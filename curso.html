@@ -286,7 +286,7 @@
         }
         .cert-actions { text-align: center; margin: 20px 0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-        @medía print {
+        @media print {
             body * { visibility: hidden; }
             .certificate, .certificate * { visibility: visible; }
             .certificate { position: absolute; left: 0; top: 0; margin: 0; box-shadow: none; width: 100%; }
@@ -325,7 +325,7 @@
         .xp-text { font-size: 0.8em; color: var(--gold); font-weight: 700; }
         .streak { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.85em; }
         .topbar-instructor { display: flex; flex-direction: column; line-height: 1.1; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 12px; }
-        @medía (max-width: 700px) { .topbar-instructor { display: none; } }
+        @media (max-width: 700px) { .topbar-instructor { display: none; } }
 
         /* === SIDEBAR NAV === */
         .layout { display: flex; min-height: calc(100vh - 52px); }
@@ -498,14 +498,90 @@
         .match-item.matched { border-color: var(--green); background: #e8f5e9; cursor: default; opacity: 0.8; }
         .match-item.wrong-flash { border-color: #c62828; background: #ffebee; animation: shake 0.4s; }
 
-        /* Responsive */
-        @medía (max-width: 900px) {
-            .sidebar { display: none; }
-            .main { max-width: 100%; }
+        /* ===== RESPONSIVE ===== */
+        /* Botón hamburger - oculto en desktop */
+        .menu-toggle {
+            display: none; background: none; border: none; color: white;
+            font-size: 1.6em; cursor: pointer; padding: 4px 10px; line-height: 1;
         }
-        @medía (max-width: 600px) {
-            .topbar { flex-wrap: wrap; gap: 8px; }
-            .lesson-header h1 { font-size: 1.3em; }
+        .sidebar-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            z-index: 90;
+        }
+        .sidebar-overlay.open { display: block; }
+
+        /* ==== TABLET (≤ 900px) ==== */
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .sidebar {
+                position: fixed; top: 0; left: 0; height: 100vh;
+                transform: translateX(-100%); transition: transform 0.3s ease;
+                z-index: 100; width: 260px; box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+                overflow-y: auto;
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main { max-width: 100%; padding: 16px; }
+            .topbar-instructor { display: none; }
+            .xp-track { width: 80px; }
+            .lesson-hero { min-height: 160px !important; padding: 20px !important; }
+            .instructor-card { flex-direction: column; text-align: center; }
+            .instructor-card img { width: 120px !important; height: 160px !important; }
+            .svg-illustration { width: 100%; height: auto; }
+            .content-card { padding: 16px !important; }
+            .content-card h3 { font-size: 1.05em; }
+            table { font-size: 0.82em; }
+            .certificate { padding: 24px !important; }
+            .cert-course { font-size: 1.3em !important; }
+            .cert-name { font-size: 1.5em !important; }
+        }
+
+        /* ==== MÓVIL (≤ 600px) ==== */
+        @media (max-width: 600px) {
+            .topbar { padding: 8px 12px; flex-wrap: wrap; gap: 8px; }
+            .topbar h2 { font-size: 0.9em; }
+            .topbar-left { gap: 8px; }
+            .lesson-header h1 { font-size: 1.2em; }
+            .lesson-header { padding: 16px !important; }
+            .main { padding: 12px; }
+            #splash { padding: 20px; }
+            #splash h1 { font-size: 1.6em !important; }
+            #splash p { font-size: 1em !important; }
+            .instructor-card { padding: 14px !important; max-width: 100% !important; }
+            .instructor-card img { width: 100px !important; height: 130px !important; }
+            .instructor-name { font-size: 1em !important; }
+            .start-btn { padding: 12px 24px !important; font-size: 1em !important; }
+            .quiz-container { padding: 14px !important; }
+            .quiz-q { font-size: 0.95em; }
+            .quiz-option { padding: 10px 12px !important; font-size: 0.9em; }
+            .btn { padding: 10px 16px !important; font-size: 0.9em; }
+            .content-card { padding: 14px !important; margin-bottom: 12px; }
+            .auth-card { padding: 20px !important; max-width: 100% !important; }
+            .auth-logo h2 { font-size: 1.1em !important; }
+            /* Tablas a scroll horizontal */
+            .content-card table { display: block; overflow-x: auto; white-space: nowrap; }
+            /* Certificado: compactar */
+            .certificate { padding: 18px !important; margin: 10px 0 !important; }
+            .cert-header .cert-title { font-size: 1.4em !important; }
+            .cert-name { font-size: 1.3em !important; }
+            .cert-course { font-size: 1.1em !important; line-height: 1.3 !important; }
+            .cert-footer { flex-direction: column !important; gap: 24px !important; }
+            .cert-sig-line { width: 100% !important; }
+            .cert-seal { width: 70px !important; height: 70px !important; right: 12px !important; top: 12px !important; font-size: 0.8em !important; }
+            .cert-actions { flex-direction: column; gap: 10px; }
+            .cert-actions .btn { width: 100%; }
+        }
+
+        /* ==== MÓVIL PEQUEÑO (≤ 400px) ==== */
+        @media (max-width: 400px) {
+            .topbar h2 { display: none; }
+            .xp-track { width: 60px; }
+            .course-footer .footer-text { font-size: 0.78em; }
+            #splash h1 { font-size: 1.35em !important; }
+        }
+
+        /* ==== IMPRESIÓN (certificado) ==== */
+        @media print {
+            .menu-toggle, .sidebar-overlay { display: none !important; }
         }
 
         /* Accordion for concepts */
@@ -669,6 +745,7 @@
 <!-- TOP BAR -->
 <div class="topbar" id="topbar" style="display:none;">
     <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menú de lecciones">&#9776;</button>
         <img src="assets/logo-trikles.jpg" alt="TRIKLES" style="height:32px;background:white;padding:3px 8px;border-radius:6px;" onerror="this.style.display='none';">
         <h2>&#127919; Curso 4DX</h2>
         <div class="topbar-instructor">
@@ -692,6 +769,8 @@
 
 <!-- LAYOUT -->
 <div class="layout" id="layout" style="display:none;">
+    <!-- Overlay para cerrar sidebar en móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"></div>
 
@@ -1063,12 +1142,28 @@ function showLockedAlert(lessonIdx) {
     }
 }
 
+function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebarOverlay');
+    if (!sb) return;
+    const isOpen = sb.classList.toggle('open');
+    if (ov) ov.classList.toggle('open', isOpen);
+}
+function closeSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebarOverlay');
+    if (sb) sb.classList.remove('open');
+    if (ov) ov.classList.remove('open');
+}
+
 function showLesson(idx) {
     // Security check - cannot access locked lessons
     if (!isLessonUnlocked(idx)) {
         showLockedAlert(idx);
         return;
     }
+    // Cerrar sidebar en móvil al navegar
+    if (window.innerWidth <= 900) closeSidebar();
     currentLesson = idx;
     const l = lessons[idx];
     const mc = document.getElementById('mainContent');

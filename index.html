@@ -147,10 +147,42 @@
     .instructor-section .info .title { color: var(--orange); font-weight: 600; font-size: 0.88em; margin-bottom: 8px; }
     .instructor-section .info p { color: var(--text-light); font-size: 0.88em; }
 
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+        .container { padding: 16px !important; }
+        .hero { padding: 30px 20px !important; }
+        .hero h1 { font-size: 1.8em; }
+        .section-title { font-size: 1.1em; }
+        .courses-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important; gap: 14px; }
+        .course-card .cover { height: 180px !important; }
+    }
     @media (max-width: 600px) {
-        .hero h1 { font-size: 1.4em; }
-        .topbar { padding: 10px 14px; }
-        .instructor-section { flex-direction: column; text-align: center; }
+        body { font-size: 15px; }
+        .container { padding: 12px !important; }
+        .hero { padding: 24px 16px !important; border-radius: 12px; }
+        .hero h1 { font-size: 1.4em; line-height: 1.25; }
+        .hero p { font-size: 0.95em; }
+        .topbar { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+        .topbar h1 { font-size: 1em !important; }
+        .topbar .right { display: flex; gap: 6px; }
+        .courses-grid { grid-template-columns: 1fr !important; gap: 12px; }
+        .course-card { max-width: 100%; }
+        .course-card .cover { height: 200px !important; }
+        .course-card .info { padding: 16px !important; }
+        .course-card h3 { font-size: 1.05em !important; line-height: 1.25; }
+        .course-card .meta { font-size: 0.78em !important; gap: 8px !important; flex-wrap: wrap; }
+        .instructor-section { flex-direction: column; text-align: center; padding: 20px !important; }
+        .instructor-section img { width: 120px !important; height: 120px !important; }
+        /* Auth card */
+        .auth-card { max-width: 100% !important; padding: 22px 18px !important; margin: 10px; }
+        .auth-logo h2 { font-size: 1.1em !important; }
+        .auth-tab { font-size: 0.85em; padding: 10px !important; }
+        .auth-form input { padding: 10px !important; font-size: 0.9em; }
+        .auth-form button { padding: 12px !important; font-size: 0.95em; }
+    }
+    @media (max-width: 400px) {
+        .hero h1 { font-size: 1.2em; }
+        .topbar .right button { padding: 6px 10px; font-size: 0.78em; }
     }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .course-card { animation: fadeIn 0.4s ease both; }
