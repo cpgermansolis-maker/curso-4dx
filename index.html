@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso 4DX - Gerencia de Administracion</title>
+    <!-- Tesseract.js para OCR del boucher (lee texto de imagenes) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
         :root {
             --blue: #1a237e; --blue-light: #3949ab; --orange: #e65100; --orange-light: #f57c00;
@@ -83,6 +85,28 @@
         }
         .instructor-avatar { flex-shrink: 0; }
         .instructor-card { max-width: 620px !important; }
+
+        /* TRIKLES logo */
+        .trikles-logo-hero {
+            max-width: 340px; max-height: 180px; object-fit: contain;
+            background: white; padding: 18px 30px; border-radius: 16px;
+            margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            animation: fadeDown 0.8s ease, pulse 3s ease-in-out 1s infinite;
+        }
+        .trikles-logo {
+            max-width: 200px; max-height: 80px; object-fit: contain;
+            background: white; padding: 8px 16px; border-radius: 10px;
+            margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            animation: fadeDown 0.8s ease;
+        }
+        .trikles-logo-cert {
+            max-width: 140px; max-height: 60px; object-fit: contain;
+            display: block; margin: 0 auto 8px;
+        }
+        .trikles-logo-auth {
+            max-width: 140px; max-height: 50px; object-fit: contain;
+            display: block; margin: 0 auto 10px;
+        }
         .instructor-note-body { flex: 1; }
         .instructor-note-label {
             font-size: 0.75em; text-transform: uppercase; color: var(--orange); font-weight: 700; letter-spacing: 0.5px;
@@ -94,35 +118,38 @@
         /* LOGIN / REGISTER */
         #authScreen {
             position: fixed; inset: 0; z-index: 9998; background: linear-gradient(135deg, #0d1b4a, #1a237e);
-            display: flex; align-items: center; justify-content: center; padding: 20px;
+            display: flex; align-items: flex-start; justify-content: center; padding: 16px;
+            overflow-y: auto;
         }
         #authScreen.hide { display: none; }
         .auth-card {
-            background: white; border-radius: 20px; padding: 36px 32px; max-width: 440px; width: 100%;
+            background: white; border-radius: 16px; padding: 20px 22px; max-width: 400px; width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: fadeDown 0.6s ease;
+            margin: 10px auto;
         }
-        .auth-logo { text-align: center; margin-bottom: 20px; }
-        .auth-logo-icon { font-size: 3em; }
-        .auth-card h2 { text-align: center; color: var(--blue); margin-bottom: 6px; }
-        .auth-card .auth-sub { text-align: center; color: var(--text-light); font-size: 0.9em; margin-bottom: 24px; }
-        .auth-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; }
+        .auth-logo { text-align: center; margin-bottom: 12px; }
+        .auth-logo-icon { font-size: 2em; line-height: 1; }
+        .auth-card h2 { text-align: center; color: var(--blue); margin-bottom: 2px; font-size: 1.1em; }
+        .auth-card .auth-sub { text-align: center; color: var(--text-light); font-size: 0.8em; margin-bottom: 14px; }
+        .auth-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 14px; }
         .auth-tab {
-            flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 600;
+            flex: 1; padding: 8px; text-align: center; cursor: pointer; font-weight: 600;
             color: #999; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s;
+            font-size: 0.9em;
         }
         .auth-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
         .auth-form { display: none; }
         .auth-form.active { display: block; }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 0.85em; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .form-group { margin-bottom: 9px; }
+        .form-group label { display: block; font-size: 0.78em; font-weight: 600; color: var(--text); margin-bottom: 3px; }
         .form-group input {
-            width: 100%; padding: 12px 14px; border: 2px solid #e0e0e0; border-radius: 10px;
-            font-size: 0.95em; transition: border-color 0.2s; font-family: inherit;
+            width: 100%; padding: 8px 10px; border: 2px solid #e0e0e0; border-radius: 8px;
+            font-size: 0.88em; transition: border-color 0.2s; font-family: inherit;
         }
         .form-group input:focus { outline: none; border-color: var(--blue); }
         .auth-btn {
-            width: 100%; padding: 14px; background: var(--blue); color: white; border: none;
-            border-radius: 10px; font-size: 1em; font-weight: 700; cursor: pointer; margin-top: 8px;
+            width: 100%; padding: 11px; background: var(--blue); color: white; border: none;
+            border-radius: 8px; font-size: 0.95em; font-weight: 700; cursor: pointer; margin-top: 6px;
             transition: transform 0.1s;
         }
         .auth-btn:hover { transform: translateY(-1px); background: #283593; }
@@ -132,6 +159,65 @@
             background: #f5f5f5; border-radius: 8px; padding: 10px; margin-top: 10px;
             font-size: 0.8em; color: var(--text-light); display: none;
         }
+
+        /* Voucher upload */
+        .voucher-btn {
+            display: flex; flex-direction: row; align-items: center; gap: 8px;
+            padding: 10px 12px; background: #f5f5f5; border: 2px dashed #bbb; border-radius: 8px;
+            cursor: pointer; text-align: left; transition: all 0.2s;
+            font-size: 0.82em;
+        }
+        .voucher-btn:hover { border-color: var(--blue); background: #e8eaf6; }
+        .voucher-btn.loaded { border-color: var(--green); background: #e8f5e9; }
+        .voucher-btn > span:first-child { font-size: 1.4em; }
+        .voucher-hint { font-size: 0.72em; color: var(--text-light); display: block; line-height: 1.2; }
+        .voucher-preview {
+            max-width: 100%; max-height: 120px; border-radius: 6px; margin-top: 6px;
+            border: 2px solid #ddd; display: block;
+        }
+        .voucher-status { font-size: 0.85em; margin-top: 8px; padding: 8px 12px; border-radius: 6px; display: none; }
+        .voucher-status.show { display: block; }
+        .voucher-status.ok { background: #e8f5e9; color: var(--green); }
+        .voucher-status.checking { background: #fff3e0; color: var(--orange); }
+        .voucher-status.bad { background: #ffebee; color: #c62828; }
+        .progress-ocr {
+            height: 6px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin-top: 4px;
+        }
+        .progress-ocr-fill { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
+
+        /* Admin panel */
+        #adminPanel {
+            position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.9); padding: 20px;
+            display: none; overflow-y: auto;
+        }
+        #adminPanel.show { display: flex; align-items: flex-start; justify-content: center; }
+        .admin-card {
+            background: white; border-radius: 16px; max-width: 1100px; width: 100%; padding: 30px;
+            margin: 20px auto; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .admin-header h2 { color: var(--blue); }
+        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 20px; }
+        .admin-stat {
+            background: linear-gradient(135deg, var(--blue), #283593); color: white; padding: 16px;
+            border-radius: 10px; text-align: center;
+        }
+        .admin-stat.gold { background: linear-gradient(135deg, var(--orange), #ff8f00); }
+        .admin-stat.green { background: linear-gradient(135deg, var(--green), #43a047); }
+        .admin-stat .num { font-size: 2em; font-weight: 800; }
+        .admin-stat .lbl { font-size: 0.8em; opacity: 0.9; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85em; }
+        .admin-table th, .admin-table td { padding: 10px; border: 1px solid #eee; text-align: left; }
+        .admin-table th { background: #e8eaf6; color: var(--blue); font-weight: 700; }
+        .admin-table tr:nth-child(even) { background: #fafafa; }
+        .admin-voucher-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; }
+        .admin-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+        .admin-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: 700;
+        }
+        .admin-badge.done { background: #c8e6c9; color: var(--green); }
+        .admin-badge.progress { background: #fff9c4; color: var(--orange); }
+        .admin-badge.new { background: #e3f2fd; color: var(--blue); }
 
         /* USER DASHBOARD in topbar */
         .user-badge {
@@ -422,10 +508,36 @@
 </head>
 <body>
 
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+    <div class="admin-card">
+        <div class="admin-header">
+            <h2>&#128200; Panel de Administrador - Curso 4DX</h2>
+            <div>
+                <button class="btn btn-primary" onclick="refreshAdmin()">&#128260; Actualizar</button>
+                <button class="btn" style="background:#c62828;color:white;" onclick="closeAdmin()">Cerrar</button>
+            </div>
+        </div>
+        <p style="color:var(--text-light);font-size:0.9em;margin-bottom:10px;">
+            <strong>Nota:</strong> Este panel muestra los alumnos registrados en <strong>este dispositivo/navegador</strong>.
+            Para ver TODOS los alumnos centralmente, configura el webhook a Google Sheets (ver guia).
+        </p>
+        <div class="admin-stats" id="adminStats"></div>
+        <div style="overflow-x:auto;">
+            <table class="admin-table" id="adminTable"></table>
+        </div>
+        <div class="admin-actions">
+            <button class="btn btn-success" onclick="exportCSV()">&#128196; Descargar lista (CSV)</button>
+            <button class="btn btn-gold" onclick="window.open('GUIA-PUBLICACION-ONLINE.html','_blank')">&#128214; Ver guia</button>
+        </div>
+    </div>
+</div>
+
 <!-- AUTH SCREEN -->
 <div id="authScreen">
     <div class="auth-card">
         <div class="auth-logo">
+            <img src="logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-auth" onerror="this.style.display='none';">
             <div class="auth-logo-icon">&#127919;</div>
             <h2>Las 4 Disciplinas de la Ejecucion</h2>
             <div class="auth-sub">Curso en linea - TRIKLES</div>
@@ -473,16 +585,45 @@
                 <label>Crea una contrasena</label>
                 <input type="password" id="regPass" required minlength="4" placeholder="Minimo 4 caracteres">
             </div>
-            <button class="auth-btn" type="submit">Crear cuenta y comenzar &#127881;</button>
+            <div class="form-group">
+                <label>Boucher de pago (foto) &#128196;</label>
+                <div class="voucher-upload">
+                    <input type="file" id="regVoucher" accept="image/*" required onchange="previewVoucher(this)" style="display:none;">
+                    <label for="regVoucher" class="voucher-btn" id="voucherLabel">
+                        <span>&#128247;</span>
+                        <div style="flex:1;">
+                            <div style="font-weight:700;">Subir foto del boucher</div>
+                            <span class="voucher-hint">A nombre de German Solis Munoz</span>
+                        </div>
+                    </label>
+                    <img id="voucherPreview" class="voucher-preview" style="display:none;">
+                    <div id="voucherStatus" class="voucher-status"></div>
+                </div>
+            </div>
+            <button class="auth-btn" type="submit" id="regSubmitBtn">
+                <span id="regBtnText">Validar boucher y crear cuenta &#127881;</span>
+                <span id="regBtnLoading" style="display:none;">Validando boucher... &#8987;</span>
+            </button>
             <div class="auth-error" id="regError"></div>
-            <div class="auth-footer">Tus datos se guardan solo en tu navegador. Nunca salen de tu dispositivo.</div>
+            <div class="auth-footer">Tus datos se guardan localmente. El boucher se valida automaticamente con OCR.</div>
+
+            <!-- BOTON TEMPORAL DE PRUEBA (eliminar en produccion) -->
+            <div style="margin-top:12px;padding-top:10px;border-top:2px dashed #ffb300;">
+                <div style="font-size:0.7em;color:#e65100;text-align:center;margin-bottom:6px;font-weight:700;">
+                    &#128736;&#65039; MODO PRUEBA (Instructor)
+                </div>
+                <button type="button" onclick="createTestStudent()"
+                    style="width:100%;padding:10px;background:linear-gradient(135deg,#ff8f00,#ffb300);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.85em;">
+                    &#129514; Crear alumno de prueba
+                </button>
+            </div>
         </form>
     </div>
 </div>
 
 <!-- SPLASH -->
 <div id="splash">
-    <div style="font-size:4em; margin-bottom:16px;">&#127919;</div>
+    <img src="logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-hero" onerror="this.outerHTML='<div style=&quot;font-size:4em;margin-bottom:16px;&quot;>&#127919;</div>';">
     <h1>Las 4 Disciplinas de la Ejecucion</h1>
     <p>Curso interactivo para la Gerencia de Administracion</p>
 
@@ -511,6 +652,7 @@
 <!-- TOP BAR -->
 <div class="topbar" id="topbar" style="display:none;">
     <div class="topbar-left">
+        <img src="logo-trikles.jpg" alt="TRIKLES" style="height:32px;background:white;padding:3px 8px;border-radius:6px;" onerror="this.style.display='none';">
         <h2>&#127919; Curso 4DX</h2>
         <div class="topbar-instructor">
             <span style="opacity:0.7;font-size:0.78em;">Instructor:</span>
@@ -1242,6 +1384,7 @@ const lessons = [
             </div>
 
             <div class="cert-header">
+                <img src="logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-cert" onerror="this.style.display='none';">
                 <div class="cert-icon">&#127942;</div>
                 <div class="cert-title">CERTIFICADO</div>
                 <div class="cert-subtitle">de finalizacion satisfactoria</div>
@@ -1322,7 +1465,74 @@ function switchAuthTab(tab) {
     document.getElementById(tab + 'Form').classList.add('active');
 }
 
-function doRegister(e) {
+// ========== VOUCHER OCR ==========
+const REQUIRED_NAME = 'german solis munoz'; // Normalizado sin acentos
+let voucherImageData = null;
+let voucherValidated = false;
+
+function previewVoucher(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        voucherImageData = e.target.result;
+        const preview = document.getElementById('voucherPreview');
+        preview.src = voucherImageData;
+        preview.style.display = 'block';
+        document.getElementById('voucherLabel').classList.add('loaded');
+        document.getElementById('voucherLabel').querySelector('span:nth-child(2)').textContent = 'Boucher cargado (haz clic para cambiar)';
+        voucherValidated = false;
+    };
+    reader.readAsDataURL(file);
+}
+
+function normalize(str) {
+    return str.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9 ]/g, ' ')
+        .replace(/\s+/g, ' ').trim();
+}
+
+async function validateVoucher(imageData) {
+    const status = document.getElementById('voucherStatus');
+    status.className = 'voucher-status show checking';
+    status.innerHTML = 'Leyendo texto del boucher con OCR...<div class="progress-ocr"><div class="progress-ocr-fill" id="ocrProgress"></div></div>';
+
+    try {
+        const result = await Tesseract.recognize(imageData, 'spa+eng', {
+            logger: m => {
+                if (m.status === 'recognizing text') {
+                    document.getElementById('ocrProgress').style.width = (m.progress * 100) + '%';
+                }
+            }
+        });
+        const text = normalize(result.data.text);
+        console.log('OCR detecto:', text);
+
+        // Check variations: "german solis munoz", "german solis", etc.
+        const variants = ['german solis munoz', 'german solis', 'solis munoz german'];
+        const matched = variants.some(v => text.includes(v));
+
+        if (matched) {
+            status.className = 'voucher-status show ok';
+            status.innerHTML = '&#9989; Boucher validado a nombre de German Solis Munoz';
+            voucherValidated = true;
+            return { ok: true, text: result.data.text };
+        } else {
+            status.className = 'voucher-status show bad';
+            status.innerHTML = '&#10060; No se detecto el nombre "German Solis Munoz" en el boucher. Verifica que la imagen sea legible y este a ese nombre.';
+            voucherValidated = false;
+            return { ok: false, text: result.data.text };
+        }
+    } catch (err) {
+        status.className = 'voucher-status show bad';
+        status.innerHTML = '&#10060; Error al leer la imagen. Intenta con otra foto mas clara.';
+        console.error(err);
+        return { ok: false, text: '' };
+    }
+}
+
+async function doRegister(e) {
     e.preventDefault();
     const name = document.getElementById('regName').value.trim();
     const email = document.getElementById('regEmail').value.trim().toLowerCase();
@@ -1330,6 +1540,7 @@ function doRegister(e) {
     const role = document.getElementById('regRole').value.trim();
     const pass = document.getElementById('regPass').value;
     const errEl = document.getElementById('regError');
+    errEl.style.display = 'none';
 
     const users = getUsers();
     if (users[email]) {
@@ -1338,15 +1549,110 @@ function doRegister(e) {
         return;
     }
 
+    if (!voucherImageData) {
+        errEl.textContent = 'Debes subir la foto de tu boucher de pago.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    // Show loading state
+    const btn = document.getElementById('regSubmitBtn');
+    btn.disabled = true;
+    document.getElementById('regBtnText').style.display = 'none';
+    document.getElementById('regBtnLoading').style.display = 'inline';
+
+    // Validate voucher
+    const validation = await validateVoucher(voucherImageData);
+
+    btn.disabled = false;
+    document.getElementById('regBtnText').style.display = 'inline';
+    document.getElementById('regBtnLoading').style.display = 'none';
+
+    if (!validation.ok) {
+        errEl.textContent = 'El boucher no pudo ser validado. Sube una imagen clara del boucher a nombre de German Solis Munoz.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    // Register automatically
     users[email] = {
         name, email, company, role, pass: hashPass(pass),
         registeredAt: new Date().toISOString(),
+        voucher: voucherImageData, // base64
+        voucherText: validation.text.substring(0, 500),
         progress: { xp: 0, completed: [], finalScore: null, completedDate: null }
     };
     saveUsers(users);
     localStorage.setItem(SESSION_KEY, email);
     currentUser = users[email];
+
+    // Send to webhook if configured
+    sendToWebhook('register', users[email]);
+
     enterCourse();
+}
+
+// ========== MODO PRUEBA (eliminar en produccion) ==========
+function createTestStudent() {
+    const names = ['Maria Lopez Garcia', 'Juan Perez Ramirez', 'Ana Sanchez Torres', 'Carlos Mendoza Ruiz', 'Laura Gomez Hernandez', 'Pedro Vargas Castro', 'Sofia Ramirez Diaz', 'Ricardo Morales Silva'];
+    const companies = ['ACME Corp', 'Grupo Industrial XYZ', 'Constructora del Norte', 'Comercializadora Sol', 'Servicios Profesionales TM', 'Logistica Express'];
+    const roles = ['Gerente de Administracion', 'Coordinador Administrativo', 'Director de Finanzas', 'Jefe de Compras', 'Gerente de RH', 'Contralor'];
+
+    const rnd = arr => arr[Math.floor(Math.random() * arr.length)];
+    const name = rnd(names);
+    const timestamp = Date.now();
+    const email = 'test.' + name.toLowerCase().split(' ')[0] + timestamp + '@prueba.com';
+    const company = rnd(companies);
+    const role = rnd(roles);
+
+    const users = getUsers();
+    users[email] = {
+        name, email, company, role, pass: hashPass('test123'),
+        registeredAt: new Date().toISOString(),
+        voucher: null,
+        voucherText: '[ALUMNO DE PRUEBA - sin boucher]',
+        isTest: true,
+        progress: { xp: 0, completed: [], finalScore: null, completedDate: null }
+    };
+    saveUsers(users);
+    localStorage.setItem(SESSION_KEY, email);
+    currentUser = users[email];
+
+    // Enviar al webhook
+    sendToWebhook('register', users[email]);
+
+    // Mostrar notificacion
+    alert('Alumno de prueba creado:\n\nNombre: ' + name + '\nCorreo: ' + email + '\nEmpresa: ' + company + '\nCargo: ' + role + '\n\nSe envio al webhook de Google Sheets.\nVas a entrar al curso como este alumno.');
+
+    enterCourse();
+}
+
+// ========== WEBHOOK (Google Sheets) ==========
+// URL hardcodeada del Google Apps Script de LADE German Solis Munoz - TRIKLES
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
+
+function sendToWebhook(event, data) {
+    // Permite override local para testing
+    const url = localStorage.getItem('curso4dx_webhook') || WEBHOOK_URL;
+    if (!url) return;
+    try {
+        fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                event,
+                timestamp: new Date().toISOString(),
+                name: data.name,
+                email: data.email,
+                company: data.company,
+                role: data.role,
+                progress: data.progress?.completed?.length || 0,
+                finalScore: data.progress?.finalScore,
+                completed: (data.progress?.completed?.length || 0) >= 7
+            })
+        }).catch(e => console.log('Webhook error (ignorado):', e));
+    } catch(e) { console.log('Webhook fail:', e); }
 }
 
 function doLogin(e) {
@@ -1526,7 +1832,122 @@ window.addEventListener('DOMContentLoaded', () => {
             enterCourse();
         }
     }
+    // Admin panel via URL hash #admin
+    if (location.hash === '#admin') openAdminPrompt();
+    // Keyboard shortcut Ctrl+Shift+A
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); openAdminPrompt(); }
+    });
 });
+
+// ========== ADMIN PANEL ==========
+const ADMIN_PASSWORD = 'trikles4dx2026'; // Cambia esto por tu contrasena
+
+function openAdminPrompt() {
+    const pass = prompt('Contrasena de administrador:');
+    if (pass === ADMIN_PASSWORD) {
+        openAdmin();
+    } else if (pass !== null) {
+        alert('Contrasena incorrecta.');
+    }
+}
+
+function openAdmin() {
+    document.getElementById('adminPanel').classList.add('show');
+    refreshAdmin();
+}
+
+function closeAdmin() {
+    document.getElementById('adminPanel').classList.remove('show');
+    if (location.hash === '#admin') history.replaceState(null, '', location.pathname);
+}
+
+function refreshAdmin() {
+    const users = getUsers();
+    const arr = Object.values(users);
+    const total = arr.length;
+    const completed = arr.filter(u => u.progress?.completed?.length >= 7 && u.progress?.finalScore >= 7).length;
+    const inProgress = arr.filter(u => (u.progress?.completed?.length || 0) > 0 && !(u.progress?.completed?.length >= 7 && u.progress?.finalScore >= 7)).length;
+    const thisWeek = arr.filter(u => {
+        const d = new Date(u.registeredAt);
+        const ago = (Date.now() - d.getTime()) / 86400000;
+        return ago <= 7;
+    }).length;
+
+    const stats = document.getElementById('adminStats');
+    stats.innerHTML =
+        '<div class="admin-stat"><div class="num">'+total+'</div><div class="lbl">Alumnos totales</div></div>' +
+        '<div class="admin-stat gold"><div class="num">'+inProgress+'</div><div class="lbl">En curso</div></div>' +
+        '<div class="admin-stat green"><div class="num">'+completed+'</div><div class="lbl">Certificados</div></div>' +
+        '<div class="admin-stat"><div class="num">'+thisWeek+'</div><div class="lbl">Esta semana</div></div>';
+
+    let tbl = '<thead><tr>' +
+        '<th>#</th><th>Nombre</th><th>Empresa / Cargo</th><th>Correo</th>' +
+        '<th>Fecha registro</th><th>Progreso</th><th>Examen</th><th>Estado</th><th>Boucher</th>' +
+        '</tr></thead><tbody>';
+
+    if (arr.length === 0) {
+        tbl += '<tr><td colspan="9" style="text-align:center;color:#999;padding:30px;">Aun no hay alumnos registrados en este dispositivo</td></tr>';
+    } else {
+        arr.sort((a,b) => new Date(b.registeredAt) - new Date(a.registeredAt))
+           .forEach((u, i) => {
+            const pct = Math.round(((u.progress?.completed?.length || 0) / 7) * 100);
+            const score = u.progress?.finalScore !== null && u.progress?.finalScore !== undefined ? u.progress.finalScore + '/10' : '-';
+            let badge, badgeClass;
+            if ((u.progress?.completed?.length || 0) >= 7 && u.progress?.finalScore >= 7) {
+                badge = 'CERTIFICADO'; badgeClass = 'done';
+            } else if ((u.progress?.completed?.length || 0) > 0) {
+                badge = 'EN CURSO'; badgeClass = 'progress';
+            } else {
+                badge = 'NUEVO'; badgeClass = 'new';
+            }
+            const regDate = new Date(u.registeredAt).toLocaleDateString('es-MX');
+            const voucherImg = u.voucher ? '<img src="'+u.voucher+'" class="admin-voucher-thumb" onclick="viewVoucher(\''+u.email+'\')">' : '-';
+
+            tbl += '<tr>' +
+                '<td>'+(i+1)+'</td>' +
+                '<td><strong>'+u.name+'</strong></td>' +
+                '<td>'+u.company+'<br><small style="color:#888;">'+u.role+'</small></td>' +
+                '<td>'+u.email+'</td>' +
+                '<td>'+regDate+'</td>' +
+                '<td>'+pct+'% ('+(u.progress?.completed?.length || 0)+'/7)</td>' +
+                '<td>'+score+'</td>' +
+                '<td><span class="admin-badge '+badgeClass+'">'+badge+'</span></td>' +
+                '<td>'+voucherImg+'</td>' +
+            '</tr>';
+        });
+    }
+    tbl += '</tbody>';
+
+    document.getElementById('adminTable').innerHTML = tbl;
+}
+
+function viewVoucher(email) {
+    const users = getUsers();
+    const u = users[email];
+    if (!u || !u.voucher) return;
+    const w = window.open('', '_blank', 'width=600,height=800');
+    w.document.write('<title>Boucher - '+u.name+'</title><body style="margin:0;background:#333;text-align:center;padding:20px;"><img src="'+u.voucher+'" style="max-width:100%;max-height:95vh;"></body>');
+}
+
+function exportCSV() {
+    const users = Object.values(getUsers());
+    if (users.length === 0) { alert('No hay alumnos para exportar.'); return; }
+    let csv = 'Nombre,Correo,Empresa,Cargo,Fecha registro,Progreso %,Lecciones completadas,Examen,Estado\n';
+    users.forEach(u => {
+        const pct = Math.round(((u.progress?.completed?.length || 0) / 7) * 100);
+        const done = u.progress?.completed?.length || 0;
+        const score = u.progress?.finalScore !== null && u.progress?.finalScore !== undefined ? u.progress.finalScore : '';
+        const status = (done >= 7 && u.progress?.finalScore >= 7) ? 'CERTIFICADO' : (done > 0 ? 'EN CURSO' : 'NUEVO');
+        csv += [u.name, u.email, u.company, u.role, u.registeredAt, pct, done, score, status]
+            .map(v => '"'+String(v||'').replace(/"/g,'""')+'"').join(',') + '\n';
+    });
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'alumnos-curso-4dx-' + new Date().toISOString().split('T')[0] + '.csv';
+    link.click();
+}
 
 function checkQuiz(qid, btn, correct) {
     const container = document.getElementById(qid);
@@ -1592,6 +2013,7 @@ function checkFinal(qid, btn, correct) {
             completedLessons.add(currentLesson);
             if (finalScore >= 7) completedLessons.add(7); // unlock certificate
             saveProgress();
+            if (finalScore >= 7) sendToWebhook('completed', currentUser);
             buildSidebar();
             result.scrollIntoView({ behavior: 'smooth' });
         }, 500);
