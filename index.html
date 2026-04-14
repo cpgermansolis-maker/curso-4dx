@@ -667,6 +667,7 @@ function closeAuth() {
 function renderMyCourses() {
     const grid = document.getElementById('myCoursesGrid');
     const empty = document.getElementById('myCoursesEmpty');
+    if (!currentUser) { grid.innerHTML = ''; if (empty) empty.style.display = 'none'; return; }
     const enrollments = currentUser.enrollments || {};
     const enrolledIds = Object.keys(enrollments);
     if (enrolledIds.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
