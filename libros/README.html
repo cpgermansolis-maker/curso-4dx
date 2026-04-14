@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cómo agregar un libro nuevo - TRIKLES</title>
+<style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 800px; margin: 0 auto; padding: 30px; line-height: 1.6; color: #333; background: #f0f2f5; }
+    h1 { color: #1a237e; border-bottom: 3px solid #ffb300; padding-bottom: 10px; }
+    h2 { color: #1a237e; margin-top: 28px; }
+    h3 { color: #e65100; }
+    .card { background: white; padding: 20px 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 18px; }
+    code { background: #263238; color: #fff176; padding: 2px 8px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+    pre { background: #263238; color: #eceff1; padding: 14px; border-radius: 8px; overflow-x: auto; font-size: 0.85em; }
+    .step { background: #e8eaf6; border-left: 4px solid #1a237e; padding: 12px 16px; border-radius: 8px; margin: 10px 0; }
+    .step strong { color: #1a237e; }
+    .tip { background: #fff3e0; border-left: 4px solid #ff8f00; padding: 12px 16px; border-radius: 8px; margin: 10px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9em; }
+    th, td { padding: 10px; border: 1px solid #e0e0e0; text-align: left; }
+    th { background: #e8eaf6; color: #1a237e; }
+</style>
+</head>
+<body>
+
+<h1>📚 Carpeta de libros TRIKLES</h1>
+
+<div class="card">
+    <p>En esta carpeta (<code>libros/</code>) se guardan los archivos fuente de cada libro que se convierte en curso. Por cada libro hay una subcarpeta con dos archivos: el PDF del libro y la foto de su portada.</p>
+</div>
+
+<h2>📋 Estructura de cada libro</h2>
+
+<div class="card">
+    <p>Cada carpeta de libro debe contener exactamente estos archivos:</p>
+    <pre>libros/
+└── {nombre-del-curso}/
+    ├── libro.pdf       ← PDF completo del libro
+    └── portada.jpg     ← Foto/imagen de la portada</pre>
+
+    <p><strong>Ejemplo actual:</strong></p>
+    <pre>libros/
+└── 4dx/
+    ├── libro.pdf       ✅ (ya está)
+    └── portada.jpg     ⚠️ (pendiente de agregar)</pre>
+</div>
+
+<h2>🆕 Cómo agregar un libro nuevo</h2>
+
+<div class="card">
+    <div class="step">
+        <strong>Paso 1:</strong> Piensa un nombre corto sin espacios ni acentos (en minúsculas) para el libro. Este nombre será el ID del curso en la URL.
+        <br><br>
+        Ejemplos:
+        <table>
+            <tr><th>Libro</th><th>Nombre de carpeta</th></tr>
+            <tr><td>Los 7 Hábitos de la Gente Altamente Efectiva</td><td><code>habitos</code></td></tr>
+            <tr><td>El Líder Ejecutivo (Peter Drucker)</td><td><code>drucker</code></td></tr>
+            <tr><td>Empresas que Sobresalen (Jim Collins)</td><td><code>sobresalen</code></td></tr>
+            <tr><td>El Monje que Vendió su Ferrari</td><td><code>monje-ferrari</code></td></tr>
+            <tr><td>Piensa y Hazte Rico</td><td><code>piensa-rico</code></td></tr>
+        </table>
+    </div>
+
+    <div class="step">
+        <strong>Paso 2:</strong> Crea una nueva carpeta dentro de <code>libros/</code> con ese nombre.
+        <br><br>
+        Ejemplo: <code>libros/habitos/</code>
+    </div>
+
+    <div class="step">
+        <strong>Paso 3:</strong> Copia dentro de esa carpeta:
+        <ul>
+            <li>El PDF del libro renombrado a <code>libro.pdf</code></li>
+            <li>La foto de la portada renombrada a <code>portada.jpg</code> (o <code>.png</code>)</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <strong>Paso 4:</strong> Avisa al asistente (Claude) diciéndole algo como:
+        <br><br>
+        <em>"Ya puse el libro de Hábitos en <code>libros/habitos/</code>, procede a crear el curso"</em>
+        <br><br>
+        Claude leerá el PDF, extraerá los conceptos clave y generará automáticamente:
+        <ul>
+            <li><code>cursos/habitos.js</code> - contenido del curso (lecciones, quizzes, examen)</li>
+            <li><code>assets/covers/habitos.jpg</code> - portada optimizada para la web</li>
+            <li>Entrada en el catálogo de <code>index.html</code></li>
+        </ul>
+    </div>
+</div>
+
+<h2>📐 Recomendaciones para las portadas</h2>
+
+<div class="card">
+    <ul>
+        <li><strong>Formato:</strong> JPG o PNG</li>
+        <li><strong>Tamaño recomendado:</strong> 400 x 600 píxeles (proporción 2:3 vertical, como una portada de libro real)</li>
+        <li><strong>Tamaño máximo:</strong> 500 KB (si es más grande, Claude la optimiza automáticamente)</li>
+        <li><strong>Calidad:</strong> Buena resolución, sin marcas de agua, que se lea bien el título</li>
+    </ul>
+
+    <div class="tip">
+        <strong>💡 Tip:</strong> Si no tienes la foto del libro, puedes buscarla en Amazon, Google Books o Goodreads. O pedirle a Claude que genere una portada SVG profesional con los colores TRIKLES mientras consigues la real.
+    </div>
+</div>
+
+<h2>🔢 Requisitos mínimos por libro</h2>
+
+<div class="card">
+    <ul>
+        <li>PDF legible (no escaneado de baja calidad - Claude necesita extraer el texto)</li>
+        <li>El libro debe ser sobre gestión, liderazgo, finanzas, estrategia, ventas, RH, productividad o temas empresariales</li>
+        <li>Preferentemente en español, pero inglés también funciona</li>
+        <li>Extensión: cualquiera, aunque Claude puede leer hasta ~300 páginas cómodamente</li>
+    </ul>
+</div>
+
+<h2>📦 Ejemplo completo: Agregar "Los 7 Hábitos"</h2>
+
+<div class="card">
+    <ol>
+        <li>Creas la carpeta <code>libros/habitos/</code></li>
+        <li>Pones ahí <code>libro.pdf</code> (el PDF del libro)</li>
+        <li>Pones ahí <code>portada.jpg</code> (foto de la portada)</li>
+        <li>Le dices a Claude: "Ya está el libro de hábitos, procede"</li>
+        <li>Claude lo procesa en una sesión (~1 hora)</li>
+        <li>El curso aparece disponible en <code>index.html</code> automáticamente</li>
+        <li>Los alumnos lo ven en el catálogo y pueden inscribirse (tras validar boucher)</li>
+    </ol>
+</div>
+
+<div style="text-align:center; color:#888; font-size:0.85em; margin-top:40px; padding-top:20px; border-top:1px solid #ddd;">
+    Guía para LADE Germán Solís Muñoz - Director de Gestión Empresarial TRIKLES
+</div>
+
+</body>
+</html>

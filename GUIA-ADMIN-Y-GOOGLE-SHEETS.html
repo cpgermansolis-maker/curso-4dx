@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Admin y Google Sheets - Curso 4DX</title>
+<style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 920px; margin: 0 auto; padding: 20px; line-height: 1.65; color: #333; background: #f0f2f5; }
+    h1 { color: #1a237e; border-bottom: 3px solid #ffb300; padding-bottom: 10px; }
+    h2 { color: #1a237e; margin-top: 30px; background: white; padding: 14px 20px; border-radius: 10px; border-left: 5px solid #ffb300; }
+    h3 { color: #e65100; margin-top: 20px; }
+    .card { background: white; padding: 20px 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    code { background: #263238; color: #fff176; padding: 2px 8px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; word-break: break-all; }
+    pre { background: #263238; color: #eceff1; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: Consolas, monospace; font-size: 0.85em; line-height: 1.5; }
+    .step { background: #e8eaf6; border-left: 4px solid #1a237e; padding: 14px 18px; border-radius: 8px; margin: 12px 0; }
+    .step strong { color: #1a237e; }
+    .tip { background: #fff3e0; border-left: 4px solid #ff8f00; padding: 14px 18px; border-radius: 8px; margin: 12px 0; }
+    .warning { background: #ffebee; border-left: 4px solid #c62828; padding: 14px 18px; border-radius: 8px; margin: 12px 0; }
+    ol li, ul li { margin-bottom: 8px; }
+    a { color: #1565c0; font-weight: 600; }
+    .kbd { display: inline-block; padding: 2px 8px; background: #fff; border: 1px solid #ccc; border-radius: 4px; font-family: monospace; font-size: 0.85em; box-shadow: 0 2px 0 #ddd; }
+</style>
+</head>
+<body>
+
+<h1>Cómo ver a tus alumnos (Panel Admin + Google Sheets)</h1>
+
+<div class="card">
+    <p>Tienes <strong>dos formas</strong> de ver quien está tomando tu curso:</p>
+    <ol>
+        <li><strong>Panel de Admin local</strong> (rápido, pero solo ve alumnos del mismo dispositivo)</li>
+        <li><strong>Google Sheets centralizado</strong> (ve TODOS los alumnos de cualquier dispositivo en una hoja de calculo)</li>
+    </ol>
+</div>
+
+<h2>&#128200; Opción 1: Panel de Admin local</h2>
+
+<div class="card">
+    <p>Integrado en el mismo curso. Te muestra:</p>
+    <ul>
+        <li>Total de alumnos registrados en ese navegador</li>
+        <li>Cuantos van en progreso, cuantos ya se certificaron</li>
+        <li>Nombre, correo, empresa, cargo, fecha de registro</li>
+        <li>Progreso (%) y calificación del examen</li>
+        <li>Boucher de pago de cada uno (clic para ampliar)</li>
+        <li>Descarga de lista en CSV (Excel)</li>
+    </ul>
+
+    <h3>Cómo abrir el panel</h3>
+    <div class="step">
+        <strong>Opción A:</strong> Agrega <code>#admin</code> al final de la URL del curso.<br>
+        Ejemplo: <code>https://tu-curso.netlify.app/#admin</code>
+    </div>
+    <div class="step">
+        <strong>Opción B:</strong> En el curso, presióna <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">A</span>
+    </div>
+    <div class="step">
+        <strong>Contraseña:</strong> <code>trikles4dx2026</code><br>
+        (Puedes cambiarla editando la constante <code>ADMIN_PASSWORD</code> en el código)
+    </div>
+
+    <div class="warning">
+        <strong>&#9888;&#65039; Limitación importante:</strong> El panel local solo ve alumnos registrados en el <strong>mismo navegador</strong>. Sí un alumno se registra desde su laptop, tú no lo verás desde tu computadora. Para ver TODOS los alumnos, necesitas la Opción 2 (Google Sheets).
+    </div>
+</div>
+
+<h2>&#128196; Opción 2: Google Sheets centralizado (RECOMENDADO)</h2>
+
+<div class="card">
+    <p>Con esto verás automáticamente en una Google Sheet <strong>a todos los alumnos</strong> de cualquier dispositivo, en tiempo real. No cuesta nada.</p>
+
+    <h3>Paso 1: Crea la Google Sheet</h3>
+    <div class="step">
+        <strong>1.1:</strong> Ve a <a href="https://sheets.new" target="_blank">sheets.new</a> (o entra a Google Drive y crea una hoja nueva)
+    </div>
+    <div class="step">
+        <strong>1.2:</strong> Ponle nombre: <code>Alumnos Curso 4DX</code>
+    </div>
+    <div class="step">
+        <strong>1.3:</strong> En la fila 1, escribe estos encabezados (uno en cada columna A-I):<br>
+        <code>Fecha | Evento | Nombre | Correo | Empresa | Cargo | Progreso | Examen | Completado</code>
+    </div>
+
+    <h3>Paso 2: Crea el script que recibe los datos</h3>
+    <div class="step">
+        <strong>2.1:</strong> En la misma Google Sheet, menú <strong>Extensiones > Apps Script</strong>
+    </div>
+    <div class="step">
+        <strong>2.2:</strong> Borra el código de ejemplo y pega este codigo:
+    </div>
+    <pre>function doPost(e) {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.timestamp || new Date().toISOString(),
+      data.event || '',
+      data.name || '',
+      data.email || '',
+      data.company || '',
+      data.role || '',
+      (data.progress || 0) + '/7',
+      data.finalScore !== null && data.finalScore !== undefined ? data.finalScore + '/10' : '',
+      data.completed ? 'SI' : 'NO'
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({ok:true}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ok:false, error: err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre>
+    <div class="step">
+        <strong>2.3:</strong> Guarda el proyecto (<span class="kbd">Ctrl</span>+<span class="kbd">S</span>). Ponle nombre <code>Curso4DX-Webhook</code>
+    </div>
+
+    <h3>Paso 3: Publica el script como Web App</h3>
+    <div class="step">
+        <strong>3.1:</strong> Clic en el botón <strong>Implementar (Deploy)</strong> arriba a la derecha > <strong>Nueva implementación</strong>
+    </div>
+    <div class="step">
+        <strong>3.2:</strong> En el engranaje izquierdo seleccióna <strong>"Aplicación web"</strong>
+    </div>
+    <div class="step">
+        <strong>3.3:</strong> Configura asi:
+        <ul>
+            <li><strong>Descripción:</strong> Webhook Curso 4DX</li>
+            <li><strong>Ejecutar como:</strong> Yo (tu correo)</li>
+            <li><strong>Quien tiene acceso:</strong> Cualquier usuario (importante!)</li>
+        </ul>
+    </div>
+    <div class="step">
+        <strong>3.4:</strong> Clic en <strong>Implementar</strong>. Google te pedira autorizar, acepta los permisos.
+    </div>
+    <div class="step">
+        <strong>3.5:</strong> Copia la <strong>URL de la aplicación web</strong> que te da (algo como <code>https://script.google.com/macros/s/AKfycb.../exec</code>)
+    </div>
+
+    <h3>Paso 4: Configura el webhook en el curso</h3>
+    <div class="step">
+        <strong>4.1:</strong> Abre el curso en tu navegador
+    </div>
+    <div class="step">
+        <strong>4.2:</strong> Abre la consola del navegador (<span class="kbd">F12</span>, pestaña "Consola" o "Console")
+    </div>
+    <div class="step">
+        <strong>4.3:</strong> Pega este comando (reemplazando la URL por la que copiaste):
+    </div>
+    <pre>localStorage.setItem('curso4dx_webhook', 'https://script.google.com/macros/s/TU_URL_AQUI/exec');</pre>
+    <div class="step">
+        <strong>4.4:</strong> Presióna <span class="kbd">Enter</span>. Listo! Ahora cada registro y cada certificado se enviará automáticamente a tu Google Sheet.
+    </div>
+
+    <div class="tip">
+        <strong>&#128161; Tip:</strong> Como cada alumno necesita configurar el webhook en su navegador, en realidad hay una forma más sencilla: <strong>hardcodear la URL en el código</strong>. Pideme que edite la constante <code>WEBHOOK_URL</code> con tu URL y quedará fija para todos los alumnos sin que tengan que hacer nada.
+    </div>
+</div>
+
+<h2>&#128202; Qué verás en Google Sheets</h2>
+
+<div class="card">
+    <p>Cada vez que un alumno:</p>
+    <ul>
+        <li><strong>Se registre</strong> → aparece una fila con evento "register"</li>
+        <li><strong>Complete el curso (aprueba examen)</strong> → aparece una fila con evento "completed"</li>
+    </ul>
+    <p>Ejemplo de cómo se verá tu hoja:</p>
+    <pre style="background:white;color:#333;border:1px solid #ddd;font-size:0.82em;">
+2026-04-14T10:30  register   María López    maria@acme.com    ACME      Gerente Admin     0/7   -      NO
+2026-04-14T11:15  register   Juan Pérez     juan@xyz.com      XYZ       Coordinadora      0/7   -      NO
+2026-04-14T15:42  completed  María López    maria@acme.com    ACME      Gerente Admin     7/7   9/10   SI</pre>
+    <p>Desde Google Sheets puedes:</p>
+    <ul>
+        <li>Filtrar por empresa, fecha, estado</li>
+        <li>Graficar avance semanal, tasa de completación</li>
+        <li>Exportar a Excel / PDF</li>
+        <li>Compartir con tu equipo con permisos de solo lectura</li>
+    </ul>
+</div>
+
+<h2>Seguridad de la contraseña de admin</h2>
+
+<div class="card">
+    <p>La contraseña actual del panel de admin es: <code>trikles4dx2026</code></p>
+    <p>Para cambiarla:</p>
+    <ol>
+        <li>Abre <code>index.html</code> en un editor de texto</li>
+        <li>Busca la línea: <code>const ADMIN_PASSWORD = 'trikles4dx2026';</code></li>
+        <li>Cambiala por tu nueva contraseña</li>
+        <li>Guarda y vuelve a publicar</li>
+    </ol>
+    <div class="warning">
+        <strong>&#9888;&#65039;</strong> La contraseña está en el código HTML qué es público. Alguien muy técnico podria verla inspecciónando el código fuente. Para máxima seguridad real, el panel admin deberia estar en un archivo aparte que solo tu tengas. Pidemelo si necesitas eso.
+    </div>
+</div>
+
+<div style="text-align:center; color:#666; font-size:0.85em; margin-top:40px; padding-top:20px; border-top:1px solid #ddd;">
+    Guía para LADE Germán Solís Muñoz - Director de Gestión Empresarial TRIKLES
+</div>
+
+</body>
+</html>

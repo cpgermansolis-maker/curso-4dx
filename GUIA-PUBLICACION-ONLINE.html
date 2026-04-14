@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía para publicar el curso en línea</title>
+<style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; background: #f0f2f5; }
+    h1 { color: #1a237e; border-bottom: 3px solid #ffb300; padding-bottom: 10px; }
+    h2 { color: #1a237e; margin-top: 30px; background: white; padding: 14px 20px; border-radius: 10px; border-left: 5px solid #ffb300; }
+    h3 { color: #e65100; margin-top: 20px; }
+    .card { background: white; padding: 20px 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    .badge { display: inline-block; background: #2e7d32; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 700; margin-right: 8px; }
+    .badge.blue { background: #1565c0; }
+    .badge.orange { background: #e65100; }
+    code { background: #263238; color: #fff176; padding: 2px 8px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; }
+    pre { background: #263238; color: #eceff1; padding: 16px; border-radius: 8px; overflow-x: auto; font-family: Consolas, monospace; font-size: 0.88em; }
+    .step { background: #e8eaf6; border-left: 4px solid #1a237e; padding: 14px 18px; border-radius: 8px; margin: 12px 0; }
+    .step strong { color: #1a237e; }
+    .tip { background: #fff3e0; border-left: 4px solid #ff8f00; padding: 14px 18px; border-radius: 8px; margin: 12px 0; }
+    .warning { background: #ffebee; border-left: 4px solid #c62828; padding: 14px 18px; border-radius: 8px; margin: 12px 0; }
+    ol li, ul li { margin-bottom: 8px; }
+    a { color: #1565c0; font-weight: 600; }
+    .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .option-card { background: white; padding: 18px; border-radius: 10px; border-top: 4px solid #1a237e; }
+    .option-card.netlify { border-top-color: #00c7b7; }
+    .option-card.github { border-top-color: #333; }
+    @medía (max-width: 700px) { .option-grid { grid-template-columns: 1fr; } }
+    .emoji { font-size: 1.3em; }
+</style>
+</head>
+<body>
+
+<h1>Guía para publicar tu Curso 4DX en línea</h1>
+
+<div class="card">
+    <p>Tu curso ya es una plataforma LMS completa con:</p>
+    <ul>
+        <li><span class="badge">LMS</span> Registro y login de alumnos</li>
+        <li><span class="badge blue">Tracking</span> Progreso guardado por usuario (localStorage)</li>
+        <li><span class="badge orange">Certificado</span> Diploma personalizado imprimible</li>
+        <li><span class="badge">Gamificacion</span> XP, rachas, badges, confetti</li>
+    </ul>
+    <p>Ahora solo falta subirlo a internet. Aquí tienes las <strong>2 mejores opciones gratuitas</strong>.</p>
+</div>
+
+<h2>Archivos a publicar</h2>
+<div class="card">
+    <p>Necesitas subir estos 3 archivos juntos:</p>
+    <ol>
+        <li><code>curso-4dx-gerencia-administración.html</code> - El curso</li>
+        <li><code>checklist-4dx-gerencia-administración.html</code> - La evaluación</li>
+        <li><code>instructor-german.jpg</code> - Tu foto como instructor</li>
+    </ol>
+    <div class="tip">
+        <strong>Importante:</strong> También renombra el archivo del curso a <code>index.html</code> antes de subirlo, para que sea la página principal al abrir el link.
+    </div>
+</div>
+
+<div class="option-grid">
+    <div class="option-card netlify">
+        <h3><span class="emoji">&#9889;</span> Opción 1: Netlify (Más fácil)</h3>
+        <p><strong>Tiempo:</strong> 2 minutos</p>
+        <p><strong>No requiere:</strong> Cuenta Git, terminal, ni conocimientos técnicos</p>
+        <p><strong>Ideal para:</strong> Publicar rápido sin complicaciones</p>
+    </div>
+    <div class="option-card github">
+        <h3><span class="emoji">&#128187;</span> Opción 2: GitHub Pages</h3>
+        <p><strong>Tiempo:</strong> 10 minutos</p>
+        <p><strong>Requiere:</strong> Cuenta GitHub gratuita</p>
+        <p><strong>Ideal para:</strong> Control de versiones y URLs personalizables</p>
+    </div>
+</div>
+
+<h2><span class="emoji">&#9889;</span> Opción 1: Netlify Drop (RECOMENDADO)</h2>
+
+<div class="card">
+    <div class="step">
+        <strong>Paso 1:</strong> Crea una carpeta nueva en tu computadora llamada <code>curso-4dx</code>.
+    </div>
+    <div class="step">
+        <strong>Paso 2:</strong> Copia dentro de esa carpeta:
+        <ul>
+            <li>El archivo <code>curso-4dx-gerencia-administración.html</code> pero RENOMBRADO a <code>index.html</code></li>
+            <li>El archivo <code>checklist-4dx-gerencia-administración.html</code> (sin renombrar)</li>
+            <li>La imagen <code>instructor-german.jpg</code></li>
+        </ul>
+    </div>
+    <div class="step">
+        <strong>Paso 3:</strong> Abre <a href="https://app.netlify.com/drop" target="_blank">https://app.netlify.com/drop</a> en tu navegador.
+    </div>
+    <div class="step">
+        <strong>Paso 4:</strong> <strong>Arrastra la carpeta completa</strong> <code>curso-4dx</code> directo a la zona que dice "Drag and drop your site folder here".
+    </div>
+    <div class="step">
+        <strong>Paso 5:</strong> En 10 segundos Netlify te dará una URL tipo: <code>https://random-name-123.netlify.app</code> - Ya está en línea!
+    </div>
+    <div class="step">
+        <strong>Paso 6 (opcional):</strong> Crea cuenta gratis en Netlify y podras:
+        <ul>
+            <li>Cambiar el nombre a algo como <code>https://curso-4dx-trikles.netlify.app</code></li>
+            <li>Actualizar el curso en el futuro (solo arrastras la carpeta de nuevo)</li>
+            <li>Ver estadísticas de visitas</li>
+        </ul>
+    </div>
+
+    <div class="tip">
+        <strong>&#128073; Comparte el link por WhatsApp, email o LinkedIn</strong> y cualquier persona podrá hacer el curso. Cada alumno crea su cuenta en su navegador y su progreso queda guardado localmente en su dispositivo.
+    </div>
+</div>
+
+<h2><span class="emoji">&#128187;</span> Opción 2: GitHub Pages</h2>
+
+<div class="card">
+    <div class="step">
+        <strong>Paso 1:</strong> Crea una cuenta gratis en <a href="https://github.com" target="_blank">GitHub.com</a> si no tienes.
+    </div>
+    <div class="step">
+        <strong>Paso 2:</strong> Haz clic en el botón verde <strong>"New"</strong> para crear un repositorio. Ponle el nombre <code>curso-4dx</code> y marca <strong>"Public"</strong>. Haz clic en "Create repository".
+    </div>
+    <div class="step">
+        <strong>Paso 3:</strong> En la página del repositorio, haz clic en <strong>"uploading an existing file"</strong>.
+    </div>
+    <div class="step">
+        <strong>Paso 4:</strong> Arrastra tus 3 archivos (renombrando primero el curso a <code>index.html</code>). Haz clic en "Commit changes".
+    </div>
+    <div class="step">
+        <strong>Paso 5:</strong> Ve a la pestaña <strong>Settings</strong> del repositorio > En el menú izquierdo busca <strong>Pages</strong>.
+    </div>
+    <div class="step">
+        <strong>Paso 6:</strong> En "Source" seleccióna <strong>"main"</strong> y guarda. En 1-2 minutos tu sitio estará en:<br>
+        <code>https://TU-USUARIO.github.io/curso-4dx/</code>
+    </div>
+</div>
+
+<h2>Preguntas frecuentes</h2>
+
+<div class="card">
+    <h3>Cómo se guardan los datos de los alumnos?</h3>
+    <p>Actualmente los datos se guardan en el <strong>navegador de cada alumno (localStorage)</strong>. Esto significa:</p>
+    <ul>
+        <li>&#9989; Privacidad total: los datos no salen del dispositivo del alumno</li>
+        <li>&#9989; No necesitas servidor, base de datos ni pagar nada</li>
+        <li>&#9888;&#65039; Cada alumno debe hacer el curso siempre en el mismo navegador</li>
+        <li>&#9888;&#65039; Tú no puedes ver el progreso centralizado de todos los alumnos</li>
+    </ul>
+    <div class="tip">
+        Sí en el futuro necesitas tracking centralizado (ver quien aprobó, lista de alumnos, etc.), puedo ayudarte a integrar Firebase o Supabase (gratis hasta cierto volumen).
+    </div>
+</div>
+
+<div class="card">
+    <h3>Cómo se ven los alumnos si creo un link?</h3>
+    <p>Cuando un alumno abre tu link por primera vez, ve la pantalla de registro. Llena sus datos (nombre, correo, empresa, cargo, contraseña) y comienza el curso. La próxima vez que abra el link, solo inicia sesión con su correo.</p>
+    <p>Al completar todo el curso + examen final con 7/10 o mas, desbloquea su certificado personalizado con su nombre.</p>
+</div>
+
+<div class="card">
+    <h3>Puedo cobrar por el curso?</h3>
+    <p>Sí. Puedes integrar una plataforma de pagos como Stripe, PayPal o MercadoPago. La lógica seria: cobrar antes de dar acceso al link. Sí quieres que te ayude a hacer esto, avísame.</p>
+</div>
+
+<div class="card">
+    <h3>Puedo personalizar más el curso?</h3>
+    <p>Claro. Puedes cambiar colores, agregar más lecciónes, cambiar preguntas del examen, agregar videos (Youtube embebidos), etc. Solo pide la modificacion.</p>
+</div>
+
+<h2>Siguientes pasos recomendados</h2>
+
+<div class="card">
+    <ol>
+        <li><strong>Guarda tu foto:</strong> Ya tienes <code>instructor-german.jpg</code> en la carpeta?</li>
+        <li><strong>Prueba el curso localmente:</strong> Abre el HTML en tu navegador y registrate con un email de prueba. Completa el curso para ver el certificado.</li>
+        <li><strong>Publica en Netlify Drop:</strong> Siguiendo la opción 1 de arriba.</li>
+        <li><strong>Comparte el link</strong> con tus primeros alumnos y pide feedback.</li>
+        <li><strong>Actualiza el contenido</strong> según feedback y vuelve a publicar.</li>
+    </ol>
+</div>
+
+<div style="text-align:center; color:#666; font-size:0.85em; margin-top:40px; padding-top:20px; border-top:1px solid #ddd;">
+    Guía preparada para LADE Germán Solís Muñoz - Director de Gestión Empresarial TRIKLES<br>
+    Curso: Las 4 Disciplinas de la Ejecución aplicadas a Gerencia de Administración
+</div>
+
+</body>
+</html>

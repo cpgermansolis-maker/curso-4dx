@@ -1,0 +1,27 @@
+# Dependencias de Node
+node_modules/
+package-lock.json
+package.json
+
+# PDFs fuente de los libros (copyright, no se publican)
+libros/*/libro.pdf
+libros/*/libro.PDF
+
+# Archivos temporales
+tmp-*.js
+tmp-*.txt
+*.tmp
+*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Claude Code
+.claude/

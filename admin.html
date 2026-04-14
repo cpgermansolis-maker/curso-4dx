@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin TRIKLES - Panel de Cursos</title>
+<style>
+    :root {
+        --blue: #1a237e; --orange: #e65100; --green: #2e7d32; --gold: #ff8f00;
+        --text: #333; --text-light: #666; --bg: #f0f2f5;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+
+    /* Pantalla de autenticación admin */
+    #authScreen {
+        position: fixed; inset: 0; z-index: 100; background: linear-gradient(135deg, #0d1b4a, #1a237e);
+        display: flex; align-items: center; justify-content: center;
+    }
+    #authScreen.hide { display: none; }
+    .admin-auth-card {
+        background: white; border-radius: 16px; padding: 30px; max-width: 380px; width: 90%;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .admin-auth-card h2 { color: var(--blue); text-align: center; margin-bottom: 8px; }
+    .admin-auth-card .sub { text-align: center; color: var(--text-light); font-size: 0.85em; margin-bottom: 20px; }
+    .admin-auth-card input {
+        width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 12px;
+        font-size: 0.95em;
+    }
+    .admin-auth-card button {
+        width: 100%; padding: 12px; background: var(--blue); color: white; border: none;
+        border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1em;
+    }
+    .admin-error { color: #c62828; font-size: 0.85em; text-align: center; margin-top: 8px; display: none; }
+
+    /* Panel principal */
+    .topbar {
+        background: linear-gradient(135deg, #0d1b4a, #1a237e);
+        color: white; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+        position: sticky; top: 0; z-index: 50;
+    }
+    .topbar img { height: 36px; background: white; padding: 3px 10px; border-radius: 6px; }
+    .topbar h1 { font-size: 1.1em; }
+    .topbar .right { display: flex; gap: 10px; }
+    .btn {
+        padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85em;
+        border: none; transition: transform 0.1s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-success { background: var(--green); color: white; }
+    .btn-gold { background: var(--gold); color: #333; }
+    .btn-danger { background: #c62828; color: white; }
+    .btn-outline { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .stat-card {
+        background: white; border-radius: 12px; padding: 18px; text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid var(--blue);
+    }
+    .stat-card.total { border-top-color: var(--blue); }
+    .stat-card.enrolled { border-top-color: var(--orange); }
+    .stat-card.certified { border-top-color: var(--green); }
+    .stat-card.week { border-top-color: var(--gold); }
+    .stat-card .value { font-size: 2.2em; font-weight: 800; color: var(--blue); line-height: 1; margin-bottom: 4px; }
+    .stat-card .label { font-size: 0.82em; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Filtros */
+    .filters {
+        background: white; border-radius: 12px; padding: 16px; margin-bottom: 18px;
+        display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .filters label { font-size: 0.85em; font-weight: 600; color: var(--text); }
+    .filters select, .filters input {
+        padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.88em;
+    }
+
+    /* Tabla */
+    .table-wrap { background: white; border-radius: 12px; overflow: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85em; min-width: 900px; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+    th {
+        background: linear-gradient(135deg, #e8eaf6, #c5cae9); color: var(--blue);
+        font-weight: 700; position: sticky; top: 0;
+    }
+    tr:hover { background: #fafafa; }
+    td.name strong { color: var(--blue); }
+    td.name small { color: var(--text-light); font-size: 0.85em; }
+
+    .pill {
+        display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72em;
+        font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .pill.done { background: #c8e6c9; color: var(--green); }
+    .pill.progress { background: #fff9c4; color: var(--orange); }
+    .pill.new { background: #e3f2fd; color: var(--blue); }
+
+    .voucher-thumb {
+        width: 40px; height: 40px; object-fit: cover; border-radius: 4px; cursor: pointer;
+        border: 1px solid #ddd;
+    }
+
+    .empty { padding: 40px; text-align: center; color: var(--text-light); }
+
+    /* Tabs per course */
+    .course-tabs {
+        display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .course-tab {
+        padding: 8px 16px; background: white; border: 2px solid #ddd; border-radius: 20px;
+        cursor: pointer; font-size: 0.85em; font-weight: 600; color: var(--text-light);
+        transition: all 0.2s;
+    }
+    .course-tab.active { border-color: var(--blue); background: var(--blue); color: white; }
+    .course-tab .count { margin-left: 4px; opacity: 0.7; }
+</style>
+</head>
+<body>
+
+<div id="authScreen">
+    <div class="admin-auth-card">
+        <h2>🔐 Panel de Administrador</h2>
+        <div class="sub">TRIKLES - Gestión de cursos y alumnos</div>
+        <input type="password" id="adminPass" placeholder="Contraseña de administrador" autofocus>
+        <button onclick="tryAdminLogin()">Entrar</button>
+        <div class="admin-error" id="adminError"></div>
+    </div>
+</div>
+
+<div id="adminPanel" style="display:none;">
+    <div class="topbar">
+        <div style="display:flex;align-items:center;gap:14px;">
+            <img src="assets/logo-trikles.jpg" alt="TRIKLES" onerror="this.style.display='none';">
+            <h1>Panel de Administrador</h1>
+        </div>
+        <div class="right">
+            <button class="btn btn-outline" onclick="window.location.href='index.html'">← Ir al catálogo</button>
+            <button class="btn btn-outline" onclick="logoutAdmin()">Salir</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card total"><div class="value" id="statTotal">0</div><div class="label">Alumnos totales</div></div>
+            <div class="stat-card enrolled"><div class="value" id="statEnrolled">0</div><div class="label">Inscripciones</div></div>
+            <div class="stat-card certified"><div class="value" id="statCertified">0</div><div class="label">Certificados</div></div>
+            <div class="stat-card week"><div class="value" id="statWeek">0</div><div class="label">Esta semana</div></div>
+        </div>
+
+        <div class="course-tabs" id="courseTabs"></div>
+
+        <div class="filters">
+            <label>Estado:</label>
+            <select id="filterStatus" onchange="renderTable()">
+                <option value="all">Todos</option>
+                <option value="certified">Certificados</option>
+                <option value="progress">En curso</option>
+                <option value="enrolled">Solo inscritos (0%)</option>
+                <option value="nocourse">Sin inscribirse en ningún curso</option>
+            </select>
+            <label>Buscar:</label>
+            <input type="text" id="filterSearch" placeholder="Nombre, correo o empresa..." oninput="renderTable()">
+            <button class="btn btn-success" onclick="exportCSV()">📄 Descargar CSV</button>
+            <button class="btn btn-gold" onclick="exportAllData()">💾 Backup completo</button>
+        </div>
+
+        <div class="table-wrap">
+            <table id="mainTable"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = 'trikles4dx2026';
+const USERS_KEY = 'trikles_users';
+let selectedCourse = 'all';
+
+function tryAdminLogin() {
+    const pass = document.getElementById('adminPass').value;
+    const errEl = document.getElementById('adminError');
+    if (pass === ADMIN_PASSWORD) {
+        localStorage.setItem('trikles_admin_session', '1');
+        document.getElementById('authScreen').classList.add('hide');
+        document.getElementById('adminPanel').style.display = 'block';
+        init();
+    } else {
+        errEl.textContent = 'Contraseña incorrecta';
+        errEl.style.display = 'block';
+    }
+}
+
+function logoutAdmin() {
+    localStorage.removeItem('trikles_admin_session');
+    location.reload();
+}
+
+function getUsers() { try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); } catch(e) { return {}; } }
+
+function getCatalog() {
+    // Cargar catalogo desde index.html (si esta disponible) o usar lista fija
+    return [
+        { id: '4dx', title: 'Las 4 Disciplinas de la Ejecución' }
+        // Agrega más cursos aqui
+    ];
+}
+
+function init() {
+    const users = Object.values(getUsers());
+    const catalog = getCatalog();
+
+    // Stats
+    let totalEnrollments = 0, totalCertified = 0, totalWeek = 0;
+    const now = Date.now();
+    users.forEach(u => {
+        const enrs = u.enrollments || {};
+        Object.values(enrs).forEach(e => {
+            totalEnrollments++;
+            if ((e.progress?.completed?.length || 0) >= 7 && e.progress?.finalScore >= 7) totalCertified++;
+            if ((now - new Date(e.enrolledAt).getTime()) / 86400000 <= 7) totalWeek++;
+        });
+    });
+    document.getElementById('statTotal').textContent = users.length;
+    document.getElementById('statEnrolled').textContent = totalEnrollments;
+    document.getElementById('statCertified').textContent = totalCertified;
+    document.getElementById('statWeek').textContent = totalWeek;
+
+    // Tabs de cursos
+    const tabs = document.getElementById('courseTabs');
+    let tabsHTML = '<div class="course-tab ' + (selectedCourse === 'all' ? 'active' : '') + '" onclick="selectCourse(\'all\')">Todos los cursos <span class="count">(' + totalEnrollments + ')</span></div>';
+    catalog.forEach(c => {
+        const count = users.reduce((n, u) => n + (u.enrollments && u.enrollments[c.id] ? 1 : 0), 0);
+        tabsHTML += '<div class="course-tab ' + (selectedCourse === c.id ? 'active' : '') + '" onclick="selectCourse(\'' + c.id + '\')">' + c.title + ' <span class="count">(' + count + ')</span></div>';
+    });
+    tabs.innerHTML = tabsHTML;
+
+    renderTable();
+}
+
+function selectCourse(id) {
+    selectedCourse = id;
+    init();
+}
+
+function renderTable() {
+    const users = Object.values(getUsers());
+    const filter = document.getElementById('filterStatus').value;
+    const search = document.getElementById('filterSearch').value.toLowerCase().trim();
+
+    // Expandir a filas por inscripción
+    let rows = [];
+    users.forEach(u => {
+        const enrollments = u.enrollments || {};
+        const ids = Object.keys(enrollments);
+        if (ids.length === 0) {
+            rows.push({ user: u, courseId: null, enrollment: null });
+        } else {
+            ids.forEach(id => {
+                rows.push({ user: u, courseId: id, enrollment: enrollments[id] });
+            });
+        }
+    });
+
+    // Filtro por curso
+    if (selectedCourse !== 'all') {
+        rows = rows.filter(r => r.courseId === selectedCourse);
+    }
+
+    // Filtro por estado
+    rows = rows.filter(r => {
+        const e = r.enrollment;
+        const done = e && (e.progress?.completed?.length || 0) >= 7 && e.progress?.finalScore >= 7;
+        const inProgress = e && (e.progress?.completed?.length || 0) > 0 && !done;
+        const justEnrolled = e && (e.progress?.completed?.length || 0) === 0;
+        const noCourse = !e;
+        switch(filter) {
+            case 'certified': return done;
+            case 'progress': return inProgress;
+            case 'enrolled': return justEnrolled;
+            case 'nocourse': return noCourse;
+            default: return true;
+        }
+    });
+
+    // Buscar
+    if (search) {
+        rows = rows.filter(r => {
+            const u = r.user;
+            return (u.name + ' ' + u.email + ' ' + u.company + ' ' + u.role).toLowerCase().includes(search);
+        });
+    }
+
+    // Ordenar por registro reciente
+    rows.sort((a, b) => new Date(b.user.registeredAt) - new Date(a.user.registeredAt));
+
+    // Render
+    const catalog = getCatalog();
+    let tbl = '<thead><tr>' +
+        '<th>#</th><th>Nombre</th><th>Empresa / Cargo</th><th>Correo</th>' +
+        '<th>Curso</th><th>Fecha insc.</th><th>Progreso</th><th>Examen</th>' +
+        '<th>Estado</th><th>Boucher</th></tr></thead><tbody>';
+
+    if (rows.length === 0) {
+        tbl += '<tr><td colspan="10" class="empty">No hay resultados con esos filtros</td></tr>';
+    } else {
+        rows.forEach((r, i) => {
+            const u = r.user, e = r.enrollment;
+            const course = catalog.find(c => c.id === r.courseId);
+            const courseTitle = course ? course.title : (r.courseId || '<em>Sin inscripción</em>');
+            const p = e?.progress || {};
+            const done = e && (p.completed?.length || 0) >= 7 && p.finalScore >= 7;
+            const pct = Math.round(((p.completed?.length || 0) / 7) * 100);
+            let badge = 'SIN CURSO', badgeClass = 'new';
+            if (done) { badge = 'CERTIFICADO'; badgeClass = 'done'; }
+            else if (e && (p.completed?.length || 0) > 0) { badge = 'EN CURSO'; badgeClass = 'progress'; }
+            else if (e) { badge = 'INSCRITO'; badgeClass = 'new'; }
+
+            const voucherImg = e && e.voucher ?
+                '<img src="'+e.voucher+'" class="voucher-thumb" onclick="viewVoucher(\''+u.email+'\',\''+r.courseId+'\')">' :
+                (e ? '<span style="color:#999;font-size:0.85em;">-</span>' : '');
+            const enrolledDate = e ? new Date(e.enrolledAt).toLocaleDateString('es-MX') : '-';
+            const examScore = p.finalScore !== null && p.finalScore !== undefined ? p.finalScore + '/10' : '-';
+
+            tbl += '<tr>' +
+                '<td>' + (i+1) + '</td>' +
+                '<td class="name"><strong>'+u.name+'</strong></td>' +
+                '<td>'+u.company+'<br><small>'+u.role+'</small></td>' +
+                '<td>'+u.email+'</td>' +
+                '<td>'+courseTitle+'</td>' +
+                '<td>'+enrolledDate+'</td>' +
+                '<td>'+(e ? pct+'% ('+(p.completed?.length || 0)+'/7)' : '-')+'</td>' +
+                '<td>'+examScore+'</td>' +
+                '<td><span class="pill '+badgeClass+'">'+badge+'</span></td>' +
+                '<td>'+voucherImg+'</td>' +
+            '</tr>';
+        });
+    }
+    tbl += '</tbody>';
+    document.getElementById('mainTable').innerHTML = tbl;
+}
+
+function viewVoucher(email, courseId) {
+    const users = getUsers();
+    const u = users[email];
+    if (!u || !u.enrollments || !u.enrollments[courseId] || !u.enrollments[courseId].voucher) return;
+    const w = window.open('', '_blank', 'width=700,height=900');
+    w.document.write('<title>Boucher - '+u.name+'</title><body style="margin:0;background:#333;text-align:center;padding:20px;"><img src="'+u.enrollments[courseId].voucher+'" style="max-width:100%;max-height:95vh;"></body>');
+}
+
+function exportCSV() {
+    const users = Object.values(getUsers());
+    const catalog = getCatalog();
+    let rows = [];
+    users.forEach(u => {
+        const enrs = u.enrollments || {};
+        if (Object.keys(enrs).length === 0) {
+            rows.push({ user: u, courseId: null, enrollment: null });
+        } else {
+            Object.keys(enrs).forEach(id => rows.push({ user: u, courseId: id, enrollment: enrs[id] }));
+        }
+    });
+    if (selectedCourse !== 'all') rows = rows.filter(r => r.courseId === selectedCourse);
+
+    let csv = 'Nombre,Correo,Empresa,Cargo,Fecha registro,Curso,Fecha inscripcion,Progreso %,Lecciones,Examen,Estado\n';
+    rows.forEach(r => {
+        const u = r.user, e = r.enrollment;
+        const course = catalog.find(c => c.id === r.courseId);
+        const p = e?.progress || {};
+        const done = e && (p.completed?.length || 0) >= 7 && p.finalScore >= 7;
+        const pct = Math.round(((p.completed?.length || 0) / 7) * 100);
+        const status = done ? 'CERTIFICADO' : (e && (p.completed?.length || 0) > 0 ? 'EN CURSO' : (e ? 'INSCRITO' : 'SIN CURSO'));
+        csv += [u.name, u.email, u.company, u.role, u.registeredAt,
+            course ? course.title : '', e ? e.enrolledAt : '',
+            e ? pct : '', e ? (p.completed?.length || 0) : '',
+            p.finalScore !== null && p.finalScore !== undefined ? p.finalScore : '', status]
+            .map(v => '"'+String(v||'').replace(/"/g,'""')+'"').join(',') + '\n';
+    });
+    const blob = new Blob(["\ufeff" + csv], {type:'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'alumnos-trikles-' + new Date().toISOString().split('T')[0] + '.csv';
+    link.click();
+}
+
+function exportAllData() {
+    const data = { users: getUsers(), exportedAt: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'trikles-backup-' + new Date().toISOString().split('T')[0] + '.json';
+    link.click();
+}
+
+// Auto-login si hay sesión admin
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('trikles_admin_session') === '1') {
+        document.getElementById('authScreen').classList.add('hide');
+        document.getElementById('adminPanel').style.display = 'block';
+        init();
+    } else {
+        setTimeout(() => document.getElementById('adminPass').focus(), 100);
+    }
+
+    document.getElementById('adminPass').addEventListener('keydown', e => {
+        if (e.key === 'Enter') tryAdminLogin();
+    });
+});
+</script>
+</body>
+</html>
