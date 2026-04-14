@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso 4DX - Gerencia de Administracion</title>
+    <style>
+        :root {
+            --blue: #1a237e; --blue-light: #3949ab; --orange: #e65100; --orange-light: #f57c00;
+            --green: #2e7d32; --green-light: #43a047; --purple: #6a1b9a; --purple-light: #8e24aa;
+            --gold: #ff8f00; --bg: #f0f2f5; --card: #fff; --text: #333; --text-light: #666;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; }
+
+        /* === SPLASH SCREEN === */
+        #splash {
+            position: fixed; inset: 0; z-index: 9999; background: linear-gradient(135deg, #0d1b4a, #1a237e, #283593);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center; transition: opacity 0.8s;
+        }
+        #splash.hide { opacity: 0; pointer-events: none; }
+        #splash h1 { font-size: 2.4em; margin-bottom: 10px; animation: fadeDown 1s ease; }
+        #splash p { font-size: 1.1em; opacity: 0.8; margin-bottom: 30px; animation: fadeDown 1.2s ease; }
+        #splash .start-btn {
+            padding: 16px 48px; font-size: 1.2em; font-weight: 700; border: none; border-radius: 50px;
+            background: linear-gradient(135deg, var(--gold), #ffb300); color: #333; cursor: pointer;
+            animation: pulse 2s infinite; transition: transform 0.2s;
+        }
+        #splash .start-btn:hover { transform: scale(1.05); }
+        #splash .book-ref { margin-top: 20px; font-size: 0.85em; opacity: 0.6; line-height: 1.5; }
+
+        .instructor-card {
+            background: rgba(255,255,255,0.12); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.25); border-radius: 16px;
+            padding: 18px 24px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+            max-width: 520px; animation: fadeDown 1.4s ease;
+        }
+        .instructor-avatar { flex-shrink: 0; }
+        .instructor-info { text-align: left; }
+        .instructor-label { font-size: 0.75em; opacity: 0.75; text-transform: uppercase; letter-spacing: 1px; }
+        .instructor-name { font-size: 1.15em; font-weight: 700; color: var(--gold); margin: 2px 0; }
+        .instructor-title { font-size: 0.85em; opacity: 0.9; line-height: 1.3; }
+
+        /* Lesson images */
+        .lesson-hero {
+            width: 100%; height: 220px; border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+            background-size: cover; background-position: center; position: relative;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .lesson-hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6));
+        }
+        .lesson-hero .hero-caption {
+            position: absolute; bottom: 16px; left: 20px; right: 20px; color: white;
+            font-size: 0.95em; font-weight: 600; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .inline-img {
+            width: 100%; max-height: 280px; object-fit: cover; border-radius: 10px;
+            margin: 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .img-caption { font-size: 0.82em; color: var(--text-light); text-align: center; font-style: italic; margin-top: -6px; margin-bottom: 12px; }
+
+        .instructor-note {
+            background: linear-gradient(135deg, #fff3e0, #fff8e1); border-left: 4px solid var(--gold);
+            border-radius: 10px; padding: 14px 18px; margin: 16px 0; display: flex; gap: 14px; align-items: flex-start;
+        }
+        .instructor-note .instructor-mini-avatar {
+            width: 70px; height: 90px; border-radius: 12px; background: var(--gold);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            color: white; font-weight: 800; font-size: 1.1em; overflow: hidden;
+            border: 3px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .instructor-note .instructor-mini-avatar img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center top;
+        }
+        .instructor-photo {
+            width: 160px; height: 220px; border-radius: 16px; object-fit: cover; object-position: center top;
+            border: 4px solid #ffb300; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            display: block;
+        }
+        .instructor-avatar { flex-shrink: 0; }
+        .instructor-card { max-width: 620px !important; }
+        .instructor-note-body { flex: 1; }
+        .instructor-note-label {
+            font-size: 0.75em; text-transform: uppercase; color: var(--orange); font-weight: 700; letter-spacing: 0.5px;
+        }
+        .instructor-note-text { font-size: 0.95em; color: #555; margin-top: 3px; }
+
+        .svg-illustration { width: 100%; max-width: 500px; display: block; margin: 16px auto; }
+
+        /* LOGIN / REGISTER */
+        #authScreen {
+            position: fixed; inset: 0; z-index: 9998; background: linear-gradient(135deg, #0d1b4a, #1a237e);
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        #authScreen.hide { display: none; }
+        .auth-card {
+            background: white; border-radius: 20px; padding: 36px 32px; max-width: 440px; width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: fadeDown 0.6s ease;
+        }
+        .auth-logo { text-align: center; margin-bottom: 20px; }
+        .auth-logo-icon { font-size: 3em; }
+        .auth-card h2 { text-align: center; color: var(--blue); margin-bottom: 6px; }
+        .auth-card .auth-sub { text-align: center; color: var(--text-light); font-size: 0.9em; margin-bottom: 24px; }
+        .auth-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; }
+        .auth-tab {
+            flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 600;
+            color: #999; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s;
+        }
+        .auth-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.85em; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .form-group input {
+            width: 100%; padding: 12px 14px; border: 2px solid #e0e0e0; border-radius: 10px;
+            font-size: 0.95em; transition: border-color 0.2s; font-family: inherit;
+        }
+        .form-group input:focus { outline: none; border-color: var(--blue); }
+        .auth-btn {
+            width: 100%; padding: 14px; background: var(--blue); color: white; border: none;
+            border-radius: 10px; font-size: 1em; font-weight: 700; cursor: pointer; margin-top: 8px;
+            transition: transform 0.1s;
+        }
+        .auth-btn:hover { transform: translateY(-1px); background: #283593; }
+        .auth-error { color: #c62828; font-size: 0.85em; margin-top: 8px; display: none; }
+        .auth-footer { text-align: center; margin-top: 16px; font-size: 0.8em; color: var(--text-light); }
+        .user-list-preview {
+            background: #f5f5f5; border-radius: 8px; padding: 10px; margin-top: 10px;
+            font-size: 0.8em; color: var(--text-light); display: none;
+        }
+
+        /* USER DASHBOARD in topbar */
+        .user-badge {
+            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15);
+            padding: 6px 12px; border-radius: 20px; font-size: 0.85em; cursor: pointer;
+        }
+        .user-badge-avatar {
+            width: 26px; height: 26px; border-radius: 50%; background: var(--gold);
+            color: var(--blue); font-weight: 800; display: flex; align-items: center; justify-content: center;
+            font-size: 0.8em;
+        }
+        .logout-btn {
+            background: none; border: 1px solid rgba(255,255,255,0.3); color: white;
+            padding: 4px 10px; border-radius: 6px; font-size: 0.75em; cursor: pointer; margin-left: 8px;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); }
+
+        /* CERTIFICATE */
+        .certificate {
+            background: white; border: 12px double var(--gold); padding: 40px;
+            max-width: 800px; margin: 20px auto; position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2); font-family: Georgia, serif;
+        }
+        .certificate::before, .certificate::after {
+            content: ''; position: absolute; width: 60px; height: 60px;
+            border: 3px solid var(--blue);
+        }
+        .certificate::before { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .certificate::after { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+        .cert-header { text-align: center; margin-bottom: 24px; }
+        .cert-icon { font-size: 4em; color: var(--gold); }
+        .cert-title { font-size: 1.8em; color: var(--blue); font-weight: 800; letter-spacing: 2px; margin: 8px 0; }
+        .cert-subtitle { font-size: 1em; color: var(--text-light); font-style: italic; }
+        .cert-body { text-align: center; margin: 30px 0; line-height: 2; }
+        .cert-award-text { font-size: 1.1em; color: var(--text); }
+        .cert-name { font-size: 2.4em; color: var(--blue); font-weight: 800; margin: 12px 0; font-family: Georgia, serif; border-bottom: 2px solid var(--gold); display: inline-block; padding: 0 20px 6px; }
+        .cert-course { font-size: 1.2em; color: var(--orange); font-weight: 700; margin: 12px 0; }
+        .cert-desc { font-size: 0.95em; color: var(--text-light); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .cert-footer {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;
+            padding-top: 20px;
+        }
+        .cert-sig-block { text-align: center; }
+        .cert-sig-line { border-top: 1.5px solid var(--text); padding-top: 8px; font-size: 0.85em; }
+        .cert-sig-name { font-weight: 700; color: var(--blue); }
+        .cert-sig-title { font-size: 0.75em; color: var(--text-light); font-style: italic; }
+        .cert-date { text-align: right; color: var(--text-light); font-size: 0.85em; margin-top: 10px; }
+        .cert-seal {
+            position: absolute; right: 40px; top: 40%; transform: rotate(-15deg);
+            width: 100px; height: 100px; border: 3px solid var(--orange); border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--orange); font-weight: 800; text-align: center; font-size: 0.75em;
+            opacity: 0.85;
+        }
+        .cert-actions { text-align: center; margin: 20px 0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .certificate, .certificate * { visibility: visible; }
+            .certificate { position: absolute; left: 0; top: 0; margin: 0; box-shadow: none; width: 100%; }
+            .topbar, .sidebar, .cert-actions, .course-footer { display: none !important; }
+        }
+
+        .course-footer {
+            margin-top: 40px; padding-top: 24px; text-align: center; color: var(--text-light);
+            font-size: 0.85em; line-height: 1.6;
+        }
+        .footer-line {
+            height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin-bottom: 16px;
+        }
+        .footer-text strong { color: var(--blue); }
+
+        @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,179,0,0.5); } 50% { box-shadow: 0 0 0 15px rgba(255,179,0,0); } }
+        @keyframes slideIn { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes pop { 0% { transform:scale(0.8); opacity:0; } 100% { transform:scale(1); opacity:1; } }
+        @keyframes confetti { 0% { transform: translateY(0) rotate(0); opacity:1; } 100% { transform: translateY(80px) rotate(360deg); opacity:0; } }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+        /* === TOP BAR === */
+        .topbar {
+            background: linear-gradient(135deg, #0d1b4a, var(--blue));
+            color: white; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+        .topbar-left { display: flex; align-items: center; gap: 16px; }
+        .topbar h2 { font-size: 1em; }
+        .xp-bar { display: flex; align-items: center; gap: 8px; }
+        .xp-track { width: 120px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; }
+        .xp-fill { height: 100%; background: var(--gold); border-radius: 10px; transition: width 0.5s; }
+        .xp-text { font-size: 0.8em; color: var(--gold); font-weight: 700; }
+        .streak { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.85em; }
+        .topbar-instructor { display: flex; flex-direction: column; line-height: 1.1; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 12px; }
+        @media (max-width: 700px) { .topbar-instructor { display: none; } }
+
+        /* === SIDEBAR NAV === */
+        .layout { display: flex; min-height: calc(100vh - 52px); }
+        .sidebar {
+            width: 280px; background: white; border-right: 1px solid #e0e0e0; padding: 16px 0;
+            position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto; flex-shrink: 0;
+        }
+        .sidebar h3 { padding: 0 16px; font-size: 0.8em; text-transform: uppercase; color: #999; letter-spacing: 1px; margin-bottom: 8px; }
+        .nav-item {
+            padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            font-size: 0.92em; border-left: 3px solid transparent; transition: all 0.2s;
+        }
+        .nav-item:hover { background: #f5f5f5; }
+        .nav-item.active { background: #e8eaf6; border-left-color: var(--blue); font-weight: 600; }
+        .nav-item.completed .nav-icon { background: var(--green); color: white; }
+        .nav-item.locked { opacity: 0.4; cursor: not-allowed; }
+        .nav-icon {
+            width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.75em; font-weight: 700; border: 2px solid #ddd; color: #999; flex-shrink: 0;
+        }
+        .nav-item.active .nav-icon { border-color: var(--blue); color: var(--blue); }
+
+        /* === MAIN CONTENT === */
+        .main { flex: 1; padding: 24px; max-width: 820px; }
+        .lesson { display: none; animation: slideIn 0.4s ease; }
+        .lesson.active { display: block; }
+        .lesson-header { margin-bottom: 24px; }
+        .lesson-header .tag {
+            display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.8em; font-weight: 700;
+            color: white; margin-bottom: 8px;
+        }
+        .tag-d1 { background: var(--blue); } .tag-d2 { background: var(--orange); }
+        .tag-d3 { background: var(--green); } .tag-d4 { background: var(--purple); }
+        .tag-intro { background: #546e7a; } .tag-final { background: var(--gold); color: #333; }
+        .lesson-header h1 { font-size: 1.6em; color: var(--blue); }
+        .lesson-header p { color: var(--text-light); margin-top: 4px; }
+
+        /* Content cards */
+        .content-card {
+            background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #ddd;
+        }
+        .content-card h3 { margin-bottom: 12px; }
+        .content-card.tip { border-left-color: var(--gold); background: #fffde7; }
+        .content-card.story { border-left-color: var(--blue-light); background: #e8eaf6; }
+        .content-card.warning { border-left-color: #c62828; background: #ffebee; }
+        .content-card.admin { border-left-color: var(--green); background: #e8f5e9; }
+
+        .icon-text { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+        .icon-text .icon { font-size: 1.5em; flex-shrink: 0; }
+
+        /* Interactive elements */
+        .scenario-box {
+            background: linear-gradient(135deg, #e3f2fd, #e8eaf6); border-radius: 12px; padding: 20px;
+            margin: 16px 0; border: 2px dashed var(--blue-light);
+        }
+        .scenario-box h4 { color: var(--blue); margin-bottom: 10px; }
+
+        .quiz-container { margin: 20px 0; }
+        .quiz-q { font-weight: 700; font-size: 1.05em; margin-bottom: 12px; }
+        .quiz-option {
+            display: block; width: 100%; text-align: left; padding: 14px 18px; margin-bottom: 8px;
+            background: white; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer;
+            font-size: 0.95em; transition: all 0.2s; position: relative;
+        }
+        .quiz-option:hover:not(.disabled) { border-color: var(--blue-light); background: #f5f7ff; transform: translateX(4px); }
+        .quiz-option.correct { border-color: var(--green); background: #e8f5e9; animation: pop 0.3s; }
+        .quiz-option.wrong { border-color: #c62828; background: #ffebee; animation: shake 0.4s; }
+        .quiz-option.disabled { cursor: default; opacity: 0.7; }
+        .quiz-feedback {
+            padding: 14px 18px; border-radius: 10px; margin-top: 10px; font-size: 0.95em;
+            display: none; animation: pop 0.3s;
+        }
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.ok { background: #e8f5e9; border-left: 4px solid var(--green); }
+        .quiz-feedback.bad { background: #ffebee; border-left: 4px solid #c62828; }
+
+        /* Drag & Drop */
+        .drag-zone { display: flex; flex-wrap: wrap; gap: 10px; min-height: 50px; margin: 10px 0; }
+        .drag-item {
+            padding: 10px 16px; background: white; border: 2px solid #ccc; border-radius: 8px;
+            cursor: grab; font-size: 0.9em; transition: all 0.2s; user-select: none;
+        }
+        .drag-item:active { cursor: grabbing; transform: scale(1.05); }
+        .drop-zone {
+            min-height: 60px; border: 2px dashed #bbb; border-radius: 10px; padding: 12px;
+            display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0;
+            transition: all 0.2s;
+        }
+        .drop-zone.over { border-color: var(--blue); background: #e8eaf6; }
+        .drop-zone .label { color: #999; font-size: 0.85em; }
+        .drop-zone .drag-item { background: #e8eaf6; border-color: var(--blue-light); }
+        .drop-result { padding: 10px; border-radius: 8px; margin-top: 10px; display: none; }
+        .drop-result.show { display: block; animation: pop 0.3s; }
+
+        /* Fill in the blank */
+        .fill-blank {
+            display: inline-block; border-bottom: 2px dashed var(--blue); min-width: 120px;
+            padding: 2px 8px; font-weight: 700; color: var(--blue);
+        }
+        .fill-input {
+            border: none; border-bottom: 2px solid var(--blue); background: transparent;
+            font-size: 1em; font-weight: 600; color: var(--blue); width: 140px; outline: none;
+            padding: 2px 4px;
+        }
+        .fill-input.correct { border-color: var(--green); color: var(--green); }
+        .fill-input.wrong { border-color: #c62828; color: #c62828; }
+
+        /* Slider/meter */
+        .meter-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
+        .meter-label { width: 200px; font-size: 0.9em; }
+        .meter-track { flex: 1; height: 12px; background: #e0e0e0; border-radius: 10px; overflow: hidden; position: relative; cursor: pointer; }
+        .meter-fill { height: 100%; border-radius: 10px; transition: width 0.3s; }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 28px; border: none; border-radius: 10px; font-weight: 700; font-size: 0.95em;
+            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn-primary { background: var(--blue); color: white; }
+        .btn-success { background: var(--green); color: white; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), #ffb300); color: #333; }
+        .btn-next { float: right; margin-top: 20px; }
+
+        /* Badge popup */
+        .badge-popup {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0);
+            background: white; border-radius: 20px; padding: 40px; text-align: center; z-index: 200;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .badge-popup.show { transform: translate(-50%,-50%) scale(1); }
+        .badge-popup .badge-icon { font-size: 4em; margin-bottom: 12px; }
+        .badge-popup h2 { color: var(--blue); }
+        .badge-popup p { color: var(--text-light); margin: 8px 0 20px; }
+        .overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .overlay.show { opacity: 1; pointer-events: auto; }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed; width: 10px; height: 10px; z-index: 300; border-radius: 2px;
+            animation: confetti 1.5s ease-out forwards;
+        }
+
+        /* Progress steps visual */
+        .steps-visual { display: flex; align-items: center; gap: 0; margin: 20px 0; }
+        .step-circle {
+            width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.1em; color: white; position: relative; z-index: 1;
+        }
+        .step-line { flex: 1; height: 4px; background: #ddd; }
+        .step-line.done { background: var(--green); }
+
+        /* Matching game */
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+        .match-item {
+            padding: 14px; border-radius: 10px; border: 2px solid #ddd; cursor: pointer;
+            text-align: center; transition: all 0.2s; font-size: 0.9em;
+        }
+        .match-item:hover { border-color: var(--blue); }
+        .match-item.selected { border-color: var(--blue); background: #e8eaf6; transform: scale(1.02); }
+        .match-item.matched { border-color: var(--green); background: #e8f5e9; cursor: default; opacity: 0.8; }
+        .match-item.wrong-flash { border-color: #c62828; background: #ffebee; animation: shake 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { max-width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .topbar { flex-wrap: wrap; gap: 8px; }
+            .lesson-header h1 { font-size: 1.3em; }
+        }
+
+        /* Accordion for concepts */
+        .accordion { margin: 12px 0; border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
+        .acc-header {
+            padding: 14px 18px; background: #fafafa; cursor: pointer; font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center; transition: background 0.2s;
+        }
+        .acc-header:hover { background: #f0f0f0; }
+        .acc-body { padding: 0 18px; max-height: 0; overflow: hidden; transition: max-height 0.3s, padding 0.3s; }
+        .acc-body.open { max-height: 800px; padding: 14px 18px; }
+
+        ul.concept-list { padding-left: 20px; }
+        ul.concept-list li { margin-bottom: 8px; }
+        .highlight { background: #fff9c4; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="auth-logo-icon">&#127919;</div>
+            <h2>Las 4 Disciplinas de la Ejecucion</h2>
+            <div class="auth-sub">Curso en linea - TRIKLES</div>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchAuthTab('login')">Iniciar sesion</div>
+            <div class="auth-tab" onclick="switchAuthTab('register')">Registrarse</div>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form class="auth-form active" id="loginForm" onsubmit="doLogin(event)">
+            <div class="form-group">
+                <label>Correo electronico</label>
+                <input type="email" id="loginEmail" required placeholder="tu@empresa.com">
+            </div>
+            <div class="form-group">
+                <label>Contrasena</label>
+                <input type="password" id="loginPass" required placeholder="Tu contrasena">
+            </div>
+            <button class="auth-btn" type="submit">Iniciar sesion &#10145;&#65039;</button>
+            <div class="auth-error" id="loginError"></div>
+            <div class="auth-footer">Si ya te registraste antes, usa el mismo correo y contrasena</div>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form class="auth-form" id="registerForm" onsubmit="doRegister(event)">
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" id="regName" required placeholder="Ej: Juan Perez Lopez">
+            </div>
+            <div class="form-group">
+                <label>Correo electronico</label>
+                <input type="email" id="regEmail" required placeholder="tu@empresa.com">
+            </div>
+            <div class="form-group">
+                <label>Empresa / Organizacion</label>
+                <input type="text" id="regCompany" required placeholder="Nombre de tu empresa">
+            </div>
+            <div class="form-group">
+                <label>Cargo</label>
+                <input type="text" id="regRole" required placeholder="Ej: Gerente de Administracion">
+            </div>
+            <div class="form-group">
+                <label>Crea una contrasena</label>
+                <input type="password" id="regPass" required minlength="4" placeholder="Minimo 4 caracteres">
+            </div>
+            <button class="auth-btn" type="submit">Crear cuenta y comenzar &#127881;</button>
+            <div class="auth-error" id="regError"></div>
+            <div class="auth-footer">Tus datos se guardan solo en tu navegador. Nunca salen de tu dispositivo.</div>
+        </form>
+    </div>
+</div>
+
+<!-- SPLASH -->
+<div id="splash">
+    <div style="font-size:4em; margin-bottom:16px;">&#127919;</div>
+    <h1>Las 4 Disciplinas de la Ejecucion</h1>
+    <p>Curso interactivo para la Gerencia de Administracion</p>
+
+    <div class="instructor-card">
+        <div class="instructor-avatar">
+            <img src="instructor-german.jpg" alt="LADE German Solis Munoz" class="instructor-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <svg viewBox="0 0 100 100" width="90" height="90" style="display:none;">
+                <circle cx="50" cy="50" r="48" fill="#ffb300" stroke="#fff" stroke-width="3"/>
+                <circle cx="50" cy="38" r="16" fill="#fff"/>
+                <path d="M20 85 Q50 55 80 85 Z" fill="#fff"/>
+                <rect x="30" y="65" width="40" height="8" fill="#1a237e" rx="2"/>
+            </svg>
+        </div>
+        <div class="instructor-info">
+            <div class="instructor-label">Adaptado e impartido por:</div>
+            <div class="instructor-name">LADE German Solis Munoz</div>
+            <div class="instructor-title">Director de Gestion Empresarial - TRIKLES</div>
+        </div>
+    </div>
+
+    <button class="start-btn" onclick="startCourse()">&#9654; Comenzar el Curso</button>
+    <div class="book-ref">Basado en el libro de Chris McChesney, Sean Covey y Jim Huling<br>Adaptacion pedagogica para Gerencia de Administracion</div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar" id="topbar" style="display:none;">
+    <div class="topbar-left">
+        <h2>&#127919; Curso 4DX</h2>
+        <div class="topbar-instructor">
+            <span style="opacity:0.7;font-size:0.78em;">Instructor:</span>
+            <strong style="color:var(--gold);font-size:0.85em;">LADE German Solis Munoz</strong>
+        </div>
+        <div class="xp-bar">
+            <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+            <span class="xp-text" id="xpText">0 XP</span>
+        </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+        <div class="streak" id="streakBadge">&#11088; Racha: 0</div>
+        <div class="user-badge" id="userBadge" title="Tu cuenta">
+            <div class="user-badge-avatar" id="userInitials">U</div>
+            <span id="userDisplayName">Alumno</span>
+            <button class="logout-btn" onclick="doLogout()">Salir</button>
+        </div>
+    </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout" id="layout" style="display:none;">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar"></div>
+
+    <!-- MAIN -->
+    <div class="main" id="mainContent"></div>
+</div>
+
+<!-- BADGE POPUP -->
+<div class="overlay" id="overlay" onclick="closeBadge()"></div>
+<div class="badge-popup" id="badgePopup">
+    <div class="badge-icon" id="badgeIcon"></div>
+    <h2 id="badgeTitle"></h2>
+    <p id="badgeDesc"></p>
+    <button class="btn btn-gold" onclick="closeBadge()">&#127881; Continuar</button>
+</div>
+
+<script>
+// ========== DATA ==========
+const lessons = [
+    {
+        id: 'intro', module: 'Introduccion', tag: 'tag-intro', tagLabel: 'INTRODUCCION',
+        title: 'El Problema Real de la Ejecucion',
+        subtitle: 'Por que las estrategias fracasan y que puedes hacer al respecto',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&q=80')">
+            <div class="hero-caption">Entre la estrategia y la ejecucion hay un abismo: las 4DX son el puente</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Nota del instructor - LADE German Solis Munoz</div>
+                <div class="instructor-note-text">En mis anos como especialista en procesos y prevencion de riesgos, he visto decenas de estrategias brillantes morir en la ejecucion. Este curso te dara las herramientas probadas para que tu gerencia SI ejecute lo que planea.</div>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128214;</span><div>
+                <h3>La historia de Jim Dixon</h3>
+                <p>Jim era gerente de un supermercado con el peor desempeno de 250 tiendas. Cada dia empujaba la misma roca cuesta arriba: carritos desordenados, anaqueles vacios, basura en el estacionamiento. Trabajaba sin descanso, sin vacaciones, y nada mejoraba.</p>
+                <p><strong>Suena familiar?</strong> Muchos gerentes de administracion viven atrapados en el "torbellino" del dia a dia: pagos urgentes, requisiciones, quejas, reportes... sin avanzar en lo verdaderamente importante.</p>
+            </div></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#9889; El dato que lo cambia todo</h3>
+            <p>Una encuesta internacional revelo que solo <span class="highlight">1 de cada 7 empleados</span> puede citar los objetivos mas importantes de su organizacion. El 15% ni siquiera podia nombrar UNA meta.</p>
+            <p>Esto significa que si tu gerencia tiene 14 personas, estadisticamente solo 2 saben cual es la meta principal.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>&#128161; Concepto clave: El Torbellino</h3>
+            <p>El <strong>torbellino</strong> es la enorme cantidad de energia necesaria solo para mantener las operaciones del dia a dia. No es malo, pero si lo dejas, consumira toda tu atencion y no quedara nada para lo estrategico.</p>
+            <svg class="svg-illustration" viewBox="0 0 500 220">
+                <defs>
+                    <radialGradient id="torbGrad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ff6b6b" stop-opacity="0.9"/>
+                        <stop offset="100%" stop-color="#c62828" stop-opacity="0.3"/>
+                    </radialGradient>
+                </defs>
+                <ellipse cx="150" cy="110" rx="110" ry="95" fill="url(#torbGrad)"/>
+                <g opacity="0.85" fill="white" font-size="11" font-family="sans-serif">
+                    <text x="90" y="60">Pagos urgentes</text>
+                    <text x="70" y="95">Requisiciones</text>
+                    <text x="110" y="130">Quejas</text>
+                    <text x="85" y="160">Reportes</text>
+                    <text x="130" y="185">Juntas</text>
+                </g>
+                <text x="150" y="40" text-anchor="middle" fill="#c62828" font-weight="800" font-size="16">EL TORBELLINO</text>
+                <g transform="translate(320,60)">
+                    <rect width="150" height="100" fill="#1a237e" rx="10"/>
+                    <text x="75" y="40" text-anchor="middle" fill="#ffb300" font-weight="800" font-size="14">MCI</text>
+                    <text x="75" y="62" text-anchor="middle" fill="white" font-size="11">Meta Crucialmente</text>
+                    <text x="75" y="78" text-anchor="middle" fill="white" font-size="11">Importante</text>
+                </g>
+                <path d="M 260 110 Q 290 110 315 110" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#333"/></marker></defs>
+                <text x="285" y="100" text-anchor="middle" font-size="10" fill="#666">proteger energia</text>
+            </svg>
+            <p>Piensa en tu ultima semana: cuanto tiempo invertiste en apagar fuegos vs. avanzar en algo realmente importante?</p>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128640; Dos tipos de estrategia</h3>
+            <p>Segun el libro, hay dos tipos fundamentales:</p>
+            <ul class="concept-list">
+                <li><strong>Poder de la firma:</strong> Las ejecutas con dinero y autoridad (comprar un software, contratar personal, cambiar proveedores).</li>
+                <li><strong>Cambio de conducta:</strong> Requieren que las PERSONAS hagan algo DIFERENTE. Estas son las dificiles y las que necesitan las 4DX.</li>
+            </ul>
+        </div>
+
+        <div class="quiz-container" id="quiz_intro">
+            <div class="quiz-q">&#127917; Pregunta rapida: Cual es la razon principal por la que fracasan las estrategias?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_intro', this, false)">Falta de presupuesto</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_intro', this, true)">No se logra que las personas cambien su comportamiento</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_intro', this, false)">Los competidores son mejores</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_intro', this, false)">La estrategia esta mal disenada</button>
+            <div class="quiz-feedback" id="quiz_intro_fb"></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#127919; Las 4 Disciplinas: Tu mapa de ruta</h3>
+            <div class="steps-visual">
+                <div class="step-circle" style="background:var(--blue)">D1</div><div class="step-line"></div>
+                <div class="step-circle" style="background:var(--orange)">D2</div><div class="step-line"></div>
+                <div class="step-circle" style="background:var(--green)">D3</div><div class="step-line"></div>
+                <div class="step-circle" style="background:var(--purple)">D4</div>
+            </div>
+            <ol class="concept-list">
+                <li><strong>Enfocarse en lo Crucialmente Importante</strong> - Definir 1-2 metas que realmente importen</li>
+                <li><strong>Actuar sobre Medidas de Prediccion</strong> - Identificar las acciones que mueven la aguja</li>
+                <li><strong>Llevar un Tablero de Resultados</strong> - Que todos sepan si van ganando o perdiendo</li>
+                <li><strong>Crear una Cadencia de Rendicion de Cuentas</strong> - Reuniones semanales de compromiso</li>
+            </ol>
+        </div>
+        `
+    },
+    {
+        id: 'd1_concept', module: 'Disciplina 1', tag: 'tag-d1', tagLabel: 'DISCIPLINA 1',
+        title: 'Enfocarse en lo Crucialmente Importante',
+        subtitle: 'La Meta Crucialmente Importante (MCI)',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=900&q=80')">
+            <div class="hero-caption">Una meta clara, un equipo enfocado: asi se logra lo imposible</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Reflexion del instructor</div>
+                <div class="instructor-note-text">En mi experiencia con gerencias de administracion, el error numero uno es querer mejorar TODO al mismo tiempo. Enfocate en UNA meta que cambie el juego. El resto vendra despues.</div>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#127765;</span><div>
+                <h3>Kennedy y la Luna</h3>
+                <p>En 1961, el presidente Kennedy dijo: "Pondremos a un hombre en la Luna y lo traeremos de regreso antes del final de la decada". Con esa UNICA meta clara, la NASA logro lo imposible. La rendicion de cuentas y el compromiso se dispararon.</p>
+                <p><strong>Leccion:</strong> Cuando un equipo pasa de tener docenas de metas "ojala se pueda" a 1-2 metas "pase lo que pase", la moral y el compromiso se disparan.</p>
+            </div></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128270; Que es una MCI?</h3>
+            <p>La <strong>MCI (Meta Crucialmente Importante)</strong> es la meta cuyo logro lo cambia todo. Si todas las demas metas se cumplieran pero esta no, nada de lo otro importaria demasiado.</p>
+            <svg class="svg-illustration" viewBox="0 0 500 140">
+                <rect x="10" y="40" width="480" height="60" rx="30" fill="#e8eaf6" stroke="#1a237e" stroke-width="2"/>
+                <text x="60" y="75" fill="#1a237e" font-weight="800" font-size="20">De</text>
+                <rect x="90" y="55" width="80" height="30" rx="6" fill="#1a237e"/>
+                <text x="130" y="75" text-anchor="middle" fill="white" font-weight="800" font-size="18">X</text>
+                <text x="190" y="75" fill="#1a237e" font-weight="800" font-size="20">a</text>
+                <rect x="215" y="55" width="80" height="30" rx="6" fill="#2e7d32"/>
+                <text x="255" y="75" text-anchor="middle" fill="white" font-weight="800" font-size="18">Y</text>
+                <text x="315" y="75" fill="#1a237e" font-weight="800" font-size="20">para</text>
+                <rect x="375" y="55" width="100" height="30" rx="6" fill="#ff8f00"/>
+                <text x="425" y="75" text-anchor="middle" fill="white" font-weight="700" font-size="13">[fecha]</text>
+                <text x="250" y="125" text-anchor="middle" font-size="13" fill="#666" font-style="italic">La formula magica de toda MCI</text>
+            </svg>
+            <p>Ejemplo: "Reducir el tiempo de cierre contable <strong>de 15 dias a 5 dias</strong> para el <strong>31 de diciembre de 2026</strong>"</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>&#128161; Las 4 Reglas del Enfoque</h3>
+            <ul class="concept-list">
+                <li><strong>Regla 1:</strong> Ningun equipo se enfoca en mas de 2 MCIs a la vez (idealmente 1).</li>
+                <li><strong>Regla 2:</strong> Las batallas elegidas deben ganar la guerra (alineacion con la MCI organizacional).</li>
+                <li><strong>Regla 3:</strong> Los lideres senior pueden vetar, pero no dictar (los equipos participan en definir su MCI).</li>
+                <li><strong>Regla 4:</strong> Todas las MCIs deben formularse con "de X a Y para tal fecha" y tener linea de meta clara.</li>
+            </ul>
+        </div>
+
+        <div class="content-card warning">
+            <h3>&#9888;&#65039; Trampa comun: La fabula de las avellanas</h3>
+            <p>Un nino metio su mano en un tarro de avellanas e intento tomar todas las que pudo. Su puno era tan grande que no podia sacar la mano. Al no soltar ninguna, no obtuvo nada.</p>
+            <p><strong>Moraleja:</strong> Si intentas hacer 10 cosas a la vez, no lograras ninguna con excelencia. Steve Jobs decia: "Estoy tan orgulloso de lo que NO hacemos como de lo que hacemos".</p>
+        </div>
+
+        <div class="content-card admin">
+            <h3>&#127970; Aplicado a TU Gerencia de Administracion</h3>
+            <p>Piensa: de todas las cosas que podrías mejorar (presupuestos, compras, RH, servicios generales, pagos, contrataciones...), cual es la UNA que mas impactaria?</p>
+            <p>Ejemplos de MCIs para administracion:</p>
+            <ul class="concept-list">
+                <li>"Reducir el gasto operativo de $2.5M a $2.1M para el 31 de diciembre"</li>
+                <li>"Aumentar el cumplimiento de pago a proveedores en plazo de 62% a 95% para septiembre"</li>
+                <li>"Reducir la rotacion de personal administrativo de 35% a 15% anual"</li>
+            </ul>
+        </div>
+
+        <div class="quiz-container" id="quiz_d1a">
+            <div class="quiz-q">&#127917; Cual de estas es una MCI correctamente formulada?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1a', this, false)">Mejorar los procesos administrativos</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1a', this, false)">Ser la mejor gerencia de administracion del pais</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1a', this, true)">Reducir el tiempo promedio de pago a proveedores de 45 a 15 dias para el 30 de junio</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1a', this, false)">Trabajar mas duro en reducir costos</button>
+            <div class="quiz-feedback" id="quiz_d1a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_d1b">
+            <div class="quiz-q">&#127917; Cuantas MCIs debe tener un equipo como maximo?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1b', this, false)">5 a 10 para cubrir todas las areas</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1b', this, true)">1 a 2 maximo, idealmente 1</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1b', this, false)">Las que el jefe decida</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1b', this, false)">3 a 5 es lo optimo</button>
+            <div class="quiz-feedback" id="quiz_d1b_fb"></div>
+        </div>
+        `
+    },
+    {
+        id: 'd1_practice', module: 'Disciplina 1', tag: 'tag-d1', tagLabel: 'PRACTICA D1',
+        title: 'Taller: Construye tu MCI',
+        subtitle: 'Ejercicio practico para definir la meta de tu gerencia',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1552581234-26160f608093?w=900&q=80')">
+            <div class="hero-caption">Taller practico: construyamos juntos la MCI de tu gerencia</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Instrucciones del instructor</div>
+                <div class="instructor-note-text">Este es un taller practico. Te recomiendo tener papel y lapiz a la mano. Al final tendras un borrador de tu propia MCI que podras validar con tu equipo.</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128736;&#65039; Ejercicio: El filtro de la MCI</h3>
+            <p>Vamos a aplicar las 3 preguntas de descubrimiento del libro para encontrar la MCI de tu gerencia.</p>
+        </div>
+
+        <div class="scenario-box">
+            <h4>&#129300; Pregunta 1 de descubrimiento</h4>
+            <p>"Que area del desempeno del equipo queremos mejorar MAS, bajo el entendido de que lo demas funciona, para alcanzar la MCI de la organizacion?"</p>
+        </div>
+
+        <div class="quiz-container" id="quiz_d1p1">
+            <div class="quiz-q">Para la Gerencia de Administracion, cual seria la mejor forma de abordar esta pregunta?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p1', this, false)">Hacer una lista de TODOS los problemas y atacarlos simultaneamente</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p1', this, true)">Identificar el area que mas impacta la meta general de la organizacion y enfocarse en ella</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p1', this, false)">Preguntar al director que quiere que hagamos</button>
+            <div class="quiz-feedback" id="quiz_d1p1_fb"></div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>&#128161; Piensa en el QUE, no en el COMO</h3>
+            <p>Uno de los errores mas comunes es saltar al COMO antes de definir el QUE. Primero define la meta (reducir costos), luego las acciones (el como viene en la Disciplina 2).</p>
+        </div>
+
+        <div class="scenario-box">
+            <h4>&#127916; Escenario: La Gerencia de Administracion de Empresa XYZ</h4>
+            <p>La empresa tiene como meta general "Incrementar la rentabilidad de 12% a 18% para diciembre". La gerencia de administracion tiene estos problemas:</p>
+            <ul class="concept-list">
+                <li>Los costos operativos han crecido 20% en 2 anos</li>
+                <li>El 40% de los pagos a proveedores se hacen fuera de plazo</li>
+                <li>El proceso de compras tarda en promedio 25 dias</li>
+                <li>La rotacion de personal administrativo es del 30%</li>
+            </ul>
+        </div>
+
+        <div class="quiz-container" id="quiz_d1p2">
+            <div class="quiz-q">Considerando que la meta de la empresa es incrementar rentabilidad, cual seria la MCI mas alineada para esta gerencia?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p2', this, true)">Reducir costos operativos de $3.2M a $2.6M para el 31 de diciembre</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p2', this, false)">Reducir la rotacion de personal de 30% a 10%</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p2', this, false)">Mejorar todos los indicadores un 10%</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d1p2', this, false)">Implementar un nuevo ERP</button>
+            <div class="quiz-feedback" id="quiz_d1p2_fb"></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128203; Checklist rapido de tu MCI</h3>
+            <div id="mciChecklist">
+                <label style="display:block;padding:8px 0;cursor:pointer"><input type="checkbox" onchange="checkMCI()"> Tiene formato "de X a Y para [fecha]"</label>
+                <label style="display:block;padding:8px 0;cursor:pointer"><input type="checkbox" onchange="checkMCI()"> Esta alineada con la meta de la organizacion</label>
+                <label style="display:block;padding:8px 0;cursor:pointer"><input type="checkbox" onchange="checkMCI()"> El equipo participo en definirla</label>
+                <label style="display:block;padding:8px 0;cursor:pointer"><input type="checkbox" onchange="checkMCI()"> Requiere cambio de conducta (no solo "poder de la firma")</label>
+                <label style="display:block;padding:8px 0;cursor:pointer"><input type="checkbox" onchange="checkMCI()"> Es una sola meta (maximo 2)</label>
+            </div>
+            <div id="mciResult" style="margin-top:10px;padding:12px;border-radius:8px;display:none;font-weight:600;"></div>
+        </div>
+        `
+    },
+    {
+        id: 'd2_concept', module: 'Disciplina 2', tag: 'tag-d2', tagLabel: 'DISCIPLINA 2',
+        title: 'Actuar sobre las Medidas de Prediccion',
+        subtitle: 'La diferencia entre medir resultados y medir las acciones que los producen',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80')">
+            <div class="hero-caption">Deja de mirar el espejo retrovisor: enfocate en lo que mueve la aguja</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Reflexion del instructor</div>
+                <div class="instructor-note-text">Como especialista en analisis y prevencion de riesgos, te puedo asegurar que esta disciplina es la mas poderosa. Cambiar el enfoque de "que paso" a "que hacer para que pase" es un salto mental enorme.</div>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128663;</span><div>
+                <h3>La analogia del auto</h3>
+                <p>No puedes controlar cada cuanto se descompone tu auto (<strong>medida historica</strong>), pero SI puedes controlar cada cuanto le das mantenimiento (<strong>medida de prediccion</strong>). Mientras mas actues sobre lo segundo, menos problemas tendras.</p>
+            </div></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128200; Historicas vs. Prediccion: La diferencia crucial</h3>
+            <svg class="svg-illustration" viewBox="0 0 500 180">
+                <g>
+                    <rect x="10" y="20" width="220" height="140" fill="#ffebee" stroke="#c62828" stroke-width="2" rx="10"/>
+                    <text x="120" y="45" text-anchor="middle" fill="#c62828" font-weight="800" font-size="14">MEDIDA HISTORICA</text>
+                    <text x="120" y="70" text-anchor="middle" font-size="11" fill="#555">Gasto total del trimestre</text>
+                    <circle cx="60" cy="110" r="22" fill="#c62828"/>
+                    <text x="60" y="116" text-anchor="middle" fill="white" font-size="20">&#128202;</text>
+                    <text x="140" y="105" font-size="10" fill="#666">Mide el resultado</text>
+                    <text x="140" y="120" font-size="10" fill="#666">Ya no puedes cambiarlo</text>
+                    <text x="140" y="135" font-size="10" fill="#666">Es historia</text>
+                </g>
+                <g>
+                    <rect x="270" y="20" width="220" height="140" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2" rx="10"/>
+                    <text x="380" y="45" text-anchor="middle" fill="#2e7d32" font-weight="800" font-size="14">MEDIDA DE PREDICCION</text>
+                    <text x="380" y="70" text-anchor="middle" font-size="11" fill="#555">Revisiones de gastos/semana</text>
+                    <circle cx="320" cy="110" r="22" fill="#2e7d32"/>
+                    <text x="320" y="116" text-anchor="middle" fill="white" font-size="20">&#9889;</text>
+                    <text x="400" y="105" font-size="10" fill="#666">Mide la accion</text>
+                    <text x="400" y="120" font-size="10" fill="#666">Puedes influenciarla</text>
+                    <text x="400" y="135" font-size="10" fill="#666">Predice el resultado</text>
+                </g>
+            </svg>
+            <table style="width:100%;border-collapse:collapse;margin:12px 0;">
+                <tr style="background:#e8eaf6;"><th style="padding:12px;text-align:left;border:1px solid #ddd;">Medida Historica</th><th style="padding:12px;text-align:left;border:1px solid #ddd;">Medida de Prediccion</th></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">Mide el RESULTADO</td><td style="padding:10px;border:1px solid #eee;">Mide la ACCION que produce el resultado</td></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">Se obtiene DESPUES (es historia)</td><td style="padding:10px;border:1px solid #eee;">Se mide ANTES o DURANTE</td></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">Dificil de influenciar directamente</td><td style="padding:10px;border:1px solid #eee;">El equipo puede influir en ella</td></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">Ej: Gasto total del trimestre</td><td style="padding:10px;border:1px solid #eee;">Ej: Revisiones de gastos por semana</td></tr>
+            </table>
+        </div>
+
+        <div class="content-card warning">
+            <h3>&#9888;&#65039; La trampa del espejo retrovisor</h3>
+            <p>W. Edwards Deming decia: "Dirigir una organizacion solo con resultados economicos es como manejar un auto mirando solo el espejo retrovisor". La mayoria de los lideres se obsesionan con las medidas historicas porque son faciles de obtener, pero cuando las tienen, ya es demasiado tarde.</p>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128167;</span><div>
+                <h3>El caso de la planta de agua</h3>
+                <p>Una embotelladora tenia la MCI de aumentar produccion de 175 a 185 millones de litros. Al principio, los lideres propusieron como medida de prediccion "la produccion mensual de agua"... pero eso seguia siendo una medida historica!</p>
+                <p>Despues de reflexionar, descubrieron las verdaderas medidas de prediccion: <strong>aumentar turnos con personal completo de 80% a 95%</strong> y <strong>cumplimiento de mantenimiento preventivo de 72% a 100%</strong>. Resultado: la produccion crecio mucho mas de lo esperado.</p>
+            </div></div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>&#128161; Las 2 caracteristicas de una buena medida de prediccion</h3>
+            <ol class="concept-list">
+                <li><strong>PREDICTIVA:</strong> Si la medida cambia, la meta historica tambien cambiara. Hay relacion causa-efecto.</li>
+                <li><strong>INFLUENCIABLE:</strong> El equipo puede actuar directamente sobre ella, sin depender de otros.</li>
+            </ol>
+            <p style="margin-top:10px">&#9888;&#65039; AMBAS deben cumplirse. La lluvia predice la cosecha, pero no es influenciable. Un reporte mensual es influenciable, pero no predice resultados.</p>
+        </div>
+
+        <div class="quiz-container" id="quiz_d2a">
+            <div class="quiz-q">&#127917; Tu MCI es "Reducir costos operativos de $3.2M a $2.6M". Cual es una BUENA medida de prediccion?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2a', this, false)">Gasto mensual total (es la misma meta pero mensual)</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2a', this, false)">Inflacion del pais (predice costos pero no es influenciable)</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2a', this, true)">Numero de auditorias de gastos por partida realizadas por semana</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2a', this, false)">Satisfaccion de los proveedores</button>
+            <div class="quiz-feedback" id="quiz_d2a_fb"></div>
+        </div>
+
+        <div class="content-card admin">
+            <h3>&#127970; Medidas de prediccion para tu Gerencia</h3>
+            <ul class="concept-list">
+                <li><strong>Compras:</strong> Cotizaciones comparativas realizadas por cada solicitud de compra</li>
+                <li><strong>Presupuesto:</strong> Revisiones de partidas presupuestarias realizadas por semana</li>
+                <li><strong>Proveedores:</strong> Evaluaciones de desempeno de proveedores completadas por mes</li>
+                <li><strong>RH:</strong> Entrevistas de clima laboral realizadas por semana</li>
+                <li><strong>Servicios:</strong> Inspecciones preventivas completadas segun calendario</li>
+            </ul>
+        </div>
+
+        <div class="quiz-container" id="quiz_d2b">
+            <div class="quiz-q">&#127917; "Produccion mensual de agua" como medida de prediccion de "produccion anual de agua" es...</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2b', this, true)">Incorrecta: sigue siendo una medida historica, solo en menor escala</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2b', this, false)">Correcta: si cumples la mensual, cumples la anual</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d2b', this, false)">Depende del contexto de la empresa</button>
+            <div class="quiz-feedback" id="quiz_d2b_fb"></div>
+        </div>
+        `
+    },
+    {
+        id: 'd3_concept', module: 'Disciplina 3', tag: 'tag-d3', tagLabel: 'DISCIPLINA 3',
+        title: 'Llevar un Tablero de Resultados Convincente',
+        subtitle: 'Las personas juegan diferente cuando se lleva la puntuacion',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80')">
+            <div class="hero-caption">Un tablero visible convierte el trabajo en un juego que todos quieren ganar</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Reflexion del instructor</div>
+                <div class="instructor-note-text">He visto equipos transformarse en semanas solo por colocar un tablero visible en la pared. La psicologia de llevar la puntuacion es real: activa la energia competitiva sana del equipo.</div>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#9917;</span><div>
+                <h3>El partido sin marcador</h3>
+                <p>Imagina un partido de futbol sin marcador. Los jugadores no sabrian si van ganando o perdiendo. Su energia y compromiso disminuirian. Ahora imagina que pones un marcador gigante... todo cambia! Las personas juegan DIFERENTE cuando se lleva la puntuacion.</p>
+            </div></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128202; Tablero de entrenadores vs. Tablero de jugadores</h3>
+            <p>Hay una diferencia importante:</p>
+            <ul class="concept-list">
+                <li><strong>Tablero de entrenadores:</strong> Complejo, con muchos datos, solo lo entienden los lideres. Piensa en esos reportes de 50 paginas que nadie lee.</li>
+                <li><strong>Tablero de jugadores:</strong> Simple, visual, y en 5 segundos cualquiera sabe si va ganando o perdiendo. <span class="highlight">ESTE es el que necesitas!</span></li>
+            </ul>
+        </div>
+
+        <div class="content-card tip">
+            <h3>&#128161; Las 4 reglas del tablero convincente</h3>
+            <ol class="concept-list">
+                <li><strong>Debe ser simple:</strong> Si requiere explicacion, es demasiado complejo.</li>
+                <li><strong>Debe ser visible:</strong> Todos deben poder verlo todo el tiempo (no escondido en un correo).</li>
+                <li><strong>Debe mostrar medidas historicas Y de prediccion:</strong> Ambas en un solo vistazo.</li>
+                <li><strong>Debe indicar si se esta ganando o perdiendo:</strong> Al instante, sin ambiguedad.</li>
+            </ol>
+        </div>
+
+        <div class="quiz-container" id="quiz_d3a">
+            <div class="quiz-q">&#127917; Cual de estos es un "tablero de jugadores"?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3a', this, false)">Un reporte Excel de 15 hojas con todos los KPIs del area</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3a', this, false)">Un dashboard que solo puede ver el gerente en su computadora</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3a', this, true)">Una grafica simple en la pared donde todos ven al instante si la meta de costos va bien o mal</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3a', this, false)">El reporte mensual que se envia por correo al director</button>
+            <div class="quiz-feedback" id="quiz_d3a_fb"></div>
+        </div>
+
+        <div class="content-card admin">
+            <h3>&#127970; Tu tablero en la Gerencia de Administracion</h3>
+            <p>Un buen tablero para tu gerencia podria incluir:</p>
+            <div style="background:#f5f5f5;border-radius:10px;padding:16px;margin:12px 0;font-family:monospace;font-size:0.9em;">
+                <div style="text-align:center;font-weight:700;margin-bottom:10px;">TABLERO MCI - GERENCIA DE ADMINISTRACION</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <div style="background:white;padding:12px;border-radius:8px;border-left:4px solid var(--blue);">
+                        <div style="font-size:0.8em;color:#999;">MCI: Costos Operativos</div>
+                        <div style="font-size:1.5em;font-weight:800;">$2.85M</div>
+                        <div style="font-size:0.8em;">Meta: $2.6M &#128308;</div>
+                    </div>
+                    <div style="background:white;padding:12px;border-radius:8px;border-left:4px solid var(--orange);">
+                        <div style="font-size:0.8em;color:#999;">Auditorias/semana</div>
+                        <div style="font-size:1.5em;font-weight:800;">4 de 5</div>
+                        <div style="font-size:0.8em;">Meta: 5/semana &#128993;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#129489;&#8205;&#127912; El efecto motivador</h3>
+            <p>Cuando el equipo DISEÑA su propio tablero (no se lo impone el jefe), el compromiso se multiplica. El tablero pasa de ser una herramienta de control a ser un simbolo de orgullo del equipo.</p>
+            <p>Recuerda: <span class="highlight">El tablero debe actualizarse al menos semanalmente</span>. Un tablero desactualizado es peor que no tener tablero.</p>
+        </div>
+
+        <div class="quiz-container" id="quiz_d3b">
+            <div class="quiz-q">&#127917; Por que es importante que el EQUIPO diseñe el tablero y no solo el lider?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3b', this, false)">Porque el lider no sabe de diseño grafico</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3b', this, true)">Porque sin participacion no hay compromiso - el equipo se apropia del proceso</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d3b', this, false)">Para ahorrar tiempo del lider</button>
+            <div class="quiz-feedback" id="quiz_d3b_fb"></div>
+        </div>
+        `
+    },
+    {
+        id: 'd4_concept', module: 'Disciplina 4', tag: 'tag-d4', tagLabel: 'DISCIPLINA 4',
+        title: 'Cadencia de Rendicion de Cuentas',
+        subtitle: 'La sesion semanal de MCI que lo cambia todo',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=80')">
+            <div class="hero-caption">20 minutos a la semana que cambian el destino de cualquier proyecto</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Consejo del instructor</div>
+                <div class="instructor-note-text">Esta es la disciplina mas dificil de mantener: muchos lideres la abandonan despues de 2 o 3 semanas cuando el torbellino aprieta. Si logras sostenerla 8 semanas seguidas, se vuelve habito y tu cultura cambia para siempre.</div>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128188;</span><div>
+                <h3>El caso de Susan y su equipo de hotel</h3>
+                <p>Susan lideraba un equipo de ventas en un hotel Marriott. Su MCI: aumentar ingresos por reuniones corporativas de $22M a $31M. Cada lunes, en 20 minutos, su equipo hacia 3 cosas: reportar compromisos de la semana anterior, revisar el tablero, y hacer nuevos compromisos para la semana.</p>
+                <p>Resultado: superaron la meta con creces. Pero lo mas valioso fue la CULTURA que crearon.</p>
+            </div></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#128337; La Sesion de MCI: Anatomia perfecta</h3>
+            <p>Dura <strong>20-30 minutos maximo</strong>. Tiene exactamente 3 partes:</p>
+            <div style="display:grid;gap:10px;margin:12px 0;">
+                <div style="background:#e8eaf6;padding:14px;border-radius:8px;border-left:4px solid var(--purple);">
+                    <strong>1. Rendir cuentas:</strong> Cada miembro reporta si cumplio o no sus compromisos de la semana pasada.
+                </div>
+                <div style="background:#f3e5f5;padding:14px;border-radius:8px;border-left:4px solid var(--purple);">
+                    <strong>2. Revisar el tablero:</strong> Vamos ganando o perdiendo? Que muestran las tendencias?
+                </div>
+                <div style="background:#ede7f6;padding:14px;border-radius:8px;border-left:4px solid var(--purple);">
+                    <strong>3. Nuevos compromisos:</strong> Cada persona elige 1-2 compromisos para la proxima semana que muevan las medidas de prediccion.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card warning">
+            <h3>&#9888;&#65039; La trampa de Jeff</h3>
+            <p>Jeff no cumplio su compromiso porque "el torbellino fue muy fuerte esa semana". Esto pasa SIEMPRE. El torbellino siempre sera feroz.</p>
+            <p>La leccion: <span class="highlight">Los compromisos son INCONDICIONALES</span>. No es "lo hare a menos que algo urgente surja". Es "encontrare la forma de hacerlo pase lo que pase".</p>
+            <p>Si aceptas excusas del torbellino, la MCI nunca avanzara.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>&#128161; Compromisos de ALTO impacto vs. BAJO impacto</h3>
+            <table style="width:100%;border-collapse:collapse;margin:12px 0;">
+                <tr style="background:#ffebee;"><th style="padding:10px;border:1px solid #ddd;">&#10060; Bajo impacto</th><th style="padding:10px;border:1px solid #ddd;background:#e8f5e9;">&#9989; Alto impacto</th></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">"Me enfocara en capacitacion"</td><td style="padding:10px;border:1px solid #eee;">"Trabajare 30 min con Ana y Carlos para mejorar el proceso de cotizaciones"</td></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">"Revisare los gastos"</td><td style="padding:10px;border:1px solid #eee;">"Auditare las 5 partidas mayores del area de compras y presentare hallazgos el jueves"</td></tr>
+                <tr><td style="padding:10px;border:1px solid #eee;">"Hablare con proveedores"</td><td style="padding:10px;border:1px solid #eee;">"Renegociare el contrato con los 3 proveedores de papeleria para obtener 10% de descuento"</td></tr>
+            </table>
+        </div>
+
+        <div class="quiz-container" id="quiz_d4a">
+            <div class="quiz-q">&#127917; Cual es la regla FUNDAMENTAL de los compromisos en la sesion de MCI?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4a', this, false)">Son flexibles y se pueden ajustar si el torbellino es fuerte</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4a', this, true)">Son incondicionales: se cumplen pase lo que pase</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4a', this, false)">Solo el lider los define para el equipo</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4a', this, false)">Se deben hacer al menos 5 por persona</button>
+            <div class="quiz-feedback" id="quiz_d4a_fb"></div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#127939; Las 5 fases del cambio</h3>
+            <p>El libro describe que todo equipo pasa por estas fases al implementar 4DX:</p>
+            <ol class="concept-list">
+                <li><strong>Claridad:</strong> El equipo define MCI, medidas y tablero. Hay emocion inicial.</li>
+                <li><strong>Lanzamiento:</strong> Se inicia la ejecucion. Es dificil, hay confusion. Requiere energia del lider.</li>
+                <li><strong>Adopcion:</strong> El equipo encuentra su ritmo. Las medidas empiezan a moverse.</li>
+                <li><strong>Optimizacion:</strong> El equipo propone mejoras por iniciativa propia. Quieren ganar!</li>
+                <li><strong>Habitos:</strong> Las nuevas conductas se convierten en parte del torbellino. Victoria!</li>
+            </ol>
+        </div>
+
+        <div class="quiz-container" id="quiz_d4b">
+            <div class="quiz-q">&#127917; Si un compromiso se repite por mas de 2 semanas consecutivas, que debes hacer?</div>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4b', this, false)">Mantenerlo porque la consistencia es importante</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4b', this, true)">Cambiarlo: buscar nuevas formas de mover las medidas de prediccion</button>
+            <button class="quiz-option" onclick="checkQuiz('quiz_d4b', this, false)">Eliminarlo porque claramente no funciona</button>
+            <div class="quiz-feedback" id="quiz_d4b_fb"></div>
+        </div>
+
+        <div class="content-card admin">
+            <h3>&#127970; Tu sesion de MCI semanal en Administracion</h3>
+            <p>Ejemplo de agenda para tu gerencia cada lunes a las 9:00 AM (25 min):</p>
+            <ul class="concept-list">
+                <li><strong>9:00-9:05</strong> - El gerente abre la sesion y reporta SUS compromisos</li>
+                <li><strong>9:05-9:15</strong> - Cada coordinador reporta compromisos y revisa el tablero</li>
+                <li><strong>9:15-9:20</strong> - El equipo ayuda a desbloquear obstaculos de alguien</li>
+                <li><strong>9:20-9:25</strong> - Cada persona elige 1-2 compromisos para la semana</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>CLAVE:</strong> Esta sesion NO es la junta operativa del torbellino. No se habla de pagos pendientes, ni de requisiciones urgentes. Solo MCI.</p>
+        </div>
+        `
+    },
+    {
+        id: 'final_exam', module: 'Examen Final', tag: 'tag-final', tagLabel: 'EXAMEN FINAL',
+        title: 'Examen Final Integrador',
+        subtitle: 'Demuestra que dominas las 4 Disciplinas!',
+        content: `
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=900&q=80')">
+            <div class="hero-caption">El momento de la verdad: demuestra tu dominio de las 4DX</div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Mensaje final del instructor</div>
+                <div class="instructor-note-text">Has llegado al momento clave. Este examen no busca evaluarte: busca confirmar que estas listo para implementar las 4DX en tu gerencia. Si apruebas con 7 o mas, podras hacer la evaluacion formal con confianza. Suerte!</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#127942; Hora de demostrar lo aprendido!</h3>
+            <p>Responde correctamente estas preguntas que integran las 4 disciplinas. Necesitas <strong>al menos 7 de 10</strong> para aprobar. Cada respuesta correcta te da XP extra!</p>
+        </div>
+
+        <div class="quiz-container" id="final_q1">
+            <div class="quiz-q">1. El "torbellino" en el contexto de las 4DX se refiere a:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q1', this, false)">Los problemas graves de la empresa</button>
+            <button class="quiz-option" onclick="checkFinal('final_q1', this, true)">La energia del dia a dia necesaria para mantener las operaciones</button>
+            <button class="quiz-option" onclick="checkFinal('final_q1', this, false)">Los competidores de la organizacion</button>
+            <div class="quiz-feedback" id="final_q1_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q2">
+            <div class="quiz-q">2. La formula correcta para una MCI es:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q2', this, false)">Mejorar + area + objetivo general</button>
+            <button class="quiz-option" onclick="checkFinal('final_q2', this, false)">Verbo + indicador + lo antes posible</button>
+            <button class="quiz-option" onclick="checkFinal('final_q2', this, true)">De X a Y para [fecha especifica]</button>
+            <div class="quiz-feedback" id="final_q2_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q3">
+            <div class="quiz-q">3. Una medida de prediccion debe ser:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q3', this, true)">Predictiva del resultado E influenciable por el equipo</button>
+            <button class="quiz-option" onclick="checkFinal('final_q3', this, false)">Solo predictiva, no importa si el equipo puede influir</button>
+            <button class="quiz-option" onclick="checkFinal('final_q3', this, false)">Identica a la medida historica pero en menor escala</button>
+            <div class="quiz-feedback" id="final_q3_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q4">
+            <div class="quiz-q">4. "Gasto mensual" como medida de prediccion de "gasto anual" es:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q4', this, false)">Buena medida de prediccion</button>
+            <button class="quiz-option" onclick="checkFinal('final_q4', this, true)">Mala: sigue siendo medida historica, solo en menor escala temporal</button>
+            <button class="quiz-option" onclick="checkFinal('final_q4', this, false)">Depende del tipo de gasto</button>
+            <div class="quiz-feedback" id="final_q4_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q5">
+            <div class="quiz-q">5. Un tablero "de jugadores" se caracteriza por:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q5', this, false)">Tener la mayor cantidad de datos posible</button>
+            <button class="quiz-option" onclick="checkFinal('final_q5', this, true)">Ser tan simple que en 5 segundos sabes si vas ganando o perdiendo</button>
+            <button class="quiz-option" onclick="checkFinal('final_q5', this, false)">Solo lo ve el gerente para tomar decisiones</button>
+            <div class="quiz-feedback" id="final_q5_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q6">
+            <div class="quiz-q">6. La sesion semanal de MCI tiene estas 3 partes en orden:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q6', this, false)">Planear, ejecutar, evaluar</button>
+            <button class="quiz-option" onclick="checkFinal('final_q6', this, true)">Rendir cuentas de compromisos, revisar tablero, hacer nuevos compromisos</button>
+            <button class="quiz-option" onclick="checkFinal('final_q6', this, false)">Revisar problemas, asignar tareas, cerrar sesion</button>
+            <div class="quiz-feedback" id="final_q6_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q7">
+            <div class="quiz-q">7. Cuando Jeff no cumplio su compromiso porque "el torbellino fue muy fuerte", la leccion es:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q7', this, false)">Es comprensible, el torbellino es una excusa valida</button>
+            <button class="quiz-option" onclick="checkFinal('final_q7', this, false)">Jeff deberia ser sancionado</button>
+            <button class="quiz-option" onclick="checkFinal('final_q7', this, true)">Los compromisos son incondicionales: el torbellino siempre estara ahi</button>
+            <div class="quiz-feedback" id="final_q7_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q8">
+            <div class="quiz-q">8. Cuantas MCIs debe tener un equipo como maximo?</div>
+            <button class="quiz-option" onclick="checkFinal('final_q8', this, true)">1 a 2</button>
+            <button class="quiz-option" onclick="checkFinal('final_q8', this, false)">3 a 5</button>
+            <button class="quiz-option" onclick="checkFinal('final_q8', this, false)">Las que necesite segun su complejidad</button>
+            <div class="quiz-feedback" id="final_q8_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q9">
+            <div class="quiz-q">9. "Realizare 5 auditorias de partidas esta semana" es un compromiso de...</div>
+            <button class="quiz-option" onclick="checkFinal('final_q9', this, true)">Alto impacto: es especifico, medible y moverá las medidas de prediccion</button>
+            <button class="quiz-option" onclick="checkFinal('final_q9', this, false)">Bajo impacto: es demasiado operativo</button>
+            <button class="quiz-option" onclick="checkFinal('final_q9', this, false)">Ni alto ni bajo: depende del contexto</button>
+            <div class="quiz-feedback" id="final_q9_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q10">
+            <div class="quiz-q">10. La razon por la que "sin participacion no hay compromiso" es clave en las 4DX es porque:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q10', this, false)">El lider no puede saberlo todo</button>
+            <button class="quiz-option" onclick="checkFinal('final_q10', this, true)">Las personas se comprometen con lo que ayudan a crear, no con lo que se les impone</button>
+            <button class="quiz-option" onclick="checkFinal('final_q10', this, false)">Es una norma de recursos humanos</button>
+            <div class="quiz-feedback" id="final_q10_fb"></div>
+        </div>
+
+        <div id="finalResult" style="display:none;margin-top:20px;padding:24px;border-radius:12px;text-align:center;animation:pop 0.4s;">
+            <div style="font-size:3em;" id="finalEmoji"></div>
+            <h2 id="finalTitle" style="margin:10px 0;"></h2>
+            <p id="finalDesc"></p>
+            <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                <button class="btn btn-gold" onclick="showLesson(7)">&#127942; Ver mi Certificado</button>
+                <button class="btn btn-primary" onclick="window.open('checklist-4dx-gerencia-administracion.html','_blank')">&#128203; Ir a la Evaluacion</button>
+            </div>
+        </div>
+        `
+    },
+    {
+        id: 'certificate', module: 'Certificado', tag: 'tag-final', tagLabel: 'CERTIFICADO',
+        title: 'Certificado de Finalizacion',
+        subtitle: 'Felicidades! Has completado el curso',
+        content: `
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Palabras finales del instructor</div>
+                <div class="instructor-note-text">Has recorrido las 4 Disciplinas de la Ejecucion. Ahora tienes el conocimiento y las herramientas para transformar la ejecucion en tu gerencia. Recuerda: no se trata de saber, se trata de hacer. Empieza esta semana con UNA MCI. Exito!</div>
+            </div>
+        </div>
+
+        <div class="certificate" id="certificateEl">
+            <div class="cert-seal">
+                <div style="font-size:1.2em;">4DX</div>
+                <div style="font-size:0.65em;">CERTIFIED</div>
+                <div style="font-size:0.6em;" id="certYear">2026</div>
+            </div>
+
+            <div class="cert-header">
+                <div class="cert-icon">&#127942;</div>
+                <div class="cert-title">CERTIFICADO</div>
+                <div class="cert-subtitle">de finalizacion satisfactoria</div>
+            </div>
+
+            <div class="cert-body">
+                <div class="cert-award-text">Se otorga el presente a:</div>
+                <div class="cert-name" id="certName">Nombre del Alumno</div>
+                <div class="cert-award-text">Por haber completado exitosamente el curso:</div>
+                <div class="cert-course">Las 4 Disciplinas de la Ejecucion<br>aplicadas a la Gerencia de Administracion</div>
+                <div class="cert-desc">Habiendo demostrado dominio de los conceptos de Meta Crucialmente Importante (MCI), Medidas de Prediccion, Tablero de Resultados y Cadencia de Rendicion de Cuentas, segun el modelo de McChesney, Covey y Huling.</div>
+            </div>
+
+            <div class="cert-footer">
+                <div class="cert-sig-block">
+                    <div class="cert-sig-line">
+                        <div class="cert-sig-name">LADE German Solis Munoz</div>
+                        <div class="cert-sig-title">Director de Gestion Empresarial - TRIKLES</div>
+                    </div>
+                </div>
+                <div class="cert-sig-block">
+                    <div class="cert-sig-line">
+                        <div class="cert-sig-name" id="certDate">14 de Abril, 2026</div>
+                        <div class="cert-sig-title">Fecha de expedicion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cert-actions">
+            <button class="btn btn-primary" onclick="window.print()">&#128424;&#65039; Imprimir / Guardar PDF</button>
+            <button class="btn btn-success" onclick="window.open('checklist-4dx-gerencia-administracion.html','_blank')">&#128203; Hacer la Evaluacion</button>
+        </div>
+
+        <div class="content-card" style="margin-top:30px;">
+            <h3>&#128640; Que sigue ahora?</h3>
+            <ol class="concept-list">
+                <li><strong>Define TU MCI:</strong> Usa el formato "de X a Y para tal fecha" con tu equipo</li>
+                <li><strong>Identifica 2 medidas de prediccion:</strong> Acciones semanales que el equipo puede influenciar</li>
+                <li><strong>Arma el tablero:</strong> Simple, visible, que muestre si se gana o pierde en 5 segundos</li>
+                <li><strong>Programa la sesion semanal:</strong> 20 minutos cada lunes, sin excepcion</li>
+                <li><strong>Sostenla por 8 semanas:</strong> Es el tiempo para formar el habito</li>
+            </ol>
+        </div>
+        `
+    }
+];
+
+// ========== STATE ==========
+let xp = 0;
+let streak = 0;
+let currentLesson = 0;
+let completedLessons = new Set();
+let finalScore = 0;
+let finalAnswered = 0;
+let currentUser = null;
+
+// ========== AUTH FUNCTIONS ==========
+const USERS_KEY = 'curso4dx_users';
+const SESSION_KEY = 'curso4dx_session';
+
+function getUsers() {
+    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
+    catch(e) { return {}; }
+}
+function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+
+function hashPass(pass) {
+    // Simple hash (not real security, just to avoid plain text)
+    let h = 0; for (let i = 0; i < pass.length; i++) h = ((h<<5)-h) + pass.charCodeAt(i) | 0;
+    return 'h_' + h;
+}
+
+function switchAuthTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById(tab + 'Form').classList.add('active');
+}
+
+function doRegister(e) {
+    e.preventDefault();
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const company = document.getElementById('regCompany').value.trim();
+    const role = document.getElementById('regRole').value.trim();
+    const pass = document.getElementById('regPass').value;
+    const errEl = document.getElementById('regError');
+
+    const users = getUsers();
+    if (users[email]) {
+        errEl.textContent = 'Este correo ya esta registrado. Inicia sesion en su lugar.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    users[email] = {
+        name, email, company, role, pass: hashPass(pass),
+        registeredAt: new Date().toISOString(),
+        progress: { xp: 0, completed: [], finalScore: null, completedDate: null }
+    };
+    saveUsers(users);
+    localStorage.setItem(SESSION_KEY, email);
+    currentUser = users[email];
+    enterCourse();
+}
+
+function doLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('loginPass').value;
+    const errEl = document.getElementById('loginError');
+
+    const users = getUsers();
+    const user = users[email];
+    if (!user) {
+        errEl.textContent = 'No existe una cuenta con ese correo. Registrate primero.';
+        errEl.style.display = 'block';
+        return;
+    }
+    if (user.pass !== hashPass(pass)) {
+        errEl.textContent = 'Contrasena incorrecta.';
+        errEl.style.display = 'block';
+        return;
+    }
+    localStorage.setItem(SESSION_KEY, email);
+    currentUser = user;
+    loadProgress();
+    enterCourse();
+}
+
+function doLogout() {
+    if (currentUser) saveProgress();
+    localStorage.removeItem(SESSION_KEY);
+    currentUser = null;
+    location.reload();
+}
+
+function loadProgress() {
+    if (!currentUser) return;
+    const p = currentUser.progress || {};
+    xp = p.xp || 0;
+    completedLessons = new Set(p.completed || []);
+    finalScore = p.finalScore || 0;
+}
+
+function saveProgress() {
+    if (!currentUser) return;
+    const users = getUsers();
+    if (!users[currentUser.email]) return;
+    users[currentUser.email].progress = {
+        xp, completed: Array.from(completedLessons),
+        finalScore, completedDate: completedLessons.size >= lessons.length ? (users[currentUser.email].progress?.completedDate || new Date().toISOString()) : null
+    };
+    saveUsers(users);
+    currentUser = users[currentUser.email];
+}
+
+function enterCourse() {
+    document.getElementById('authScreen').classList.add('hide');
+    document.getElementById('splash').style.display = 'flex';
+    updateUserBadge();
+}
+
+function updateUserBadge() {
+    if (!currentUser) return;
+    const initials = currentUser.name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
+    document.getElementById('userInitials').textContent = initials;
+    document.getElementById('userDisplayName').textContent = currentUser.name.split(' ')[0];
+}
+
+// ========== FUNCTIONS ==========
+function startCourse() {
+    document.getElementById('splash').classList.add('hide');
+    setTimeout(() => {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('topbar').style.display = 'flex';
+        document.getElementById('layout').style.display = 'flex';
+        updateXPBar();
+        buildSidebar();
+        showLesson(0);
+    }, 600);
+}
+
+function updateXPBar() {
+    const maxXP = (lessons.length - 1) * 25 + 150;
+    const pct = Math.min(100, Math.round((xp / maxXP) * 100));
+    document.getElementById('xpFill').style.width = pct + '%';
+    document.getElementById('xpText').textContent = xp + ' XP';
+}
+
+function buildSidebar() {
+    const sb = document.getElementById('sidebar');
+    let html = '<h3>Contenido del Curso</h3>';
+    lessons.forEach((l, i) => {
+        const done = completedLessons.has(i) ? 'completed' : '';
+        const active = i === currentLesson ? 'active' : '';
+        const icon = completedLessons.has(i) ? '&#10003;' : (i + 1);
+        html += '<div class="nav-item '+done+' '+active+'" onclick="showLesson('+i+')" id="nav'+i+'">' +
+            '<div class="nav-icon">'+icon+'</div>' +
+            '<span>'+l.title+'</span></div>';
+    });
+    sb.innerHTML = html;
+}
+
+function showLesson(idx) {
+    currentLesson = idx;
+    const l = lessons[idx];
+    const mc = document.getElementById('mainContent');
+    mc.innerHTML = '<div class="lesson active">' +
+        '<div class="lesson-header">' +
+            '<span class="tag '+l.tag+'">'+l.tagLabel+'</span>' +
+            '<h1>'+l.title+'</h1>' +
+            '<p>'+l.subtitle+'</p>' +
+        '</div>' +
+        l.content +
+        (idx < lessons.length - 1 ?
+            '<button class="btn btn-primary btn-next" onclick="completeAndNext()">Siguiente leccion &#10145;&#65039;</button>' :
+            '') +
+        '<div style="clear:both;height:40px;"></div>' +
+        '<div class="course-footer">' +
+            '<div class="footer-line"></div>' +
+            '<div class="footer-text">' +
+                '<strong>Curso adaptado e impartido por LADE German Solis Munoz</strong><br>' +
+                '<span>Director de Gestion Empresarial - TRIKLES</span><br>' +
+                '<em>Basado en "Las 4 Disciplinas de la Ejecucion" - McChesney, Covey, Huling</em>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+    buildSidebar();
+
+    // Populate certificate if on that lesson
+    if (l.id === 'certificate' && currentUser) {
+        setTimeout(() => {
+            const nameEl = document.getElementById('certName');
+            const dateEl = document.getElementById('certDate');
+            const yearEl = document.getElementById('certYear');
+            if (nameEl) nameEl.textContent = currentUser.name;
+            if (dateEl) {
+                const d = new Date();
+                const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+                dateEl.textContent = d.getDate() + ' de ' + months[d.getMonth()] + ', ' + d.getFullYear();
+            }
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+        }, 50);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function completeAndNext() {
+    if (!completedLessons.has(currentLesson)) {
+        completedLessons.add(currentLesson);
+        addXP(25);
+        streak++;
+        document.getElementById('streakBadge').innerHTML = '&#11088; Racha: ' + streak;
+        saveProgress();
+
+        if (completedLessons.size === 2) showBadge('&#128218;', 'Primer Paso!', 'Completaste tu primera leccion de concepto.');
+        if (completedLessons.size === 4) showBadge('&#128293;', 'En Racha!', 'Llevas 4 lecciones completadas. Vas volando!');
+        if (completedLessons.size === 6) showBadge('&#127941;', 'Casi Experto!', 'Solo falta el examen final. Estas listo!');
+    }
+    if (currentLesson < lessons.length - 1) {
+        showLesson(currentLesson + 1);
+    }
+}
+
+function addXP(amount) {
+    xp += amount;
+    updateXPBar();
+    saveProgress();
+}
+
+// Auto-login check on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const email = localStorage.getItem(SESSION_KEY);
+    if (email) {
+        const users = getUsers();
+        if (users[email]) {
+            currentUser = users[email];
+            loadProgress();
+            enterCourse();
+        }
+    }
+});
+
+function checkQuiz(qid, btn, correct) {
+    const container = document.getElementById(qid);
+    const fb = document.getElementById(qid + '_fb');
+    const opts = container.querySelectorAll('.quiz-option');
+
+    opts.forEach(o => { o.classList.add('disabled'); o.disabled = true; });
+
+    if (correct) {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show ok';
+        fb.textContent = '&#9989; Correcto! +10 XP';
+        addXP(10);
+        streak++;
+        document.getElementById('streakBadge').innerHTML = '&#11088; Racha: ' + streak;
+        spawnConfetti(btn);
+    } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show bad';
+        fb.textContent = '&#10060; No exactamente. Lee la retroalimentacion en las tarjetas de arriba y reflexiona.';
+        streak = 0;
+        document.getElementById('streakBadge').innerHTML = '&#11088; Racha: 0';
+        // Highlight correct one
+        opts.forEach(o => {
+            if (o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+        });
+    }
+}
+
+function checkFinal(qid, btn, correct) {
+    checkQuiz(qid, btn, correct);
+    if (correct) finalScore++;
+    finalAnswered++;
+
+    if (finalAnswered >= 10) {
+        setTimeout(() => {
+            const result = document.getElementById('finalResult');
+            const emoji = document.getElementById('finalEmoji');
+            const title = document.getElementById('finalTitle');
+            const desc = document.getElementById('finalDesc');
+
+            result.style.display = 'block';
+
+            if (finalScore >= 9) {
+                result.style.background = '#e8f5e9';
+                emoji.textContent = '🏆';
+                title.textContent = 'EXCELENTE! ' + finalScore + '/10';
+                desc.textContent = 'Dominas las 4 Disciplinas! Estas completamente listo para la evaluacion.';
+                showBadge('&#127942;', 'Maestro 4DX!', 'Aprobaste el examen final con ' + finalScore + '/10. Eres un experto!');
+            } else if (finalScore >= 7) {
+                result.style.background = '#fff9c4';
+                emoji.textContent = '🎉';
+                title.textContent = 'MUY BIEN! ' + finalScore + '/10';
+                desc.textContent = 'Aprobaste! Tienes una solida comprension de las 4DX. Puedes hacer la evaluacion.';
+                showBadge('&#127881;', 'Aprobado!', 'Completaste el examen con ' + finalScore + '/10.');
+            } else {
+                result.style.background = '#ffebee';
+                emoji.textContent = '📚';
+                title.textContent = 'Necesitas repasar: ' + finalScore + '/10';
+                desc.textContent = 'Te recomiendo repasar las lecciones antes de hacer la evaluacion. Necesitas 7/10 para aprobar.';
+            }
+
+            completedLessons.add(currentLesson);
+            if (finalScore >= 7) completedLessons.add(7); // unlock certificate
+            saveProgress();
+            buildSidebar();
+            result.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+    }
+}
+
+function checkMCI() {
+    const checks = document.querySelectorAll('#mciChecklist input[type="checkbox"]');
+    const result = document.getElementById('mciResult');
+    const total = checks.length;
+    let checked = 0;
+    checks.forEach(c => { if (c.checked) checked++; });
+
+    result.style.display = 'block';
+    if (checked === total) {
+        result.style.background = '#e8f5e9';
+        result.textContent = '&#9989; Tu MCI cumple todos los criterios! Esta lista para implementarse.';
+    } else if (checked >= 3) {
+        result.style.background = '#fff9c4';
+        result.textContent = '&#128993; Vas bien! Falta cumplir ' + (total - checked) + ' criterio(s) mas.';
+    } else {
+        result.style.background = '#ffebee';
+        result.textContent = '&#128308; Tu MCI necesita mas trabajo. Revisa los criterios faltantes.';
+    }
+}
+
+function showBadge(icon, title, desc) {
+    document.getElementById('badgeIcon').innerHTML = icon;
+    document.getElementById('badgeTitle').textContent = title;
+    document.getElementById('badgeDesc').textContent = desc;
+    document.getElementById('overlay').classList.add('show');
+    document.getElementById('badgePopup').classList.add('show');
+}
+
+function closeBadge() {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('badgePopup').classList.remove('show');
+}
+
+function spawnConfetti(el) {
+    const rect = el.getBoundingClientRect();
+    const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff8e00','#a855f7'];
+    for (let i = 0; i < 12; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = (rect.left + rect.width/2 + (Math.random()-0.5)*60) + 'px';
+        c.style.top = (rect.top - 10) + 'px';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDuration = (1 + Math.random()) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2000);
+    }
+}
+
+function toggleAcc(el) {
+    const body = el.nextElementSibling;
+    body.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
