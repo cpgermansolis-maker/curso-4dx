@@ -119,6 +119,77 @@
     .course-tab.active { border-color: var(--blue); background: var(--blue); color: white; }
     .course-tab .count { margin-left: 4px; opacity: 0.7; }
 
+    /* Acciones rápidas */
+    .quick-actions {
+        display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px;
+        padding: 14px 16px; background: white; border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid var(--orange);
+    }
+    .btn-action {
+        padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;
+        border: 0; font-size: 0.88em; transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
+    .btn-scholarship { background: linear-gradient(135deg, var(--green), #43a047); color: white; }
+    .btn-clean-test { background: #fff3e0; color: var(--orange); border: 1px solid #ffcc80 !important; }
+    .btn-clean-all { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a !important; margin-left: auto; }
+
+    /* Badge BECA en tabla */
+    .pill.scholarship { background: #e8f5e9; color: var(--green); }
+
+    /* Modal */
+    .modal-backdrop {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+        z-index: 9999; align-items: flex-start; justify-content: center; padding: 20px;
+        overflow-y: auto; backdrop-filter: blur(3px);
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-body {
+        background: white; border-radius: 14px; padding: 26px 28px; max-width: 500px;
+        width: 100%; margin: 40px auto; position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .modal-close {
+        position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+        border-radius: 50%; border: 0; background: #f5f5f5; cursor: pointer; font-size: 1.1em;
+        color: var(--text); display: flex; align-items: center; justify-content: center;
+    }
+    .modal-close:hover { background: #e0e0e0; }
+    .modal-body h2 { color: var(--blue); font-size: 1.2em; margin-bottom: 6px; }
+    .modal-body .form-group { margin-bottom: 14px; }
+    .modal-body label { display: block; font-size: 0.82em; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+    .modal-body input, .modal-body select {
+        width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 8px;
+        font-size: 0.92em; font-family: inherit; box-sizing: border-box;
+    }
+    .modal-body input:focus, .modal-body select:focus { outline: none; border-color: var(--blue); }
+
+    .student-picker {
+        max-height: 200px; overflow-y: auto; border: 1px solid #e0e0e0;
+        border-radius: 8px; margin-top: 6px; background: #fafafa;
+    }
+    .student-picker-item {
+        padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f0f0f0;
+        transition: background 0.15s; font-size: 0.88em;
+    }
+    .student-picker-item:last-child { border-bottom: 0; }
+    .student-picker-item:hover { background: #e3f2fd; }
+    .student-picker-item.selected { background: var(--blue); color: white; }
+    .student-picker-item strong { display: block; }
+    .student-picker-item small { opacity: 0.75; }
+    .student-picker-empty { padding: 18px; text-align: center; color: #999; font-size: 0.85em; }
+
+    .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+    .btn-modal-cancel, .btn-modal-confirm {
+        flex: 1; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer;
+        border: 0; font-size: 0.9em;
+    }
+    .btn-modal-cancel { background: #f5f5f5; color: var(--text); }
+    .btn-modal-cancel:hover { background: #e0e0e0; }
+    .btn-modal-confirm { background: var(--green); color: white; }
+    .btn-modal-confirm:hover:not(:disabled) { background: #1b5e20; }
+    .btn-modal-confirm:disabled { background: #bdbdbd; cursor: not-allowed; }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
         body { padding: 16px !important; }
@@ -130,6 +201,10 @@
         .filters select, .filters input { width: 100%; box-sizing: border-box; }
         table { font-size: 0.8em; min-width: 720px; }
         th, td { padding: 8px 10px; }
+    }
+    @media (max-width: 900px) {
+        .quick-actions { flex-direction: column; }
+        .btn-action { width: 100%; margin-left: 0 !important; }
     }
     @media (max-width: 600px) {
         body { padding: 10px !important; }
@@ -203,8 +278,45 @@
             <button class="btn btn-gold" onclick="exportAllData()">💾 Backup completo</button>
         </div>
 
+        <!-- Acciones rápidas -->
+        <div class="quick-actions">
+            <button class="btn-action btn-scholarship" onclick="openScholarshipModal()">🎓 Otorgar beca</button>
+            <button class="btn-action btn-clean-test" onclick="cleanTestStudents()">🧹 Borrar alumnos de prueba</button>
+            <button class="btn-action btn-clean-all" onclick="cleanAllStudents()">⚠️ Borrar TODOS los alumnos</button>
+        </div>
+
         <div class="table-wrap">
             <table id="mainTable"></table>
+        </div>
+    </div>
+</div>
+
+<!-- ======= MODAL BECA ======= -->
+<div id="scholarshipModal" class="modal-backdrop" onclick="if(event.target===this) closeScholarshipModal()">
+    <div class="modal-body">
+        <button class="modal-close" onclick="closeScholarshipModal()">✕</button>
+        <h2>🎓 Otorgar beca a un alumno</h2>
+        <p style="color:var(--text-light);margin:6px 0 18px;font-size:0.9em;">Inscribe a un alumno a un curso sin costo (sin requerir boucher de pago).</p>
+
+        <div class="form-group">
+            <label>Alumno:</label>
+            <input type="text" id="schSearch" placeholder="Busca por nombre o correo..." oninput="filterScholarshipStudents()">
+            <div class="student-picker" id="schStudentList"></div>
+        </div>
+
+        <div class="form-group" id="schCourseGroup" style="display:none;">
+            <label>Curso:</label>
+            <select id="schCourse"></select>
+        </div>
+
+        <div class="form-group" id="schNoteGroup" style="display:none;">
+            <label>Nota (opcional):</label>
+            <input type="text" id="schNote" placeholder="Motivo de la beca, ej: Empleado nuevo, Promoción, etc.">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-modal-cancel" onclick="closeScholarshipModal()">Cancelar</button>
+            <button class="btn-modal-confirm" id="schConfirmBtn" onclick="grantScholarship()" disabled>🎓 Otorgar beca</button>
         </div>
     </div>
 </div>
@@ -236,11 +348,165 @@ function logoutAdmin() {
 function getUsers() { try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); } catch(e) { return {}; } }
 
 function getCatalog() {
-    // Cargar catalogo desde index.html (si esta disponible) o usar lista fija
     return [
-        { id: '4dx', title: 'Las 4 Disciplinas de la Ejecución' }
-        // Agrega más cursos aqui
+        { id: '4dx', title: 'Las 4 Disciplinas de la Ejecución' },
+        { id: 'habitos', title: 'Los 7 Hábitos de la Gente Altamente Efectiva' }
     ];
+}
+
+// Para guardar cambios en los usuarios
+function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+
+// =========================================================
+// ========== LIMPIEZA DE ALUMNOS ==========
+// =========================================================
+function cleanTestStudents() {
+    const users = getUsers();
+    const testEmails = Object.keys(users).filter(e => users[e].isTest);
+    if (testEmails.length === 0) {
+        alert('No hay alumnos de prueba en este navegador.');
+        return;
+    }
+    if (!confirm('Se eliminarán ' + testEmails.length + ' alumno(s) de prueba de este navegador.\n\n¿Continuar?')) return;
+    testEmails.forEach(e => delete users[e]);
+    saveUsers(users);
+    alert('✅ Se eliminaron ' + testEmails.length + ' alumno(s) de prueba.');
+    init();
+}
+
+function cleanAllStudents() {
+    const users = getUsers();
+    const count = Object.keys(users).length;
+    if (count === 0) { alert('No hay alumnos que borrar.'); return; }
+
+    if (!confirm('⚠️ ADVERTENCIA: Esto eliminará ABSOLUTAMENTE TODOS los alumnos (' + count + ') de este navegador.\n\nEsta acción NO afecta Google Sheets.\n\n¿Continuar?')) return;
+
+    const safety = prompt('Para confirmar, escribe exactamente:  BORRAR TODO');
+    if (safety !== 'BORRAR TODO') { alert('Operación cancelada.'); return; }
+
+    localStorage.removeItem(USERS_KEY);
+    localStorage.removeItem('trikles_session');
+    alert('✅ Se eliminaron los ' + count + ' alumno(s). El sistema está limpio.');
+    init();
+}
+
+// =========================================================
+// ========== SISTEMA DE BECAS ==========
+// =========================================================
+let schSelectedEmail = null;
+
+function openScholarshipModal() {
+    schSelectedEmail = null;
+    document.getElementById('schSearch').value = '';
+    document.getElementById('schCourseGroup').style.display = 'none';
+    document.getElementById('schNoteGroup').style.display = 'none';
+    document.getElementById('schConfirmBtn').disabled = true;
+    document.getElementById('scholarshipModal').classList.add('show');
+    renderScholarshipStudentList('');
+}
+
+function closeScholarshipModal() {
+    document.getElementById('scholarshipModal').classList.remove('show');
+}
+
+function renderScholarshipStudentList(filter) {
+    const users = getUsers();
+    const emails = Object.keys(users).filter(e => !users[e].isTest);
+    const f = (filter || '').toLowerCase().trim();
+    const filtered = emails.filter(e => {
+        const u = users[e];
+        return !f || (u.name || '').toLowerCase().includes(f) || e.includes(f) || (u.company || '').toLowerCase().includes(f);
+    });
+    const container = document.getElementById('schStudentList');
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="student-picker-empty">' + (emails.length === 0 ? 'No hay alumnos registrados todavía.' : 'Ningún alumno coincide con la búsqueda.') + '</div>';
+        return;
+    }
+    container.innerHTML = filtered.slice(0, 50).map(e => {
+        const u = users[e];
+        const sel = schSelectedEmail === e ? ' selected' : '';
+        return '<div class="student-picker-item' + sel + '" onclick="selectScholarshipStudent(\'' + e.replace(/'/g, "\\'") + '\')">' +
+            '<strong>' + (u.name || e) + '</strong>' +
+            '<small>' + e + (u.company ? ' · ' + u.company : '') + '</small>' +
+        '</div>';
+    }).join('');
+}
+
+function filterScholarshipStudents() {
+    renderScholarshipStudentList(document.getElementById('schSearch').value);
+}
+
+function selectScholarshipStudent(email) {
+    schSelectedEmail = email;
+    renderScholarshipStudentList(document.getElementById('schSearch').value);
+
+    // Poblar cursos disponibles (en los que NO esté inscrito ya)
+    const users = getUsers();
+    const u = users[email];
+    const enrolled = Object.keys(u.enrollments || {});
+    const catalog = getCatalog();
+    const available = catalog.filter(c => !enrolled.includes(c.id));
+
+    const select = document.getElementById('schCourse');
+    if (available.length === 0) {
+        select.innerHTML = '<option value="">El alumno ya está inscrito en todos los cursos</option>';
+        document.getElementById('schConfirmBtn').disabled = true;
+    } else {
+        select.innerHTML = available.map(c => '<option value="' + c.id + '">' + c.title + '</option>').join('');
+        document.getElementById('schConfirmBtn').disabled = false;
+    }
+    document.getElementById('schCourseGroup').style.display = 'block';
+    document.getElementById('schNoteGroup').style.display = 'block';
+}
+
+function grantScholarship() {
+    if (!schSelectedEmail) return;
+    const courseId = document.getElementById('schCourse').value;
+    if (!courseId) return;
+    const note = document.getElementById('schNote').value.trim();
+
+    const users = getUsers();
+    const u = users[schSelectedEmail];
+    if (!u) { alert('Alumno no encontrado.'); return; }
+    if (!u.enrollments) u.enrollments = {};
+    if (u.enrollments[courseId]) {
+        alert('El alumno ya está inscrito en este curso.');
+        return;
+    }
+
+    u.enrollments[courseId] = {
+        enrolledAt: new Date().toISOString(),
+        voucher: null,
+        voucherText: '[BECA] ' + (note || 'Otorgada por administrador'),
+        scholarship: true,
+        scholarshipNote: note,
+        scholarshipGrantedAt: new Date().toISOString(),
+        progress: {}
+    };
+    saveUsers(users);
+
+    // Avisar al webhook (mismo formato que un signup de inscripción)
+    try {
+        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
+        const course = getCatalog().find(c => c.id === courseId);
+        fetch(WEBHOOK_URL, {
+            method: 'POST', mode: 'no-cors',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                event: 'scholarship_granted',
+                timestamp: new Date().toISOString(),
+                courseId: courseId,
+                courseTitle: course ? course.title : '',
+                name: u.name, email: u.email, company: u.company, role: u.role,
+                scholarshipNote: note
+            })
+        }).catch(() => {});
+    } catch(e) {}
+
+    const courseTitle = getCatalog().find(c => c.id === courseId)?.title || courseId;
+    alert('✅ Beca otorgada\n\n' + u.name + ' ha sido inscrito al curso:\n"' + courseTitle + '"\n\nEl alumno puede entrar al curso sin necesidad de boucher de pago.');
+    closeScholarshipModal();
+    init();
 }
 
 function init() {
@@ -353,9 +619,13 @@ function renderTable() {
             else if (e && (p.completed?.length || 0) > 0) { badge = 'EN CURSO'; badgeClass = 'progress'; }
             else if (e) { badge = 'INSCRITO'; badgeClass = 'new'; }
 
+            // Si es beca, añadir segundo pill
+            const scholarshipPill = e && e.scholarship ? '<br><span class="pill scholarship" title="' + (e.scholarshipNote || '').replace(/"/g, '&quot;') + '">🎓 BECA</span>' : '';
+
             const voucherImg = e && e.voucher ?
                 '<img src="'+e.voucher+'" class="voucher-thumb" onclick="viewVoucher(\''+u.email+'\',\''+r.courseId+'\')">' :
-                (e ? '<span style="color:#999;font-size:0.85em;">-</span>' : '');
+                (e && e.scholarship ? '<span style="color:var(--green);font-size:0.8em;font-weight:700;">🎓 Beca</span>' :
+                 (e ? '<span style="color:#999;font-size:0.85em;">-</span>' : ''));
             const enrolledDate = e ? new Date(e.enrolledAt).toLocaleDateString('es-MX') : '-';
             const examScore = p.finalScore !== null && p.finalScore !== undefined ? p.finalScore + '/10' : '-';
 
@@ -368,7 +638,7 @@ function renderTable() {
                 '<td>'+enrolledDate+'</td>' +
                 '<td>'+(e ? pct+'% ('+(p.completed?.length || 0)+'/7)' : '-')+'</td>' +
                 '<td>'+examScore+'</td>' +
-                '<td><span class="pill '+badgeClass+'">'+badge+'</span></td>' +
+                '<td><span class="pill '+badgeClass+'">'+badge+'</span>' + scholarshipPill + '</td>' +
                 '<td>'+voucherImg+'</td>' +
             '</tr>';
         });

@@ -333,10 +333,6 @@
             <button class="auth-btn" type="submit">Crear cuenta y explorar cursos 🎉</button>
             <div class="auth-error" id="regError"></div>
             <div class="auth-footer">Al registrarte solo creas tu cuenta. Los bouchers de pago se validan al inscribirte a cada curso.</div>
-            <div style="margin-top:12px;padding-top:10px;border-top:2px dashed #ffb300;">
-                <div style="font-size:0.7em;color:#e65100;text-align:center;margin-bottom:6px;font-weight:700;">🛠️ MODO PRUEBA (Instructor)</div>
-                <button type="button" onclick="createTestStudent()" style="width:100%;padding:10px;background:linear-gradient(135deg,#ff8f00,#ffb300);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.85em;">🧪 Crear alumno de prueba</button>
-            </div>
         </form>
     </div>
 </div>
@@ -573,39 +569,6 @@ function doLogout() {
     localStorage.removeItem(SESSION_KEY);
     currentUser = null;
     location.reload();
-}
-
-function createTestStudent() {
-    const names = ['María López García', 'Juan Pérez Ramírez', 'Ana Sánchez Torres', 'Carlos Mendoza Ruiz', 'Laura Gómez Hernández', 'Pedro Vargas Castro'];
-    const companies = ['ACME Corp', 'Grupo Industrial XYZ', 'Constructora del Norte', 'Servicios Profesionales TM'];
-    const roles = ['Gerente de Administración', 'Coordinador Administrativo', 'Director de Finanzas', 'Jefe de Compras'];
-    const rnd = arr => arr[Math.floor(Math.random() * arr.length)];
-    const name = rnd(names);
-    const email = 'test.' + name.toLowerCase().split(' ')[0] + Date.now() + '@prueba.com';
-    const users = getUsers();
-    // Pre-inscribir al alumno de prueba en TODOS los cursos activos
-    const enrollments = {};
-    const nowIso = new Date().toISOString();
-    CATALOG.filter(c => c.active).forEach(c => {
-        enrollments[c.id] = {
-            enrolledAt: nowIso,
-            voucher: null,
-            voucherText: '[Alumno de prueba - acceso automático]',
-            progress: {}
-        };
-    });
-    users[email] = {
-        name, email, company: rnd(companies), role: rnd(roles),
-        pass: hashPass('test123'), registeredAt: nowIso,
-        enrollments, isTest: true
-    };
-    saveUsers(users);
-    localStorage.setItem(SESSION_KEY, email);
-    currentUser = users[email];
-    sendToWebhook('signup', currentUser);
-    const cursosTxt = CATALOG.filter(c => c.active).map(c => '• ' + c.title).join('\n');
-    alert('Alumno de prueba creado:\n\nNombre: ' + name + '\nCorreo: ' + email + '\n\nInscrito automáticamente en:\n' + cursosTxt + '\n\nEntrando al catálogo...');
-    showPlatform();
 }
 
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
