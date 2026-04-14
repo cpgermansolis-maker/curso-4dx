@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checklist 4DX - Gerencia de Administracion</title>
+    <title>Checklist 4DX - Gerencia de Administración</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -13,7 +13,7 @@
             line-height: 1.6;
         }
         .header {
-            background: linear-gradient(135deg, #1a237e, #283593);
+            background: línear-gradient(135deg, #1a237e, #283593);
             color: white;
             padding: 30px 20px;
             text-align: center;
@@ -38,7 +38,7 @@
             position: relative;
         }
         .progress-fill {
-            background: linear-gradient(90deg, #43a047, #66bb6a);
+            background: línear-gradient(90deg, #43a047, #66bb6a);
             height: 100%;
             border-radius: 10px;
             transition: width 0.5s ease;
@@ -75,10 +75,10 @@
             font-size: 0.85em;
             white-space: nowrap;
         }
-        .d1 .discipline-header { background: linear-gradient(135deg, #1565c0, #1976d2); }
-        .d2 .discipline-header { background: linear-gradient(135deg, #e65100, #f57c00); }
-        .d3 .discipline-header { background: linear-gradient(135deg, #2e7d32, #43a047); }
-        .d4 .discipline-header { background: linear-gradient(135deg, #6a1b9a, #8e24aa); }
+        .d1 .discipline-header { background: línear-gradient(135deg, #1565c0, #1976d2); }
+        .d2 .discipline-header { background: línear-gradient(135deg, #e65100, #f57c00); }
+        .d3 .discipline-header { background: línear-gradient(135deg, #2e7d32, #43a047); }
+        .d4 .discipline-header { background: línear-gradient(135deg, #6a1b9a, #8e24aa); }
 
         .discipline-body { padding: 0 20px 20px; }
 
@@ -174,10 +174,10 @@
         }
         .score-card .score-value { font-size: 2em; font-weight: 800; }
         .score-card .score-label { font-size: 0.85em; opacity: 0.9; }
-        .sc-d1 { background: linear-gradient(135deg, #1565c0, #1976d2); }
-        .sc-d2 { background: linear-gradient(135deg, #e65100, #f57c00); }
-        .sc-d3 { background: linear-gradient(135deg, #2e7d32, #43a047); }
-        .sc-d4 { background: linear-gradient(135deg, #6a1b9a, #8e24aa); }
+        .sc-d1 { background: línear-gradient(135deg, #1565c0, #1976d2); }
+        .sc-d2 { background: línear-gradient(135deg, #e65100, #f57c00); }
+        .sc-d3 { background: línear-gradient(135deg, #2e7d32, #43a047); }
+        .sc-d4 { background: línear-gradient(135deg, #6a1b9a, #8e24aa); }
 
         .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
         .btn {
@@ -201,12 +201,12 @@
             font-size: 0.8em;
         }
 
-        @media print {
+        @medía print {
             body { background: white; }
             .btn-group, .progress-bar-container { display: none; }
             .discipline { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
         }
-        @media (max-width: 600px) {
+        @medía (max-width: 600px) {
             .header h1 { font-size: 1.2em; }
             .score-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -215,15 +215,15 @@
 <body>
 
 <div class="header">
-    <h1>Checklist de Evaluacion - Gerencia de Administracion</h1>
-    <p>Basado en "Las 4 Disciplinas de la Ejecucion" (4DX) de Chris McChesney, Sean Covey y Jim Huling</p>
+    <h1>Checklist de Evaluación - Gerencia de Administración</h1>
+    <p>Basado en "Las 4 Disciplinas de la Ejecución" (4DX) de Chris McChesney, Sean Covey y Jim Huling</p>
 </div>
 
 <div class="container">
 
     <!-- Progreso general -->
     <div class="progress-bar-container">
-        <h3>Progreso General de la Evaluacion</h3>
+        <h3>Progreso General de la Evaluación</h3>
         <div class="progress-track">
             <div class="progress-fill" id="progressFill" style="width: 0%"></div>
         </div>
@@ -237,7 +237,7 @@
             <span class="badge" id="badge1">0/0</span>
         </div>
         <div class="discipline-body" id="body1">
-            <p class="section-title">Definicion de la MCI (Meta Crucialmente Importante)</p>
+            <p class="section-title">Definición de la MCI (Meta Crucialmente Importante)</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d1c1" onchange="updateProgress()">
@@ -245,34 +245,34 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c2" onchange="updateProgress()">
-                <label for="d1c2"><strong>Maximo 2 MCIs simultaneas:</strong> La gerencia se enfoca en no mas de dos metas crucialmente importantes a la vez, evitando la dispersion de esfuerzos.</label>
+                <label for="d1c2"><strong>Máximo 2 MCIs simultaneas:</strong> La gerencia se enfoca en no más de dos metas crucialmente importantes a la vez, evitando la dispersión de esfuerzos.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c3" onchange="updateProgress()">
-                <label for="d1c3"><strong>Distincion torbellino vs. MCI:</strong> El equipo diferencia claramente entre las actividades del dia a dia (torbellino) y las acciones dirigidas a la MCI.</label>
+                <label for="d1c3"><strong>Distinción torbellino vs. MCI:</strong> El equipo diferencia claramente entre las actividades del día a día (torbellino) y las acciones dirigidas a la MCI.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c4" onchange="updateProgress()">
-                <label for="d1c4"><strong>Alineacion vertical:</strong> La MCI de la gerencia esta alineada con la MCI general de la organizacion y contribuye directamente a ella.</label>
+                <label for="d1c4"><strong>Alineación vertical:</strong> La MCI de la gerencia está alineada con la MCI general de la organización y contribuye directamente a ella.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c5" onchange="updateProgress()">
-                <label for="d1c5"><strong>Participacion del equipo:</strong> Los miembros del equipo participaron activamente en la definicion de la MCI del area (sin participacion no hay compromiso).</label>
+                <label for="d1c5"><strong>Participación del equipo:</strong> Los miembros del equipo participaron activamente en la definición de la MCI del área (sin participación no hay compromiso).</label>
             </div>
 
-            <p class="section-title">Aplicacion en Gerencia de Administracion</p>
+            <p class="section-title">Aplicación en Gerencia de Administración</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d1c6" onchange="updateProgress()">
-                <label for="d1c6"><strong>Presupuesto y finanzas:</strong> Existe una MCI relacionada con la optimizacion presupuestaria o reduccion de costos administrativos medible y con fecha limite.</label>
+                <label for="d1c6"><strong>Presupuesto y finanzas:</strong> Existe una MCI relacionada con la optimización presupuestaria o reducción de costos administrativos medible y con fecha límite.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c7" onchange="updateProgress()">
-                <label for="d1c7"><strong>Eficiencia de procesos:</strong> Se ha identificado el proceso administrativo mas critico que debe mejorar (compras, pagos, nomina, contrataciones, etc.).</label>
+                <label for="d1c7"><strong>Eficiencia de procesos:</strong> Se ha identificado el proceso administrativo más crítico que debe mejorar (compras, pagos, nomina, contrataciones, etc.).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c8" onchange="updateProgress()">
-                <label for="d1c8"><strong>Comunicacion de la MCI:</strong> Todos los colaboradores de la gerencia pueden citar la MCI del area sin necesidad de consultarla.</label>
+                <label for="d1c8"><strong>Comunicación de la MCI:</strong> Todos los colaboradores de la gerencia pueden citar la MCI del área sin necesidad de consultarla.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c9" onchange="updateProgress()">
@@ -280,69 +280,69 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d1c10" onchange="updateProgress()">
-                <label for="d1c10"><strong>Plazo definido:</strong> La MCI tiene una linea de meta clara con fecha especifica, no es una meta abierta o indefinida.</label>
+                <label for="d1c10"><strong>Plazo definido:</strong> La MCI tiene una línea de meta clara con fecha específica, no es una meta abierta o indefinida.</label>
             </div>
 
             <p class="section-title">Notas y Observaciones - Disciplina 1</p>
-            <textarea class="notes-area" placeholder="Registre observaciones, areas de mejora o compromisos para la Disciplina 1..."></textarea>
+            <textarea class="notes-area" placeholder="Registre observaciones, áreas de mejora o compromisos para la Disciplina 1..."></textarea>
         </div>
     </div>
 
     <!-- DISCIPLINA 2 -->
     <div class="discipline d2" id="disc2">
         <div class="discipline-header" onclick="toggleSection('body2')">
-            <h2>Disciplina 2: Actuar sobre las Medidas de Prediccion</h2>
+            <h2>Disciplina 2: Actuar sobre las Medidas de Predicción</h2>
             <span class="badge" id="badge2">0/0</span>
         </div>
         <div class="discipline-body" id="body2">
-            <p class="section-title">Medidas Historicas vs. Medidas de Prediccion</p>
+            <p class="section-title">Medidas Históricas vs. Medidas de Predicción</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d2c1" onchange="updateProgress()">
-                <label for="d2c1"><strong>Medidas historicas identificadas:</strong> Se monitorean indicadores de resultado (ej: gasto total, cumplimiento presupuestal, tiempos de cierre contable) que miden si se alcanzo la MCI.</label>
+                <label for="d2c1"><strong>Medidas históricas identificadas:</strong> Se monitorean indicadores de resultado (ej: gasto total, cumplimiento presupuestal, tiempos de cierre contable) que miden si se alcanzó la MCI.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c2" onchange="updateProgress()">
-                <label for="d2c2"><strong>Medidas de prediccion definidas:</strong> Se han identificado las actividades predictivas que impulsan el logro de la MCI (ej: numero de revisiones de gastos semanales, auditorias internas realizadas, proveedores evaluados).</label>
+                <label for="d2c2"><strong>Medidas de predicción definidas:</strong> Se han identificado las actividades predictivas que impulsan el logro de la MCI (ej: número de revisiones de gastos semanales, auditorias internas realizadas, proveedores evaluados).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c3" onchange="updateProgress()">
-                <label for="d2c3"><strong>Predictivas e influenciables:</strong> Las medidas de prediccion cumplen ambos criterios: predicen el logro de la MCI Y el equipo puede influir directamente en ellas.</label>
+                <label for="d2c3"><strong>Predictivas e influenciables:</strong> Las medidas de predicción cumplen ambos criterios: predicen el logro de la MCI Y el equipo puede influir directamente en ellas.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c4" onchange="updateProgress()">
-                <label for="d2c4"><strong>Medibles semanalmente:</strong> Las medidas de prediccion se pueden rastrear y reportar con frecuencia semanal (no mensual o trimestral).</label>
+                <label for="d2c4"><strong>Medibles semanalmente:</strong> Las medidas de predicción se pueden rastrear y reportar con frecuencia semanal (no mensual o trimestral).</label>
             </div>
 
-            <p class="section-title">Aplicacion en Gerencia de Administracion</p>
+            <p class="section-title">Aplicación en Gerencia de Administración</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d2c5" onchange="updateProgress()">
-                <label for="d2c5"><strong>Control de gastos:</strong> Se realiza un numero definido de revisiones de partidas presupuestarias por semana para detectar desviaciones a tiempo.</label>
+                <label for="d2c5"><strong>Control de gastos:</strong> Se realiza un número definido de revisiones de partidas presupuestarias por semana para detectar desviaciones a tiempo.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c6" onchange="updateProgress()">
-                <label for="d2c6"><strong>Gestion de proveedores:</strong> Se llevan a cabo evaluaciones periodicas de proveedores con criterios estandarizados de costo, calidad y cumplimiento.</label>
+                <label for="d2c6"><strong>Gestión de proveedores:</strong> Se llevan a cabo evaluaciones periodicas de proveedores con criterios estandarizados de costo, calidad y cumplimiento.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c7" onchange="updateProgress()">
-                <label for="d2c7"><strong>Procesos de compras:</strong> Existe un indicador de prediccion para el proceso de adquisiciones (ej: cotizaciones comparativas realizadas por solicitud de compra).</label>
+                <label for="d2c7"><strong>Procesos de compras:</strong> Existe un indicador de predicción para el proceso de adquisiciones (ej: cotizaciones comparativas realizadas por solicitud de compra).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c8" onchange="updateProgress()">
-                <label for="d2c8"><strong>Recursos humanos:</strong> Se miden actividades predictivas en RH (ej: entrevistas de clima laboral realizadas, horas de capacitacion impartidas por semana).</label>
+                <label for="d2c8"><strong>Recursos humaños:</strong> Se miden actividades predictivas en RH (ej: entrevistas de clima laboral realizadas, horas de capacitación impartidas por semana).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c9" onchange="updateProgress()">
-                <label for="d2c9"><strong>Servicios generales:</strong> Existen metricas de prediccion para mantenimiento e infraestructura (ej: inspecciones preventivas realizadas, ordenes de servicio atendidas en plazo).</label>
+                <label for="d2c9"><strong>Servicios generales:</strong> Existen metricas de predicción para mantenimiento e infraestructura (ej: inspecciones preventivas realizadas, ordenes de servicio atendidas en plazo).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d2c10" onchange="updateProgress()">
-                <label for="d2c10"><strong>Estandar de rendimiento:</strong> Cada medida de prediccion tiene un estandar numerico claro (ej: "5 revisiones de gastos por semana" y no solo "revisar gastos").</label>
+                <label for="d2c10"><strong>Estandar de rendimiento:</strong> Cada medida de predicción tiene un estandar numerico claro (ej: "5 revisiones de gastos por semana" y no solo "revisar gastos").</label>
             </div>
 
             <p class="section-title">Notas y Observaciones - Disciplina 2</p>
-            <textarea class="notes-area" placeholder="Registre observaciones, areas de mejora o compromisos para la Disciplina 2..."></textarea>
+            <textarea class="notes-area" placeholder="Registre observaciones, áreas de mejora o compromisos para la Disciplina 2..."></textarea>
         </div>
     </div>
 
@@ -361,22 +361,22 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d3c2" onchange="updateProgress()">
-                <label for="d3c2"><strong>Simple y claro:</strong> El tablero es tan sencillo que cualquier miembro del equipo puede saber en 5 segundos si se esta ganando o perdiendo.</label>
+                <label for="d3c2"><strong>Simple y claro:</strong> El tablero es tan sencillo que cualquier miembro del equipo puede saber en 5 segundos si se está ganando o perdiendo.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d3c3" onchange="updateProgress()">
-                <label for="d3c3"><strong>Muestra MCI y medidas de prediccion:</strong> El tablero incluye tanto la medida historica (resultado de la MCI) como las medidas de prediccion y su avance.</label>
+                <label for="d3c3"><strong>Muestra MCI y medidas de predicción:</strong> El tablero incluye tanto la medida histórica (resultado de la MCI) como las medidas de predicción y su avance.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d3c4" onchange="updateProgress()">
-                <label for="d3c4"><strong>Tipo de tablero adecuado:</strong> Se utiliza un formato visual apropiado (grafica de tendencias, velocimetro, barras comparativas) que refleja claramente el progreso.</label>
+                <label for="d3c4"><strong>Tipo de tablero adecuado:</strong> Se utiliza un formato visual apropiado (gráfica de tendencias, velocimetro, barras comparativas) que refleja claramente el progreso.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d3c5" onchange="updateProgress()">
                 <label for="d3c5"><strong>Diseñado por el equipo:</strong> Los miembros del equipo participaron en el diseño del tablero, generando mayor sentido de pertenencia y compromiso.</label>
             </div>
 
-            <p class="section-title">Aplicacion en Gerencia de Administracion</p>
+            <p class="section-title">Aplicación en Gerencia de Administración</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d3c6" onchange="updateProgress()">
@@ -392,7 +392,7 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d3c9" onchange="updateProgress()">
-                <label for="d3c9"><strong>Efecto motivador:</strong> El tablero genera un efecto de "juego" que motiva al equipo a mejorar los numeros (las personas juegan diferente cuando se lleva la puntuacion).</label>
+                <label for="d3c9"><strong>Efecto motivador:</strong> El tablero genera un efecto de "juego" que motiva al equipo a mejorar los números (las personas juegan diferente cuando se lleva la puntuación).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d3c10" onchange="updateProgress()">
@@ -400,72 +400,72 @@
             </div>
 
             <p class="section-title">Notas y Observaciones - Disciplina 3</p>
-            <textarea class="notes-area" placeholder="Registre observaciones, areas de mejora o compromisos para la Disciplina 3..."></textarea>
+            <textarea class="notes-area" placeholder="Registre observaciones, áreas de mejora o compromisos para la Disciplina 3..."></textarea>
         </div>
     </div>
 
     <!-- DISCIPLINA 4 -->
     <div class="discipline d4" id="disc4">
         <div class="discipline-header" onclick="toggleSection('body4')">
-            <h2>Disciplina 4: Crear una Cadencia de Rendicion de Cuentas</h2>
+            <h2>Disciplina 4: Crear una Cadencia de Rendición de Cuentas</h2>
             <span class="badge" id="badge4">0/0</span>
         </div>
         <div class="discipline-body" id="body4">
-            <p class="section-title">Sesiones de MCI (Rendicion de Cuentas Semanal)</p>
+            <p class="section-title">Sesiónes de MCI (Rendición de Cuentas Semanal)</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d4c1" onchange="updateProgress()">
-                <label for="d4c1"><strong>Sesion semanal de MCI:</strong> Se realiza una sesion semanal exclusiva para revisar el avance de la MCI (no mezclada con juntas operativas del torbellino).</label>
+                <label for="d4c1"><strong>Sesión semanal de MCI:</strong> Se realiza una sesión semanal exclusiva para revisar el avance de la MCI (no mezclada con juntas operativas del torbellino).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c2" onchange="updateProgress()">
-                <label for="d4c2"><strong>Duracion breve:</strong> La sesion dura entre 20 y 30 minutos como maximo, con una agenda clara y enfocada.</label>
+                <label for="d4c2"><strong>Duracion breve:</strong> La sesión dura entre 20 y 30 minutos como máximo, con una agenda clara y enfocada.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c3" onchange="updateProgress()">
-                <label for="d4c3"><strong>Rendicion de cuentas:</strong> Cada miembro del equipo reporta el cumplimiento de los compromisos adquiridos la semana anterior.</label>
+                <label for="d4c3"><strong>Rendición de cuentas:</strong> Cada miembro del equipo reporta el cumplimiento de los compromisos adquiridos la semana anterior.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c4" onchange="updateProgress()">
-                <label for="d4c4"><strong>Revision del tablero:</strong> Se revisa el tablero de resultados para verificar si se esta ganando o perdiendo y se analizan las tendencias.</label>
+                <label for="d4c4"><strong>Revisión del tablero:</strong> Se revisa el tablero de resultados para verificar si se está ganando o perdiendo y se analizan las tendencias.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c5" onchange="updateProgress()">
-                <label for="d4c5"><strong>Nuevos compromisos:</strong> Cada miembro del equipo establece de 1 a 2 compromisos especificos para la semana entrante que impacten las medidas de prediccion.</label>
+                <label for="d4c5"><strong>Nuevos compromisos:</strong> Cada miembro del equipo establece de 1 a 2 compromisos específicos para la semana entrante que impacten las medidas de predicción.</label>
             </div>
 
-            <p class="section-title">Aplicacion en Gerencia de Administracion</p>
+            <p class="section-title">Aplicación en Gerencia de Administración</p>
 
             <div class="check-item">
                 <input type="checkbox" id="d4c6" onchange="updateProgress()">
-                <label for="d4c6"><strong>Agenda estandar:</strong> La sesion sigue la estructura: 1) Rendir cuentas de compromisos anteriores, 2) Revisar tablero, 3) Asumir nuevos compromisos.</label>
+                <label for="d4c6"><strong>Agenda estandar:</strong> La sesión sigue la estructura: 1) Rendir cuentas de compromisos anteriores, 2) Revisar tablero, 3) Asumir nuevos compromisos.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c7" onchange="updateProgress()">
-                <label for="d4c7"><strong>Compromisos de alto impacto:</strong> Los compromisos semanales del equipo administrativo se centran en actividades que mueven las medidas de prediccion (no tareas rutinarias del torbellino).</label>
+                <label for="d4c7"><strong>Compromisos de alto impacto:</strong> Los compromisos semanales del equipo administrativo se centran en actividades que mueven las medidas de predicción (no táreas rutinarias del torbellino).</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c8" onchange="updateProgress()">
-                <label for="d4c8"><strong>Desbloqueo colaborativo:</strong> El equipo colabora para resolver obstaculos que impiden a algun miembro cumplir sus compromisos.</label>
+                <label for="d4c8"><strong>Desbloqueo colaborativo:</strong> El equipo colabora para resolver obstaculos que impiden a algún miembro cumplir sus compromisos.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c9" onchange="updateProgress()">
-                <label for="d4c9"><strong>Consistencia:</strong> La sesion de MCI se ha mantenido de manera ininterrumpida por al menos las ultimas 4 semanas consecutivas.</label>
+                <label for="d4c9"><strong>Consistencia:</strong> La sesión de MCI se ha mantenido de manera ininterrumpida por al menos las últimas 4 semanas consecutivas.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="d4c10" onchange="updateProgress()">
-                <label for="d4c10"><strong>Compromiso personal del lider:</strong> El gerente de administracion participa activamente, rinde cuentas de sus propios compromisos y modela la disciplina.</label>
+                <label for="d4c10"><strong>Compromiso personal del lider:</strong> El gerente de administración participa activamente, rinde cuentas de sus propios compromisos y modela la disciplina.</label>
             </div>
 
             <p class="section-title">Notas y Observaciones - Disciplina 4</p>
-            <textarea class="notes-area" placeholder="Registre observaciones, areas de mejora o compromisos para la Disciplina 4..."></textarea>
+            <textarea class="notes-area" placeholder="Registre observaciones, áreas de mejora o compromisos para la Disciplina 4..."></textarea>
         </div>
     </div>
 
     <!-- SECCION DE CULTURA Y COMPROMISO -->
     <div class="discipline" style="border-left: 4px solid #ff6f00;">
-        <div class="discipline-header" style="background: linear-gradient(135deg, #e65100, #ff8f00);" onclick="toggleSection('bodyCulture')">
-            <h2>Evaluacion de Cultura y Compromiso del Equipo</h2>
+        <div class="discipline-header" style="background: línear-gradient(135deg, #e65100, #ff8f00);" onclick="toggleSection('bodyCulture')">
+            <h2>Evaluación de Cultura y Compromiso del Equipo</h2>
             <span class="badge" id="badgeCulture">0/0</span>
         </div>
         <div class="discipline-body" id="bodyCulture">
@@ -477,7 +477,7 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="cc2" onchange="updateProgress()">
-                <label for="cc2"><strong>Sentido de logro:</strong> Los miembros del equipo sienten entusiasmo y energia al reportar avances en las sesiones de MCI.</label>
+                <label for="cc2"><strong>Sentido de logro:</strong> Los miembros del equipo sienten entusiasmo y energía al reportar avances en las sesiones de MCI.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="cc3" onchange="updateProgress()">
@@ -485,7 +485,7 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="cc4" onchange="updateProgress()">
-                <label for="cc4"><strong>Aislamiento del torbellino:</strong> El equipo logra proteger tiempo para la MCI a pesar de las demandas urgentes del dia a dia administrativo.</label>
+                <label for="cc4"><strong>Aislamiento del torbellino:</strong> El equipo logra proteger tiempo para la MCI a pesar de las demandas urgentes del día a día administrativo.</label>
             </div>
             <div class="check-item">
                 <input type="checkbox" id="cc5" onchange="updateProgress()">
@@ -499,7 +499,7 @@
 
     <!-- RESUMEN -->
     <div class="summary-section">
-        <h3>Resumen de Evaluacion</h3>
+        <h3>Resumen de Evaluación</h3>
         <div class="score-grid">
             <div class="score-card sc-d1">
                 <div class="score-value" id="scoreD1">0%</div>
@@ -507,7 +507,7 @@
             </div>
             <div class="score-card sc-d2">
                 <div class="score-value" id="scoreD2">0%</div>
-                <div class="score-label">D2: Prediccion</div>
+                <div class="score-label">D2: Predicción</div>
             </div>
             <div class="score-card sc-d3">
                 <div class="score-value" id="scoreD3">0%</div>
@@ -515,7 +515,7 @@
             </div>
             <div class="score-card sc-d4">
                 <div class="score-value" id="scoreD4">0%</div>
-                <div class="score-label">D4: Rendicion</div>
+                <div class="score-label">D4: Rendición</div>
             </div>
         </div>
 
@@ -524,12 +524,12 @@
             <input type="text" id="evaluator" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; margin-top:4px;" placeholder="Nombre del evaluador">
         </div>
         <div style="margin-bottom: 16px;">
-            <label for="evalDate"><strong>Fecha de evaluacion:</strong></label>
+            <label for="evalDate"><strong>Fecha de evaluación:</strong></label>
             <input type="date" id="evalDate" style="padding:8px; border:1px solid #ddd; border-radius:6px; margin-top:4px;">
         </div>
         <div>
             <label><strong>Observaciones generales:</strong></label>
-            <textarea class="notes-area" placeholder="Plan de accion general, proximos pasos, compromisos de mejora..."></textarea>
+            <textarea class="notes-area" placeholder="Plan de acción general, próximos pasos, compromisos de mejora..."></textarea>
         </div>
 
         <div class="btn-group">
@@ -540,8 +540,8 @@
     </div>
 
     <div class="footer">
-        Checklist basado en "Las 4 Disciplinas de la Ejecucion" de Chris McChesney, Sean Covey y Jim Huling<br>
-        Adaptado para evaluacion de Gerencia de Administracion
+        Checklist basado en "Las 4 Disciplinas de la Ejecución" de Chris McChesney, Sean Covey y Jim Huling<br>
+        Adaptado para evaluación de Gerencia de Administración
     </div>
 </div>
 
@@ -622,7 +622,7 @@
     }
 
     function resetAll() {
-        if (!confirm('¿Seguro que desea reiniciar toda la evaluacion? Se perdera el progreso no guardado.')) return;
+        if (!confirm('¿Seguro que desea reiniciar toda la evaluación? Se perdera el progreso no guardado.')) return;
         document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
         document.querySelectorAll('textarea').forEach(ta => ta.value = '');
         document.querySelectorAll('input[type="text"], input[type="date"]').forEach(inp => inp.value = '');
