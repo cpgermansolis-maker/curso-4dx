@@ -17,7 +17,7 @@
 
         /* === SPLASH SCREEN === */
         #splash {
-            position: fixed; inset: 0; z-index: 9999; background: línear-gradient(135deg, #0d1b4a, #1a237e, #283593);
+            position: fixed; inset: 0; z-index: 9999; background: linear-gradient(135deg, #0d1b4a, #1a237e, #283593);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: white; text-align: center; transition: opacity 0.8s;
         }
@@ -26,7 +26,7 @@
         #splash p { font-size: 1.1em; opacity: 0.8; margin-bottom: 30px; animation: fadeDown 1.2s ease; }
         #splash .start-btn {
             padding: 16px 48px; font-size: 1.2em; font-weight: 700; border: none; border-radius: 50px;
-            background: línear-gradient(135deg, var(--gold), #ffb300); color: #333; cursor: pointer;
+            background: linear-gradient(135deg, var(--gold), #ffb300); color: #333; cursor: pointer;
             animation: pulse 2s infinite; transition: transform 0.2s;
         }
         #splash .start-btn:hover { transform: scale(1.05); }
@@ -52,7 +52,7 @@
         }
         .lesson-hero::after {
             content: ''; position: absolute; inset: 0;
-            background: línear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6));
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6));
         }
         .lesson-hero .hero-caption {
             position: absolute; bottom: 16px; left: 20px; right: 20px; color: white;
@@ -66,7 +66,7 @@
         .img-caption { font-size: 0.82em; color: var(--text-light); text-align: center; font-style: italic; margin-top: -6px; margin-bottom: 12px; }
 
         .instructor-note {
-            background: línear-gradient(135deg, #fff3e0, #fff8e1); border-left: 4px solid var(--gold);
+            background: linear-gradient(135deg, #fff3e0, #fff8e1); border-left: 4px solid var(--gold);
             border-radius: 10px; padding: 14px 18px; margin: 16px 0; display: flex; gap: 14px; align-items: flex-start;
         }
         .instructor-note .instructor-mini-avatar {
@@ -117,7 +117,7 @@
 
         /* LOGIN / REGISTER */
         #authScreen {
-            position: fixed; inset: 0; z-index: 9998; background: línear-gradient(135deg, #0d1b4a, #1a237e);
+            position: fixed; inset: 0; z-index: 9998; background: linear-gradient(135deg, #0d1b4a, #1a237e);
             display: flex; align-items: flex-start; justify-content: center; padding: 16px;
             overflow-y: auto;
         }
@@ -199,11 +199,11 @@
         .admin-header h2 { color: var(--blue); }
         .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: 20px; }
         .admin-stat {
-            background: línear-gradient(135deg, var(--blue), #283593); color: white; padding: 16px;
+            background: linear-gradient(135deg, var(--blue), #283593); color: white; padding: 16px;
             border-radius: 10px; text-align: center;
         }
-        .admin-stat.gold { background: línear-gradient(135deg, var(--orange), #ff8f00); }
-        .admin-stat.green { background: línear-gradient(135deg, var(--green), #43a047); }
+        .admin-stat.gold { background: linear-gradient(135deg, var(--orange), #ff8f00); }
+        .admin-stat.green { background: linear-gradient(135deg, var(--green), #43a047); }
         .admin-stat .num { font-size: 2em; font-weight: 800; }
         .admin-stat .lbl { font-size: 0.8em; opacity: 0.9; }
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.85em; }
@@ -286,7 +286,7 @@
             font-size: 0.85em; line-height: 1.6;
         }
         .footer-line {
-            height: 3px; background: línear-gradient(90deg, transparent, var(--gold), transparent);
+            height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
             margin-bottom: 16px;
         }
         .footer-text strong { color: var(--blue); }
@@ -301,7 +301,7 @@
 
         /* === TOP BAR === */
         .topbar {
-            background: línear-gradient(135deg, #0d1b4a, var(--blue));
+            background: linear-gradient(135deg, #0d1b4a, var(--blue));
             color: white; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
         }
@@ -372,7 +372,7 @@
 
         /* Interactive elements */
         .scenario-box {
-            background: línear-gradient(135deg, #e3f2fd, #e8eaf6); border-radius: 12px; padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd, #e8eaf6); border-radius: 12px; padding: 20px;
             margin: 16px 0; border: 2px dashed var(--blue-light);
         }
         .scenario-box h4 { color: var(--blue); margin-bottom: 10px; }
@@ -441,7 +441,7 @@
         .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .btn-primary { background: var(--blue); color: white; }
         .btn-success { background: var(--green); color: white; }
-        .btn-gold { background: línear-gradient(135deg, var(--gold), #ffb300); color: #333; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), #ffb300); color: #333; }
         .btn-next { float: right; margin-top: 20px; }
 
         /* Badge popup */
