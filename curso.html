@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso TRIKLES - Plataforma de cursos</title>
+    <!-- Firebase SDK (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="firebase-init.js"></script>
     <!-- Tesseract.js para OCR del boucher (lee texto de imagenes) -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <!-- Cargar el curso segun el parametro ?id=xxx de la URL -->
@@ -601,31 +606,6 @@
 </head>
 <body>
 
-<!-- ADMIN PANEL -->
-<div id="adminPanel">
-    <div class="admin-card">
-        <div class="admin-header">
-            <h2>&#128200; Panel de Administrador - Curso 4DX</h2>
-            <div>
-                <button class="btn btn-primary" onclick="refreshAdmin()">&#128260; Actualizar</button>
-                <button class="btn" style="background:#c62828;color:white;" onclick="closeAdmin()">Cerrar</button>
-            </div>
-        </div>
-        <p style="color:var(--text-light);font-size:0.9em;margin-bottom:10px;">
-            <strong>Nota:</strong> Este panel muestra los alumnos registrados en <strong>este dispositivo/navegador</strong>.
-            Para ver TODOS los alumnos centralmente, configura el webhook a Google Sheets (ver guia).
-        </p>
-        <div class="admin-stats" id="adminStats"></div>
-        <div style="overflow-x:auto;">
-            <table class="admin-table" id="adminTable"></table>
-        </div>
-        <div class="admin-actions">
-            <button class="btn btn-success" onclick="exportCSV()">&#128196; Descargar lista (CSV)</button>
-            <button class="btn btn-gold" onclick="window.open('GUIA-PUBLICACION-ONLINE.html','_blank')">&#128214; Ver guia</button>
-        </div>
-    </div>
-</div>
-
 <!-- AUTH SCREEN -->
 <div id="authScreen">
     <div class="auth-card">
@@ -700,16 +680,6 @@
             <div class="auth-error" id="regError"></div>
             <div class="auth-footer">Tus datos se guardan localmente. El boucher se valida automáticamente con OCR.</div>
 
-            <!-- BOTON TEMPORAL DE PRUEBA (eliminar en producción) -->
-            <div style="margin-top:12px;padding-top:10px;border-top:2px dashed #ffb300;">
-                <div style="font-size:0.7em;color:#e65100;text-align:center;margin-bottom:6px;font-weight:700;">
-                    &#128736;&#65039; MODO PRUEBA (Instructor)
-                </div>
-                <button type="button" onclick="createTestStudent()"
-                    style="width:100%;padding:10px;background:linear-gradient(135deg,#ff8f00,#ffb300);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.85em;">
-                    &#129514; Crear alumno de prueba
-                </button>
-            </div>
         </form>
     </div>
 </div>
@@ -803,22 +773,7 @@ let finalScore = 0;
 let finalAnswered = 0;
 let currentUser = null;
 
-// ========== AUTH FUNCTIONS ==========
-const USERS_KEY = 'trikles_users';
-const SESSION_KEY = 'trikles_session';
-
-function getUsers() {
-    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
-    catch(e) { return {}; }
-}
-function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
-
-function hashPass(pass) {
-    // Simple hash (not real security, just to avoid plain text)
-    let h = 0; for (let i = 0; i < pass.length; i++) h = ((h<<5)-h) + pass.charCodeAt(i) | 0;
-    return 'h_' + h;
-}
-
+// ========== AUTH FUNCTIONS (Firebase-backed) ==========
 function switchAuthTab(tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -903,12 +858,7 @@ async function doRegister(e) {
     const errEl = document.getElementById('regError');
     errEl.style.display = 'none';
 
-    const users = getUsers();
-    if (users[email]) {
-        errEl.textContent = 'Este correo ya está registrado. Inicia sesión en su lugar.';
-        errEl.style.display = 'block';
-        return;
-    }
+    if (pass.length < 6) { errEl.textContent = 'La contraseña debe tener al menos 6 caracteres.'; errEl.style.display = 'block'; return; }
 
     if (!voucherImageData) {
         errEl.textContent = 'Debes subir la foto de tu boucher de pago.';
@@ -916,76 +866,41 @@ async function doRegister(e) {
         return;
     }
 
-    // Show loading state
     const btn = document.getElementById('regSubmitBtn');
     btn.disabled = true;
     document.getElementById('regBtnText').style.display = 'none';
     document.getElementById('regBtnLoading').style.display = 'inline';
 
-    // Validate voucher
     const validation = await validateVoucher(voucherImageData);
 
-    btn.disabled = false;
-    document.getElementById('regBtnText').style.display = 'inline';
-    document.getElementById('regBtnLoading').style.display = 'none';
-
     if (!validation.ok) {
+        btn.disabled = false;
+        document.getElementById('regBtnText').style.display = 'inline';
+        document.getElementById('regBtnLoading').style.display = 'none';
         errEl.textContent = 'El boucher no pudo ser validado. Sube una imagen clara del boucher a nombre de Germán Solís Muñoz.';
         errEl.style.display = 'block';
         return;
     }
 
-    // Register automátically
-    users[email] = {
-        name, email, company, role, pass: hashPass(pass),
-        registeredAt: new Date().toISOString(),
-        voucher: voucherImageData, // base64
-        voucherText: validation.text.substring(0, 500),
-        progress: { xp: 0, completed: [], finalScore: null, completedDate: null }
-    };
-    saveUsers(users);
-    localStorage.setItem(SESSION_KEY, email);
-    currentUser = users[email];
-
-    // Send to webhook if configured
-    sendToWebhook('register', users[email]);
-
-    enterCourse();
-}
-
-// ========== MODO PRUEBA (eliminar en producción) ==========
-function createTestStudent() {
-    const names = ['María López Garcia', 'Juan Pérez Ramirez', 'Ana Sánchez Torres', 'Carlos Mendoza Ruiz', 'Laura Gómez Hernández', 'Pedro Vargas Castro', 'Sofía Ramírez Diaz', 'Ricardo Morales Silva'];
-    const companies = ['ACME Corp', 'Grupo Industrial XYZ', 'Constructora del Norte', 'Comercializadora Sol', 'Servicios Profesiónales TM', 'Logistica Express'];
-    const roles = ['Gerente de Administración', 'Coordinador Administrativo', 'Director de Finanzas', 'Jefe de Compras', 'Gerente de RH', 'Contralor'];
-
-    const rnd = arr => arr[Math.floor(Math.random() * arr.length)];
-    const name = rnd(names);
-    const timestamp = Date.now();
-    const email = 'test.' + name.toLowerCase().split(' ')[0] + timestamp + '@prueba.com';
-    const company = rnd(companies);
-    const role = rnd(roles);
-
-    const users = getUsers();
-    users[email] = {
-        name, email, company, role, pass: hashPass('test123'),
-        registeredAt: new Date().toISOString(),
-        voucher: null,
-        voucherText: '[ALUMNO DE PRUEBA - sin boucher]',
-        isTest: true,
-        progress: { xp: 0, completed: [], finalScore: null, completedDate: null }
-    };
-    saveUsers(users);
-    localStorage.setItem(SESSION_KEY, email);
-    currentUser = users[email];
-
-    // Enviar al webhook
-    sendToWebhook('register', users[email]);
-
-    // Mostrar notificación
-    alert('Alumno de prueba creado:\n\nNombre: ' + name + '\nCorreo: ' + email + '\nEmpresa: ' + company + '\nCargo: ' + role + '\n\nSe envio al webhook de Google Sheets.\nVas a entrar al curso como este alumno.');
-
-    enterCourse();
+    try {
+        await TK.register({ name, email, company, role }, pass);
+        // Crear la inscripción al curso actual con el voucher
+        await TK.saveEnrollment(COURSE.id, {
+            enrolledAt: new Date().toISOString(),
+            voucher: voucherImageData,
+            voucherText: validation.text.substring(0, 500),
+            progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
+        });
+        currentUser = TK.getCurrentUser();
+        sendToWebhook('register', currentUser);
+        enterCourse();
+    } catch (err) {
+        btn.disabled = false;
+        document.getElementById('regBtnText').style.display = 'inline';
+        document.getElementById('regBtnLoading').style.display = 'none';
+        errEl.textContent = err.message;
+        errEl.style.display = 'block';
+    }
 }
 
 // ========== WEBHOOK (Google Sheets) ==========
@@ -993,7 +908,7 @@ function createTestStudent() {
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
 
 function sendToWebhook(event, data) {
-    const url = localStorage.getItem('curso4dx_webhook') || localStorage.getItem('trikles_webhook') || WEBHOOK_URL;
+    const url = WEBHOOK_URL;
     if (!url) return;
     try {
         const courseId = COURSE ? COURSE.id : '';
@@ -1021,35 +936,30 @@ function sendToWebhook(event, data) {
     } catch(e) { console.log('Webhook fail:', e); }
 }
 
-function doLogin(e) {
+async function doLogin(e) {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value;
     const errEl = document.getElementById('loginError');
-
-    const users = getUsers();
-    const user = users[email];
-    if (!user) {
-        errEl.textContent = 'No existe una cuenta con ese correo. Registrate primero.';
+    errEl.style.display = 'none';
+    try {
+        const data = await TK.login(email, pass);
+        if (!data) { errEl.textContent = 'Tu cuenta no tiene perfil.'; errEl.style.display = 'block'; return; }
+        currentUser = data;
+        loadProgress();
+        // Si está inscrito al curso actual → entra; si no → pantalla de inscripción
+        if (isEnrolledInCurrentCourse()) enterCourse();
+        else showEnrollmentScreen();
+    } catch (err) {
+        errEl.textContent = err.message;
         errEl.style.display = 'block';
-        return;
     }
-    if (user.pass !== hashPass(pass)) {
-        errEl.textContent = 'Contraseña incorrecta.';
-        errEl.style.display = 'block';
-        return;
-    }
-    localStorage.setItem(SESSION_KEY, email);
-    currentUser = user;
-    loadProgress();
-    enterCourse();
 }
 
-function doLogout() {
-    if (currentUser) saveProgress();
-    localStorage.removeItem(SESSION_KEY);
+async function doLogout() {
+    try { await TK.logout(); } catch(e) {}
     currentUser = null;
-    location.reload();
+    window.location.href = 'index.html';
 }
 
 function loadProgress() {
@@ -1065,20 +975,20 @@ function loadProgress() {
 
 function saveProgress() {
     if (!currentUser || !COURSE) return;
-    const users = getUsers();
-    if (!users[currentUser.email]) return;
-    if (!users[currentUser.email].enrollments) users[currentUser.email].enrollments = {};
-    if (!users[currentUser.email].enrollments[COURSE.id]) {
-        users[currentUser.email].enrollments[COURSE.id] = { enrolledAt: new Date().toISOString(), progress: {} };
+    if (!currentUser.enrollments) currentUser.enrollments = {};
+    if (!currentUser.enrollments[COURSE.id]) {
+        currentUser.enrollments[COURSE.id] = { enrolledAt: new Date().toISOString(), progress: {} };
     }
-    const enr = users[currentUser.email].enrollments[COURSE.id];
+    const enr = currentUser.enrollments[COURSE.id];
+    const prevCompletedDate = enr.progress?.completedDate || null;
     enr.progress = {
         xp, completed: Array.from(completedLessons),
         correctQuizzes: Array.from(correctQuizzes),
-        finalScore, completedDate: (completedLessons.size >= lessons.length ? (enr.progress?.completedDate || new Date().toISOString()) : null)
+        finalScore,
+        completedDate: (completedLessons.size >= lessons.length ? (prevCompletedDate || new Date().toISOString()) : null)
     };
-    saveUsers(users);
-    currentUser = users[currentUser.email];
+    // Persistir en Firestore (fire-and-forget; no bloqueamos la UI)
+    TK.saveProgress(COURSE.id, enr.progress).catch(e => console.warn('saveProgress:', e));
 }
 
 function enterCourse() {
@@ -1282,51 +1192,28 @@ function waitForCourse(callback, attempts = 0) {
 }
 
 // Auto-login check on page load
-window.addEventListener('DOMContentLoaded', () => {
-    // Migrar usuarios antiguos a nueva estructura (si aplica)
-    migrateLegacyUsers();
+window.addEventListener('DOMContentLoaded', async () => {
+    // Esperar a que Firebase determine sesión y a que el curso se cargue
+    const [{ data }] = await Promise.all([
+        TK.ready(),
+        new Promise(resolve => waitForCourse(resolve))
+    ]);
 
-    // Esperar a que el curso se cargue
-    waitForCourse(() => {
-        const email = localStorage.getItem(SESSION_KEY);
-        if (email) {
-            const users = getUsers();
-            if (users[email]) {
-                currentUser = users[email];
-                loadProgress();
-                // Alumno de prueba: auto-inscripción sin boucher
-                if (currentUser.isTest && !isEnrolledInCurrentCourse()) {
-                    const users = getUsers();
-                    if (!users[email].enrollments) users[email].enrollments = {};
-                    users[email].enrollments[COURSE.id] = {
-                        enrolledAt: new Date().toISOString(),
-                        voucher: null,
-                        voucherText: '[Alumno de prueba - acceso automático]',
-                        progress: {}
-                    };
-                    saveUsers(users);
-                    currentUser = users[email];
-                }
-                // Si esta inscrito en este curso, entrar directo
-                if (isEnrolledInCurrentCourse()) {
-                    enterCourse();
-                } else {
-                    showEnrollmentScreen();
-                }
-            } else {
-                window.location.href = 'index.html';
-            }
-        } else {
-            // Sin sesion, redirigir al catalogo
-            window.location.href = 'index.html';
-        }
-    });
+    if (!data) {
+        window.location.href = 'index.html';
+        return;
+    }
+    currentUser = data;
+    loadProgress();
+    if (isEnrolledInCurrentCourse()) {
+        enterCourse();
+    } else {
+        showEnrollmentScreen();
+    }
 
-    // Admin panel via URL hash #admin
-    if (location.hash === '#admin') openAdminPrompt();
-    // Keyboard shortcut Ctrl+Shift+A
+    // Atajo admin (Ctrl+Shift+A) - ahora redirige a admin.html
     document.addEventListener('keydown', e => {
-        if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); openAdminPrompt(); }
+        if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); window.location.href = 'admin.html'; }
     });
 });
 
@@ -1415,17 +1302,15 @@ async function doEnroll() {
             return;
         }
 
-        // Inscribir al alumno en el curso
-        const users = getUsers();
-        if (!users[currentUser.email].enrollments) users[currentUser.email].enrollments = {};
-        users[currentUser.email].enrollments[COURSE.id] = {
+        // Inscribir al alumno en el curso (Firestore)
+        const enrollment = {
             enrolledAt: new Date().toISOString(),
             voucher: enrollVoucherData,
             voucherText: result.data.text.substring(0, 500),
             progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
         };
-        saveUsers(users);
-        currentUser = users[currentUser.email];
+        await TK.saveEnrollment(COURSE.id, enrollment);
+        currentUser = TK.getCurrentUser();
 
         sendToWebhook('enroll', currentUser);
 
@@ -1441,149 +1326,6 @@ async function doEnroll() {
         btn.disabled = false;
         btn.textContent = 'Validar e inscribirme 🎉';
     }
-}
-
-// ========== MIGRACION DE USUARIOS ANTIGUOS ==========
-function migrateLegacyUsers() {
-    // Si hay datos en la clave antigua, migrar a la nueva
-    const oldUsersRaw = localStorage.getItem('curso4dx_users');
-    const newUsersRaw = localStorage.getItem('trikles_users');
-    if (oldUsersRaw && !newUsersRaw) {
-        try {
-            const oldUsers = JSON.parse(oldUsersRaw);
-            const newUsers = {};
-            Object.keys(oldUsers).forEach(email => {
-                const u = oldUsers[email];
-                newUsers[email] = {
-                    name: u.name, email: u.email, company: u.company, role: u.role,
-                    pass: u.pass, registeredAt: u.registeredAt,
-                    enrollments: {
-                        '4dx': {
-                            enrolledAt: u.registeredAt,
-                            voucher: u.voucher || null,
-                            voucherText: u.voucherText || '',
-                            progress: u.progress || { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
-                        }
-                    }
-                };
-                if (u.isTest) newUsers[email].isTest = true;
-            });
-            localStorage.setItem('trikles_users', JSON.stringify(newUsers));
-            // Migrar tambien la sesion
-            const oldSession = localStorage.getItem('curso4dx_session');
-            if (oldSession) localStorage.setItem('trikles_session', oldSession);
-            console.log('Migracion: ' + Object.keys(newUsers).length + ' usuarios migrados');
-        } catch(e) { console.error('Error en migracion:', e); }
-    }
-}
-
-// ========== ADMIN PANEL ==========
-const ADMIN_PASSWORD = 'trikles4dx2026'; // Cambia esto por tu contraseña
-
-function openAdminPrompt() {
-    const pass = prompt('Contraseña de administrador:');
-    if (pass === ADMIN_PASSWORD) {
-        openAdmin();
-    } else if (pass !== null) {
-        alert('Contraseña incorrecta.');
-    }
-}
-
-function openAdmin() {
-    document.getElementById('adminPanel').classList.add('show');
-    refreshAdmin();
-}
-
-function closeAdmin() {
-    document.getElementById('adminPanel').classList.remove('show');
-    if (location.hash === '#admin') history.replaceState(null, '', location.pathname);
-}
-
-function refreshAdmin() {
-    const users = getUsers();
-    const arr = Object.values(users);
-    const total = arr.length;
-    const completed = arr.filter(u => u.progress?.completed?.length >= 7 && u.progress?.finalScore >= 7).length;
-    const inProgress = arr.filter(u => (u.progress?.completed?.length || 0) > 0 && !(u.progress?.completed?.length >= 7 && u.progress?.finalScore >= 7)).length;
-    const thisWeek = arr.filter(u => {
-        const d = new Date(u.registeredAt);
-        const ago = (Date.now() - d.getTime()) / 86400000;
-        return ago <= 7;
-    }).length;
-
-    const stats = document.getElementById('adminStats');
-    stats.innerHTML =
-        '<div class="admin-stat"><div class="num">'+total+'</div><div class="lbl">Alumnos totales</div></div>' +
-        '<div class="admin-stat gold"><div class="num">'+inProgress+'</div><div class="lbl">En curso</div></div>' +
-        '<div class="admin-stat green"><div class="num">'+completed+'</div><div class="lbl">Certificados</div></div>' +
-        '<div class="admin-stat"><div class="num">'+thisWeek+'</div><div class="lbl">Esta semana</div></div>';
-
-    let tbl = '<thead><tr>' +
-        '<th>#</th><th>Nombre</th><th>Empresa / Cargo</th><th>Correo</th>' +
-        '<th>Fecha registro</th><th>Progreso</th><th>Examen</th><th>Estado</th><th>Boucher</th>' +
-        '</tr></thead><tbody>';
-
-    if (arr.length === 0) {
-        tbl += '<tr><td colspan="9" style="text-align:center;color:#999;padding:30px;">Aun no hay alumnos registrados en este dispositivo</td></tr>';
-    } else {
-        arr.sort((a,b) => new Date(b.registeredAt) - new Date(a.registeredAt))
-           .forEach((u, i) => {
-            const pct = Math.round(((u.progress?.completed?.length || 0) / 7) * 100);
-            const score = u.progress?.finalScore !== null && u.progress?.finalScore !== undefined ? u.progress.finalScore + '/10' : '-';
-            let badge, badgeClass;
-            if ((u.progress?.completed?.length || 0) >= 7 && u.progress?.finalScore >= 7) {
-                badge = 'CERTIFICADO'; badgeClass = 'done';
-            } else if ((u.progress?.completed?.length || 0) > 0) {
-                badge = 'EN CURSO'; badgeClass = 'progress';
-            } else {
-                badge = 'NUEVO'; badgeClass = 'new';
-            }
-            const regDate = new Date(u.registeredAt).toLocaleDateString('es-MX');
-            const voucherImg = u.voucher ? '<img src="'+u.voucher+'" class="admin-voucher-thumb" onclick="viewVoucher(\''+u.email+'\')">' : '-';
-
-            tbl += '<tr>' +
-                '<td>'+(i+1)+'</td>' +
-                '<td><strong>'+u.name+'</strong></td>' +
-                '<td>'+u.company+'<br><small style="color:#888;">'+u.role+'</small></td>' +
-                '<td>'+u.email+'</td>' +
-                '<td>'+regDate+'</td>' +
-                '<td>'+pct+'% ('+(u.progress?.completed?.length || 0)+'/7)</td>' +
-                '<td>'+score+'</td>' +
-                '<td><span class="admin-badge '+badgeClass+'">'+badge+'</span></td>' +
-                '<td>'+voucherImg+'</td>' +
-            '</tr>';
-        });
-    }
-    tbl += '</tbody>';
-
-    document.getElementById('adminTable').innerHTML = tbl;
-}
-
-function viewVoucher(email) {
-    const users = getUsers();
-    const u = users[email];
-    if (!u || !u.voucher) return;
-    const w = window.open('', '_blank', 'width=600,height=800');
-    w.document.write('<title>Boucher - '+u.name+'</title><body style="margin:0;background:#333;text-align:center;padding:20px;"><img src="'+u.voucher+'" style="max-width:100%;max-height:95vh;"></body>');
-}
-
-function exportCSV() {
-    const users = Object.values(getUsers());
-    if (users.length === 0) { alert('No hay alumnos para exportar.'); return; }
-    let csv = 'Nombre,Correo,Empresa,Cargo,Fecha registro,Progreso %,Lecciónes completadas,Examen,Estado\n';
-    users.forEach(u => {
-        const pct = Math.round(((u.progress?.completed?.length || 0) / 7) * 100);
-        const done = u.progress?.completed?.length || 0;
-        const score = u.progress?.finalScore !== null && u.progress?.finalScore !== undefined ? u.progress.finalScore : '';
-        const status = (done >= 7 && u.progress?.finalScore >= 7) ? 'CERTIFICADO' : (done > 0 ? 'EN CURSO' : 'NUEVO');
-        csv += [u.name, u.email, u.company, u.role, u.registeredAt, pct, done, score, status]
-            .map(v => '"'+String(v||'').replace(/"/g,'""')+'"').join(',') + '\n';
-    });
-    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'alumnos-curso-4dx-' + new Date().toISOString().split('T')[0] + '.csv';
-    link.click();
 }
 
 // Track correct quiz answers per user

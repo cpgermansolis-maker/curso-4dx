@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin TRIKLES - Panel de Cursos</title>
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
 <style>
     :root {
         --blue: #1a237e; --orange: #e65100; --green: #2e7d32; --gold: #ff8f00;
@@ -323,17 +328,17 @@
 
 <script>
 const ADMIN_PASSWORD = 'trikles4dx2026';
-const USERS_KEY = 'trikles_users';
 let selectedCourse = 'all';
+let _usersCache = {}; // se llena desde Firestore en init()
 
-function tryAdminLogin() {
+async function tryAdminLogin() {
     const pass = document.getElementById('adminPass').value;
     const errEl = document.getElementById('adminError');
     if (pass === ADMIN_PASSWORD) {
-        localStorage.setItem('trikles_admin_session', '1');
+        sessionStorage.setItem('trikles_admin_session', '1');
         document.getElementById('authScreen').classList.add('hide');
         document.getElementById('adminPanel').style.display = 'block';
-        init();
+        await init();
     } else {
         errEl.textContent = 'Contraseña incorrecta';
         errEl.style.display = 'block';
@@ -341,11 +346,17 @@ function tryAdminLogin() {
 }
 
 function logoutAdmin() {
-    localStorage.removeItem('trikles_admin_session');
+    sessionStorage.removeItem('trikles_admin_session');
     location.reload();
 }
 
-function getUsers() { try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); } catch(e) { return {}; } }
+// Cache sync lookup (para compatibilidad con el código existente)
+function getUsers() { return _usersCache; }
+
+async function refreshUsers() {
+    _usersCache = await TK.loadAllUsers();
+    return _usersCache;
+}
 
 function getCatalog() {
     return [
@@ -354,40 +365,41 @@ function getCatalog() {
     ];
 }
 
-// Para guardar cambios en los usuarios
-function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
-
 // =========================================================
 // ========== LIMPIEZA DE ALUMNOS ==========
 // =========================================================
-function cleanTestStudents() {
+async function cleanTestStudents() {
     const users = getUsers();
     const testEmails = Object.keys(users).filter(e => users[e].isTest);
     if (testEmails.length === 0) {
-        alert('No hay alumnos de prueba en este navegador.');
+        alert('No hay alumnos de prueba.');
         return;
     }
-    if (!confirm('Se eliminarán ' + testEmails.length + ' alumno(s) de prueba de este navegador.\n\n¿Continuar?')) return;
-    testEmails.forEach(e => delete users[e]);
-    saveUsers(users);
+    if (!confirm('Se eliminarán ' + testEmails.length + ' alumno(s) de prueba de la base de datos.\n\n¿Continuar?')) return;
+    for (const e of testEmails) {
+        try { await TK.deleteUser(e); } catch(err) { console.error(err); }
+    }
     alert('✅ Se eliminaron ' + testEmails.length + ' alumno(s) de prueba.');
-    init();
+    await init();
 }
 
-function cleanAllStudents() {
+async function cleanAllStudents() {
     const users = getUsers();
     const count = Object.keys(users).length;
     if (count === 0) { alert('No hay alumnos que borrar.'); return; }
 
-    if (!confirm('⚠️ ADVERTENCIA: Esto eliminará ABSOLUTAMENTE TODOS los alumnos (' + count + ') de este navegador.\n\nEsta acción NO afecta Google Sheets.\n\n¿Continuar?')) return;
+    if (!confirm('⚠️ ADVERTENCIA: Esto eliminará ABSOLUTAMENTE TODOS los alumnos (' + count + ') de la base de datos en la nube.\n\nEsta acción NO afecta Google Sheets.\n\n¿Continuar?')) return;
 
     const safety = prompt('Para confirmar, escribe exactamente:  BORRAR TODO');
     if (safety !== 'BORRAR TODO') { alert('Operación cancelada.'); return; }
 
-    localStorage.removeItem(USERS_KEY);
-    localStorage.removeItem('trikles_session');
-    alert('✅ Se eliminaron los ' + count + ' alumno(s). El sistema está limpio.');
-    init();
+    try {
+        await TK.deleteAllUsers();
+        alert('✅ Se eliminaron los ' + count + ' alumno(s). El sistema está limpio.\n\nNota: Las cuentas de Firebase Auth no se borran desde aquí (quedan sin perfil y ya no aparecen en el panel).');
+    } catch (e) {
+        alert('Error al borrar: ' + e.message);
+    }
+    await init();
 }
 
 // =========================================================
@@ -459,7 +471,7 @@ function selectScholarshipStudent(email) {
     document.getElementById('schNoteGroup').style.display = 'block';
 }
 
-function grantScholarship() {
+async function grantScholarship() {
     if (!schSelectedEmail) return;
     const courseId = document.getElementById('schCourse').value;
     if (!courseId) return;
@@ -468,13 +480,12 @@ function grantScholarship() {
     const users = getUsers();
     const u = users[schSelectedEmail];
     if (!u) { alert('Alumno no encontrado.'); return; }
-    if (!u.enrollments) u.enrollments = {};
-    if (u.enrollments[courseId]) {
+    if (u.enrollments && u.enrollments[courseId]) {
         alert('El alumno ya está inscrito en este curso.');
         return;
     }
 
-    u.enrollments[courseId] = {
+    const enrollment = {
         enrolledAt: new Date().toISOString(),
         voucher: null,
         voucherText: '[BECA] ' + (note || 'Otorgada por administrador'),
@@ -483,9 +494,15 @@ function grantScholarship() {
         scholarshipGrantedAt: new Date().toISOString(),
         progress: {}
     };
-    saveUsers(users);
 
-    // Avisar al webhook (mismo formato que un signup de inscripción)
+    try {
+        await TK.grantScholarship(schSelectedEmail, courseId, enrollment);
+    } catch (e) {
+        alert('Error al otorgar la beca: ' + e.message);
+        return;
+    }
+
+    // Avisar al webhook
     try {
         const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
         const course = getCatalog().find(c => c.id === courseId);
@@ -504,12 +521,13 @@ function grantScholarship() {
     } catch(e) {}
 
     const courseTitle = getCatalog().find(c => c.id === courseId)?.title || courseId;
-    alert('✅ Beca otorgada\n\n' + u.name + ' ha sido inscrito al curso:\n"' + courseTitle + '"\n\nEl alumno puede entrar al curso sin necesidad de boucher de pago.');
+    alert('✅ Beca otorgada\n\n' + u.name + ' ha sido inscrito al curso:\n"' + courseTitle + '"\n\nEl alumno puede entrar al curso desde cualquier dispositivo sin necesidad de boucher.');
     closeScholarshipModal();
-    init();
+    await init();
 }
 
-function init() {
+async function init() {
+    await refreshUsers();
     const users = Object.values(getUsers());
     const catalog = getCatalog();
 
@@ -699,12 +717,12 @@ function exportAllData() {
     link.click();
 }
 
-// Auto-login si hay sesión admin
-window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('trikles_admin_session') === '1') {
+// Auto-login si hay sesión admin en esta pestaña
+window.addEventListener('DOMContentLoaded', async () => {
+    if (sessionStorage.getItem('trikles_admin_session') === '1') {
         document.getElementById('authScreen').classList.add('hide');
         document.getElementById('adminPanel').style.display = 'block';
-        init();
+        await init();
     } else {
         setTimeout(() => document.getElementById('adminPass').focus(), 100);
     }

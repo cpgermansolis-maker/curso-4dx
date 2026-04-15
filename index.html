@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRIKLES - Plataforma de cursos</title>
+<!-- Firebase SDK (compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-init.js"></script>
 <style>
     :root {
         --blue: #1a237e; --blue-light: #3949ab;
@@ -471,43 +476,7 @@ const CATALOG = [
     }
 ];
 
-const USERS_KEY = 'trikles_users';
-const SESSION_KEY = 'trikles_session';
 let currentUser = null;
-
-function getUsers() { try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); } catch(e) { return {}; } }
-function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
-function hashPass(pass) { let h = 0; for (let i = 0; i < pass.length; i++) h = ((h<<5)-h) + pass.charCodeAt(i) | 0; return 'h_' + h; }
-
-function migrateLegacyUsers() {
-    const oldUsersRaw = localStorage.getItem('curso4dx_users');
-    const newUsersRaw = localStorage.getItem('trikles_users');
-    if (oldUsersRaw && !newUsersRaw) {
-        try {
-            const oldUsers = JSON.parse(oldUsersRaw);
-            const newUsers = {};
-            Object.keys(oldUsers).forEach(email => {
-                const u = oldUsers[email];
-                newUsers[email] = {
-                    name: u.name, email: u.email, company: u.company, role: u.role,
-                    pass: u.pass, registeredAt: u.registeredAt,
-                    enrollments: {
-                        '4dx': {
-                            enrolledAt: u.registeredAt,
-                            voucher: u.voucher || null,
-                            voucherText: u.voucherText || '',
-                            progress: u.progress || { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
-                        }
-                    }
-                };
-                if (u.isTest) newUsers[email].isTest = true;
-            });
-            localStorage.setItem('trikles_users', JSON.stringify(newUsers));
-            const oldSession = localStorage.getItem('curso4dx_session');
-            if (oldSession) localStorage.setItem('trikles_session', oldSession);
-        } catch(e) {}
-    }
-}
 
 function switchAuthTab(tab) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -516,7 +485,7 @@ function switchAuthTab(tab) {
     document.getElementById(tab + 'Form').classList.add('active');
 }
 
-function doRegister(e) {
+async function doRegister(e) {
     e.preventDefault();
     const name = document.getElementById('regName').value.trim();
     const email = document.getElementById('regEmail').value.trim().toLowerCase();
@@ -526,54 +495,54 @@ function doRegister(e) {
     const errEl = document.getElementById('regError');
     errEl.style.display = 'none';
 
-    const users = getUsers();
-    if (users[email]) { errEl.textContent = 'Este correo ya está registrado. Inicia sesión en su lugar.'; errEl.style.display = 'block'; return; }
+    if (pass.length < 6) { errEl.textContent = 'La contraseña debe tener al menos 6 caracteres.'; errEl.style.display = 'block'; return; }
 
-    users[email] = { name, email, company, role, pass: hashPass(pass), registeredAt: new Date().toISOString(), enrollments: {} };
-    saveUsers(users);
-    localStorage.setItem(SESSION_KEY, email);
-    currentUser = users[email];
-    sendToWebhook('signup', users[email]);
-    handlePostAuth();
+    try {
+        const data = await TK.register({ name, email, company, role }, pass);
+        currentUser = data;
+        sendToWebhook('signup', data);
+        handlePostAuth();
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = 'block';
+    }
 }
 
-function doLogin(e) {
+async function doLogin(e) {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value;
     const errEl = document.getElementById('loginError');
     errEl.style.display = 'none';
-    const users = getUsers();
-    const user = users[email];
-    if (!user) { errEl.textContent = 'No existe una cuenta con ese correo.'; errEl.style.display = 'block'; return; }
-    if (user.pass !== hashPass(pass)) { errEl.textContent = 'Contraseña incorrecta.'; errEl.style.display = 'block'; return; }
-    localStorage.setItem(SESSION_KEY, email);
-    currentUser = user;
-    handlePostAuth();
+    try {
+        const data = await TK.login(email, pass);
+        if (!data) { errEl.textContent = 'Tu cuenta existe pero no tiene perfil. Contacta al administrador.'; errEl.style.display = 'block'; return; }
+        currentUser = data;
+        handlePostAuth();
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.style.display = 'block';
+    }
 }
 
 function handlePostAuth() {
-    // Si había un curso pendiente (invitado quería verlo), llevarlo allá directamente
     const pendingId = pendingCourseId;
     pendingCourseId = null;
     showPlatform();
     if (pendingId) {
-        setTimeout(() => {
-            localStorage.setItem('trikles_last_course', pendingId);
-            window.location.href = 'curso.html?id=' + pendingId;
-        }, 300);
+        setTimeout(() => { window.location.href = 'curso.html?id=' + pendingId; }, 300);
     }
 }
 
-function doLogout() {
-    localStorage.removeItem(SESSION_KEY);
+async function doLogout() {
+    try { await TK.logout(); } catch(e) {}
     currentUser = null;
     location.reload();
 }
 
 const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
 function sendToWebhook(event, data, courseId) {
-    const url = localStorage.getItem('trikles_webhook') || WEBHOOK_URL;
+    const url = WEBHOOK_URL;
     if (!url) return;
     try {
         const enrollment = (data.enrollments && courseId) ? data.enrollments[courseId] : null;
@@ -677,7 +646,6 @@ function goToCourse(id) {
         openCourseModal(id);
         return;
     }
-    localStorage.setItem('trikles_last_course', id);
     window.location.href = 'curso.html?id=' + id;
 }
 
@@ -757,13 +725,10 @@ document.addEventListener('keydown', e => {
     }
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-    migrateLegacyUsers();
-    const email = localStorage.getItem(SESSION_KEY);
-    if (email) {
-        const users = getUsers();
-        if (users[email]) { currentUser = users[email]; }
-    }
+window.addEventListener('DOMContentLoaded', async () => {
+    // Espera a que Firebase determine el estado de sesión
+    const { data } = await TK.ready();
+    if (data) currentUser = data;
     showPlatform();
 });
 </script>
