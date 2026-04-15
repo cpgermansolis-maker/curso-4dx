@@ -202,6 +202,37 @@
         }
         .progress-ocr-fill { height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; }
 
+        /* Panel de datos de depósito (colapsable) */
+        .deposit-toggle-btn {
+            width: 100%; padding: 10px 12px; background: #f5f5f5; color: #424242;
+            border: 2px dashed #bdbdbd; border-radius: 8px; cursor: pointer;
+            font-size: 0.85em; font-weight: 700; margin-top: 6px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.2s;
+        }
+        .deposit-toggle-btn:hover { background: #eeeeee; border-color: #757575; color: #212121; }
+        .deposit-toggle-btn.open { background: #e3f2fd; border-color: var(--blue); color: var(--blue); }
+        .deposit-panel {
+            background: linear-gradient(135deg,#e3f2fd,#fff3e0);
+            border: 1px solid #90caf9; border-radius: 10px; padding: 14px; margin-top: 8px;
+            font-size: 0.85em;
+        }
+        .deposit-panel-title { font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+        .deposit-panel-row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px dashed #bbdefb; flex-wrap: wrap; }
+        .deposit-panel-row:last-of-type { border-bottom: 0; }
+        .deposit-panel-label { font-size: 0.78em; color: #555; font-weight: 600; }
+        .deposit-panel-value { font-weight: 700; color: #1a237e; display: flex; align-items: center; gap: 6px; font-family: 'Courier New', monospace; }
+        .deposit-panel-copy {
+            background: var(--blue); color: white; border: 0; padding: 3px 8px; border-radius: 5px;
+            font-size: 0.72em; cursor: pointer; font-weight: 700;
+        }
+        .deposit-panel-copy.done { background: var(--green); }
+        .deposit-panel-whats {
+            margin-top: 10px; padding: 8px 10px; background: #e8f5e9; border-left: 3px solid #43a047;
+            border-radius: 5px; font-size: 0.82em; color: #1b5e20;
+        }
+        .deposit-panel-whats a { color: #1b5e20; font-weight: 800; }
+
         /* Admin panel */
         #adminPanel {
             position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.9); padding: 20px;
@@ -671,6 +702,32 @@
                     </label>
                     <img id="voucherPreview" class="voucher-preview" style="display:none;">
                     <div id="voucherStatus" class="voucher-status"></div>
+                    <button type="button" class="deposit-toggle-btn" onclick="toggleDepositPanel(this)">
+                        <span>&#128179;</span> &iquest;C&oacute;mo hago el dep&oacute;sito?
+                    </button>
+                    <div class="deposit-panel" id="depositPanel" style="display:none;">
+                        <div class="deposit-panel-title">Datos para tu dep&oacute;sito</div>
+                        <div class="deposit-panel-row">
+                            <div class="deposit-panel-label">Tarjeta (SPEI desde otro banco)</div>
+                            <div class="deposit-panel-value">
+                                <span>4027 6600 3894 9030</span>
+                                <button type="button" class="deposit-panel-copy" onclick="copyDepositPanel('4027660038949030', this)">Copiar</button>
+                            </div>
+                        </div>
+                        <div class="deposit-panel-row">
+                            <div class="deposit-panel-label">Banco</div>
+                            <div class="deposit-panel-value">Banco Azteca</div>
+                        </div>
+                        <div class="deposit-panel-row">
+                            <div class="deposit-panel-label">A nombre de</div>
+                            <div class="deposit-panel-value">Germ&aacute;n Sol&iacute;s Mu&ntilde;oz</div>
+                        </div>
+                        <div class="deposit-panel-whats">
+                            &#128241; <strong>Notifica tu dep&oacute;sito por WhatsApp:</strong>
+                            <a href="https://wa.me/522464115513?text=Hola,%20acabo%20de%20realizar%20mi%20dep%C3%B3sito%20para%20el%20curso." target="_blank" rel="noopener">246 411 5513</a>
+                            <div style="font-size:0.78em;color:#558b2f;margin-top:3px;">Tambi&eacute;n &uacute;salo si tienes alg&uacute;n inconveniente con tu acceso.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <button class="auth-btn" type="submit" id="regSubmitBtn">
@@ -758,6 +815,28 @@
 </div>
 
 <script>
+// ========== PANEL DE DATOS DE DEPÓSITO (colapsable) ==========
+function toggleDepositPanel(btn) {
+    const panel = document.getElementById('depositPanel');
+    if (!panel) return;
+    const isOpen = panel.style.display !== 'none';
+    panel.style.display = isOpen ? 'none' : 'block';
+    btn.classList.toggle('open', !isOpen);
+    btn.innerHTML = isOpen
+        ? '<span>&#128179;</span> &iquest;C&oacute;mo hago el dep&oacute;sito?'
+        : '<span>&#11014;&#65039;</span> Ocultar datos de dep&oacute;sito';
+}
+function copyDepositPanel(value, btn) {
+    (navigator.clipboard ? navigator.clipboard.writeText(value) : Promise.reject())
+        .then(() => {
+            const prev = btn.textContent;
+            btn.textContent = '\u2713 Copiado';
+            btn.classList.add('done');
+            setTimeout(() => { btn.textContent = prev; btn.classList.remove('done'); }, 1800);
+        })
+        .catch(() => { alert('N\u00famero: ' + value); });
+}
+
 // ========== DATA ==========
 // Cargar el curso segun el ID de la URL (se inyecta via <script src> en el <head>)
 let COURSE = null;
