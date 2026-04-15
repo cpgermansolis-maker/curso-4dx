@@ -202,43 +202,99 @@
         color: var(--text-light); font-size: 0.95em;
     }
 
-    .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-    .course-card {
-        background: white; border-radius: 14px; overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        display: flex; flex-direction: column;
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
     }
-    .course-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .course-card {
+        background: white; border-radius: 16px; overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: flex; flex-direction: column;
+        position: relative;
+    }
+    .course-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 14px 32px rgba(26,35,126,0.18);
+    }
+    .course-card:hover .course-cover { transform: scale(1.04); }
+    .course-cover-wrap {
+        position: relative; overflow: hidden;
+        aspect-ratio: 3 / 4;
+        background: linear-gradient(135deg, #1a237e, #3949ab);
+    }
     .course-cover {
-        height: 180px; background-size: cover; background-position: center;
-        background-color: var(--blue); position: relative;
+        position: absolute; inset: 0;
+        background-size: cover; background-position: center;
+        transition: transform 0.4s ease;
     }
     .course-cover-placeholder {
+        position: absolute; inset: 0;
         display: flex; align-items: center; justify-content: center;
-        height: 100%; background: linear-gradient(135deg, var(--blue), var(--purple));
-        color: white; font-size: 3em;
+        color: white; font-size: 3.5em;
+    }
+    .course-cover-gradient {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0) 70%);
+        pointer-events: none;
+    }
+    .course-cover-overlay {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        padding: 14px 14px 12px;
+        color: white;
+    }
+    .course-cover-overlay .course-category {
+        color: var(--gold); font-size: 0.68em; font-weight: 800;
+        text-transform: uppercase; letter-spacing: 1.2px;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .course-cover-overlay .course-title {
+        color: white; font-size: 1em; font-weight: 800; line-height: 1.25;
+        margin: 4px 0 0; text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     .course-badge {
-        position: absolute; top: 12px; right: 12px;
-        background: var(--gold); color: #333; padding: 4px 12px; border-radius: 20px;
-        font-size: 0.72em; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+        position: absolute; top: 10px; right: 10px; z-index: 2;
+        background: var(--gold); color: #333; padding: 4px 10px; border-radius: 20px;
+        font-size: 0.68em; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
     .course-badge.done { background: var(--green); color: white; }
     .course-badge.progress { background: var(--orange); color: white; }
     .course-badge.new { background: var(--blue-light); color: white; }
-    .course-info { padding: 16px; flex: 1; display: flex; flex-direction: column; }
-    .course-category { font-size: 0.72em; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-    .course-title { font-size: 1.05em; font-weight: 700; color: var(--blue); margin: 6px 0 4px; line-height: 1.3; }
-    .course-author { font-size: 0.78em; color: var(--text-light); font-style: italic; margin-bottom: 10px; }
-    .course-desc { font-size: 0.85em; color: var(--text); flex: 1; margin-bottom: 12px; line-height: 1.5; }
-    .course-meta { display: flex; gap: 12px; font-size: 0.75em; color: var(--text-light); margin-bottom: 12px; }
-    .course-progress { background: #e0e0e0; height: 6px; border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
-    .course-progress-fill { background: var(--green); height: 100%; }
+    .course-info {
+        padding: 14px 14px 14px; flex: 1;
+        display: flex; flex-direction: column;
+    }
+    .course-author {
+        font-size: 0.75em; color: var(--text-light); font-style: italic;
+        margin-bottom: 8px; line-height: 1.3;
+        display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .course-desc {
+        font-size: 0.82em; color: var(--text); flex: 1; margin-bottom: 10px; line-height: 1.45;
+        display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .course-meta {
+        display: flex; gap: 10px; font-size: 0.72em; color: var(--text-light);
+        margin-bottom: 10px; flex-wrap: wrap;
+    }
+    .course-progress {
+        background: #e6e8f0; height: 5px; border-radius: 10px; overflow: hidden; margin-bottom: 8px;
+    }
+    .course-progress-fill {
+        background: linear-gradient(90deg, var(--green), #43a047); height: 100%;
+        transition: width 0.4s ease;
+    }
     .course-btn {
         background: var(--blue); color: white; border: none; padding: 10px;
-        border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.88em;
+        border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.85em;
+        transition: filter 0.2s;
     }
+    .course-btn:hover { filter: brightness(1.1); }
     .course-btn.continue { background: var(--green); }
     .course-btn.certified { background: var(--gold); color: #333; }
 
@@ -260,8 +316,7 @@
         .hero { padding: 30px 20px !important; }
         .hero h1 { font-size: 1.8em; }
         .section-title { font-size: 1.1em; }
-        .courses-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important; gap: 14px; }
-        .course-card .cover { height: 180px !important; }
+        .course-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; gap: 16px; }
     }
     @media (max-width: 600px) {
         body { font-size: 15px; }
@@ -272,12 +327,24 @@
         .topbar { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
         .topbar h1 { font-size: 1em !important; }
         .topbar .right { display: flex; gap: 6px; }
-        .courses-grid { grid-template-columns: 1fr !important; gap: 12px; }
-        .course-card { max-width: 100%; }
-        .course-card .cover { height: 200px !important; }
-        .course-card .info { padding: 16px !important; }
-        .course-card h3 { font-size: 1.05em !important; line-height: 1.25; }
-        .course-card .meta { font-size: 0.78em !important; gap: 8px !important; flex-wrap: wrap; }
+        /* Catálogo: cuadrícula 2×N con portadas grandes */
+        .course-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+        }
+        .course-card { border-radius: 12px; }
+        .course-card:hover { transform: none; }
+        .course-cover-overlay { padding: 10px 10px 8px; }
+        .course-cover-overlay .course-title { font-size: 0.82em; line-height: 1.2; }
+        .course-cover-overlay .course-category { font-size: 0.58em; letter-spacing: 1px; }
+        .course-badge { font-size: 0.58em; padding: 3px 7px; top: 8px; right: 8px; }
+        .course-info { padding: 10px; }
+        .course-author { font-size: 0.68em; margin-bottom: 6px; }
+        .course-desc { display: none; }
+        .course-meta { font-size: 0.66em; gap: 6px; margin-bottom: 8px; }
+        .course-meta span { white-space: nowrap; }
+        .course-btn { padding: 8px 6px; font-size: 0.78em; border-radius: 7px; }
+        .course-progress { height: 4px; margin-bottom: 6px; }
         .instructor-section { flex-direction: column; text-align: center; padding: 20px !important; }
         .instructor-section img { width: 120px !important; height: 120px !important; }
         /* Auth card */
@@ -290,6 +357,9 @@
     @media (max-width: 400px) {
         .hero h1 { font-size: 1.2em; }
         .topbar .right button { padding: 6px 10px; font-size: 0.78em; }
+        .course-grid { gap: 10px !important; }
+        .course-info { padding: 8px; }
+        .course-cover-overlay .course-title { font-size: 0.76em; }
     }
     /* Modal curso responsive */
     @media (max-width: 600px) {
@@ -479,7 +549,7 @@ const CATALOG = [
         title: 'Administración de Inventarios Farmacéuticos (FEUM)',
         subtitle: 'Con base en la Farmacopea de los Estados Unidos Mexicanos y NOM aplicables',
         author: 'Normativa oficial: FEUM · NOM-SSA · LGS · RIS',
-        cover: 'assets/covers/feum-inventarios.svg',
+        cover: 'assets/covers/feum-inventarios.jpg',
         description: 'Curso técnico-regulatorio para responsables sanitarios, jefes de almacén, farmacéuticos y personal de farmacias, hospitales y distribuidoras en México. Aprende a diseñar y operar un sistema de inventarios que cumpla la FEUM, las NOM aplicables y los criterios de verificación de COFEPRIS, con citas textuales de la normativa y plantillas listas para usar (kárdex, bitácora de temperatura/humedad y checklist de recepción).',
         category: 'Regulación sanitaria / Farmacia',
         duration: '8-10 horas',
@@ -638,16 +708,23 @@ function renderCourseCard(course, enrollment) {
     else if (enrolled) { badge = (pct > 0 ? pct + '%' : 'Inscrito'); badgeClass = 'progress'; btnText = 'Continuar'; btnClass = 'continue'; }
     else if (!currentUser) { badge = 'Disponible'; btnText = 'Ver temario'; }
     else { badge = 'Disponible'; }
-    const coverStyle = course.cover ? 'background-image:url(' + course.cover + ');' : '';
-    const coverInner = course.cover ? '' : '<div class="course-cover-placeholder">' + (course.icon || '📖') + '</div>';
+    const coverLayer = course.cover
+        ? '<div class="course-cover" style="background-image:url('+course.cover+');"></div>'
+        : '<div class="course-cover-placeholder">'+(course.icon || '📖')+'</div>';
     return '<div class="course-card" onclick="goToCourse(\''+course.id+'\')">' +
-        '<div class="course-cover" style="'+coverStyle+'">'+coverInner+'<span class="course-badge '+badgeClass+'">'+badge+'</span></div>' +
+        '<div class="course-cover-wrap">' +
+            coverLayer +
+            '<div class="course-cover-gradient"></div>' +
+            '<span class="course-badge '+badgeClass+'">'+badge+'</span>' +
+            '<div class="course-cover-overlay">' +
+                '<div class="course-category">'+course.category+'</div>' +
+                '<div class="course-title">'+course.title+'</div>' +
+            '</div>' +
+        '</div>' +
         '<div class="course-info">' +
-            '<div class="course-category">'+course.category+'</div>' +
-            '<div class="course-title">'+course.title+'</div>' +
             '<div class="course-author">'+course.author+'</div>' +
             '<div class="course-desc">'+course.description+'</div>' +
-            '<div class="course-meta"><span>📚 '+course.lessonsCount+' lecciones</span><span>⏱ '+course.duration+'</span></div>' +
+            '<div class="course-meta"><span>📚 '+course.lessonsCount+' lec.</span><span>⏱ '+course.duration+'</span></div>' +
             (enrolled && !completed ? '<div class="course-progress"><div class="course-progress-fill" style="width:'+pct+'%"></div></div>' : '') +
             '<button class="course-btn '+btnClass+'">'+btnText+'</button>' +
         '</div>' +

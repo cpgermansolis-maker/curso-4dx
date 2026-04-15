@@ -15,7 +15,7 @@ const COURSE_FEUM_INVENTARIOS = {
         title: 'Administración de Inventarios Farmacéuticos (FEUM)',
         subtitle: 'Con base en la Farmacopea de los Estados Unidos Mexicanos y NOM aplicables',
         author: 'Normativa oficial: FEUM · NOM-SSA · LGS · RIS',
-        cover: 'assets/covers/feum-inventarios.svg',
+        cover: 'assets/covers/feum-inventarios.jpg',
         description: 'Curso técnico-regulatorio para responsables sanitarios, jefes de almacén, farmacéuticos y personal de farmacias, hospitales y distribuidoras en México. Aprende a diseñar y operar un sistema de inventarios que cumpla la FEUM, las NOM aplicables y los criterios de verificación de COFEPRIS, con citas textuales de la normativa, procedimientos operativos y plantillas listas para usar.',
         descripcionCorta: 'Cumple la FEUM y COFEPRIS: BPAD, cadena de frío, kárdex, controlados, trazabilidad y auditoría.',
         category: 'Regulación sanitaria / Farmacia',
