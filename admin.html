@@ -112,6 +112,13 @@
 
     .empty { padding: 40px; text-align: center; color: var(--text-light); }
 
+    .row-del-btn {
+        background: #ffebee; color: #c62828; border: 1px solid #ffcdd2;
+        width: 32px; height: 32px; border-radius: 6px; cursor: pointer;
+        font-size: 1em; transition: all .15s;
+    }
+    .row-del-btn:hover { background: #c62828; color: #fff; border-color: #c62828; transform: scale(1.1); }
+
     /* Tabs per course */
     .course-tabs {
         display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;
@@ -368,6 +375,20 @@ function getCatalog() {
 // =========================================================
 // ========== LIMPIEZA DE ALUMNOS ==========
 // =========================================================
+async function deleteStudent(email) {
+    const u = getUsers()[email];
+    if (!u) return;
+    if (!confirm('¿Borrar al alumno "' + (u.name || email) + '"?\n\nEsto elimina su perfil, inscripciones y progreso de la base de datos.\nEsta acción NO se puede deshacer.')) return;
+    try {
+        await TK.deleteUser(email);
+        alert('✅ Alumno "' + (u.name || email) + '" eliminado.');
+    } catch (e) {
+        alert('Error al borrar: ' + e.message);
+        return;
+    }
+    await init();
+}
+
 async function cleanTestStudents() {
     const users = getUsers();
     const testEmails = Object.keys(users).filter(e => users[e].isTest);
@@ -620,10 +641,10 @@ function renderTable() {
     let tbl = '<thead><tr>' +
         '<th>#</th><th>Nombre</th><th>Empresa / Cargo</th><th>Correo</th>' +
         '<th>Curso</th><th>Fecha insc.</th><th>Progreso</th><th>Examen</th>' +
-        '<th>Estado</th><th>Boucher</th></tr></thead><tbody>';
+        '<th>Estado</th><th>Boucher</th><th>Acciones</th></tr></thead><tbody>';
 
     if (rows.length === 0) {
-        tbl += '<tr><td colspan="10" class="empty">No hay resultados con esos filtros</td></tr>';
+        tbl += '<tr><td colspan="11" class="empty">No hay resultados con esos filtros</td></tr>';
     } else {
         rows.forEach((r, i) => {
             const u = r.user, e = r.enrollment;
@@ -647,6 +668,9 @@ function renderTable() {
             const enrolledDate = e ? new Date(e.enrolledAt).toLocaleDateString('es-MX') : '-';
             const examScore = p.finalScore !== null && p.finalScore !== undefined ? p.finalScore + '/10' : '-';
 
+            const emailEsc = u.email.replace(/'/g, "\\'");
+            const deleteBtn = '<button class="row-del-btn" title="Borrar este alumno" onclick="deleteStudent(\''+emailEsc+'\')">🗑️</button>';
+
             tbl += '<tr>' +
                 '<td>' + (i+1) + '</td>' +
                 '<td class="name"><strong>'+u.name+'</strong></td>' +
@@ -658,6 +682,7 @@ function renderTable() {
                 '<td>'+examScore+'</td>' +
                 '<td><span class="pill '+badgeClass+'">'+badge+'</span>' + scholarshipPill + '</td>' +
                 '<td>'+voucherImg+'</td>' +
+                '<td>'+deleteBtn+'</td>' +
             '</tr>';
         });
     }
