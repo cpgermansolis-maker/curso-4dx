@@ -6,10 +6,14 @@ package.json
 # PDFs fuente de los libros (copyright, no se publican)
 libros/*/libro.pdf
 libros/*/libro.PDF
+libros/FARMACOPEA/
 
 # Archivos temporales
 tmp-*.js
 tmp-*.txt
+tmp-*.json
+tmp-*.md
+tmp-feum-texts/
 *.tmp
 *.log
 
