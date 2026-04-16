@@ -407,6 +407,175 @@
     }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .course-card { animation: fadeIn 0.4s ease both; }
+
+    /* ===== PRICING SECTION ===== */
+    .hero-cta-row {
+        display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px;
+    }
+    .hero-cta-row button {
+        padding: 10px 22px; border-radius: 10px; font-weight: 800; cursor: pointer;
+        border: 0; font-size: 0.95em; transition: transform 0.15s;
+    }
+    .hero-cta-row button:hover { transform: translateY(-2px); }
+    .hero-cta-pricing {
+        background: linear-gradient(135deg, #ff8f00, #ff6f00); color: white;
+        box-shadow: 0 4px 12px rgba(255,143,0,0.4);
+    }
+    .hero-cta-scroll {
+        background: rgba(255,255,255,0.15); color: white; border: 2px solid rgba(255,255,255,0.4) !important;
+    }
+    .hero-cta-scroll:hover { background: rgba(255,255,255,0.25); }
+
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
+    }
+    .price-card {
+        background: white; border-radius: 16px; padding: 24px 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        display: flex; flex-direction: column;
+        position: relative; overflow: hidden;
+        border: 2px solid transparent;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .price-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(26,35,126,0.15);
+        border-color: var(--gold);
+    }
+    .price-card.premium { border-color: var(--gold); }
+    .price-badge {
+        position: absolute; top: 14px; right: -30px;
+        background: linear-gradient(135deg, var(--gold), #ff6f00);
+        color: white; font-size: 0.72em; font-weight: 800;
+        padding: 4px 36px; transform: rotate(35deg);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+        letter-spacing: 1px;
+    }
+    .price-badge.tecnico {
+        background: linear-gradient(135deg, #1976d2, #0d47a1);
+    }
+    .price-icon {
+        font-size: 2.2em; margin-bottom: 8px;
+    }
+    .price-title {
+        font-weight: 800; color: var(--blue); font-size: 1.05em; line-height: 1.25;
+        margin-bottom: 4px;
+    }
+    .price-author {
+        color: var(--text-light); font-size: 0.8em; font-style: italic; margin-bottom: 12px;
+    }
+    .price-meta {
+        display: flex; gap: 14px; color: #555; font-size: 0.82em; margin-bottom: 14px;
+        flex-wrap: wrap;
+    }
+    .price-meta span { display: inline-flex; align-items: center; gap: 4px; }
+    .price-tag {
+        display: flex; align-items: baseline; gap: 8px; margin: 6px 0 14px;
+    }
+    .price-strike {
+        color: #999; text-decoration: line-through; font-size: 0.95em; font-weight: 600;
+    }
+    .price-current {
+        color: var(--orange); font-size: 1.85em; font-weight: 900; line-height: 1;
+    }
+    .price-current small { font-size: 0.55em; color: #666; font-weight: 700; margin-left: 2px; }
+    .price-save {
+        display: inline-block; background: #e8f5e9; color: #2e7d32;
+        font-size: 0.72em; font-weight: 800; padding: 3px 8px; border-radius: 6px;
+        margin-bottom: 14px; letter-spacing: 0.3px;
+    }
+    .price-buy {
+        margin-top: auto; background: linear-gradient(135deg, var(--orange), var(--gold));
+        color: white; border: 0; padding: 12px 20px; border-radius: 10px;
+        font-weight: 800; font-size: 0.95em; cursor: pointer;
+        box-shadow: 0 3px 10px rgba(255,143,0,0.35);
+        transition: transform 0.15s;
+    }
+    .price-buy:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(255,143,0,0.45); }
+
+    .bundle-banner {
+        margin-top: 28px;
+        background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #ff8f00 100%);
+        border-radius: 20px;
+        padding: 32px 28px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 22px;
+        align-items: center;
+        box-shadow: 0 10px 30px rgba(26,35,126,0.25);
+    }
+    .bundle-banner::after {
+        content: '🎁'; position: absolute; right: -20px; bottom: -30px;
+        font-size: 11em; opacity: 0.08;
+    }
+    .bundle-title {
+        font-size: 1.4em; font-weight: 900; margin-bottom: 6px;
+    }
+    .bundle-sub { opacity: 0.9; font-size: 0.92em; margin-bottom: 10px; }
+    .bundle-features {
+        list-style: none; padding: 0; margin: 10px 0 0; font-size: 0.88em;
+    }
+    .bundle-features li { margin: 4px 0; display: flex; align-items: center; gap: 8px; }
+    .bundle-price-box {
+        background: rgba(255,255,255,0.15); border-radius: 14px; padding: 20px;
+        text-align: center; backdrop-filter: blur(4px);
+        border: 1px solid rgba(255,255,255,0.25);
+        position: relative; z-index: 1;
+    }
+    .bundle-strike { opacity: 0.7; text-decoration: line-through; font-size: 1em; }
+    .bundle-main-price {
+        font-size: 2.6em; font-weight: 900; line-height: 1; margin: 6px 0;
+    }
+    .bundle-main-price small { font-size: 0.45em; opacity: 0.85; font-weight: 700; }
+    .bundle-save-tag {
+        display: inline-block; background: var(--gold); color: #1a237e;
+        font-size: 0.75em; font-weight: 900; padding: 4px 10px; border-radius: 20px;
+        margin-top: 6px; letter-spacing: 0.5px;
+    }
+    .bundle-btn {
+        display: inline-block; margin-top: 14px; background: white; color: var(--orange);
+        border: 0; padding: 12px 26px; border-radius: 10px;
+        font-weight: 900; font-size: 1em; cursor: pointer; width: 100%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: transform 0.15s;
+    }
+    .bundle-btn:hover { transform: translateY(-2px); }
+
+    /* Modal de depósito (reusa .deposit-info pero en overlay) */
+    .deposit-modal {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+        z-index: 9999; align-items: center; justify-content: center; padding: 20px;
+        animation: fadeIn 0.2s ease;
+    }
+    .deposit-modal.open { display: flex; }
+    .deposit-modal-body {
+        background: white; border-radius: 16px; max-width: 520px; width: 100%;
+        padding: 24px; position: relative; max-height: 90vh; overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    .deposit-modal-close {
+        position: absolute; top: 10px; right: 12px; background: #f5f5f5; border: 0;
+        width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1.1em;
+    }
+    .deposit-modal-close:hover { background: #e0e0e0; }
+    .deposit-modal-title { color: var(--blue); font-weight: 800; font-size: 1.15em; margin-bottom: 4px; }
+    .deposit-modal-course {
+        background: #fff3e0; color: #e65100; border-radius: 10px; padding: 10px 14px;
+        margin: 10px 0 16px; font-weight: 700; font-size: 0.95em;
+        display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .deposit-modal-course .amt { font-size: 1.3em; font-weight: 900; }
+
+    @media (max-width: 720px) {
+        .bundle-banner { grid-template-columns: 1fr; text-align: center; }
+        .bundle-banner::after { display: none; }
+        .price-current { font-size: 1.6em; }
+    }
 </style>
 </head>
 <body>
@@ -463,6 +632,10 @@
     <div class="hero">
         <h1>🎓 Catálogo de cursos TRIKLES</h1>
         <p id="heroSubtitle">Desarrolla habilidades clave de gestión empresarial con los mejores libros adaptados a cursos interactivos. Cada curso incluye lecciones, quizzes, examen final y certificado.</p>
+        <div class="hero-cta-row" id="heroCtaRow">
+            <button class="hero-cta-pricing" onclick="scrollToPricing()">💰 Ver precios</button>
+            <button class="hero-cta-scroll" onclick="document.getElementById('catalogGrid').scrollIntoView({behavior:'smooth',block:'start'});">📚 Explorar catálogo</button>
+        </div>
     </div>
 
     <div class="container">
@@ -476,6 +649,12 @@
             <div class="section-title">🌟 Catálogo disponible</div>
             <div class="section-subtitle">Libros de gestión empresarial convertidos a cursos interactivos</div>
             <div class="course-grid" id="catalogGrid"></div>
+        </div>
+        <div class="section" id="pricingSection">
+            <div class="section-title">💰 Precios de lanzamiento</div>
+            <div class="section-subtitle">Acceso de por vida · Certificado incluido · Transferencia SPEI o depósito bancario</div>
+            <div class="pricing-grid" id="pricingGrid"></div>
+            <div class="bundle-banner" id="bundleBanner"></div>
         </div>
         <div class="section">
             <div class="section-title">👨‍🏫 Tu instructor</div>
@@ -572,6 +751,39 @@
     </div>
 </div>
 
+<!-- MODAL DE DEPÓSITO (desde sección de precios) -->
+<div class="deposit-modal" id="depositModal" onclick="if(event.target===this) closeDepositModal()">
+    <div class="deposit-modal-body">
+        <button class="deposit-modal-close" onclick="closeDepositModal()" aria-label="Cerrar">✕</button>
+        <div class="deposit-modal-title">💳 Inscripción al curso</div>
+        <div class="section-subtitle" style="margin-bottom:10px;">Realiza tu depósito y notifícanos por WhatsApp para habilitar tu acceso.</div>
+        <div class="deposit-modal-course" id="depositModalCourse"></div>
+        <div class="deposit-info" style="display:block; margin-top:0;">
+            <div class="deposit-title">Datos para tu depósito</div>
+            <div class="deposit-row">
+                <div class="deposit-label">Tarjeta (SPEI desde otro banco)</div>
+                <div class="deposit-value">
+                    <span>4027 6600 3894 9030</span>
+                    <button type="button" class="deposit-copy" onclick="copyDeposit('4027660038949030', this)">Copiar</button>
+                </div>
+            </div>
+            <div class="deposit-row">
+                <div class="deposit-label">Banco</div>
+                <div class="deposit-value">Banco Azteca</div>
+            </div>
+            <div class="deposit-row">
+                <div class="deposit-label">A nombre de</div>
+                <div class="deposit-value">Germán Solís Muñoz</div>
+            </div>
+            <div class="deposit-whats">
+                📱 <strong>Notifica tu depósito por WhatsApp:</strong>
+                <a id="depositModalWa" href="https://wa.me/522464115513" target="_blank" rel="noopener">246 411 5513</a>
+                <div class="deposit-hint">Envíanos el comprobante y el curso que deseas activar.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 const CATALOG = [
     {
@@ -653,6 +865,19 @@ const CATALOG = [
         active: true
     }
 ];
+
+// ==========================================================
+// PRICING — precios de lanzamiento (MXN)
+// ==========================================================
+const PRICING = {
+    'coaching':          { listPrice: 1499, price:  799, badge: 'Premium' },
+    'gerencia-efectiva': { listPrice: 1499, price:  799, badge: 'Premium' },
+    'feum-inventarios':  { listPrice: 1999, price: 1299, badge: 'Técnico' },
+    'la-paradoja':       { listPrice: 1199, price:  599, badge: null },
+    'habitos':           { listPrice:  999, price:  499, badge: null },
+    '4dx':               { listPrice:  999, price:  499, badge: null }
+};
+const BUNDLE = { listPrice: 4494, price: 2999 }; // total individual vs bundle
 
 let currentUser = null;
 
@@ -745,6 +970,7 @@ function showPlatform() {
     updateUIState();
     renderMyCourses();
     renderCatalog();
+    renderPricing();
 }
 
 function updateUIState() {
@@ -941,6 +1167,109 @@ window.addEventListener('DOMContentLoaded', async () => {
     const { data } = await TK.ready();
     if (data) currentUser = data;
     showPlatform();
+});
+
+// ============================================================
+// PRICING — renderizado y modal de depósito
+// ============================================================
+function fmtPrice(n) {
+    return '$' + n.toLocaleString('es-MX');
+}
+
+function renderPricing() {
+    const grid = document.getElementById('pricingGrid');
+    if (!grid) return;
+    // Orden: premium arriba, técnico, luego los demás
+    const order = ['coaching', 'gerencia-efectiva', 'feum-inventarios', 'la-paradoja', 'habitos', '4dx'];
+    const byId = Object.fromEntries(CATALOG.map(c => [c.id, c]));
+    grid.innerHTML = order.filter(id => byId[id] && PRICING[id]).map(id => {
+        const c = byId[id];
+        const p = PRICING[id];
+        const save = p.listPrice - p.price;
+        const badge = p.badge
+            ? `<div class="price-badge ${p.badge === 'Técnico' ? 'tecnico' : ''}">${p.badge}</div>`
+            : '';
+        const cardClass = p.badge === 'Premium' ? 'price-card premium' : 'price-card';
+        return `
+        <div class="${cardClass}">
+            ${badge}
+            <div class="price-icon">${c.icon || '📘'}</div>
+            <div class="price-title">${c.title}</div>
+            <div class="price-author">${c.author}</div>
+            <div class="price-meta">
+                <span>📚 ${c.lessonsCount} lecciones</span>
+                <span>⏱ ${c.duration}</span>
+            </div>
+            <div class="price-tag">
+                <span class="price-strike">${fmtPrice(p.listPrice)}</span>
+                <span class="price-current">${fmtPrice(p.price)}<small>MXN</small></span>
+            </div>
+            <span class="price-save">Ahorra ${fmtPrice(save)}</span>
+            <button class="price-buy" onclick="openDepositModal('${id}')">🎓 Inscribirme</button>
+        </div>`;
+    }).join('');
+
+    // Bundle banner
+    const banner = document.getElementById('bundleBanner');
+    if (banner) {
+        const save = BUNDLE.listPrice - BUNDLE.price;
+        const pct = Math.round((save / BUNDLE.listPrice) * 100);
+        banner.innerHTML = `
+            <div>
+                <div class="bundle-title">🎁 Bundle completo — Los 6 cursos</div>
+                <div class="bundle-sub">La forma más económica de acceder a todo el catálogo TRIKLES.</div>
+                <ul class="bundle-features">
+                    <li>✅ 103 lecciones · 40+ horas de contenido</li>
+                    <li>✅ 6 certificados TRIKLES personalizados</li>
+                    <li>✅ Acceso de por vida + actualizaciones</li>
+                    <li>✅ Videos curados, citas textuales e imágenes reales</li>
+                </ul>
+            </div>
+            <div class="bundle-price-box">
+                <div class="bundle-strike">${fmtPrice(BUNDLE.listPrice)} MXN</div>
+                <div class="bundle-main-price">${fmtPrice(BUNDLE.price)}<small> MXN</small></div>
+                <div class="bundle-save-tag">Ahorra ${fmtPrice(save)} (${pct}%)</div>
+                <button class="bundle-btn" onclick="openDepositModal('__bundle')">🎉 Obtener el bundle</button>
+            </div>
+        `;
+    }
+}
+
+function scrollToPricing() {
+    const el = document.getElementById('pricingSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function openDepositModal(idOrBundle) {
+    const modal = document.getElementById('depositModal');
+    const courseBox = document.getElementById('depositModalCourse');
+    const waLink = document.getElementById('depositModalWa');
+    let label, amount, waText;
+    if (idOrBundle === '__bundle') {
+        label = '🎁 Bundle completo — 6 cursos';
+        amount = BUNDLE.price;
+        waText = 'Hola, quiero inscribirme al BUNDLE completo de TRIKLES (6 cursos) por $' + BUNDLE.price + ' MXN.';
+    } else {
+        const c = CATALOG.find(x => x.id === idOrBundle);
+        const p = PRICING[idOrBundle];
+        if (!c || !p) return;
+        label = (c.icon || '📘') + ' ' + c.title;
+        amount = p.price;
+        waText = 'Hola, quiero inscribirme al curso "' + c.title + '" por $' + p.price + ' MXN.';
+    }
+    courseBox.innerHTML = `<span>${label}</span><span class="amt">${fmtPrice(amount)} MXN</span>`;
+    waLink.href = 'https://wa.me/522464115513?text=' + encodeURIComponent(waText);
+    modal.classList.add('open');
+}
+
+function closeDepositModal() {
+    const modal = document.getElementById('depositModal');
+    if (modal) modal.classList.remove('open');
+}
+
+// Cerrar con Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDepositModal();
 });
 </script>
 </body>
