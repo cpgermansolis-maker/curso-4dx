@@ -149,7 +149,7 @@ const COURSE_COACHING = {
 
         ${videoLink('Resumen del libro Coaching de John Whitmore', 'H3Fe2JjUs1k')}
 
-        ${realImg('https://images.unsplash.com/photo-1552664730-d307ca884978?w=800', 'Sesión de coaching en equipo', 'El coaching es el arte de liberar el potencial de las personas para que alcancen su máximo rendimiento')}
+        ${realImg('https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800', 'Sesión de coaching en equipo', 'El coaching es el arte de liberar el potencial de las personas para que alcancen su máximo rendimiento')}
 
         <div class="content-card">
             <h3>🎯 ¿A quién está dirigido este curso?</h3>
@@ -606,7 +606,7 @@ const COURSE_COACHING = {
 
         ${videoLink('Escucha activa: 12 técnicas imprescindibles', 'VcIW9uUDx0c')}
 
-        ${realImg('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800', 'Personas escuchándose con atención', 'Escuchar no es esperar mi turno de hablar. Es entrar en el mundo del otro con genuina curiosidad')}
+        ${realImg('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800', 'Personas escuchándose con atención', 'Escuchar no es esperar mi turno de hablar. Es entrar en el mundo del otro con genuina curiosidad')}
 
         <div class="content-card">
             <h3>🧠 Por qué escuchar es tan difícil</h3>
@@ -1485,7 +1485,7 @@ const COURSE_COACHING = {
 
         ${videoLink('¿Cómo calcular el ROI?', 'avhe8KIuXzs')}
 
-        ${realImg('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800', 'Dashboard de métricas', 'El coaching no es un gasto: es una inversión. Performance Consultants documenta ROI promedio del 800%')}
+        ${realImg('https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800', 'Dashboard de métricas', 'El coaching no es un gasto: es una inversión. Performance Consultants documenta ROI promedio del 800%')}
 
         <div class="content-card">
             <h3>💰 El ROI promedio del coaching organizacional</h3>

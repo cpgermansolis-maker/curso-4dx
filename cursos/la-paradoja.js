@@ -223,7 +223,7 @@ const COURSE_LA_PARADOJA = {
 
         ${videoLink('La diferencia entre poder y autoridad — Liderazgo', '913nEj1aCAk')}
 
-        ${realImg('https://images.unsplash.com/photo-1552664730-d307ca884978?w=800', 'Equipo de trabajo colaborando', 'El liderazgo es influir para que la gente trabaje con entusiasmo')}
+        ${realImg('https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800', 'Equipo de trabajo colaborando', 'El liderazgo es influir para que la gente trabaje con entusiasmo')}
 
         <div class="content-card">
             <h3>📖 La definición central del libro</h3>
