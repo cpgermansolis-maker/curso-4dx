@@ -1291,7 +1291,8 @@ const COURSE_LA_PARADOJA = {
 })();
 
 // Registro en plataforma
-if (typeof window !== 'undefined' && window.TRIKLES_COURSES) {
+if (typeof window !== 'undefined') {
+    window.TRIKLES_COURSES = window.TRIKLES_COURSES || {};
     window.TRIKLES_COURSES['la-paradoja'] = COURSE_LA_PARADOJA;
 }
 if (typeof module !== 'undefined' && module.exports) {
