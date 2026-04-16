@@ -100,6 +100,21 @@ const COURSE_GERENCIA_EFECTIVA = {
         </div>`;
     }
 
+    // Helper: bloque de video recomendado (enlace a YouTube)
+    function videoLink(title, videoId) {
+        return `
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">${title}</p>
+            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>`;
+    }
+
     // ==============================================================
     // 0 — INTRODUCCIÓN
     // ==============================================================
@@ -117,6 +132,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         </div>
 
         ${note('Drucker escribió este libro hace más de sesenta años y sigue siendo la referencia obligada de cualquier escuela seria de negocios. No por nostalgia: porque planteó las preguntas correctas antes que nadie y las respondió con una claridad que todavía no se ha superado. Este curso no es una lectura rápida. Es un <em>trabajo metódico</em> sobre lo que significa dirigir una empresa para producir resultados. Vas a leer citas literales de Drucker, vas a aplicar sus herramientas a tu propio negocio, y vas a salir con un plan de 90 días.', 'Bienvenida del instructor · LADE Germán Solís Muñoz')}
+
+        
+        ${videoLink('Peter Drucker — El padre de la administración moderna', 'w4XXBxh-89E')}
 
         <div class="content-card">
             <h3>🎯 ¿A quién está dirigido este curso?</h3>
@@ -174,6 +192,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         content: hero(heroGradients.m1, 'LECCIÓN 1', 'Las 8 realidades empresarias — Cap. I') + `
         ${note('Drucker abre el libro con un golpe de realismo. La mayoría de los ejecutivos —dice— actúa como si los resultados y los recursos vivieran <em>dentro</em> de la empresa. No. Ambos están <em>afuera</em>. Esta lección te entrega las ocho realidades que estructuran el libro entero. Si no las aceptas, el resto no te servirá.')}
 
+        
+        ${videoLink('La Gerencia Efectiva — Realidades Empresarias (Gotham Velveth)', 'J1ehpeciAvI')}
+
         <div class="content-card">
             <h3>📖 Las citas que fundan el libro</h3>
             <blockquote class="book-quote">"Ni los resultados ni los recursos existen dentro de la empresa. Ambos existen fuera de ella."<cite>— Cap. I</cite></blockquote>
@@ -228,6 +249,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Productos, mercados y canales: las tres dimensiones del resultado',
         subtitle: 'Dónde se mide realmente el desempeño — Cap. II',
         content: hero(heroGradients.m1, 'LECCIÓN 2', 'Las tres dimensiones del resultado — Cap. II') + `
+        
+        ${videoLink('La Gerencia Efectiva — Áreas de Resultados (Gotham Velveth)', 'XQHIXqad6ww')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Los productos son los resultados visibles de la empresa. Son también las causas visibles de los ingresos."<cite>— Cap. II, sección I</cite></blockquote>
@@ -268,6 +292,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Transacciones, no productos: el verdadero análisis del ingreso',
         subtitle: 'Por qué vender mucho puede ser peor que vender poco — Cap. III',
         content: hero(heroGradients.m1, 'LECCIÓN 3', 'La transacción como unidad de análisis — Cap. III') + `
+        
+        ${videoLink('La Gerencia Efectiva — ¿Qué es una Transacción? (Gotham Velveth)', 'nCqgyxKEQf0')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"El ingreso no se produce por productos; se produce por transacciones."<cite>— Cap. III</cite></blockquote>
@@ -318,6 +345,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Las 11 categorías de productos de Drucker',
         subtitle: 'Cómo clasificar cada producto para saber qué hacer con él — Cap. IV',
         content: hero(heroGradients.m1, 'LECCIÓN 4', 'Las 11 categorías de productos — Cap. IV') + `
+        
+        ${videoLink('La Gerencia Efectiva — ¿Cómo nos va? Las 11 categorías (Gotham Velveth)', 'UqptA5wClZM')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Los ganapanes de mañana son siempre pocos; si no los identificamos y alimentamos, no habrá empresa dentro de diez años."<cite>— Cap. IV</cite></blockquote>
@@ -365,6 +395,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Controlar el costo, no reducirlo',
         subtitle: 'Por qué los recortes lineales casi siempre fracasan — Cap. V',
         content: hero(heroGradients.m1, 'LECCIÓN 5', 'Control de costos, no reducción — Cap. V') + `
+        
+        ${videoLink('La Gerencia Efectiva — Contabilidad de Costos (Gotham Velveth)', 'nS3nlD0tweA')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Los costos no existen por sí mismos. Son siempre incurridos —en principio tanto como en la práctica— para un resultado."<cite>— Cap. V</cite></blockquote>
@@ -409,6 +442,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Síntesis del Módulo 1 + plantillas ABC y matriz de cartera',
         subtitle: 'Descarga las dos primeras herramientas y aplícalas a tu negocio',
         content: hero(heroGradients.synth, 'SÍNTESIS M1', 'Análisis ABC + Matriz de cartera de productos') + `
+        
+        ${videoLink('Análisis ABC de Inventarios y PARETO — Paso a paso en Excel', 'NMu9evFpGps')}
+
         <div class="content-card">
             <h3>🎯 Lo que aprendiste</h3>
             <ol class="concept-list">
@@ -462,6 +498,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         content: hero(heroGradients.m2, 'LECCIÓN 6', 'El cliente es la empresa — Cap. VI') + `
         ${note('Este es el capítulo más citado de Drucker y el peor entendido. "El cliente es la empresa" no significa "el cliente siempre tiene la razón" ni "seamos amables". Significa algo más profundo: quién es cliente y qué compra lo define <em>el mercado</em>, no la compañía. Y la mayoría de las empresas se equivoca al responder ambas preguntas.')}
 
+        
+        ${videoLink('Cómo diseñar una PROPUESTA DE VALOR (+ ejemplos)', '46xFqJTJZLM')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Lo que el cliente compra nunca es un producto. Es siempre una utilidad, es decir, lo que un producto o servicio hace por él."<cite>— Cap. VI</cite></blockquote>
@@ -502,6 +541,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Los no-clientes: mirar lo que no ves',
         subtitle: 'La fuente de información más desaprovechada — Cap. VI parte II',
         content: hero(heroGradients.m2, 'LECCIÓN 7', 'Los no-clientes como fuente primaria de información') + `
+        
+        ${videoLink('La Estrategia del Océano Azul — Resumen Animado', 'xHiLyHZKFro')}
+
         <div class="content-card">
             <h3>📖 La idea provocadora de Drucker</h3>
             <blockquote class="book-quote">"Los no-clientes son siempre más numerosos que los clientes."<cite>— Cap. VI</cite></blockquote>
@@ -550,6 +592,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Nuestro conocimiento es nuestra empresa',
         subtitle: 'El activo intangible que define la excelencia específica — Cap. VII',
         content: hero(heroGradients.m2, 'LECCIÓN 8', 'El conocimiento específico — Cap. VII') + `
+        
+        ${videoLink('¿Qué son las Core Competences? — Estrategias de Negocios', 'G7xtTU3M2BY')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"El conocimiento es la empresa, plenamente tanto como lo son los clientes y los productos."<cite>— Cap. VII</cite></blockquote>
@@ -603,6 +648,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Enfoque en el potencial: debilidades como oportunidades',
         subtitle: 'Donde falta algo, hay un negocio esperando — Cap. VIII',
         content: hero(heroGradients.m2, 'LECCIÓN 9', 'Enfoque en el potencial — Cap. VIII') + `
+        
+        ${videoLink('Construye sobre fortalezas — Enfoque Peter Drucker', 's0hMmakoN24')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Las debilidades son las áreas de oportunidad; las fortalezas son las áreas de resultados."<cite>— Cap. VIII</cite></blockquote>
@@ -645,6 +693,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Síntesis del Módulo 2 + plantilla "Ésta es nuestra empresa"',
         subtitle: 'El checklist diagnóstico que toda dirección debe responder',
         content: hero(heroGradients.synth, 'SÍNTESIS M2', 'Checklist "Ésta es nuestra empresa"') + `
+        
+        ${videoLink('Cómo realizar un Análisis FODA — Estructura y Proceso', 'dWDmqb-W6sA')}
+
         <div class="content-card">
             <h3>🎯 Lo que aprendiste</h3>
             <ol class="concept-list">
@@ -689,6 +740,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Construir la empresa ideal',
         subtitle: 'El diseño antes del crecimiento — Cap. IX',
         content: hero(heroGradients.m3, 'LECCIÓN 10', 'La empresa ideal — Cap. IX') + `
+        
+        ${videoLink('Modelo Canvas — Explicado paso a paso en 6 minutos', 'ZQgXyiozmYY')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"La empresa ideal es aquella que, con los recursos de la empresa actual, produciría el máximo de resultados."<cite>— Cap. IX</cite></blockquote>
@@ -736,6 +790,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'La salud de tu industria',
         subtitle: 'Por qué el entorno determina el techo — Cap. X',
         content: hero(heroGradients.m3, 'LECCIÓN 11', 'Las realidades del entorno — Cap. X') + `
+        
+        ${videoLink('Las 5 fuerzas de Porter (explicación sencilla)', 'kNOfOmjgOik')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Toda empresa está incrustada en una industria, y toda industria en una economía. La salud de la empresa no puede separarse de la salud de ese contorno."<cite>— Cap. X</cite></blockquote>
@@ -777,6 +834,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         subtitle: 'No prediga: observe lo que ya pasó y cuyas consecuencias aún no se han desplegado — Cap. XI',
         content: hero(heroGradients.m3, 'LECCIÓN 12', 'El futuro que ya ha tenido lugar — Cap. XI') + `
         ${note('Este capítulo es, posiblemente, la contribución más original de Drucker al management. Cuando todos los libros de los años sesenta hablaban de "predecir el futuro", Drucker escribió: es imposible predecir el futuro — pero es posible identificar los cambios que <em>ya ocurrieron</em> y cuyas consecuencias todavía no se han desplegado. Esa es una idea que 60 años después sigue siendo la base de la prospectiva estratégica seria.')}
+
+        
+        ${videoLink('Cinco megatendencias globales en los negocios', 'TWvyThYAnmc')}
 
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
@@ -828,6 +888,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Las tres decisiones clave',
         subtitle: 'Idea, excelencia y prioridades — Cap. XII',
         content: hero(heroGradients.m3, 'LECCIÓN 13', 'Las tres decisiones clave — Cap. XII') + `
+        
+        ${videoLink('Cómo tomar decisiones estratégicas en tu NEGOCIO', 'tO1SVr3O25w')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Toda compañía posee una idea de sus empresas: un retrato de sí misma y de sus capacidades específicas."<cite>— Cap. XII, sección I</cite></blockquote>
@@ -877,6 +940,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'El arte del abandono planificado',
         subtitle: 'Postergar es decidir no hacer — Cap. XII, sección III',
         content: hero(heroGradients.m3, 'LECCIÓN 14', 'Postergar es abandonar') + `
+        
+        ${videoLink('ABANDONA ESTO o NUNCA tendrás ÉXITO — La Regla de Drucker', '1NmM5gRLuAM')}
+
         <div class="content-card">
             <h3>📖 Drucker, la cita más incómoda del libro</h3>
             <blockquote class="book-quote">"Nunca está de más repetir que no hay que postergar, hay que abandonar."<cite>— Cap. XII, sección III</cite></blockquote>
@@ -934,6 +1000,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Oportunidades aditivas, complementarias y transformadoras',
         subtitle: 'Tres tipos de oportunidad, tres cálculos estratégicos distintos — Cap. XIII',
         content: hero(heroGradients.m4, 'LECCIÓN 15', 'Los tres tipos de oportunidades — Cap. XIII') + `
+        
+        ${videoLink('Las 7 fuentes de la innovación — Peter Drucker (MENTOR365)', '5zbDnzN6Ha8')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Las oportunidades aditivas añaden al potencial existente; las oportunidades complementarias cambian la estructura de la empresa; las oportunidades transformadoras la cambian en su naturaleza."<cite>— Cap. XIII</cite></blockquote>
@@ -971,6 +1040,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'Los cuatro tipos de riesgo',
         subtitle: 'Y la categoría que casi nadie mide: el riesgo de no actuar — Cap. XIII',
         content: hero(heroGradients.m4, 'LECCIÓN 16', 'Los cuatro tipos de riesgo — Cap. XIII') + `
+        
+        ${videoLink('¿Cuáles son los tipos de RIESGO EMPRESARIAL?', '4taRGt-kLTk')}
+
         <div class="content-card">
             <h3>📖 La tipología completa</h3>
             <blockquote class="book-quote">"Hay cuatro clases de riesgo: el riesgo que uno debe aceptar, el riesgo que uno puede permitirse aceptar, el riesgo que uno no puede permitirse aceptar y el riesgo que uno no puede permitirse no aceptar."<cite>— Cap. XIII</cite></blockquote>
@@ -1014,6 +1086,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'De la decisión al compromiso',
         subtitle: 'Por qué las decisiones no existen hasta que hay recursos asignados — Cap. XIV',
         content: hero(heroGradients.m4, 'LECCIÓN 17', 'Decisión = compromiso de recursos — Cap. XIV') + `
+        
+        ${videoLink('Asignación de recursos — La estrategia fundamental', '3DCDa_ixrdM')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"Las decisiones sólo existen cuando los recursos humanos y materiales se han comprometido a su ejecución. Hasta ese momento hay sólo buenas intenciones."<cite>— Cap. XIV</cite></blockquote>
@@ -1054,6 +1129,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'El gerente como administrador del conocimiento',
         subtitle: 'La tesis final de Drucker: el trabajo más importante del siglo XXI — Cap. XIV + Conclusión',
         content: hero(heroGradients.m4, 'LECCIÓN 18', 'El gerente y el conocimiento — Conclusión') + `
+        
+        ${videoLink('Gestionarse a uno mismo — Peter Drucker (Resumen)', '1EncujIT08c')}
+
         <div class="content-card">
             <h3>📖 Drucker, textual</h3>
             <blockquote class="book-quote">"El trabajo del gerente es hacer productivo al conocimiento. El conocimiento es hoy el verdadero capital de una economía desarrollada."<cite>— Cap. XIV</cite></blockquote>
@@ -1093,6 +1171,9 @@ const COURSE_GERENCIA_EFECTIVA = {
         subtitle: 'De la teoría a la ejecución — descarga el plan y llénalo',
         content: hero(heroGradients.synth, 'PLAN 90 DÍAS', 'Aplicación inmediata — descarga el plan') + `
         ${note('Drucker escribió un libro de 257 páginas para decir, en el fondo, una sola cosa: <em>decide qué oportunidades vas a explotar, compromete recursos, y hazlo</em>. Esta lección te da la herramienta para traducir todo el curso en un plan ejecutable en 90 días.')}
+
+        
+        ${videoLink('Cómo reinventar tu empresa en 90 Días — Plan de acción', 'f5qG5vqhRYU')}
 
         <div class="content-card">
             <h3>🗺️ Estructura del plan (basado en los 14 capítulos)</h3>
