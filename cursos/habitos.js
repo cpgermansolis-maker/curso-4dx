@@ -56,6 +56,18 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Los 7 Hábitos de la Gente Altamente Efectiva — Resumen animado</p>
+            <a href="https://www.youtube.com/watch?v=CHx6QZ0BN8c" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -186,6 +198,18 @@ const COURSE_HABITOS = {
                 <div style="font-size:1.6em;font-weight:700;letter-spacing:2px;">SEA PROACTIVO</div>
                 <div style="opacity:0.9;font-style:italic;margin-top:6px;">"Entre estímulo y respuesta hay un espacio: tu libertad"</div>
             </div>
+        </div>
+
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 1: Ser Proactivo — El hábito de la Proactividad</p>
+            <a href="https://www.youtube.com/watch?v=j1qIr5AMbNc" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
         </div>
 
         <div class="instructor-note">
@@ -323,6 +347,18 @@ const COURSE_HABITOS = {
                 <div style="font-size:1.6em;font-weight:700;letter-spacing:2px;">FIN EN MENTE</div>
                 <div style="opacity:0.9;font-style:italic;margin-top:6px;">"Todas las cosas se crean dos veces"</div>
             </div>
+        </div>
+
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 2: Comenzar con un fin en mente</p>
+            <a href="https://www.youtube.com/watch?v=G8aPVsx4dGk" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
         </div>
 
         <div class="instructor-note">
@@ -463,6 +499,18 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 3: Poner primero lo primero</p>
+            <a href="https://www.youtube.com/watch?v=eJIMa_a-yjE" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -574,6 +622,18 @@ const COURSE_HABITOS = {
                 <div style="font-size:1.6em;font-weight:700;letter-spacing:2px;">GANAR / GANAR</div>
                 <div style="opacity:0.9;font-style:italic;margin-top:6px;">"No es tu manera ni la mía: es la mejor manera"</div>
             </div>
+        </div>
+
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 4: Pensar en Ganar/Ganar — Las cuatro dimensiones</p>
+            <a href="https://www.youtube.com/watch?v=jeh6pMqZMR4" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
         </div>
 
         <div class="instructor-note">
@@ -691,6 +751,18 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 5: Procure primero comprender, después ser comprendido</p>
+            <a href="https://www.youtube.com/watch?v=eBXDGvbvcb4" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -805,6 +877,18 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 6: Sinergice — 1 + 1 = 3, el secreto de los grandes equipos</p>
+            <a href="https://www.youtube.com/watch?v=Ud88wjFJ4gw" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -905,6 +989,18 @@ const COURSE_HABITOS = {
                 <div style="font-size:1.6em;font-weight:700;letter-spacing:2px;">AFILAR LA SIERRA</div>
                 <div style="opacity:0.9;font-style:italic;margin-top:6px;">"Si no afilas la sierra, cortarás cada vez menos"</div>
             </div>
+        </div>
+
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 7: Afile la sierra — Renovación continua</p>
+            <a href="https://www.youtube.com/watch?v=k_yEKoAdrtU" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
         </div>
 
         <div class="instructor-note">

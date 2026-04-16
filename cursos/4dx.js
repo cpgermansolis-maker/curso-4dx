@@ -51,6 +51,18 @@ const COURSE_4DX = {
             <div class="hero-caption">Entre la estrategia y la ejecución hay un abismo: las 4DX son el puente</div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Las 4 Disciplinas de la Ejecución — Resumen completo</p>
+            <a href="https://www.youtube.com/watch?v=SCwt_tGVulg" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -196,6 +208,18 @@ const COURSE_4DX = {
             <div class="hero-caption">Una meta clara, un equipo enfocado: así se logra lo imposible</div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Disciplina 1: Enfocarse en lo Crucialmente Importante (MCI)</p>
+            <a href="https://www.youtube.com/watch?v=C0ZlY6Dx_Do" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -286,6 +310,18 @@ const COURSE_4DX = {
             <div class="hero-caption">Taller práctico: construyamos juntos la MCI de tu gerencia</div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Paso 1: Meta crucialmente importante — Taller práctico</p>
+            <a href="https://www.youtube.com/watch?v=bJ2wURKRCD8" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -357,6 +393,18 @@ const COURSE_4DX = {
         content: `
         <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80')">
             <div class="hero-caption">Deja de mirar el espejo retrovisor: enfócate en lo que mueve la aguja</div>
+        </div>
+
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Las 4 Disciplinas de la Ejecución — Resumen animado</p>
+            <a href="https://www.youtube.com/watch?v=y-JdTUa6aKM" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
         </div>
 
         <div class="instructor-note">
@@ -467,6 +515,18 @@ const COURSE_4DX = {
             <div class="hero-caption">Un tablero visible convierte el trabajo en un juego que todos quieren ganar</div>
         </div>
 
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">LAS 4 DISCIPLINAS DE LA EJECUCIÓN — Reseña completa</p>
+            <a href="https://www.youtube.com/watch?v=nVE4oWJA84A" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
+        </div>
+
         <div class="instructor-note">
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
@@ -552,6 +612,18 @@ const COURSE_4DX = {
         content: `
         <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=900&q=80')">
             <div class="hero-caption">20 minutos a la semana que cambian el destino de cualquier proyecto</div>
+        </div>
+
+        
+        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
+            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
+            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Cadencia de rendición de cuentas — Clip 4DX</p>
+            <a href="https://www.youtube.com/watch?v=q9YVv8bQz2c" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
+                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
+                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
+                ▶ Ver en YouTube
+            </a>
         </div>
 
         <div class="instructor-note">
