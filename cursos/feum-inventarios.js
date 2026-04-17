@@ -2076,7 +2076,7 @@ const COURSE_FEUM_INVENTARIOS = {
             </div>
 
             <div class="cert-header">
-                <img src="logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-cert" onerror="this.style.display='none';">
+                <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-cert" onerror="this.style.display='none';">
                 <div class="cert-icon">&#127942;</div>
                 <div class="cert-title">CERTIFICADO</div>
                 <div class="cert-subtitle">de finalización satisfactoria</div>

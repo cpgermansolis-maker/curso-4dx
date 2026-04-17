@@ -366,14 +366,35 @@ async function refreshUsers() {
 }
 
 function getCatalog() {
+    // lessonsCount = número real de lecciones de contenido del curso (no incluye examen ni certificado)
+    // Se usa como denominador para el cálculo del progreso y para determinar cuándo el usuario ha completado todas las lecciones.
     return [
-        { id: '4dx', title: 'Las 4 Disciplinas de la Ejecución' },
-        { id: 'habitos', title: 'Los 7 Hábitos de la Gente Altamente Efectiva' },
-        { id: 'feum-inventarios', title: 'Administración de Inventarios Farmacéuticos (FEUM)' },
-        { id: 'gerencia-efectiva', title: 'La Gerencia Efectiva (Drucker)' },
-        { id: 'la-paradoja', title: 'La Paradoja (James C. Hunter)' },
-        { id: 'coaching', title: 'Coaching (Sir John Whitmore)' }
+        { id: '4dx',               title: 'Las 4 Disciplinas de la Ejecución',                     lessonsCount:  8 },
+        { id: 'habitos',           title: 'Los 7 Hábitos de la Gente Altamente Efectiva',          lessonsCount: 10 },
+        { id: 'feum-inventarios',  title: 'Administración de Inventarios Farmacéuticos (FEUM)',    lessonsCount: 22 },
+        { id: 'gerencia-efectiva', title: 'La Gerencia Efectiva (Drucker)',                        lessonsCount: 22 },
+        { id: 'la-paradoja',       title: 'La Paradoja (James C. Hunter)',                         lessonsCount: 18 },
+        { id: 'coaching',          title: 'Coaching (Sir John Whitmore)',                          lessonsCount: 23 }
     ];
+}
+
+// Helpers para el cálculo de progreso por curso
+function _lessonsCountForCourse(courseId) {
+    const c = getCatalog().find(x => x.id === courseId);
+    return (c && c.lessonsCount) || 1; // fallback defensivo
+}
+function _enrollmentDone(enrollment, courseId) {
+    if (!enrollment) return false;
+    const total = _lessonsCountForCourse(courseId);
+    const completed = enrollment.progress?.completed?.length || 0;
+    const finalScore = enrollment.progress?.finalScore;
+    return completed >= total && finalScore >= 7;
+}
+function _enrollmentPct(enrollment, courseId) {
+    if (!enrollment) return 0;
+    const total = _lessonsCountForCourse(courseId);
+    const completed = enrollment.progress?.completed?.length || 0;
+    return Math.min(100, Math.round((completed / total) * 100));
 }
 
 // =========================================================
@@ -561,9 +582,9 @@ async function init() {
     const now = Date.now();
     users.forEach(u => {
         const enrs = u.enrollments || {};
-        Object.values(enrs).forEach(e => {
+        Object.entries(enrs).forEach(([courseId, e]) => {
             totalEnrollments++;
-            if ((e.progress?.completed?.length || 0) >= 7 && e.progress?.finalScore >= 7) totalCertified++;
+            if (_enrollmentDone(e, courseId)) totalCertified++;
             if ((now - new Date(e.enrolledAt).getTime()) / 86400000 <= 7) totalWeek++;
         });
     });
@@ -616,7 +637,7 @@ function renderTable() {
     // Filtro por estado
     rows = rows.filter(r => {
         const e = r.enrollment;
-        const done = e && (e.progress?.completed?.length || 0) >= 7 && e.progress?.finalScore >= 7;
+        const done = _enrollmentDone(e, r.courseId);
         const inProgress = e && (e.progress?.completed?.length || 0) > 0 && !done;
         const justEnrolled = e && (e.progress?.completed?.length || 0) === 0;
         const noCourse = !e;
@@ -655,8 +676,9 @@ function renderTable() {
             const course = catalog.find(c => c.id === r.courseId);
             const courseTitle = course ? course.title : (r.courseId || '<em>Sin inscripción</em>');
             const p = e?.progress || {};
-            const done = e && (p.completed?.length || 0) >= 7 && p.finalScore >= 7;
-            const pct = Math.round(((p.completed?.length || 0) / 7) * 100);
+            const done = _enrollmentDone(e, r.courseId);
+            const pct = _enrollmentPct(e, r.courseId);
+            const totalLessons = _lessonsCountForCourse(r.courseId);
             let badge = 'SIN CURSO', badgeClass = 'new';
             if (done) { badge = 'CERTIFICADO'; badgeClass = 'done'; }
             else if (e && (p.completed?.length || 0) > 0) { badge = 'EN CURSO'; badgeClass = 'progress'; }
@@ -682,7 +704,7 @@ function renderTable() {
                 '<td>'+u.email+'</td>' +
                 '<td>'+courseTitle+'</td>' +
                 '<td>'+enrolledDate+'</td>' +
-                '<td>'+(e ? pct+'% ('+(p.completed?.length || 0)+'/7)' : '-')+'</td>' +
+                '<td>'+(e ? pct+'% ('+(p.completed?.length || 0)+'/'+totalLessons+')' : '-')+'</td>' +
                 '<td>'+examScore+'</td>' +
                 '<td><span class="pill '+badgeClass+'">'+badge+'</span>' + scholarshipPill + '</td>' +
                 '<td>'+voucherImg+'</td>' +
@@ -721,8 +743,8 @@ function exportCSV() {
         const u = r.user, e = r.enrollment;
         const course = catalog.find(c => c.id === r.courseId);
         const p = e?.progress || {};
-        const done = e && (p.completed?.length || 0) >= 7 && p.finalScore >= 7;
-        const pct = Math.round(((p.completed?.length || 0) / 7) * 100);
+        const done = _enrollmentDone(e, r.courseId);
+        const pct = _enrollmentPct(e, r.courseId);
         const status = done ? 'CERTIFICADO' : (e && (p.completed?.length || 0) > 0 ? 'EN CURSO' : (e ? 'INSCRITO' : 'SIN CURSO'));
         csv += [u.name, u.email, u.company, u.role, u.registeredAt,
             course ? course.title : '', e ? e.enrolledAt : '',

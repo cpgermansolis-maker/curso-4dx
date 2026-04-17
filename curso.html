@@ -1009,7 +1009,7 @@ function sendToWebhook(event, data) {
                 role: data.role,
                 progress: progress.completed?.length || 0,
                 finalScore: progress.finalScore,
-                completed: (progress.completed?.length || 0) >= 7 && progress.finalScore >= 7
+                completed: (progress.completed?.length || 0) >= lessons.length && progress.finalScore >= 7
             })
         }).catch(e => console.log('Webhook error (ignorado):', e));
     } catch(e) { console.log('Webhook fail:', e); }
