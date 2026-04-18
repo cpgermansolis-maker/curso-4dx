@@ -1,7 +1,8 @@
 # Dependencias de Node
 node_modules/
 package-lock.json
-package.json
+# Nota: package.json a nivel raíz se ignora, pero functions/package.json SÍ se incluye
+/package.json
 
 # PDFs fuente de los libros (copyright, no se publican)
 libros/*/libro.pdf

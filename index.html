@@ -313,6 +313,35 @@
         margin-bottom: 10px; flex-wrap: wrap;
     }
 
+    /* Badges dinámicos de cursos (TOP RATED, NUEVO) */
+    .dynamic-badges {
+        position: absolute; top: 10px; left: 10px;
+        display: flex; flex-direction: column; gap: 6px;
+        z-index: 2; pointer-events: none;
+    }
+    .dbadge {
+        display: inline-block; padding: 4px 10px; border-radius: 20px;
+        font-size: 0.68em; font-weight: 900; letter-spacing: 0.8px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.25); color: white;
+        text-transform: uppercase; white-space: nowrap;
+    }
+    .dbadge.top-rated {
+        background: linear-gradient(135deg, #e53935, #ff6f00);
+        animation: dbadgePulse 2s ease-in-out infinite;
+    }
+    .dbadge.new-badge {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    }
+    @keyframes dbadgePulse {
+        0%, 100% { box-shadow: 0 3px 10px rgba(229,57,53,0.35); }
+        50% { box-shadow: 0 3px 14px rgba(229,57,53,0.7); }
+    }
+    /* En tarjetas de pricing */
+    .price-card .dynamic-badges {
+        position: static; flex-direction: row; margin-bottom: 10px;
+    }
+    .price-card .dbadge { font-size: 0.62em; padding: 3px 8px; }
+
     /* Calificaciones (ratings) */
     .rating-display {
         display: inline-flex; align-items: center; gap: 4px; font-size: 0.82em;
@@ -963,6 +992,23 @@ const PRICING = {
 };
 const BUNDLE = { listPrice: 6093, price: 3999 }; // 7 cursos total individual vs bundle
 
+// Fechas de lanzamiento (para badge "NUEVO" — últimos 45 días)
+const LAUNCH_DATES = {
+    '4dx':               '2026-01-15',
+    'habitos':           '2026-01-20',
+    'feum-inventarios':  '2026-02-10',
+    'gerencia-efectiva': '2026-03-05',
+    'la-paradoja':       '2026-04-01',
+    'coaching':          '2026-04-10',
+    'food-beverage':     '2026-04-17'  // el más nuevo
+};
+
+// Configuración de badges dinámicos
+const BADGE_CONFIG = {
+    topRated: { minAvg: 4.5, minCount: 10 },  // 🔥 TOP RATED
+    newDays: 45                                // 🆕 NUEVO si launchDate < 45 días
+};
+
 let currentUser = null;
 
 function switchAuthTab(tab) {
@@ -1114,6 +1160,26 @@ async function loadRatingsSummary() {
     }
 }
 
+// Calcula y renderiza los badges dinámicos para un curso dado
+function renderDynamicBadges(courseId) {
+    const badges = [];
+    const summary = RATINGS_SUMMARY[courseId];
+    // TOP RATED
+    if (summary && summary.avg >= BADGE_CONFIG.topRated.minAvg && summary.count >= BADGE_CONFIG.topRated.minCount) {
+        badges.push('<span class="dbadge top-rated">🔥 Top rated</span>');
+    }
+    // NUEVO
+    const launch = LAUNCH_DATES[courseId];
+    if (launch) {
+        const daysSince = Math.floor((Date.now() - new Date(launch).getTime()) / 86400000);
+        if (daysSince >= 0 && daysSince <= BADGE_CONFIG.newDays) {
+            badges.push('<span class="dbadge new-badge">🆕 Nuevo</span>');
+        }
+    }
+    if (badges.length === 0) return '';
+    return '<div class="dynamic-badges">' + badges.join('') + '</div>';
+}
+
 function renderStarChars(avg) {
     let s = '';
     for (let i = 1; i <= 5; i++) {
@@ -1178,6 +1244,7 @@ function renderCourseCard(course, enrollment) {
         '<div class="course-cover-wrap">' +
             coverLayer +
             '<div class="course-cover-gradient"></div>' +
+            renderDynamicBadges(course.id) +
             '<span class="course-badge '+badgeClass+'">'+badge+'</span>' +
             '<div class="course-cover-overlay">' +
                 '<div class="course-category">'+course.category+'</div>' +
@@ -1382,6 +1449,7 @@ function renderPricing() {
         return `
         <div class="${cardClass}">
             ${badge}
+            ${renderDynamicBadges(c.id)}
             <div class="price-icon">${c.icon || '📘'}</div>
             <div class="price-title">${c.title}</div>
             <div class="price-author">${c.author}</div>
