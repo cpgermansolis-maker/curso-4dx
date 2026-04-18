@@ -369,12 +369,13 @@ function getCatalog() {
     // lessonsCount = número real de lecciones de contenido del curso (no incluye examen ni certificado)
     // Se usa como denominador para el cálculo del progreso y para determinar cuándo el usuario ha completado todas las lecciones.
     return [
-        { id: '4dx',               title: 'Las 4 Disciplinas de la Ejecución',                     lessonsCount:  8 },
-        { id: 'habitos',           title: 'Los 7 Hábitos de la Gente Altamente Efectiva',          lessonsCount: 10 },
-        { id: 'feum-inventarios',  title: 'Administración de Inventarios Farmacéuticos (FEUM)',    lessonsCount: 22 },
-        { id: 'gerencia-efectiva', title: 'La Gerencia Efectiva (Drucker)',                        lessonsCount: 22 },
-        { id: 'la-paradoja',       title: 'La Paradoja (James C. Hunter)',                         lessonsCount: 18 },
-        { id: 'coaching',          title: 'Coaching (Sir John Whitmore)',                          lessonsCount: 23 }
+        { id: '4dx',               title: 'Las 4 Disciplinas de la Ejecución',                     lessonsCount:  8, passScore:  7 },
+        { id: 'habitos',           title: 'Los 7 Hábitos de la Gente Altamente Efectiva',          lessonsCount: 10, passScore:  7 },
+        { id: 'feum-inventarios',  title: 'Administración de Inventarios Farmacéuticos (FEUM)',    lessonsCount: 22, passScore:  7 },
+        { id: 'gerencia-efectiva', title: 'La Gerencia Efectiva (Drucker)',                        lessonsCount: 22, passScore:  7 },
+        { id: 'la-paradoja',       title: 'La Paradoja (James C. Hunter)',                         lessonsCount: 18, passScore:  7 },
+        { id: 'coaching',          title: 'Coaching (Sir John Whitmore)',                          lessonsCount: 23, passScore:  7 },
+        { id: 'food-beverage',     title: 'Control de Costos F&B (Dopson & Hayes)',                lessonsCount: 30, passScore: 12 }
     ];
 }
 
@@ -383,12 +384,17 @@ function _lessonsCountForCourse(courseId) {
     const c = getCatalog().find(x => x.id === courseId);
     return (c && c.lessonsCount) || 1; // fallback defensivo
 }
+function _passScoreForCourse(courseId) {
+    const c = getCatalog().find(x => x.id === courseId);
+    return (c && c.passScore) || 7; // fallback defensivo (7 de 10)
+}
 function _enrollmentDone(enrollment, courseId) {
     if (!enrollment) return false;
     const total = _lessonsCountForCourse(courseId);
+    const pass = _passScoreForCourse(courseId);
     const completed = enrollment.progress?.completed?.length || 0;
     const finalScore = enrollment.progress?.finalScore;
-    return completed >= total && finalScore >= 7;
+    return completed >= total && finalScore >= pass;
 }
 function _enrollmentPct(enrollment, courseId) {
     if (!enrollment) return 0;

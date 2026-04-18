@@ -445,6 +445,7 @@
         border-color: var(--gold);
     }
     .price-card.premium { border-color: var(--gold); }
+    .price-card.profesional { border-color: #3e2723; }
     .price-badge {
         position: absolute; top: 14px; right: -30px;
         background: linear-gradient(135deg, var(--gold), #ff6f00);
@@ -455,6 +456,9 @@
     }
     .price-badge.tecnico {
         background: linear-gradient(135deg, #1976d2, #0d47a1);
+    }
+    .price-badge.profesional {
+        background: linear-gradient(135deg, #3e2723, #5d4037);
     }
     .price-icon {
         font-size: 2.2em; margin-bottom: 8px;
@@ -863,6 +867,19 @@ const CATALOG = [
         lessonsCount: 23,
         icon: '🎯',
         active: true
+    },
+    {
+        id: 'food-beverage',
+        title: 'Control de Costos en Alimentos y Bebidas',
+        subtitle: 'El método profesional para restaurantes rentables',
+        author: 'Lea R. Dopson & David K. Hayes (traducido y adaptado a Latinoamérica)',
+        cover: 'assets/covers/food-beverage.jpg',
+        description: 'El curso más completo en español sobre control de costos F&B, adaptado desde el libro de referencia mundial de Dopson & Hayes. 30 lecciones en 9 módulos: estado de resultados, pronóstico de ventas, recetas estandarizadas, inventario, compras, pricing, costo laboral, ingeniería de menú, análisis CVP, presupuesto y seguridad del efectivo. Todo adaptado a la realidad mexicana. Para dueños, gerentes y chefs de restaurantes.',
+        category: 'Gastronomía y hospitalidad',
+        duration: '15-18 horas',
+        lessonsCount: 30,
+        icon: '🍽️',
+        active: true
     }
 ];
 
@@ -870,6 +887,7 @@ const CATALOG = [
 // PRICING — precios de lanzamiento (MXN)
 // ==========================================================
 const PRICING = {
+    'food-beverage':     { listPrice: 2499, price: 1599, badge: 'Profesional' },
     'coaching':          { listPrice: 1499, price:  799, badge: 'Premium' },
     'gerencia-efectiva': { listPrice: 1499, price:  799, badge: 'Premium' },
     'feum-inventarios':  { listPrice: 1999, price: 1299, badge: 'Técnico' },
@@ -877,7 +895,7 @@ const PRICING = {
     'habitos':           { listPrice:  999, price:  499, badge: null },
     '4dx':               { listPrice:  999, price:  499, badge: null }
 };
-const BUNDLE = { listPrice: 4494, price: 2999 }; // total individual vs bundle
+const BUNDLE = { listPrice: 6093, price: 3999 }; // 7 cursos total individual vs bundle
 
 let currentUser = null;
 
@@ -1180,16 +1198,16 @@ function renderPricing() {
     const grid = document.getElementById('pricingGrid');
     if (!grid) return;
     // Orden: premium arriba, técnico, luego los demás
-    const order = ['coaching', 'gerencia-efectiva', 'feum-inventarios', 'la-paradoja', 'habitos', '4dx'];
+    const order = ['food-beverage', 'coaching', 'gerencia-efectiva', 'feum-inventarios', 'la-paradoja', 'habitos', '4dx'];
     const byId = Object.fromEntries(CATALOG.map(c => [c.id, c]));
     grid.innerHTML = order.filter(id => byId[id] && PRICING[id]).map(id => {
         const c = byId[id];
         const p = PRICING[id];
         const save = p.listPrice - p.price;
-        const badge = p.badge
-            ? `<div class="price-badge ${p.badge === 'Técnico' ? 'tecnico' : ''}">${p.badge}</div>`
-            : '';
-        const cardClass = p.badge === 'Premium' ? 'price-card premium' : 'price-card';
+        const badgeClass = p.badge === 'Técnico' ? 'tecnico' : (p.badge === 'Profesional' ? 'profesional' : '');
+        const badge = p.badge ? `<div class="price-badge ${badgeClass}">${p.badge}</div>` : '';
+        const cardExtra = p.badge === 'Premium' ? ' premium' : (p.badge === 'Profesional' ? ' profesional' : '');
+        const cardClass = 'price-card' + cardExtra;
         return `
         <div class="${cardClass}">
             ${badge}
@@ -1216,11 +1234,11 @@ function renderPricing() {
         const pct = Math.round((save / BUNDLE.listPrice) * 100);
         banner.innerHTML = `
             <div>
-                <div class="bundle-title">🎁 Bundle completo — Los 6 cursos</div>
+                <div class="bundle-title">🎁 Bundle completo — Los 7 cursos</div>
                 <div class="bundle-sub">La forma más económica de acceder a todo el catálogo TRIKLES.</div>
                 <ul class="bundle-features">
-                    <li>✅ 103 lecciones · 40+ horas de contenido</li>
-                    <li>✅ 6 certificados TRIKLES personalizados</li>
+                    <li>✅ 133 lecciones · 55+ horas de contenido</li>
+                    <li>✅ 7 certificados TRIKLES personalizados</li>
                     <li>✅ Acceso de por vida + actualizaciones</li>
                     <li>✅ Videos curados, citas textuales e imágenes reales</li>
                 </ul>

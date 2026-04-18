@@ -1042,7 +1042,7 @@ function sendToWebhook(event, data) {
                 role: data.role,
                 progress: progress.completed?.length || 0,
                 finalScore: progress.finalScore,
-                completed: (progress.completed?.length || 0) >= lessons.length && progress.finalScore >= 7
+                completed: (progress.completed?.length || 0) >= lessons.length && progress.finalScore >= (COURSE.examPassScore || 7)
             })
         }).catch(e => console.log('Webhook error (ignorado):', e));
     } catch(e) { console.log('Webhook fail:', e); }
@@ -1226,7 +1226,7 @@ function showLesson(idx) {
     if (l.id === 'certificate' && currentUser) {
         setTimeout(() => {
             // Double-check: only populate and show if exam passed
-            if (finalScore < 7) {
+            if (finalScore < getExamPassScore()) {
                 const cert = document.getElementById('certificateEl');
                 if (cert) cert.style.display = 'none';
                 document.querySelectorAll('.cert-actions').forEach(a => a.style.display = 'none');
@@ -1494,12 +1494,21 @@ function getExamLessonIndex() {
 function getCertLessonIndex() {
     return lessons.findIndex(l => l.id === 'certificate');
 }
+function getExamPassScore() {
+    return (COURSE && COURSE.examPassScore) || 7;
+}
+function getExamTotalQuestions() {
+    // Número total de preguntas del examen final según los requirements
+    const examIdx = getExamLessonIndex();
+    const reqs = LESSON_REQUIREMENTS[examIdx] || [];
+    return reqs.length || 10; // fallback 10
+}
 
 function isLessonRequirementsMet(lessonIdx) {
     const req = LESSON_REQUIREMENTS[lessonIdx] || [];
     if (lessonIdx === getExamLessonIndex()) {
-        // Final exam: need 7/10 passed
-        return finalScore >= 7;
+        // Final exam: usa el umbral de aprobación del curso (examPassScore)
+        return finalScore >= getExamPassScore();
     }
     return req.every(qid => correctQuizzes.has(qid));
 }
@@ -1508,7 +1517,7 @@ function isLessonUnlocked(lessonIdx) {
     if (lessonIdx === 0) return true; // First lesson always unlocked
     if (lessonIdx === getCertLessonIndex()) {
         // Certificate: only unlocked if final exam passed
-        return finalScore >= 7;
+        return finalScore >= getExamPassScore();
     }
     // Any other lesson: previous lesson must be completed (quizzes correct)
     return isLessonRequirementsMet(lessonIdx - 1);
@@ -1535,7 +1544,10 @@ function checkFinal(qid, btn, correct) {
     if (correct) finalScore++;
     finalAnswered++;
 
-    if (finalAnswered >= 10) {
+    const totalQuestions = getExamTotalQuestions();
+    const passScore = getExamPassScore();
+    const excellentScore = Math.max(passScore + 2, Math.ceil(totalQuestions * 0.9));
+    if (finalAnswered >= totalQuestions) {
         setTimeout(() => {
             const result = document.getElementById('finalResult');
             const emoji = document.getElementById('finalEmoji');
@@ -1544,29 +1556,29 @@ function checkFinal(qid, btn, correct) {
 
             result.style.display = 'block';
 
-            if (finalScore >= 9) {
+            if (finalScore >= excellentScore) {
                 result.style.background = '#e8f5e9';
                 emoji.textContent = '🏆';
-                title.textContent = 'EXCELENTE! ' + finalScore + '/10';
+                title.textContent = 'EXCELENTE! ' + finalScore + '/' + totalQuestions;
                 desc.textContent = 'Dominas ' + (COURSE.meta.title || 'el curso') + '! Estás completamente listo.';
-                showBadge('&#127942;', 'Maestro 4DX!', 'Aprobaste el examen final con ' + finalScore + '/10. Eres un experto!');
-            } else if (finalScore >= 7) {
+                showBadge('&#127942;', '¡Maestro!', 'Aprobaste el examen final con ' + finalScore + '/' + totalQuestions + '. Eres un experto!');
+            } else if (finalScore >= passScore) {
                 result.style.background = '#fff9c4';
                 emoji.textContent = '🎉';
-                title.textContent = 'MUY BIEN! ' + finalScore + '/10';
-                desc.textContent = 'Aprobaste! Tienes una solida comprensión de las 4DX. Puedes hacer la evaluación.';
-                showBadge('&#127881;', 'Aprobado!', 'Completaste el examen con ' + finalScore + '/10.');
+                title.textContent = 'MUY BIEN! ' + finalScore + '/' + totalQuestions;
+                desc.textContent = '¡Aprobaste! Tienes una sólida comprensión del curso. Tu certificado está desbloqueado.';
+                showBadge('&#127881;', '¡Aprobado!', 'Completaste el examen con ' + finalScore + '/' + totalQuestions + '.');
             } else {
                 result.style.background = '#ffebee';
                 emoji.textContent = '📚';
-                title.textContent = 'Necesitas repasar: ' + finalScore + '/10';
-                desc.textContent = 'Te recomiendo repasar las lecciónes antes de hacer la evaluación. Necesitas 7/10 para aprobar.';
+                title.textContent = 'Necesitas repasar: ' + finalScore + '/' + totalQuestions;
+                desc.textContent = 'Te recomiendo repasar las lecciones antes de volver a intentarlo. Necesitas ' + passScore + '/' + totalQuestions + ' para aprobar.';
             }
 
             completedLessons.add(currentLesson);
-            if (finalScore >= 7) completedLessons.add(7); // unlock certificate
+            if (finalScore >= passScore) completedLessons.add(getCertLessonIndex()); // unlock certificate
             saveProgress();
-            if (finalScore >= 7) sendToWebhook('completed', currentUser);
+            if (finalScore >= passScore) sendToWebhook('completed', currentUser);
             buildSidebar();
             result.scrollIntoView({ behavior: 'smooth' });
         }, 500);
