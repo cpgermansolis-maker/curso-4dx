@@ -20,6 +20,8 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    // functions() está disponible si se incluyó el SDK de functions en el HTML
+    const functions = (typeof firebase.functions === 'function') ? firebase.functions() : null;
 
     // Usar persistencia LOCAL (el login sobrevive a recargas y a cerrar el navegador)
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
@@ -287,9 +289,29 @@
             await db.collection('ratings').doc(ratingId).update({ hidden: !!hidden });
         },
 
+        /* ===== Pagos con Stripe ===== */
+
+        // Crea una sesión de Stripe Checkout y devuelve la URL de redirect.
+        // Lanza error si la función no está desplegada o el usuario no está autenticado.
+        async createStripeCheckout(courseId) {
+            if (!currentEmail) {
+                throw new Error('Debes iniciar sesión para pagar.');
+            }
+            if (!functions) {
+                throw new Error('Firebase Functions no está cargado (verifica que el script esté incluido en el HTML).');
+            }
+            const call = functions.httpsCallable('createStripeCheckout');
+            const result = await call({ courseId: courseId });
+            if (!result.data || !result.data.url) {
+                throw new Error('La respuesta del servidor no incluyó la URL de Stripe.');
+            }
+            return result.data;  // { url, sessionId }
+        },
+
         /* ===== Utilidades ===== */
         _db: db,
-        _auth: auth
+        _auth: auth,
+        _functions: functions
     };
 
     function friendlyAuthError(e) {

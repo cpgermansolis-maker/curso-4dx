@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pago exitoso — TRIKLES</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #7c4dff 100%);
+        min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        padding: 20px; color: #fff;
+    }
+    .success-card {
+        background: white; color: #333; border-radius: 20px;
+        padding: 40px 32px; max-width: 520px; width: 100%;
+        text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: fadeInUp 0.6s ease;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .check-icon {
+        width: 100px; height: 100px; border-radius: 50%;
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+        font-size: 3em; color: white;
+        animation: bounceIn 0.8s ease;
+    }
+    @keyframes bounceIn {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+    h1 {
+        color: #1a237e; font-size: 1.6em; margin-bottom: 10px;
+    }
+    .subtitle {
+        color: #666; font-size: 1em; margin-bottom: 24px;
+    }
+    .session-ref {
+        background: #f5f5f5; padding: 12px; border-radius: 8px;
+        font-family: 'Courier New', monospace; font-size: 0.78em;
+        color: #555; margin-bottom: 20px; word-break: break-all;
+    }
+    .session-ref-label { font-size: 0.72em; color: #999; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .btn {
+        border: 0; padding: 14px 28px; border-radius: 10px;
+        font-weight: 800; font-size: 1em; cursor: pointer;
+        text-decoration: none; display: inline-block;
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #ff9800, #ff6f00); color: white;
+        box-shadow: 0 4px 14px rgba(255,111,0,0.4);
+    }
+    .btn-secondary {
+        background: #f5f5f5; color: #1a237e;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .countdown {
+        font-size: 0.82em; color: #999; margin-top: 16px; font-style: italic;
+    }
+    .tip {
+        background: #fff3e0; color: #e65100; padding: 14px;
+        border-radius: 10px; margin-top: 20px; font-size: 0.88em;
+        border-left: 4px solid #ff9800; text-align: left;
+    }
+</style>
+</head>
+<body>
+
+<div class="success-card">
+    <div class="check-icon">✓</div>
+    <h1>¡Inscripción exitosa!</h1>
+    <p class="subtitle">Tu pago fue procesado y ya tienes acceso a tu curso.</p>
+
+    <div class="session-ref" id="sessionRefBox" style="display:none;">
+        <div class="session-ref-label">Referencia de pago</div>
+        <div id="sessionRef"></div>
+    </div>
+
+    <div class="actions">
+        <a href="index.html" class="btn btn-primary">🎓 Ir a mis cursos</a>
+        <a href="index.html#catalogGrid" class="btn btn-secondary">📚 Ver catálogo</a>
+    </div>
+
+    <div class="tip">
+        💡 <strong>Siguiente paso:</strong> abre tu curso desde "Mis cursos" y empieza con la primera lección.
+        Si pagaste con OXXO, tu acceso se activará cuando el comercio confirme el pago (máximo 48 hrs).
+    </div>
+
+    <div class="countdown" id="countdown">Serás redirigido en <span id="countdownNum">8</span> segundos…</div>
+</div>
+
+<script>
+// Mostrar referencia de sesión si llega por query
+const urlParams = new URLSearchParams(window.location.search);
+const sessionId = urlParams.get('session_id');
+if (sessionId) {
+    document.getElementById('sessionRefBox').style.display = 'block';
+    document.getElementById('sessionRef').textContent = sessionId;
+}
+
+// Redirigir después de 8 segundos
+let remaining = 8;
+const numEl = document.getElementById('countdownNum');
+const timer = setInterval(() => {
+    remaining--;
+    if (numEl) numEl.textContent = remaining;
+    if (remaining <= 0) {
+        clearInterval(timer);
+        window.location.href = 'index.html';
+    }
+}, 1000);
+</script>
+
+</body>
+</html>

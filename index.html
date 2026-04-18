@@ -8,6 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
 <script src="firebase-init.js"></script>
 <style>
     :root {
@@ -650,10 +651,193 @@
     }
     .deposit-modal-course .amt { font-size: 1.3em; font-weight: 900; }
 
+    /* Opción de pago con Stripe */
+    .pay-option-online { margin-bottom: 14px; }
+    .pay-option-label {
+        font-size: 0.78em; color: #2e7d32; font-weight: 800;
+        text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+        text-align: center;
+    }
+    .stripe-pay-btn {
+        width: 100%; background: linear-gradient(135deg, #635bff, #4a42d4);
+        color: white; border: 0; padding: 14px 20px; border-radius: 10px;
+        font-weight: 800; font-size: 1em; cursor: pointer;
+        box-shadow: 0 4px 14px rgba(99,91,255,0.35);
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .stripe-pay-btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(99,91,255,0.5);
+    }
+    .stripe-pay-btn:disabled { opacity: 0.6; cursor: wait; }
+    .pay-option-hint {
+        font-size: 0.78em; color: #666; text-align: center;
+        margin-top: 6px; font-style: italic;
+    }
+    .stripe-error {
+        background: #ffebee; color: #c62828; padding: 10px 12px;
+        border-radius: 8px; font-size: 0.88em; margin-top: 8px;
+        border-left: 3px solid #c62828;
+    }
+    .pay-separator {
+        display: flex; align-items: center; gap: 10px; margin: 18px 0;
+        color: #999; font-size: 0.82em;
+    }
+    .pay-separator::before, .pay-separator::after {
+        content: ''; flex: 1; height: 1px; background: #ddd;
+    }
+    .pay-separator span { white-space: nowrap; }
+
     @media (max-width: 720px) {
         .bundle-banner { grid-template-columns: 1fr; text-align: center; }
         .bundle-banner::after { display: none; }
         .price-current { font-size: 1.6em; }
+    }
+
+    /* ============ HERO DEMO (tour guiado interactivo) ============ */
+    .hero-demo-wrapper {
+        max-width: 680px; margin: 24px auto 0;
+        background: rgba(255,255,255,0.08);
+        border-radius: 16px; padding: 18px; backdrop-filter: blur(6px);
+        border: 1px solid rgba(255,255,255,0.18);
+    }
+    .hero-demo {
+        position: relative; width: 100%; aspect-ratio: 16/9;
+        background: linear-gradient(135deg,#0d1117,#161b22);
+        border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .demo-slide {
+        position: absolute; inset: 0; padding: 24px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        color: white; text-align: center;
+        opacity: 0; transition: opacity 0.6s ease; pointer-events: none;
+    }
+    .demo-slide.active { opacity: 1; pointer-events: auto; }
+    .demo-slide h2 {
+        font-size: 1.5em; margin-bottom: 10px; color: #fff;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+    }
+    .demo-slide p { font-size: 0.95em; opacity: 0.92; max-width: 500px; line-height: 1.5; }
+    .demo-slide .big-logo {
+        font-size: 3em; font-family: Georgia, serif; font-weight: 900; color: #ffb300;
+        letter-spacing: 4px; margin-bottom: 8px;
+        text-shadow: 3px 3px 12px rgba(0,0,0,0.5);
+    }
+    .demo-covers {
+        display: grid; grid-template-columns: repeat(7, 1fr);
+        gap: 8px; width: 100%; max-width: 560px; margin-top: 12px;
+    }
+    .demo-cover {
+        aspect-ratio: 3/4; background-size: cover; background-position: center;
+        border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        animation: demoCoverBounce 1.5s ease-in-out infinite;
+    }
+    .demo-cover:nth-child(2) { animation-delay: 0.1s; }
+    .demo-cover:nth-child(3) { animation-delay: 0.2s; }
+    .demo-cover:nth-child(4) { animation-delay: 0.3s; }
+    .demo-cover:nth-child(5) { animation-delay: 0.4s; }
+    .demo-cover:nth-child(6) { animation-delay: 0.5s; }
+    .demo-cover:nth-child(7) { animation-delay: 0.6s; }
+    @keyframes demoCoverBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+    }
+
+    .demo-lesson-mock {
+        background: white; color: #333; padding: 20px; border-radius: 10px;
+        width: 100%; max-width: 480px; text-align: left; font-size: 0.82em;
+    }
+    .demo-lesson-mock .tag {
+        display: inline-block; background: #1a237e; color: white;
+        padding: 3px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .demo-lesson-mock h3 { color: #1a237e; margin-bottom: 6px; font-size: 1.1em; }
+    .demo-lesson-mock blockquote {
+        background: #fff3e0; border-left: 3px solid #e65100;
+        padding: 8px 12px; margin-top: 8px; border-radius: 4px;
+        font-style: italic; font-size: 0.85em;
+    }
+
+    .demo-quiz-mock {
+        background: white; color: #333; padding: 20px; border-radius: 10px;
+        width: 100%; max-width: 480px; text-align: left; font-size: 0.85em;
+    }
+    .demo-quiz-mock .q { font-weight: 700; color: #1a237e; margin-bottom: 10px; }
+    .demo-quiz-mock .opt {
+        display: block; padding: 8px 12px; margin-bottom: 6px;
+        background: #f5f5f5; border-radius: 6px; border: 2px solid transparent;
+    }
+    .demo-quiz-mock .opt.correct { background: #c8e6c9; border-color: #2e7d32; }
+
+    .demo-exam-mock {
+        text-align: center; color: white;
+    }
+    .demo-exam-mock .score {
+        font-size: 4em; font-weight: 900; color: #ffb300;
+        text-shadow: 3px 3px 12px rgba(0,0,0,0.5);
+    }
+    .demo-exam-mock .label { font-size: 1em; opacity: 0.9; margin-top: 4px; }
+
+    .demo-cert-mock {
+        background: linear-gradient(135deg,#3e2723,#5d4037);
+        border: 3px solid #d7a86e; border-radius: 10px;
+        padding: 20px; width: 100%; max-width: 480px; text-align: center;
+    }
+    .demo-cert-mock .cert-title {
+        color: #d7a86e; font-family: Georgia,serif; font-size: 1.4em;
+        font-weight: 900; letter-spacing: 2px;
+    }
+    .demo-cert-mock .cert-name {
+        font-size: 1.2em; color: white; font-style: italic;
+        margin: 10px 0 6px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 6px;
+    }
+    .demo-cert-mock .cert-course { color: #d7a86e; font-size: 0.88em; margin-top: 6px; }
+
+    .demo-cta-mock .cta-price {
+        font-size: 2.2em; color: #ffb300; font-weight: 900;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+    }
+    .demo-cta-mock .cta-btn {
+        display: inline-block; margin-top: 14px; background: linear-gradient(135deg,#ff9800,#ff6f00);
+        color: white; padding: 12px 26px; border-radius: 10px; font-weight: 800;
+        border: 0; cursor: pointer; font-size: 0.95em;
+        box-shadow: 0 4px 14px rgba(255,111,0,0.4);
+    }
+
+    .demo-controls {
+        display: flex; align-items: center; justify-content: space-between;
+        margin-top: 12px; color: white; opacity: 0.85;
+    }
+    .demo-dots { display: flex; gap: 6px; }
+    .demo-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: rgba(255,255,255,0.4); cursor: pointer;
+        transition: all 0.25s;
+    }
+    .demo-dot.active { background: #ffb300; width: 22px; border-radius: 4px; }
+    .demo-playpause {
+        background: transparent; border: 0; color: white;
+        cursor: pointer; font-size: 1.1em; padding: 4px 10px;
+        border-radius: 6px;
+    }
+    .demo-playpause:hover { background: rgba(255,255,255,0.15); }
+    .demo-progress {
+        position: absolute; bottom: 0; left: 0; height: 3px;
+        background: #ffb300; width: 0%; transition: width 0.1s linear;
+    }
+
+    @media (max-width: 720px) {
+        .hero-demo-wrapper { padding: 10px; margin-top: 14px; }
+        .demo-slide { padding: 14px; }
+        .demo-slide h2 { font-size: 1.1em; }
+        .demo-slide p { font-size: 0.82em; }
+        .demo-slide .big-logo { font-size: 2em; }
+        .demo-covers { grid-template-columns: repeat(4, 1fr); max-width: 340px; }
+        .demo-covers .demo-cover:nth-child(n+5) { display: none; }
+        .demo-lesson-mock, .demo-quiz-mock, .demo-cert-mock { font-size: 0.72em; padding: 12px; }
+        .demo-exam-mock .score { font-size: 2.6em; }
+        .demo-cta-mock .cta-price { font-size: 1.4em; }
     }
 </style>
 </head>
@@ -711,6 +895,19 @@
     <div class="hero">
         <h1>🎓 Catálogo de cursos TRIKLES</h1>
         <p id="heroSubtitle">Desarrolla habilidades clave de gestión empresarial con los mejores libros adaptados a cursos interactivos. Cada curso incluye lecciones, quizzes, examen final y certificado.</p>
+
+        <!-- Demo interactivo del producto -->
+        <div class="hero-demo-wrapper">
+            <div class="hero-demo" id="heroDemo">
+                <!-- Los slides se renderizan con JS al cargar -->
+                <div class="demo-progress" id="demoProgress"></div>
+            </div>
+            <div class="demo-controls">
+                <div class="demo-dots" id="demoDots"></div>
+                <button class="demo-playpause" id="demoPlayPause" onclick="toggleDemoPlay()" aria-label="Pausar/Reanudar demo">⏸</button>
+            </div>
+        </div>
+
         <div class="hero-cta-row" id="heroCtaRow">
             <button class="hero-cta-pricing" onclick="scrollToPricing()">💰 Ver precios</button>
             <button class="hero-cta-scroll" onclick="document.getElementById('catalogGrid').scrollIntoView({behavior:'smooth',block:'start'});">📚 Explorar catálogo</button>
@@ -855,10 +1052,24 @@
     <div class="deposit-modal-body">
         <button class="deposit-modal-close" onclick="closeDepositModal()" aria-label="Cerrar">✕</button>
         <div class="deposit-modal-title">💳 Inscripción al curso</div>
-        <div class="section-subtitle" style="margin-bottom:10px;">Realiza tu depósito y notifícanos por WhatsApp para habilitar tu acceso.</div>
+        <div class="section-subtitle" style="margin-bottom:10px;">Elige cómo quieres pagar. La tarjeta te inscribe automáticamente en segundos.</div>
         <div class="deposit-modal-course" id="depositModalCourse"></div>
+
+        <!-- OPCIÓN 1 — Pago online con Stripe (inscripción automática) -->
+        <div class="pay-option-online">
+            <div class="pay-option-label">⚡ Recomendado — inscripción inmediata</div>
+            <button class="stripe-pay-btn" id="stripePayBtn" onclick="payWithStripe()">
+                💳 Pagar con tarjeta / OXXO · <span id="stripeBtnAmount">—</span>
+            </button>
+            <div class="pay-option-hint">Tarjeta de crédito, débito, Apple Pay, Google Pay u OXXO. Serás redirigido a Stripe (seguro).</div>
+            <div class="stripe-error" id="stripeError" style="display:none;"></div>
+        </div>
+
+        <div class="pay-separator"><span>o también puedes</span></div>
+
+        <!-- OPCIÓN 2 — Depósito SPEI + WhatsApp (manual) -->
         <div class="deposit-info" style="display:block; margin-top:0;">
-            <div class="deposit-title">Datos para tu depósito</div>
+            <div class="deposit-title">📥 Hacer depósito SPEI o bancario</div>
             <div class="deposit-row">
                 <div class="deposit-label">Tarjeta (SPEI desde otro banco)</div>
                 <div class="deposit-value">
@@ -877,7 +1088,7 @@
             <div class="deposit-whats">
                 📱 <strong>Notifica tu depósito por WhatsApp:</strong>
                 <a id="depositModalWa" href="https://wa.me/522464115513" target="_blank" rel="noopener">246 411 5513</a>
-                <div class="deposit-hint">Envíanos el comprobante y el curso que deseas activar.</div>
+                <div class="deposit-hint">Envíanos el comprobante. Te inscribimos manualmente en menos de 24 horas.</div>
             </div>
         </div>
     </div>
@@ -1423,7 +1634,171 @@ window.addEventListener('DOMContentLoaded', async () => {
     ]);
     if (data) currentUser = data;
     showPlatform();
+    initHeroDemo();  // inicia el tour guiado del hero
 });
+
+// ============================================================
+// HERO DEMO — tour guiado interactivo
+// ============================================================
+const DEMO_SLIDES = [
+    // Slide 1 — Bienvenida
+    () => `
+        <div class="big-logo">TRIKLES</div>
+        <h2>Transforma tu carrera con los clásicos</h2>
+        <p>7 cursos profesionales basados en los libros más influyentes de gestión empresarial. Desde Drucker hasta el método GROW. Adaptados al español y al contexto latinoamericano.</p>
+    `,
+    // Slide 2 — Catálogo
+    () => {
+        const covers = CATALOG.slice(0, 7).map(c =>
+            '<div class="demo-cover" style="background-image:url(' + (c.cover || '') + ');"></div>'
+        ).join('');
+        return `
+            <h2>📚 7 cursos profesionales en español</h2>
+            <p>Cada curso es un libro adaptado: 18-30 lecciones profundas, videos, quizzes, examen final y certificado.</p>
+            <div class="demo-covers">${covers}</div>
+        `;
+    },
+    // Slide 3 — Dentro de una lección
+    () => `
+        <h2>🎯 Aprende con método</h2>
+        <p>Cada lección combina teoría, citas del libro, video recomendado y ejercicio práctico.</p>
+        <div class="demo-lesson-mock">
+            <span class="tag">LECCIÓN 4</span>
+            <h3>La pirámide invertida</h3>
+            <p>El líder tradicional se coloca arriba y dirige hacia abajo. El líder de servicio voltea la pirámide y se pone al fondo — al servicio del equipo.</p>
+            <blockquote>"Para liderar hay que servir. El amor no es un sentimiento: es un verbo." — James C. Hunter</blockquote>
+        </div>
+    `,
+    // Slide 4 — Quiz
+    () => `
+        <h2>✅ Refuerza con quizzes</h2>
+        <p>Al final de cada lección respondes una pregunta. Si aciertas, desbloqueas la siguiente.</p>
+        <div class="demo-quiz-mock">
+            <div class="q">🎯 ¿Cuál es la fórmula del aprendizaje según Whitmore?</div>
+            <div class="opt">Conocimiento + Experiencia</div>
+            <div class="opt correct">✓ Conciencia × Responsabilidad</div>
+            <div class="opt">Motivación + Disciplina</div>
+            <div class="opt">Inteligencia × Esfuerzo</div>
+        </div>
+    `,
+    // Slide 5 — Examen final
+    () => `
+        <h2>📝 Examen final</h2>
+        <p>Al terminar todas las lecciones presentas un examen de 10 a 15 preguntas. Necesitas 70-80% para certificarte.</p>
+        <div class="demo-exam-mock">
+            <div class="score">13/15</div>
+            <div class="label">🎉 ¡Aprobado con 87%!</div>
+        </div>
+    `,
+    // Slide 6 — Certificado
+    () => `
+        <h2>🏆 Recibe tu certificado</h2>
+        <p>Personalizado con tu nombre, descargable en PDF y compartible en LinkedIn.</p>
+        <div class="demo-cert-mock">
+            <div class="cert-title">TRIKLES</div>
+            <div class="cert-name">TU NOMBRE AQUÍ</div>
+            <div class="cert-course">Control de Costos en Alimentos y Bebidas<br>Método Dopson &amp; Hayes</div>
+        </div>
+    `,
+    // Slide 7 — CTA final
+    () => `
+        <h2>Empieza hoy</h2>
+        <p>Cursos individuales desde $499 MXN · Bundle completo con todos los cursos con descuento del 34%.</p>
+        <div class="demo-cta-mock">
+            <div class="cta-price">desde $499<small style="font-size:0.5em;opacity:0.8;"> MXN</small></div>
+            <button class="cta-btn" onclick="scrollToPricing()">Ver precios</button>
+        </div>
+    `
+];
+
+let demoIndex = 0;
+let demoTimer = null;
+let demoPaused = false;
+const DEMO_INTERVAL = 9000;  // 9 segundos por slide
+
+function initHeroDemo() {
+    const demo = document.getElementById('heroDemo');
+    const dots = document.getElementById('demoDots');
+    if (!demo || !dots) return;
+    // Crear los slides
+    DEMO_SLIDES.forEach((render, i) => {
+        const s = document.createElement('div');
+        s.className = 'demo-slide' + (i === 0 ? ' active' : '');
+        s.innerHTML = render();
+        demo.appendChild(s);
+    });
+    // Mover la barra de progreso al final para que esté sobre los slides
+    const progress = document.getElementById('demoProgress');
+    if (progress) demo.appendChild(progress);
+    // Crear los dots
+    for (let i = 0; i < DEMO_SLIDES.length; i++) {
+        const d = document.createElement('span');
+        d.className = 'demo-dot' + (i === 0 ? ' active' : '');
+        d.onclick = () => goToSlide(i);
+        dots.appendChild(d);
+    }
+    // Hover pausa
+    demo.addEventListener('mouseenter', () => { if (!demoPaused) pauseTimer(); });
+    demo.addEventListener('mouseleave', () => { if (!demoPaused) startTimer(); });
+    // Iniciar
+    startTimer();
+}
+
+function startTimer() {
+    stopTimer();
+    const progress = document.getElementById('demoProgress');
+    if (progress) {
+        progress.style.width = '0%';
+        setTimeout(() => {
+            if (progress) progress.style.transition = 'width ' + DEMO_INTERVAL + 'ms linear';
+            if (progress) progress.style.width = '100%';
+        }, 50);
+    }
+    demoTimer = setTimeout(() => {
+        nextSlide();
+    }, DEMO_INTERVAL);
+}
+
+function pauseTimer() {
+    if (demoTimer) { clearTimeout(demoTimer); demoTimer = null; }
+    const progress = document.getElementById('demoProgress');
+    if (progress) {
+        const computed = getComputedStyle(progress).width;
+        progress.style.transition = 'none';
+        progress.style.width = computed;
+    }
+}
+
+function stopTimer() {
+    if (demoTimer) { clearTimeout(demoTimer); demoTimer = null; }
+}
+
+function nextSlide() {
+    goToSlide((demoIndex + 1) % DEMO_SLIDES.length);
+}
+
+function goToSlide(i) {
+    demoIndex = i;
+    document.querySelectorAll('#heroDemo .demo-slide').forEach((el, idx) => {
+        el.classList.toggle('active', idx === i);
+    });
+    document.querySelectorAll('#demoDots .demo-dot').forEach((el, idx) => {
+        el.classList.toggle('active', idx === i);
+    });
+    if (!demoPaused) startTimer();
+}
+
+function toggleDemoPlay() {
+    demoPaused = !demoPaused;
+    const btn = document.getElementById('demoPlayPause');
+    if (demoPaused) {
+        pauseTimer();
+        if (btn) btn.textContent = '▶';
+    } else {
+        startTimer();
+        if (btn) btn.textContent = '⏸';
+    }
+}
 
 // ============================================================
 // PRICING — renderizado y modal de depósito
@@ -1472,13 +1847,18 @@ function renderPricing() {
     if (banner) {
         const save = BUNDLE.listPrice - BUNDLE.price;
         const pct = Math.round((save / BUNDLE.listPrice) * 100);
+        const bundleCount = Object.keys(PRICING).length;
+        // Calcular total de lecciones de forma dinámica
+        const totalLessons = CATALOG
+            .filter(c => PRICING[c.id])
+            .reduce((sum, c) => sum + (c.lessonsCount || 0), 0);
         banner.innerHTML = `
             <div>
-                <div class="bundle-title">🎁 Bundle completo — Los 7 cursos</div>
+                <div class="bundle-title">🎁 Bundle completo — Los ${bundleCount} cursos</div>
                 <div class="bundle-sub">La forma más económica de acceder a todo el catálogo TRIKLES.</div>
                 <ul class="bundle-features">
-                    <li>✅ 133 lecciones · 55+ horas de contenido</li>
-                    <li>✅ 7 certificados TRIKLES personalizados</li>
+                    <li>✅ ${totalLessons} lecciones de contenido</li>
+                    <li>✅ ${bundleCount} certificados TRIKLES personalizados</li>
                     <li>✅ Acceso de por vida + actualizaciones</li>
                     <li>✅ Videos curados, citas textuales e imágenes reales</li>
                 </ul>
@@ -1498,15 +1878,21 @@ function scrollToPricing() {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// Id del producto seleccionado actualmente en el modal (para que payWithStripe sepa cuál)
+let currentCheckoutTarget = null;
+
 function openDepositModal(idOrBundle) {
     const modal = document.getElementById('depositModal');
     const courseBox = document.getElementById('depositModalCourse');
     const waLink = document.getElementById('depositModalWa');
+    const stripeBtnAmount = document.getElementById('stripeBtnAmount');
+    const stripeError = document.getElementById('stripeError');
     let label, amount, waText;
     if (idOrBundle === '__bundle') {
-        label = '🎁 Bundle completo — 6 cursos';
+        const bundleCount = Object.keys(PRICING).length;  // dinámico: se adapta al agregar cursos
+        label = '🎁 Bundle completo — ' + bundleCount + ' cursos';
         amount = BUNDLE.price;
-        waText = 'Hola, quiero inscribirme al BUNDLE completo de TRIKLES (6 cursos) por $' + BUNDLE.price + ' MXN.';
+        waText = 'Hola, quiero inscribirme al BUNDLE completo de TRIKLES (' + bundleCount + ' cursos) por $' + BUNDLE.price + ' MXN.';
     } else {
         const c = CATALOG.find(x => x.id === idOrBundle);
         const p = PRICING[idOrBundle];
@@ -1515,14 +1901,63 @@ function openDepositModal(idOrBundle) {
         amount = p.price;
         waText = 'Hola, quiero inscribirme al curso "' + c.title + '" por $' + p.price + ' MXN.';
     }
+    currentCheckoutTarget = idOrBundle;
     courseBox.innerHTML = `<span>${label}</span><span class="amt">${fmtPrice(amount)} MXN</span>`;
     waLink.href = 'https://wa.me/522464115513?text=' + encodeURIComponent(waText);
+    if (stripeBtnAmount) stripeBtnAmount.textContent = fmtPrice(amount) + ' MXN';
+    if (stripeError) { stripeError.style.display = 'none'; stripeError.textContent = ''; }
     modal.classList.add('open');
 }
 
 function closeDepositModal() {
     const modal = document.getElementById('depositModal');
     if (modal) modal.classList.remove('open');
+}
+
+// Redirige al alumno a Stripe Checkout.
+// Si no está autenticado, le pide iniciar sesión/registrarse primero.
+async function payWithStripe() {
+    const btn = document.getElementById('stripePayBtn');
+    const errEl = document.getElementById('stripeError');
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    if (!currentCheckoutTarget) {
+        showStripeError('No hay curso seleccionado.');
+        return;
+    }
+
+    if (!currentUser) {
+        // Cerrar modal de depósito y abrir auth
+        closeDepositModal();
+        if (confirm('Para pagar con tarjeta necesitas una cuenta. ¿Quieres registrarte o iniciar sesión ahora?')) {
+            openAuth('register');
+        }
+        return;
+    }
+
+    btn.disabled = true;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = 'Procesando…';
+
+    try {
+        const courseId = currentCheckoutTarget === '__bundle' ? 'BUNDLE' : currentCheckoutTarget;
+        const result = await TK.createStripeCheckout(courseId);
+        // Redirigir a Stripe
+        window.location.href = result.url;
+    } catch (err) {
+        console.error('Stripe error:', err);
+        showStripeError(err.message || 'No se pudo iniciar el pago. Intenta de nuevo o usa el depósito manual abajo.');
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+}
+
+function showStripeError(msg) {
+    const errEl = document.getElementById('stripeError');
+    if (errEl) {
+        errEl.style.display = 'block';
+        errEl.textContent = msg;
+    }
 }
 
 // Cerrar con Escape
