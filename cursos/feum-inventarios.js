@@ -77,15 +77,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">COFEPRIS — Regulación sanitaria y responsable sanitario</p>
-            <a href="https://www.youtube.com/watch?v=XXYD5Nwr9lQ" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/XXYD5Nwr9lQ?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="COFEPRIS — Regulación sanitaria y responsable sanitario"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">COFEPRIS — Regulación sanitaria y responsable sanitario</div>
         </div>
 
         <div class="instructor-note">
@@ -164,15 +165,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Regulación sanitaria en México — COFEPRIS</p>
-            <a href="https://www.youtube.com/watch?v=eEfN2w1cp6s" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/eEfN2w1cp6s?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Regulación sanitaria en México — COFEPRIS"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Regulación sanitaria en México — COFEPRIS</div>
         </div>
 
         <div class="instructor-note">
@@ -244,15 +246,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">¿Qué es la Farmacopea? — La Farmacia TV</p>
-            <a href="https://www.youtube.com/watch?v=uKSq6G7rO9w" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/uKSq6G7rO9w?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="¿Qué es la Farmacopea? — La Farmacia TV"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">¿Qué es la Farmacopea? — La Farmacia TV</div>
         </div>
 
         <div class="instructor-note">
@@ -328,15 +331,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Clasificación de medicamentos — Artículo 226 de la LGS</p>
-            <a href="https://www.youtube.com/watch?v=WmU41lyGqzI" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/WmU41lyGqzI?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Clasificación de medicamentos — Artículo 226 de la LGS"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Clasificación de medicamentos — Artículo 226 de la LGS</div>
         </div>
 
         <div class="instructor-note">
@@ -405,15 +409,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">El Responsable Sanitario de una Farmacia</p>
-            <a href="https://www.youtube.com/watch?v=ALGqkxIqQpw" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/ALGqkxIqQpw?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="El Responsable Sanitario de una Farmacia"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">El Responsable Sanitario de una Farmacia</div>
         </div>
 
         <div class="instructor-note">
@@ -498,15 +503,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Aviso de Funcionamiento y Licencia Sanitaria</p>
-            <a href="https://www.youtube.com/watch?v=Nh2_Ngp87vU" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/Nh2_Ngp87vU?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Aviso de Funcionamiento y Licencia Sanitaria"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Aviso de Funcionamiento y Licencia Sanitaria</div>
         </div>
 
         <div class="instructor-note">
@@ -588,15 +594,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Buenas Prácticas de Almacenamiento de productos farmacéuticos</p>
-            <a href="https://www.youtube.com/watch?v=naLJb7109Zs" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/naLJb7109Zs?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Buenas Prácticas de Almacenamiento de productos farmacéuticos"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Buenas Prácticas de Almacenamiento de productos farmacéuticos</div>
         </div>
 
         <div class="instructor-note">
@@ -669,15 +676,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Áreas del almacén farmacéutico — Cuarentena, aprobado, rechazado</p>
-            <a href="https://www.youtube.com/watch?v=IU7vmvOcNxE" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/IU7vmvOcNxE?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Áreas del almacén farmacéutico — Cuarentena, aprobado, rechazado"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Áreas del almacén farmacéutico — Cuarentena, aprobado, rechazado</div>
         </div>
 
         <div class="instructor-note">
@@ -752,15 +760,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Buenas Prácticas de Almacenamiento — Regulación BPA</p>
-            <a href="https://www.youtube.com/watch?v=ICJtZqYdbqs" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/ICJtZqYdbqs?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Buenas Prácticas de Almacenamiento — Regulación BPA"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Buenas Prácticas de Almacenamiento — Regulación BPA</div>
         </div>
 
         <div class="instructor-note">
@@ -840,15 +849,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Cadena de frío en la industria farmacéutica</p>
-            <a href="https://www.youtube.com/watch?v=3NBT4821WCo" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/3NBT4821WCo?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Cadena de frío en la industria farmacéutica"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Cadena de frío en la industria farmacéutica</div>
         </div>
 
         <div class="instructor-note">
@@ -931,15 +941,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Recepción técnica de medicamentos y dispositivos médicos</p>
-            <a href="https://www.youtube.com/watch?v=icXRzRdYVGE" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/icXRzRdYVGE?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Recepción técnica de medicamentos y dispositivos médicos"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Recepción técnica de medicamentos y dispositivos médicos</div>
         </div>
 
         <div class="instructor-note">
@@ -1030,15 +1041,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Libro de control de medicamentos controlados en farmacia</p>
-            <a href="https://www.youtube.com/watch?v=kh-EveZugBI" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/kh-EveZugBI?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Libro de control de medicamentos controlados en farmacia"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Libro de control de medicamentos controlados en farmacia</div>
         </div>
 
         <div class="instructor-note">
@@ -1116,15 +1128,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Control de inventarios en tu farmacia — Medicine Depot</p>
-            <a href="https://www.youtube.com/watch?v=6sJ7vFzkuDo" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/6sJ7vFzkuDo?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Control de inventarios en tu farmacia — Medicine Depot"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Control de inventarios en tu farmacia — Medicine Depot</div>
         </div>
 
         <div class="instructor-note">
@@ -1218,15 +1231,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Sistema FEFO — Primero lo que primero caduca</p>
-            <a href="https://www.youtube.com/watch?v=NPyvyvgeohE" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/NPyvyvgeohE?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Sistema FEFO — Primero lo que primero caduca"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Sistema FEFO — Primero lo que primero caduca</div>
         </div>
 
         <div class="instructor-note">
@@ -1295,15 +1309,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Trazabilidad del medicamento — Seguridad por lote</p>
-            <a href="https://www.youtube.com/watch?v=2LCouoMFK3g" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/2LCouoMFK3g?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Trazabilidad del medicamento — Seguridad por lote"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Trazabilidad del medicamento — Seguridad por lote</div>
         </div>
 
         <div class="instructor-note">
@@ -1386,15 +1401,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Inventario cíclico vs. físico — ¿Cuál conviene más?</p>
-            <a href="https://www.youtube.com/watch?v=ikO4M0J1v4I" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/ikO4M0J1v4I?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Inventario cíclico vs. físico — ¿Cuál conviene más?"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Inventario cíclico vs. físico — ¿Cuál conviene más?</div>
         </div>
 
         <div class="instructor-note">
@@ -1471,15 +1487,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Destrucción de medicamentos caducos o deteriorados</p>
-            <a href="https://www.youtube.com/watch?v=OAAdWLB_S20" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/OAAdWLB_S20?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Destrucción de medicamentos caducos o deteriorados"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Destrucción de medicamentos caducos o deteriorados</div>
         </div>
 
         <div class="instructor-note">
@@ -1553,15 +1570,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">KPIs para controlar tu almacén</p>
-            <a href="https://www.youtube.com/watch?v=mFpibvN5TCM" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/mFpibvN5TCM?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="KPIs para controlar tu almacén"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">KPIs para controlar tu almacén</div>
         </div>
 
         <div class="instructor-note">
@@ -1623,15 +1641,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Buenas Prácticas de Distribución y transporte farmacéutico</p>
-            <a href="https://www.youtube.com/watch?v=WU7pWj86-2w" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/WU7pWj86-2w?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Buenas Prácticas de Distribución y transporte farmacéutico"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Buenas Prácticas de Distribución y transporte farmacéutico</div>
         </div>
 
         <div class="instructor-note">
@@ -1705,15 +1724,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Farmacovigilancia — NOM-220</p>
-            <a href="https://www.youtube.com/watch?v=--_k_k2QHtE" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/--_k_k2QHtE?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Farmacovigilancia — NOM-220"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Farmacovigilancia — NOM-220</div>
         </div>
 
         <div class="instructor-note">
@@ -1785,15 +1805,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Retiro de producto del mercado (Recall)</p>
-            <a href="https://www.youtube.com/watch?v=JsSxAp-00us" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/JsSxAp-00us?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Retiro de producto del mercado (Recall)"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Retiro de producto del mercado (Recall)</div>
         </div>
 
         <div class="instructor-note">
@@ -1867,15 +1888,16 @@ const COURSE_FEUM_INVENTARIOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Verificación COFEPRIS a una farmacia — Procedimiento</p>
-            <a href="https://www.youtube.com/watch?v=zjhKn_ctnYo" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/zjhKn_ctnYo?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Verificación COFEPRIS a una farmacia — Procedimiento"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Verificación COFEPRIS a una farmacia — Procedimiento</div>
         </div>
 
         <div class="instructor-note">

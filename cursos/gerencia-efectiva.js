@@ -100,18 +100,19 @@ const COURSE_GERENCIA_EFECTIVA = {
         </div>`;
     }
 
-    // Helper: bloque de video recomendado (enlace a YouTube)
+    // Helper: video complementario embebido
     function videoLink(title, videoId) {
         return `
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">${title}</p>
-            <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="${title.replace(/"/g, '&quot;')}"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">${title}</div>
         </div>`;
     }
 

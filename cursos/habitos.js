@@ -57,15 +57,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Los 7 Hábitos de la Gente Altamente Efectiva — Resumen animado</p>
-            <a href="https://www.youtube.com/watch?v=CHx6QZ0BN8c" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/CHx6QZ0BN8c?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Los 7 Hábitos de la Gente Altamente Efectiva — Resumen animado"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Los 7 Hábitos de la Gente Altamente Efectiva — Resumen animado</div>
         </div>
 
         <div class="instructor-note">
@@ -201,15 +202,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 1: Ser Proactivo — El hábito de la Proactividad</p>
-            <a href="https://www.youtube.com/watch?v=j1qIr5AMbNc" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/j1qIr5AMbNc?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 1: Ser Proactivo — El hábito de la Proactividad"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 1: Ser Proactivo — El hábito de la Proactividad</div>
         </div>
 
         <div class="instructor-note">
@@ -350,15 +352,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 2: Comenzar con un fin en mente</p>
-            <a href="https://www.youtube.com/watch?v=G8aPVsx4dGk" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/G8aPVsx4dGk?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 2: Comenzar con un fin en mente"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 2: Comenzar con un fin en mente</div>
         </div>
 
         <div class="instructor-note">
@@ -500,15 +503,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 3: Poner primero lo primero</p>
-            <a href="https://www.youtube.com/watch?v=eJIMa_a-yjE" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/eJIMa_a-yjE?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 3: Poner primero lo primero"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 3: Poner primero lo primero</div>
         </div>
 
         <div class="instructor-note">
@@ -625,15 +629,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 4: Pensar en Ganar/Ganar — Las cuatro dimensiones</p>
-            <a href="https://www.youtube.com/watch?v=jeh6pMqZMR4" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/jeh6pMqZMR4?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 4: Pensar en Ganar/Ganar — Las cuatro dimensiones"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 4: Pensar en Ganar/Ganar — Las cuatro dimensiones</div>
         </div>
 
         <div class="instructor-note">
@@ -752,15 +757,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 5: Procure primero comprender, después ser comprendido</p>
-            <a href="https://www.youtube.com/watch?v=eBXDGvbvcb4" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/eBXDGvbvcb4?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 5: Procure primero comprender, después ser comprendido"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 5: Procure primero comprender, después ser comprendido</div>
         </div>
 
         <div class="instructor-note">
@@ -878,15 +884,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 6: Sinergice — 1 + 1 = 3, el secreto de los grandes equipos</p>
-            <a href="https://www.youtube.com/watch?v=Ud88wjFJ4gw" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/Ud88wjFJ4gw?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 6: Sinergice — 1 + 1 = 3, el secreto de los grandes equipos"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 6: Sinergice — 1 + 1 = 3, el secreto de los grandes equipos</div>
         </div>
 
         <div class="instructor-note">
@@ -992,15 +999,16 @@ const COURSE_HABITOS = {
         </div>
 
         
-        <div class="content-card" style="text-align:center;padding:18px 16px;background:linear-gradient(135deg,#fff3e0,#fce4ec);border-left:4px solid #c62828;">
-            <h3 style="margin:0 0 6px;">🎬 Video recomendado</h3>
-            <p style="font-size:0.88em;color:#555;margin:0 0 12px;">Hábito 7: Afile la sierra — Renovación continua</p>
-            <a href="https://www.youtube.com/watch?v=k_yEKoAdrtU" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:8px;background:#c62828;color:white;
-                      padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.95em;
-                      box-shadow:0 2px 8px rgba(198,40,40,0.3);transition:transform 0.15s;">
-                ▶ Ver en YouTube
-            </a>
+        <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
+            <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
+            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
+                <iframe src="https://www.youtube-nocookie.com/embed/k_yEKoAdrtU?rel=0&modestbranding=1"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"
+                        title="Hábito 7: Afile la sierra — Renovación continua"></iframe>
+            </div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Hábito 7: Afile la sierra — Renovación continua</div>
         </div>
 
         <div class="instructor-note">
