@@ -295,10 +295,28 @@
             <button class="btn-action btn-scholarship" onclick="openScholarshipModal()">🎓 Otorgar beca</button>
             <button class="btn-action btn-clean-test" onclick="cleanTestStudents()">🧹 Borrar alumnos de prueba</button>
             <button class="btn-action btn-clean-all" onclick="cleanAllStudents()">⚠️ Borrar TODOS los alumnos</button>
+            <button class="btn-action" style="background:#fff3e0;color:#e65100;border-color:#ffb300;" onclick="openRatingsPanel()">⭐ Calificaciones</button>
         </div>
 
         <div class="table-wrap">
             <table id="mainTable"></table>
+        </div>
+    </div>
+</div>
+
+<!-- ======= PANEL CALIFICACIONES ======= -->
+<div id="ratingsModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this) closeRatingsPanel()">
+    <div class="modal-card" style="max-width:900px; width:95%;">
+        <button class="modal-close" onclick="closeRatingsPanel()" aria-label="Cerrar">✕</button>
+        <h2 style="color:var(--blue);margin-bottom:6px;">⭐ Calificaciones de cursos</h2>
+        <p style="font-size:0.9em;color:#666;margin-bottom:16px;">
+            Promedios por curso y reseñas individuales. Puedes ocultar una reseña si es inapropiada
+            (la estrella seguirá contando para el promedio pero el texto/autor no se mostrará al público).
+        </p>
+        <div id="ratingsSummaryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:18px;"></div>
+        <h3 style="color:var(--blue);font-size:1em;margin:18px 0 10px;">Todas las reseñas</h3>
+        <div style="max-height:55vh; overflow-y:auto;">
+            <table id="ratingsTable" style="font-size:0.85em;"></table>
         </div>
     </div>
 </div>
@@ -788,6 +806,83 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (e.key === 'Enter') tryAdminLogin();
     });
 });
+
+// =========================================================
+// PANEL DE CALIFICACIONES
+// =========================================================
+async function openRatingsPanel() {
+    const modal = document.getElementById('ratingsModal');
+    modal.classList.add('show');
+    const summaryGrid = document.getElementById('ratingsSummaryGrid');
+    const table = document.getElementById('ratingsTable');
+    summaryGrid.innerHTML = '<div style="padding:20px;color:#999;">Cargando...</div>';
+    table.innerHTML = '';
+
+    try {
+        const [summary, all] = await Promise.all([
+            TK.getRatingsSummary(),
+            TK.loadAllRatings()
+        ]);
+
+        // Resumen por curso
+        const catalog = getCatalog();
+        const summaryHtml = catalog.map(c => {
+            const s = summary[c.id] || { count: 0, avg: 0 };
+            const stars = '★★★★★'.substring(0, Math.round(s.avg)) + '☆☆☆☆☆'.substring(0, 5 - Math.round(s.avg));
+            return '<div style="background:white;padding:10px 12px;border-radius:8px;border:1px solid #e0e0e0;">' +
+                '<div style="font-weight:700;color:var(--blue);font-size:0.85em;margin-bottom:4px;">' + c.title + '</div>' +
+                '<div style="color:#ffb300;font-size:1.1em;">' + stars + '</div>' +
+                '<div style="color:#555;font-size:0.78em;">' +
+                (s.count > 0 ? s.avg.toFixed(2) + ' / 5 · ' + s.count + ' reseña' + (s.count === 1 ? '' : 's') : 'Sin reseñas') +
+                '</div>' +
+                '</div>';
+        }).join('');
+        summaryGrid.innerHTML = summaryHtml;
+
+        // Tabla de todas las reseñas
+        if (!all || all.length === 0) {
+            table.innerHTML = '<tr><td style="padding:20px;text-align:center;color:#999;">Aún no hay calificaciones</td></tr>';
+            return;
+        }
+        all.sort((a, b) => new Date(b.updatedAt || b.ratedAt) - new Date(a.updatedAt || a.ratedAt));
+        const rows = all.map(r => {
+            const stars = '★★★★★'.substring(0, r.stars) + '☆☆☆☆☆'.substring(0, 5 - r.stars);
+            const courseTitle = (catalog.find(c => c.id === r.courseId) || {}).title || r.courseId;
+            const date = new Date(r.updatedAt || r.ratedAt).toLocaleDateString('es-MX');
+            const reviewEsc = (r.review || '').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+            const hiddenBtn = r.hidden
+                ? '<button class="btn btn-outline" style="font-size:0.8em;padding:4px 8px;" onclick="adminToggleRating(\'' + r._id + '\', false)">Mostrar</button>'
+                : '<button class="btn btn-danger" style="font-size:0.8em;padding:4px 8px;" onclick="adminToggleRating(\'' + r._id + '\', true)">Ocultar</button>';
+            return '<tr style="' + (r.hidden ? 'opacity:0.5;' : '') + '">' +
+                '<td><strong>' + (r.userName || r.userId) + '</strong><br><small>' + r.userId + '</small></td>' +
+                '<td>' + courseTitle + '</td>' +
+                '<td style="color:#ffb300;font-size:1.05em;">' + stars + '</td>' +
+                '<td style="max-width:300px;">' + (reviewEsc || '<em style="color:#aaa;">Sin texto</em>') + '</td>' +
+                '<td>' + date + '</td>' +
+                '<td>' + hiddenBtn + '</td>' +
+                '</tr>';
+        }).join('');
+        table.innerHTML = '<thead><tr>' +
+            '<th>Alumno</th><th>Curso</th><th>⭐</th><th>Reseña</th><th>Fecha</th><th>Acción</th>' +
+            '</tr></thead><tbody>' + rows + '</tbody>';
+    } catch (e) {
+        summaryGrid.innerHTML = '<div style="padding:20px;color:#c62828;">Error al cargar calificaciones: ' + (e.message || e) + '</div>';
+    }
+}
+
+function closeRatingsPanel() {
+    document.getElementById('ratingsModal').classList.remove('show');
+}
+
+async function adminToggleRating(ratingId, hide) {
+    try {
+        await TK.toggleRatingVisibility(ratingId, hide);
+        // Recargar el panel
+        await openRatingsPanel();
+    } catch (e) {
+        alert('No se pudo actualizar: ' + (e.message || e));
+    }
+}
 </script>
 </body>
 </html>

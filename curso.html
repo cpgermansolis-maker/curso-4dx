@@ -322,6 +322,46 @@
         }
         .cert-actions { text-align: center; margin: 20px 0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+        /* Bloque de calificación */
+        .rating-block {
+            background: linear-gradient(135deg,#fff8e1,#ffe0b2);
+            border-radius: 16px; padding: 24px; margin: 24px 0;
+            border: 2px solid #ffb300; text-align: center;
+            box-shadow: 0 4px 16px rgba(255,143,0,0.18);
+        }
+        .rating-block h3 { color: #e65100; font-size: 1.3em; margin-bottom: 6px; }
+        .rating-block .rating-sub { color: #555; font-size: 0.92em; margin-bottom: 16px; }
+        .rating-stars { display: inline-flex; gap: 6px; margin: 8px 0; justify-content: center; }
+        .rating-stars .star {
+            font-size: 2.5em; cursor: pointer; transition: transform 0.1s;
+            color: #d1d1d1; user-select: none;
+        }
+        .rating-stars .star.active { color: #ffb300; text-shadow: 0 2px 6px rgba(255,143,0,0.3); }
+        .rating-stars .star:hover { transform: scale(1.15); }
+        .rating-review {
+            width: 100%; max-width: 520px; margin: 16px auto 0;
+            padding: 12px; border: 2px solid #ffcc80; border-radius: 10px;
+            font-size: 0.95em; font-family: inherit; min-height: 90px; resize: vertical;
+            box-sizing: border-box;
+        }
+        .rating-review:focus { outline: none; border-color: #ff6f00; }
+        .rating-charcount { font-size: 0.78em; color: #777; text-align: right; max-width: 520px; margin: 4px auto; }
+        .rating-submit {
+            background: linear-gradient(135deg,#ff9800,#ff6f00); color: white;
+            border: 0; padding: 12px 32px; border-radius: 10px; margin-top: 14px;
+            font-weight: 800; font-size: 1em; cursor: pointer;
+            box-shadow: 0 3px 10px rgba(255,111,0,0.35);
+            transition: transform 0.15s;
+        }
+        .rating-submit:hover:not(:disabled) { transform: translateY(-2px); }
+        .rating-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .rating-success {
+            background: #e8f5e9; color: #1b5e20; padding: 14px; border-radius: 10px;
+            font-weight: 700; margin-top: 14px; display: none;
+        }
+        .rating-success.show { display: block; animation: fadeIn 0.3s ease; }
+        .rating-edit-hint { font-size: 0.82em; color: #777; margin-top: 10px; font-style: italic; }
+
         @media print {
             body * { visibility: hidden; }
             .certificate, .certificate * { visibility: visible; }
@@ -1242,6 +1282,9 @@ function showLesson(idx) {
                 dateEl.textContent = d.getDate() + ' de ' + months[d.getMonth()] + ', ' + d.getFullYear();
             }
             if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Bloque de calificación del curso (solo si aprobó el examen)
+            injectRatingBlock();
         }, 50);
     }
 
@@ -1814,6 +1857,120 @@ document.addEventListener('visibilitychange', () => {
 });
 // Detener al cerrar/recargar
 window.addEventListener('beforeunload', () => TTS.stop(true));
+
+// =========================================================
+// CALIFICACIÓN DEL CURSO (rating)
+// Se muestra en la pantalla del certificado después de aprobar el examen.
+// =========================================================
+async function injectRatingBlock() {
+    const certEl = document.getElementById('certificateEl');
+    if (!certEl || certEl.style.display === 'none') return;
+
+    // Si ya hay un bloque de rating, no duplicar
+    if (document.getElementById('ratingBlock')) return;
+
+    // Contenedor del bloque
+    const block = document.createElement('div');
+    block.id = 'ratingBlock';
+    block.className = 'rating-block';
+    block.innerHTML = `
+        <h3>⭐ ¿Qué te pareció este curso?</h3>
+        <div class="rating-sub">Tu calificación ayuda a otros alumnos a elegir y nos ayuda a mejorar.</div>
+        <div class="rating-stars" id="ratingStars">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <textarea class="rating-review" id="ratingReview" maxlength="500"
+                  placeholder="Opcional: comparte qué aprendiste, qué fue más útil o qué podríamos mejorar (500 caracteres)"></textarea>
+        <div class="rating-charcount"><span id="ratingCharCount">0</span>/500</div>
+        <button class="rating-submit" id="ratingSubmit" disabled>Enviar calificación</button>
+        <div class="rating-success" id="ratingSuccess">✓ ¡Gracias por calificar! Puedes editar tu calificación cuando quieras.</div>
+        <div class="rating-edit-hint" id="ratingEditHint" style="display:none;">Puedes modificar tu calificación en cualquier momento.</div>
+    `;
+
+    // Insertar después del certificado pero antes del .course-footer (si existe)
+    const footer = certEl.parentElement.querySelector('.course-footer');
+    if (footer) {
+        certEl.parentElement.insertBefore(block, footer);
+    } else {
+        certEl.parentElement.appendChild(block);
+    }
+
+    // Cargar calificación existente (si el alumno ya calificó antes)
+    let currentStars = 0;
+    let currentReview = '';
+    try {
+        const existing = await TK.getMyRating(COURSE.id);
+        if (existing) {
+            currentStars = existing.stars || 0;
+            currentReview = existing.review || '';
+            document.getElementById('ratingEditHint').style.display = 'block';
+        }
+    } catch (e) {
+        console.warn('[Rating] No se pudo cargar calificación previa:', e);
+    }
+
+    const starsContainer = block.querySelector('#ratingStars');
+    const reviewInput = block.querySelector('#ratingReview');
+    const submitBtn = block.querySelector('#ratingSubmit');
+    const charCount = block.querySelector('#ratingCharCount');
+    const successEl = block.querySelector('#ratingSuccess');
+
+    // Pintar estrellas según el estado actual
+    function paintStars(n) {
+        starsContainer.querySelectorAll('.star').forEach(s => {
+            const v = parseInt(s.dataset.value);
+            s.classList.toggle('active', v <= n);
+        });
+    }
+
+    // Interactividad estrellas
+    starsContainer.querySelectorAll('.star').forEach(s => {
+        s.addEventListener('click', () => {
+            currentStars = parseInt(s.dataset.value);
+            paintStars(currentStars);
+            submitBtn.disabled = currentStars < 1;
+        });
+        s.addEventListener('mouseover', () => {
+            paintStars(parseInt(s.dataset.value));
+        });
+        s.addEventListener('mouseout', () => {
+            paintStars(currentStars);
+        });
+    });
+
+    // Contador de caracteres
+    reviewInput.addEventListener('input', () => {
+        charCount.textContent = reviewInput.value.length;
+    });
+
+    // Precargar valores si ya existía
+    reviewInput.value = currentReview;
+    charCount.textContent = currentReview.length;
+    paintStars(currentStars);
+    if (currentStars >= 1) submitBtn.disabled = false;
+
+    // Submit
+    submitBtn.addEventListener('click', async () => {
+        if (currentStars < 1) return;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando…';
+        try {
+            await TK.saveRating(COURSE.id, currentStars, reviewInput.value);
+            successEl.classList.add('show');
+            submitBtn.textContent = 'Actualizar calificación';
+            submitBtn.disabled = false;
+            document.getElementById('ratingEditHint').style.display = 'block';
+        } catch (e) {
+            alert('No se pudo guardar tu calificación: ' + (e.message || e));
+            submitBtn.textContent = 'Enviar calificación';
+            submitBtn.disabled = false;
+        }
+    });
+}
 </script>
 
 </body>

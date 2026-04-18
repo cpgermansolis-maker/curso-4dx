@@ -201,6 +201,92 @@
             }
         },
 
+        /* ===== Calificaciones de cursos (ratings) ===== */
+
+        // ID compuesto que garantiza una calificación por alumno-curso
+        _ratingId(email, courseId) {
+            return emailToId(email) + '__' + courseId;
+        },
+
+        // Guardar o actualizar la calificación del usuario actual para un curso
+        async saveRating(courseId, stars, review) {
+            if (!currentEmail) throw new Error('Debes iniciar sesión para calificar');
+            if (!currentUserData) throw new Error('No se pudo cargar tu perfil');
+            if (!Number.isInteger(stars) || stars < 1 || stars > 5) {
+                throw new Error('La calificación debe ser de 1 a 5 estrellas');
+            }
+            const ratingId = this._ratingId(currentEmail, courseId);
+            const existing = await db.collection('ratings').doc(ratingId).get();
+            const data = {
+                courseId: courseId,
+                userId: currentEmail,
+                userName: currentUserData.name || currentEmail,
+                userCompany: currentUserData.company || '',
+                userRole: currentUserData.role || '',
+                stars: stars,
+                review: (review || '').substring(0, 500).trim(),
+                hidden: existing.exists ? (existing.data().hidden || false) : false,
+                ratedAt: existing.exists ? existing.data().ratedAt : new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            await db.collection('ratings').doc(ratingId).set(data, { merge: true });
+            return data;
+        },
+
+        // Obtener la calificación del usuario actual para un curso (si existe)
+        async getMyRating(courseId) {
+            if (!currentEmail) return null;
+            const ratingId = this._ratingId(currentEmail, courseId);
+            const snap = await db.collection('ratings').doc(ratingId).get();
+            return snap.exists ? snap.data() : null;
+        },
+
+        // Cargar TODAS las calificaciones (para catálogo y admin).
+        // Devuelve un array. El caller puede agrupar por courseId.
+        async loadAllRatings() {
+            const snap = await db.collection('ratings').get();
+            const arr = [];
+            snap.forEach(doc => arr.push(Object.assign({ _id: doc.id }, doc.data())));
+            return arr;
+        },
+
+        // Resumen agregado por curso: { courseId: { count, avg, sum } }
+        // Útil para la tarjeta del catálogo.
+        async getRatingsSummary() {
+            const all = await this.loadAllRatings();
+            const summary = {};
+            all.forEach(r => {
+                if (!summary[r.courseId]) summary[r.courseId] = { count: 0, sum: 0, avg: 0 };
+                summary[r.courseId].count += 1;
+                summary[r.courseId].sum += (r.stars || 0);
+            });
+            for (const id in summary) {
+                const s = summary[id];
+                s.avg = s.count > 0 ? (s.sum / s.count) : 0;
+            }
+            return summary;
+        },
+
+        // Reseñas públicas de un curso (excluye ocultas por admin), ordenadas por fecha
+        async loadCoursePublicReviews(courseId, limit) {
+            const snap = await db.collection('ratings')
+                .where('courseId', '==', courseId)
+                .get();
+            const arr = [];
+            snap.forEach(doc => {
+                const d = doc.data();
+                if (!d.hidden) arr.push(Object.assign({ _id: doc.id }, d));
+            });
+            arr.sort((a, b) => new Date(b.updatedAt || b.ratedAt) - new Date(a.updatedAt || a.ratedAt));
+            return limit ? arr.slice(0, limit) : arr;
+        },
+
+        // Admin: ocultar/mostrar una reseña (solo afecta la visibilidad del texto/autor público,
+        // las estrellas siguen contando para el promedio)
+        async toggleRatingVisibility(ratingId, hidden) {
+            await db.collection('ratings').doc(ratingId).update({ hidden: !!hidden });
+        },
+
         /* ===== Utilidades ===== */
         _db: db,
         _auth: auth

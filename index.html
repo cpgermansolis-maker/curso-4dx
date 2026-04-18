@@ -312,6 +312,52 @@
         display: flex; gap: 10px; font-size: 0.72em; color: var(--text-light);
         margin-bottom: 10px; flex-wrap: wrap;
     }
+
+    /* Calificaciones (ratings) */
+    .rating-display {
+        display: inline-flex; align-items: center; gap: 4px; font-size: 0.82em;
+        font-weight: 700; color: #555; margin-bottom: 6px;
+    }
+    .rating-stars-chars { color: #d1d1d1; letter-spacing: 1px; font-size: 1em; }
+    .rating-stars-chars .full { color: #ffb300; }
+    .rating-stars-chars .half {
+        background: linear-gradient(90deg, #ffb300 50%, #d1d1d1 50%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .rating-avg { color: #e65100; font-weight: 800; }
+    .rating-count { color: #999; font-weight: 500; }
+    .rating-display.large .rating-stars-chars { font-size: 1.4em; }
+    .rating-display.large .rating-avg { font-size: 1.15em; }
+    .rating-display.mini { font-size: 0.75em; margin-bottom: 4px; }
+    .rating-none { font-size: 0.72em; color: #aaa; font-style: italic; }
+
+    /* Selector de ordenamiento */
+    .catalog-header {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
+    }
+    .sort-select {
+        padding: 6px 10px; border: 2px solid #ddd; border-radius: 8px;
+        font-size: 0.88em; background: white; cursor: pointer;
+        font-weight: 600; color: var(--blue);
+    }
+    .sort-select:focus { outline: none; border-color: var(--blue); }
+
+    /* Reseñas en el modal */
+    .reviews-section { margin-top: 20px; padding: 16px; background: #fafafa; border-radius: 12px; }
+    .reviews-section h4 { color: var(--blue); margin-bottom: 10px; }
+    .review-card {
+        background: white; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+        border-left: 4px solid #ffb300;
+    }
+    .review-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+    .review-author { font-weight: 700; font-size: 0.9em; color: var(--blue); }
+    .review-role { font-size: 0.78em; color: #777; }
+    .review-date { font-size: 0.74em; color: #999; }
+    .review-stars { color: #ffb300; font-size: 0.95em; letter-spacing: 1px; }
+    .review-text { font-size: 0.88em; color: #444; line-height: 1.45; margin-top: 4px; }
+    .reviews-empty { color: #999; font-style: italic; font-size: 0.88em; text-align: center; padding: 10px; }
     .course-progress {
         background: #e6e8f0; height: 5px; border-radius: 10px; overflow: hidden; margin-bottom: 8px;
     }
@@ -650,8 +696,22 @@
             <div class="empty-state" id="myCoursesEmpty" style="display:none;">Aún no te has inscrito en ningún curso. Explora el catálogo abajo y elige el primero.</div>
         </div>
         <div class="section">
-            <div class="section-title">🌟 Catálogo disponible</div>
-            <div class="section-subtitle">Libros de gestión empresarial convertidos a cursos interactivos</div>
+            <div class="catalog-header">
+                <div>
+                    <div class="section-title">🌟 Catálogo disponible</div>
+                    <div class="section-subtitle">Libros de gestión empresarial convertidos a cursos interactivos</div>
+                </div>
+                <div>
+                    <label for="catalogSort" style="font-size:0.82em;color:#666;margin-right:6px;">Ordenar por:</label>
+                    <select class="sort-select" id="catalogSort" onchange="onSortChange(this.value)">
+                        <option value="featured">Destacados</option>
+                        <option value="rating">Mejor calificados</option>
+                        <option value="new">Más nuevos</option>
+                        <option value="price_asc">Precio: menor a mayor</option>
+                        <option value="price_desc">Precio: mayor a menor</option>
+                    </select>
+                </div>
+            </div>
             <div class="course-grid" id="catalogGrid"></div>
         </div>
         <div class="section" id="pricingSection">
@@ -721,6 +781,12 @@
             <ul class="temario-list" id="modalTemario">
                 <li style="text-align:center;color:#999;">Cargando temario...</li>
             </ul>
+
+            <div class="reviews-section" id="modalReviewsSection" style="display:none;">
+                <h4>💬 Lo que dicen los alumnos</h4>
+                <div id="modalReviewsSummary" style="margin-bottom:12px;"></div>
+                <div id="modalReviewsList"></div>
+            </div>
         </div>
         <div class="course-modal-cta">
             <button class="cta-register" onclick="closeCourseModal(); openAuth('register');">🎉 Registrarme para inscribirme</button>
@@ -1033,8 +1099,66 @@ function renderMyCourses() {
     }).join('');
 }
 
+// ==========================================================
+// RATINGS — carga y render de calificaciones
+// ==========================================================
+let RATINGS_SUMMARY = {};           // { 'courseId': { count, sum, avg } }
+let CURRENT_SORT = 'featured';
+
+async function loadRatingsSummary() {
+    try {
+        RATINGS_SUMMARY = await TK.getRatingsSummary();
+    } catch (e) {
+        console.warn('[Ratings] No se pudieron cargar:', e);
+        RATINGS_SUMMARY = {};
+    }
+}
+
+function renderStarChars(avg) {
+    let s = '';
+    for (let i = 1; i <= 5; i++) {
+        if (avg >= i) s += '<span class="full">★</span>';
+        else if (avg >= i - 0.5) s += '<span class="half">★</span>';
+        else s += '<span>★</span>';
+    }
+    return s;
+}
+
+function renderRatingDisplay(courseId, sizeClass) {
+    const s = RATINGS_SUMMARY[courseId];
+    if (!s || s.count === 0) {
+        return '<div class="rating-none">Sin calificaciones aún</div>';
+    }
+    return '<div class="rating-display ' + (sizeClass || '') + '">' +
+        '<span class="rating-stars-chars">' + renderStarChars(s.avg) + '</span>' +
+        '<span class="rating-avg">' + s.avg.toFixed(1) + '</span>' +
+        '<span class="rating-count">(' + s.count + ')</span>' +
+        '</div>';
+}
+
+function sortedCatalog(active) {
+    const arr = active.slice();
+    if (CURRENT_SORT === 'rating') {
+        arr.sort((a, b) => (RATINGS_SUMMARY[b.id]?.avg || 0) - (RATINGS_SUMMARY[a.id]?.avg || 0));
+    } else if (CURRENT_SORT === 'new') {
+        arr.reverse(); // orden inverso del CATALOG (último agregado = más nuevo)
+    } else if (CURRENT_SORT === 'price_asc') {
+        arr.sort((a, b) => (PRICING[a.id]?.price || 99999) - (PRICING[b.id]?.price || 99999));
+    } else if (CURRENT_SORT === 'price_desc') {
+        arr.sort((a, b) => (PRICING[b.id]?.price || 0) - (PRICING[a.id]?.price || 0));
+    }
+    return arr;
+}
+
+function onSortChange(val) {
+    CURRENT_SORT = val;
+    renderCatalog();
+}
+
 function renderCatalog() {
-    document.getElementById('catalogGrid').innerHTML = CATALOG.filter(c => c.active).map(c => renderCourseCard(c, null)).join('');
+    const active = CATALOG.filter(c => c.active);
+    document.getElementById('catalogGrid').innerHTML =
+        sortedCatalog(active).map(c => renderCourseCard(c, (currentUser?.enrollments || {})[c.id] || null)).join('');
 }
 
 function renderCourseCard(course, enrollment) {
@@ -1062,6 +1186,7 @@ function renderCourseCard(course, enrollment) {
         '</div>' +
         '<div class="course-info">' +
             '<div class="course-author">'+course.author+'</div>' +
+            renderRatingDisplay(course.id) +
             '<div class="course-desc">'+course.description+'</div>' +
             '<div class="course-meta"><span>📚 '+course.lessonsCount+' lec.</span><span>⏱ '+course.duration+'</span></div>' +
             (enrolled && !completed ? '<div class="course-progress"><div class="course-progress-fill" style="width:'+pct+'%"></div></div>' : '') +
@@ -1101,6 +1226,49 @@ function openCourseModal(id) {
     document.getElementById('modalTemario').innerHTML = '<li style="text-align:center;color:#999;">Cargando temario...</li>';
     document.getElementById('courseModal').classList.add('show');
     loadTemario(id);
+    loadReviewsForModal(id);
+}
+
+async function loadReviewsForModal(courseId) {
+    const section = document.getElementById('modalReviewsSection');
+    const summaryEl = document.getElementById('modalReviewsSummary');
+    const listEl = document.getElementById('modalReviewsList');
+    section.style.display = 'block';
+    summaryEl.innerHTML = renderRatingDisplay(courseId, 'large');
+    listEl.innerHTML = '<div class="reviews-empty">Cargando reseñas…</div>';
+    try {
+        const reviews = await TK.loadCoursePublicReviews(courseId, 5);
+        if (!reviews || reviews.length === 0) {
+            listEl.innerHTML = '<div class="reviews-empty">Sé el primero en calificar este curso al completarlo.</div>';
+            return;
+        }
+        listEl.innerHTML = reviews.map(r => {
+            const stars = '★★★★★'.substring(0, r.stars) + '☆☆☆☆☆'.substring(0, 5 - r.stars);
+            const date = new Date(r.updatedAt || r.ratedAt).toLocaleDateString('es-MX', {year: 'numeric', month: 'short', day: 'numeric'});
+            const reviewHtml = r.review ? '<div class="review-text">' + escapeHtml(r.review) + '</div>' : '';
+            return '<div class="review-card">' +
+                '<div class="review-header">' +
+                    '<div>' +
+                        '<span class="review-author">' + escapeHtml(r.userName || 'Anónimo') + '</span>' +
+                        (r.userRole ? ' <span class="review-role">· ' + escapeHtml(r.userRole) + '</span>' : '') +
+                    '</div>' +
+                    '<div>' +
+                        '<span class="review-stars">' + stars + '</span>' +
+                        ' <span class="review-date">' + date + '</span>' +
+                    '</div>' +
+                '</div>' +
+                reviewHtml +
+                '</div>';
+        }).join('');
+    } catch (e) {
+        listEl.innerHTML = '<div class="reviews-empty">No se pudieron cargar las reseñas.</div>';
+    }
+}
+
+function escapeHtml(s) {
+    return String(s || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function closeCourseModal() {
@@ -1181,8 +1349,11 @@ document.addEventListener('keydown', e => {
 });
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // Espera a que Firebase determine el estado de sesión
-    const { data } = await TK.ready();
+    // Espera a que Firebase determine el estado de sesión y carga calificaciones en paralelo
+    const [{ data }] = await Promise.all([
+        TK.ready(),
+        loadRatingsSummary()
+    ]);
     if (data) currentUser = data;
     showPlatform();
 });
@@ -1214,6 +1385,7 @@ function renderPricing() {
             <div class="price-icon">${c.icon || '📘'}</div>
             <div class="price-title">${c.title}</div>
             <div class="price-author">${c.author}</div>
+            ${renderRatingDisplay(c.id, 'mini')}
             <div class="price-meta">
                 <span>📚 ${c.lessonsCount} lecciones</span>
                 <span>⏱ ${c.duration}</span>
