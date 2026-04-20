@@ -5,6 +5,8 @@ Esta carpeta contiene las funciones en la nube que potencian la plataforma:
 1. **`onLowRating`** — email automático cuando un alumno deja reseña ≤ 2 ⭐
 2. **`createStripeCheckout`** — crea sesión de Stripe para pagos online
 3. **`stripeWebhook`** — recibe confirmación de pago e inscribe al alumno automáticamente
+4. **`sendInactiveReminders`** — diario 10 AM, manda recordatorios a alumnos inactivos 30+ días
+5. **`unsubscribeReminders`** — endpoint HTTP para que los alumnos se desuscriban
 
 ---
 
@@ -332,3 +334,164 @@ Si cambias uno sin el otro, el alumno verá un precio en la página y Stripe le 
 | "Authentication required" en checkout | Modo test vs live mezclados | Asegura que key y webhook son ambos del mismo modo |
 | OXXO no aparece | Moneda no es MXN | Confirma `currency: 'mxn'` en la función |
 
+
+
+---
+
+# Parte C — Recordatorios automáticos de inactividad
+
+La función `sendInactiveReminders` se ejecuta **todos los días a las 10:00 AM (hora de Ciudad de México)** de forma automática. Busca alumnos inscritos que:
+
+1. **No son administradores** (obvio),
+2. **No han completado el curso** (el certificado sigue pendiente),
+3. **Llevan 30+ días sin entrar** al curso (según `progress.lastActiveAt`),
+4. **No recibieron otro recordatorio en los últimos 30 días** (anti-spam),
+5. **No están dados de baja** del sistema de recordatorios.
+
+A cada uno le manda un correo amigable desde tu Gmail, con:
+- Saludo personalizado con su nombre.
+- Línea adaptada según su progreso (0% → 30% → 70% → casi terminado).
+- Barra de progreso visual "X / Y lecciones (Z%)".
+- Botón **"▶ Retomar mi curso"** — link que abre directo la última lección donde quedó.
+- Footer con link de baja.
+
+## 🚀 Qué hace falta
+
+El sistema YA incluye la función — solo necesita:
+
+### 1. Tener los secretos de Gmail configurados
+
+Si ya configuraste los secretos para la **Parte A** (alertas de reseñas bajas), **ya está listo**. Usa los mismos `GMAIL_USER` y `GMAIL_APP_PASSWORD`. Nada que hacer.
+
+Si no los has configurado, corre:
+
+```bash
+firebase functions:secrets:set GMAIL_USER
+firebase functions:secrets:set GMAIL_APP_PASSWORD
+```
+
+### 2. Tener el plan Blaze de Firebase
+
+Las funciones programadas (`onSchedule`) requieren el plan **Blaze** (pay-as-you-go) de Firebase. No te preocupes: el **uso promedio es prácticamente $0/mes** — Firebase da 2 millones de invocaciones gratis al mes.
+
+Para activarlo:
+
+1. Ve a <https://console.firebase.google.com/project/trikles-cursos/usage/details>
+2. Click en **"Modify plan"** o **"Upgrade to Blaze"**
+3. Asocia una tarjeta de crédito
+4. Listo. Firebase te avisa si te acercas a algún cargo.
+
+**Costos esperados en TRIKLES**: $0-5 USD al mes incluso con miles de alumnos.
+
+### 3. Desplegar
+
+```bash
+firebase deploy --only functions
+```
+
+Durante el primer deploy Firebase te pedirá confirmar que el plan Cloud Scheduler se active (pulsa Y). Después se ejecuta sola cada día.
+
+---
+
+## 🧪 Probar manualmente (antes de esperar a mañana)
+
+Puedes disparar la función una vez sin esperar al horario programado:
+
+1. Ve a <https://console.cloud.google.com/cloudscheduler>
+2. Selecciona el proyecto **trikles-cursos**
+3. Verás un job llamado `firebase-schedule-sendInactiveReminders-us-central1`
+4. Click en el botón **"RUN NOW"**
+5. Revisa los logs: `firebase functions:log --only sendInactiveReminders`
+
+Deberás ver:
+```
+Info  sendInactiveReminders completado { scanned: 15, sent: 3, skipped: 12 }
+```
+
+Si `sent > 0`, revisa tu bandeja de recordatorios en Gmail (llegan desde el mismo Gmail que configuraste).
+
+---
+
+## ⚙️ Personalización
+
+### Cambiar los umbrales
+
+En `functions/index.js`, edita:
+
+```javascript
+const REMINDER_INACTIVE_DAYS = 30;   // considerar inactivo después de X días
+const REMINDER_COOLDOWN_DAYS = 30;   // no recordar más seguido que cada X días
+```
+
+Ejemplos:
+- Para recordar cada **15 días** de inactividad: cambia `30` a `15` (ambos).
+- Para no ser pesado: deja inactividad en 30 pero cooldown en 60 (solo 1 recordatorio cada 2 meses).
+
+Después: `firebase deploy --only functions`
+
+### Cambiar el horario (hora/día)
+
+El cron `'0 10 * * *'` significa "minuto 0, hora 10, cualquier día, cualquier mes, cualquier día de la semana". Cambios típicos:
+
+| Cuándo | Cron |
+|---|---|
+| Todos los días 10 AM | `0 10 * * *` (actual) |
+| Solo los lunes 9 AM | `0 9 * * 1` |
+| Día 1 de cada mes | `0 10 1 * *` |
+| Cada 3 días a las 10 AM | `0 10 */3 * *` |
+
+### Ver a quién le manda sin enviar realmente (dry run)
+
+Temporalmente comenta la línea `await transport.sendMail(...)` y redeploya. Los logs seguirán mostrando cuántos "enviaría" pero no mandará nada.
+
+---
+
+## 📊 Métricas útiles
+
+Después de cada ejecución, los logs muestran:
+
+```
+scanned: N   — total de inscripciones revisadas
+sent: X      — cuántos correos efectivamente se mandaron
+skipped: Y   — cuántos se saltaron (completado, reciente, opt-out, etc.)
+```
+
+Ver logs del último día:
+```bash
+firebase functions:log --only sendInactiveReminders
+```
+
+---
+
+## 🔓 Sistema de "baja" (opt-out)
+
+Cada correo incluye un link de baja:
+
+```
+https://trikles-cursos.web.app/baja-recordatorios.html?email=usuario@email.com
+```
+
+Al hacer clic:
+1. Se ejecuta `unsubscribeReminders` (HTTPS function).
+2. Actualiza `users/{email}.emailPreferences.remindersEnabled = false`.
+3. Muestra una página de confirmación.
+4. A partir de ahí **nunca más recibe recordatorios** — pero conserva todos sus cursos.
+
+**Nota**: el archivo estático `baja-recordatorios.html` **NO** existe todavía en la raíz del proyecto. Solo el endpoint de la Cloud Function. Alternativamente, el link puede apuntar directo a la Cloud Function:
+
+```
+https://us-central1-trikles-cursos.cloudfunctions.net/unsubscribeReminders?email=xxx
+```
+
+Esta URL es la que genera el email actualmente — la Cloud Function ya contesta con una página HTML de confirmación directamente.
+
+---
+
+## ❓ Problemas comunes (recordatorios)
+
+| Síntoma | Causa | Solución |
+|---|---|---|
+| "0 correos enviados" siempre | Nadie está inactivo aún (tus alumnos son nuevos) | Normal, espera 30+ días desde su inscripción |
+| Error al deploy: "Scheduler not enabled" | Firebase no ha activado Cloud Scheduler | Activa plan Blaze (paso 2) |
+| Usuarios reportan spam (múltiples correos) | `REMINDER_COOLDOWN_DAYS` muy bajo | Súbelo a 45-60 días |
+| No se actualiza `lastActiveAt` | `curso.html` desactualizado | Verifica que `saveProgress()` incluya `lastActiveAt` (ya lo hace) |

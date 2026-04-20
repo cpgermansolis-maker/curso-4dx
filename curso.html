@@ -1182,7 +1182,8 @@ function saveProgress() {
         xp, completed: Array.from(completedLessons),
         correctQuizzes: Array.from(correctQuizzes),
         finalScore,
-        lastLesson: currentLesson,   // ← guarda la última lección vista
+        lastLesson: currentLesson,                  // ← última lección vista
+        lastActiveAt: new Date().toISOString(),     // ← cuándo entró por última vez (para recordatorios)
         completedDate: (completedLessons.size >= lessons.length ? (prevCompletedDate || new Date().toISOString()) : null)
     };
     // Persistir en Firestore (fire-and-forget; no bloqueamos la UI)
