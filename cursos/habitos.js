@@ -1278,7 +1278,12 @@ const COURSE_HABITOS = {
 
             <div class="cert-footer">
                 <div class="cert-sig-block">
-                    <img src="assets/firma-german.png" alt="Firma" class="cert-sig-image" onerror="this.style.display='none';">
+                    <div class="cert-sig-handwritten">
+                        <div class="cert-sig-name-cursive">GSM</div>
+                        <svg class="cert-sig-flourish" viewBox="0 0 180 16" preserveAspectRatio="none">
+                            <path d="M 5 9 C 35 14, 75 14, 115 8 C 138 4, 158 2, 170 8 Q 177 12, 168 14"/>
+                        </svg>
+                    </div>
                     <div class="cert-sig-line">
                         <div class="cert-sig-name">LADE Germán Solís Muñoz</div>
                         <div class="cert-sig-title">Director de Gestión Empresarial · TRIKLES</div>

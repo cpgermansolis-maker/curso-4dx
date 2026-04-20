@@ -356,13 +356,27 @@
             margin-top: 30px; padding-top: 12px;
         }
         .cert-sig-block { text-align: center; }
-        .cert-sig-image {
-            /* La imagen ya viene procesada: fondo transparente, trazos en azul marino.
-               Solo ajustamos tamaño para que se vea elegante en el certificado. */
-            max-height: 80px; max-width: 240px;
-            width: auto; height: auto;
-            display: block; margin: 0 auto 4px;
-            object-fit: contain;
+        /* Firma ejecutiva generada por CSS (iniciales GSM en cursiva + rasgo) */
+        .cert-sig-handwritten {
+            text-align: center; margin: 0 auto 4px;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 80px; max-width: 240px;
+            position: relative;
+        }
+        .cert-sig-name-cursive {
+            font-family: 'Great Vibes', 'Dancing Script', 'Lucida Handwriting', cursive;
+            font-size: 3.8em; color: #0a2540; line-height: 0.9;
+            letter-spacing: 2px;
+            transform: rotate(-3deg);
+            text-shadow: 0 1px 0 rgba(10,37,64,0.08);
+        }
+        .cert-sig-flourish {
+            height: 16px; width: 180px; margin-top: -4px;
+            display: block;
+        }
+        .cert-sig-flourish path {
+            fill: none; stroke: #0a2540; stroke-width: 2;
+            stroke-linecap: round;
         }
         .cert-sig-line {
             border-top: 1.5px solid #0a2540; padding-top: 6px; font-size: 0.82em;
@@ -1571,9 +1585,13 @@ function ensureCertificateElement() {
 
             '<div class="cert-footer">' +
                 '<div class="cert-sig-block">' +
-                    // Firma digital del instructor (en azul marino por CSS filter)
-                    '<img src="assets/firma-german.png" alt="Firma" class="cert-sig-image" ' +
-                         'onerror="this.style.display=\'none\';">' +
+                    // Firma ejecutiva generada (iniciales GSM en cursiva + rasgo decorativo)
+                    '<div class="cert-sig-handwritten">' +
+                        '<div class="cert-sig-name-cursive">GSM</div>' +
+                        '<svg class="cert-sig-flourish" viewBox="0 0 180 16" preserveAspectRatio="none">' +
+                            '<path d="M 5 9 C 35 14, 75 14, 115 8 C 138 4, 158 2, 170 8 Q 177 12, 168 14"/>' +
+                        '</svg>' +
+                    '</div>' +
                     '<div class="cert-sig-line">' +
                         '<div class="cert-sig-name">LADE Germán Solís Muñoz</div>' +
                         '<div class="cert-sig-title">Director de Gestión Empresarial · TRIKLES</div>' +
