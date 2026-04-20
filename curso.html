@@ -321,6 +321,14 @@
             opacity: 0.85;
         }
         .cert-actions { text-align: center; margin: 20px 0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn-linkedin {
+            background: linear-gradient(135deg, #0077b5, #005582); color: white;
+            border: 0; padding: 12px 20px; border-radius: 8px; font-weight: 700;
+            cursor: pointer; font-size: 0.95em; display: inline-flex; align-items: center;
+            gap: 8px; transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 3px 10px rgba(0,119,181,0.35);
+        }
+        .btn-linkedin:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,119,181,0.5); }
 
         /* Bloque de calificación */
         .rating-block {
@@ -393,7 +401,20 @@
             color: white; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
         }
-        .topbar-left { display: flex; align-items: center; gap: 16px; }
+        .topbar-left { display: flex; align-items: center; gap: 12px; }
+        .back-to-catalog {
+            background: rgba(255,255,255,0.12); color: white;
+            border: 1px solid rgba(255,255,255,0.25); padding: 6px 12px;
+            border-radius: 8px; cursor: pointer; font-size: 0.85em; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: background 0.15s, transform 0.15s;
+        }
+        .back-to-catalog:hover { background: rgba(255,255,255,0.22); transform: translateX(-2px); }
+        .back-to-catalog .back-icon { font-size: 1.1em; }
+        @media (max-width: 700px) {
+            .back-to-catalog .back-text { display: none; }
+            .back-to-catalog { padding: 6px 10px; }
+        }
         .topbar h2 { font-size: 1em; }
         .xp-bar { display: flex; align-items: center; gap: 8px; }
         .xp-track { width: 120px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; }
@@ -887,6 +908,10 @@
 <div class="topbar" id="topbar" style="display:none;">
     <div class="topbar-left">
         <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menú de lecciones">&#9776;</button>
+        <button class="back-to-catalog" onclick="goToCatalog()" title="Volver al catálogo de cursos" aria-label="Volver al catálogo">
+            <span class="back-icon">&#8592;</span>
+            <span class="back-text">Catálogo</span>
+        </button>
         <img src="assets/logo-trikles.jpg" alt="TRIKLES" style="height:32px;background:white;padding:3px 8px;border-radius:6px;" onerror="this.style.display='none';">
         <h2>&#127919; Curso 4DX</h2>
         <div class="topbar-instructor">
@@ -1168,6 +1193,16 @@ function loadProgress() {
     correctQuizzes = new Set(p.correctQuizzes || []);
     finalScore = p.finalScore || 0;
     lastLessonIdx = (typeof p.lastLesson === 'number') ? p.lastLesson : null;
+
+    // Fix retroactivo: si el alumno aprobó el examen pero el índice del certificado
+    // NO está en completed (por usar versiones antiguas hardcoded), lo agregamos
+    // automáticamente para que pueda ver su certificado sin problema.
+    if (lessons && lessons.length > 0 && finalScore >= (COURSE.examPassScore || 7)) {
+        const certIdx = lessons.findIndex(l => l.id === 'certificate');
+        if (certIdx >= 0 && !completedLessons.has(certIdx)) {
+            completedLessons.add(certIdx);
+        }
+    }
 }
 
 function saveProgress() {
@@ -1191,22 +1226,28 @@ function saveProgress() {
 }
 
 // Determina a qué lección ir cuando el alumno retoma el curso.
-// Prioridad: última lección vista → primera sin completar → certificado (si completó) → lección 0.
 function determineResumeLesson() {
-    // 1. Si la última lección guardada sigue siendo válida y desbloqueada, ir ahí
+    // 1. Si ya aprobó el examen final, llevarlo directo al certificado.
+    //    Esto resuelve el caso de alumnos que terminaron pero no alcanzaron a
+    //    imprimir/descargar su certificado — al entrar de nuevo, lo ven primero.
+    const certIdx = getCertLessonIndex();
+    if (finalScore >= getExamPassScore() && certIdx >= 0 && isLessonUnlocked(certIdx)) {
+        return certIdx;
+    }
+    // 2. Si hay última lección guardada válida y desbloqueada, ir ahí
     if (typeof lastLessonIdx === 'number' &&
         lastLessonIdx >= 0 && lastLessonIdx < lessons.length &&
         isLessonUnlocked(lastLessonIdx)) {
         return lastLessonIdx;
     }
-    // 2. Buscar la primera lección NO completada que esté desbloqueada
+    // 3. Primera lección NO completada que esté desbloqueada
     for (let i = 0; i < lessons.length; i++) {
         if (!completedLessons.has(i) && isLessonUnlocked(i)) return i;
     }
-    // 3. Si completó todas y aprobó el examen, llevarlo al certificado
-    const certIdx = getCertLessonIndex();
-    if (certIdx >= 0 && isLessonUnlocked(certIdx)) return certIdx;
-    // 4. Fallback: primera lección
+    // 4. Si todo está completado pero no aprobó el examen, ir al examen
+    const examIdx = getExamLessonIndex();
+    if (examIdx >= 0 && isLessonUnlocked(examIdx)) return examIdx;
+    // 5. Fallback: primera lección
     return 0;
 }
 
@@ -1314,6 +1355,96 @@ function closeSidebar() {
     if (ov) ov.classList.remove('open');
 }
 
+// Volver al catálogo principal (con confirmación sutil si hay progreso no guardado)
+function goToCatalog() {
+    // El progreso se guarda automáticamente en cada navegación,
+    // así que es seguro regresar sin perder nada.
+    window.location.href = 'index.html';
+}
+
+// Inyecta botón "Compartir en LinkedIn" dentro de .cert-actions si no existe ya.
+// Los cursos tienen su propio bloque .cert-actions con el botón de Imprimir;
+// extendemos con LinkedIn de forma no invasiva.
+function injectLinkedInShareButton() {
+    const containers = document.querySelectorAll('.cert-actions');
+    if (!containers.length) return;
+    containers.forEach(container => {
+        if (container.querySelector('.cert-linkedin-btn')) return;  // ya existe
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-linkedin cert-linkedin-btn';
+        btn.type = 'button';
+        btn.innerHTML = '&#128279; Compartir en LinkedIn';
+        btn.onclick = shareCertificateOnLinkedIn;
+        container.appendChild(btn);
+    });
+}
+
+// Abre LinkedIn con un post prellenado sobre el certificado.
+// El alumno puede editar el texto antes de publicar.
+function shareCertificateOnLinkedIn() {
+    if (!COURSE || !currentUser) return;
+    const courseTitle = COURSE.meta.title;
+    const courseAuthor = COURSE.meta.author || '';
+    const trikleHome = 'https://trikles-cursos.web.app';
+
+    // Mensaje sugerido que LinkedIn mostrará en la caja de texto del post
+    const msg = '¡Acabo de certificarme en "' + courseTitle + '"' +
+        (courseAuthor ? ' (' + courseAuthor + ')' : '') + ' con TRIKLES! 🎓\n\n' +
+        'Un curso profundo adaptado al contexto latinoamericano, con lecciones, ' +
+        'videos, ejercicios y un examen final riguroso.\n\n' +
+        '#TRIKLES #AprendizajeContinuo #Liderazgo #GestiónEmpresarial';
+
+    // LinkedIn Share API: comparte una URL con texto sugerido
+    // (LinkedIn toma la URL + meta tags para generar la preview automática)
+    const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' +
+        encodeURIComponent(trikleHome);
+
+    // Abrir en popup (LinkedIn auto-genera el post con la URL + meta preview)
+    const w = 600, h = 600;
+    const left = (screen.width - w) / 2;
+    const top = (screen.height - h) / 2;
+    window.open(shareUrl, 'linkedinShare',
+        'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes');
+
+    // Además, copiamos el mensaje sugerido al portapapeles para que el alumno
+    // lo pegue en el post de LinkedIn.
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).then(() => {
+            // Aviso visual discreto
+            showLinkedInToast();
+        }).catch(() => {
+            showLinkedInToast(true);  // sin copiar al portapapeles
+        });
+    } else {
+        showLinkedInToast(true);
+    }
+}
+
+function showLinkedInToast(copyFailed) {
+    const toast = document.createElement('div');
+    toast.className = 'resume-toast';
+    const msg = copyFailed
+        ? '<span class="resume-toast-icon">💼</span>' +
+          '<div class="resume-toast-body">' +
+              '<div class="resume-toast-title">LinkedIn abierto</div>' +
+              '<div class="resume-toast-sub">Escribe tu mensaje y publica</div>' +
+          '</div>'
+        : '<span class="resume-toast-icon">✅</span>' +
+          '<div class="resume-toast-body">' +
+              '<div class="resume-toast-title">Mensaje copiado</div>' +
+              '<div class="resume-toast-sub">Pégalo en el post de LinkedIn (Ctrl+V)</div>' +
+          '</div>';
+    toast.innerHTML = msg +
+        '<button class="resume-toast-close" onclick="this.parentNode.remove()" aria-label="Cerrar">✕</button>';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.classList.add('fade-out');
+            setTimeout(() => toast.remove(), 400);
+        }
+    }, 6000);
+}
+
 function showLesson(idx) {
     // Security check - cannot access locked lessons
     if (!isLessonUnlocked(idx)) {
@@ -1381,6 +1512,9 @@ function showLesson(idx) {
                 dateEl.textContent = d.getDate() + ' de ' + months[d.getMonth()] + ', ' + d.getFullYear();
             }
             if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Inyectar botón "Compartir en LinkedIn" en las acciones del certificado
+            injectLinkedInShareButton();
 
             // Bloque de calificación del curso (solo si aprobó el examen)
             injectRatingBlock();
