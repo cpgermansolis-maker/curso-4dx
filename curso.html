@@ -706,6 +706,47 @@
         ul.concept-list { padding-left: 20px; }
         ul.concept-list li { margin-bottom: 8px; }
         .highlight { background: #fff9c4; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+
+        /* Toast "Retomamos donde quedaste" */
+        .resume-toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white; padding: 14px 18px; border-radius: 12px;
+            display: flex; align-items: center; gap: 14px;
+            box-shadow: 0 10px 30px rgba(26,35,126,0.4);
+            z-index: 9999; max-width: 480px; width: calc(100% - 40px);
+            animation: resumeToastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes resumeToastIn {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        .resume-toast.fade-out {
+            opacity: 0; transform: translate(-50%, 20px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .resume-toast-icon { font-size: 1.6em; flex-shrink: 0; }
+        .resume-toast-body { flex: 1; min-width: 0; }
+        .resume-toast-title {
+            font-weight: 800; font-size: 0.92em; margin-bottom: 2px;
+            color: #ffd54f;
+        }
+        .resume-toast-sub {
+            font-size: 0.85em; opacity: 0.95;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .resume-toast-close {
+            background: transparent; border: 0; color: white; opacity: 0.7;
+            cursor: pointer; font-size: 1em; padding: 4px 8px; border-radius: 6px;
+            flex-shrink: 0;
+        }
+        .resume-toast-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+        @media (max-width: 600px) {
+            .resume-toast { padding: 10px 14px; gap: 10px; }
+            .resume-toast-icon { font-size: 1.3em; }
+            .resume-toast-title { font-size: 0.85em; }
+            .resume-toast-sub { font-size: 0.78em; }
+        }
     </style>
 </head>
 <body>
@@ -1114,6 +1155,9 @@ async function doLogout() {
     window.location.href = 'index.html';
 }
 
+// Última lección vista (para que al recargar el alumno retome donde quedó)
+let lastLessonIdx = null;
+
 function loadProgress() {
     if (!currentUser || !COURSE) return;
     const enrollment = currentUser.enrollments && currentUser.enrollments[COURSE.id];
@@ -1123,6 +1167,7 @@ function loadProgress() {
     completedLessons = new Set(p.completed || []);
     correctQuizzes = new Set(p.correctQuizzes || []);
     finalScore = p.finalScore || 0;
+    lastLessonIdx = (typeof p.lastLesson === 'number') ? p.lastLesson : null;
 }
 
 function saveProgress() {
@@ -1137,10 +1182,31 @@ function saveProgress() {
         xp, completed: Array.from(completedLessons),
         correctQuizzes: Array.from(correctQuizzes),
         finalScore,
+        lastLesson: currentLesson,   // ← guarda la última lección vista
         completedDate: (completedLessons.size >= lessons.length ? (prevCompletedDate || new Date().toISOString()) : null)
     };
     // Persistir en Firestore (fire-and-forget; no bloqueamos la UI)
     TK.saveProgress(COURSE.id, enr.progress).catch(e => console.warn('saveProgress:', e));
+}
+
+// Determina a qué lección ir cuando el alumno retoma el curso.
+// Prioridad: última lección vista → primera sin completar → certificado (si completó) → lección 0.
+function determineResumeLesson() {
+    // 1. Si la última lección guardada sigue siendo válida y desbloqueada, ir ahí
+    if (typeof lastLessonIdx === 'number' &&
+        lastLessonIdx >= 0 && lastLessonIdx < lessons.length &&
+        isLessonUnlocked(lastLessonIdx)) {
+        return lastLessonIdx;
+    }
+    // 2. Buscar la primera lección NO completada que esté desbloqueada
+    for (let i = 0; i < lessons.length; i++) {
+        if (!completedLessons.has(i) && isLessonUnlocked(i)) return i;
+    }
+    // 3. Si completó todas y aprobó el examen, llevarlo al certificado
+    const certIdx = getCertLessonIndex();
+    if (certIdx >= 0 && isLessonUnlocked(certIdx)) return certIdx;
+    // 4. Fallback: primera lección
+    return 0;
 }
 
 function enterCourse() {
@@ -1165,8 +1231,37 @@ function startCourse() {
         document.getElementById('layout').style.display = 'flex';
         updateXPBar();
         buildSidebar();
-        showLesson(0);
+        // Determinar dónde retomar (última lección vista o primera sin completar)
+        const resumeIdx = determineResumeLesson();
+        showLesson(resumeIdx);
+        // Si retoma en una lección distinta a la primera, mostrar toast sutil
+        if (resumeIdx > 0 && completedLessons.size > 0) {
+            showResumeToast(resumeIdx);
+        }
     }, 600);
+}
+
+// Toast "Retomamos donde quedaste: Lección X"
+function showResumeToast(idx) {
+    const lesson = lessons[idx];
+    if (!lesson) return;
+    const toast = document.createElement('div');
+    toast.className = 'resume-toast';
+    toast.innerHTML =
+        '<span class="resume-toast-icon">📍</span>' +
+        '<div class="resume-toast-body">' +
+            '<div class="resume-toast-title">Retomamos donde quedaste</div>' +
+            '<div class="resume-toast-sub">' + (lesson.title || 'Lección ' + (idx + 1)) + '</div>' +
+        '</div>' +
+        '<button class="resume-toast-close" onclick="this.parentNode.remove()" aria-label="Cerrar">✕</button>';
+    document.body.appendChild(toast);
+    // Auto-cerrar después de 6 segundos
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.classList.add('fade-out');
+            setTimeout(() => toast.remove(), 400);
+        }
+    }, 6000);
 }
 
 function updateXPBar() {
@@ -1258,6 +1353,9 @@ function showLesson(idx) {
         '</div>' +
     '</div>';
     buildSidebar();
+
+    // Persistir la última lección vista (para que al recargar el alumno retome aquí)
+    saveProgress();
 
     // Update next button state based on quiz completion
     setTimeout(updateNextButtonState, 10);
