@@ -357,7 +357,11 @@
         }
         .cert-sig-block { text-align: center; }
         .cert-sig-image {
-            height: 60px; display: block; margin: 0 auto 4px;
+            /* Ajuste que se adapta sin importar la relación de aspecto original */
+            max-height: 70px; max-width: 220px;
+            width: auto; height: auto;
+            display: block; margin: 0 auto 4px;
+            object-fit: contain;
             /* Convierte cualquier color sólido a azul marino #0a2540 */
             filter: brightness(0) saturate(100%) invert(11%) sepia(68%) saturate(2500%) hue-rotate(201deg) brightness(90%) contrast(98%);
         }
@@ -1627,6 +1631,54 @@ function injectLinkedInShareButton() {
     });
 }
 
+// Aprendizajes clave pre-escritos por curso para el post de LinkedIn.
+// Cada entrada son los 3-4 takeaways más memorables del libro,
+// redactados en primera persona para que el alumno solo edite si quiere.
+const COURSE_LEARNINGS = {
+    '4dx': [
+        'Enfocarse en la Meta Crucialmente Importante (MCI) en lugar de intentar 10 cosas a medias',
+        'Actuar sobre medidas de predicción (lo que sí controlo) en vez de obsesionarme con las medidas históricas',
+        'Mantener un tablero visible y simple: si no sé en 5 segundos si estoy ganando o perdiendo, no sirve',
+        'Crear una cadencia semanal de rendición de cuentas para transformar intenciones en resultados'
+    ],
+    'habitos': [
+        'Ser proactivo: entre el estímulo y la respuesta hay un espacio donde reside mi libertad',
+        'Empezar con el fin en mente y poner primero lo primero — gestionar el tiempo por prioridad, no por urgencia',
+        'Pensar ganar-ganar y buscar primero entender antes de ser entendido',
+        'Afilar la sierra: cuidar las 4 dimensiones (física, mental, social, espiritual) no es pérdida de tiempo, es la inversión con más ROI'
+    ],
+    'feum-inventarios': [
+        'Aplicar las normas de la FEUM y NOM-SSA no es burocracia: es la base para pasar cualquier verificación COFEPRIS',
+        'El kárdex, la bitácora de temperatura/humedad y el checklist de recepción son las 3 herramientas indispensables',
+        'FIFO y control de caducidades reducen mermas en 30-40% cuando se implementan bien',
+        'Un sistema de inventarios serio es la diferencia entre una farmacia rentable y una que cierra al año'
+    ],
+    'gerencia-efectiva': [
+        'Los resultados están en los productos, no en los problemas — concentrar recursos donde está el futuro',
+        'El análisis ABC de Pareto (80/20) aplicado a productos, clientes y canales revela decisiones obvias que nadie ve',
+        'Las 3 decisiones del gerente: abandono (qué dejar de hacer), concentración (dónde invertir más), oportunidad (qué apostar nuevo)',
+        'La efectividad se entrena: no es un talento, es una disciplina con 5 prácticas concretas (Drucker lo demostró)'
+    ],
+    'la-paradoja': [
+        'El liderazgo verdadero es servicio: invertir la pirámide y ponerme al servicio del equipo',
+        'El poder (cargo, autoridad formal) es temporal; la autoridad (influencia genuina) se construye con carácter',
+        'El amor ágape no es un sentimiento, es un verbo — un conjunto de comportamientos (paciencia, humildad, respeto, compromiso)',
+        'Las relaciones son cuentas bancarias emocionales: deposito con cada interacción y el equipo me presta crédito cuando lo necesito'
+    ],
+    'coaching': [
+        'El liderazgo que libera potencial se basa en preguntas, no en instrucciones: "¿Qué crees que debes hacer?"',
+        'El modelo GROW (Goal, Reality, Options, Will) estructura conversaciones que transforman en 30 minutos',
+        'La conciencia y la responsabilidad son las dos activadoras del aprendizaje — más importantes que cualquier técnica',
+        'Un líder-coach produce más rendimiento con menos control: la paradoja del coaching moderno según Whitmore'
+    ],
+    'food-beverage': [
+        'El Prime Cost (alimentos + bebidas + labor) debe estar <65% de ventas — por arriba, el negocio está en riesgo',
+        'Las recetas estandarizadas, el costeo de cada platillo y el cálculo real de alimentos vendidos transforman un restaurante caótico en uno rentable',
+        'La ingeniería de menú (Goal Value Analysis) identifica qué platillos promover, cuáles cambiar y cuáles eliminar',
+        'El análisis costo-volumen-utilidad permite saber exactamente cuánto hay que vender para llegar al punto de equilibrio'
+    ]
+};
+
 // Abre un modal con texto sugerido + botones claros para compartir en LinkedIn.
 // Mejor UX que el flujo anterior que dejaba LinkedIn en blanco.
 function shareCertificateOnLinkedIn() {
@@ -1635,16 +1687,23 @@ function shareCertificateOnLinkedIn() {
     const courseAuthor = COURSE.meta.author || '';
     const firstName = (currentUser.name || '').split(' ')[0];
 
-    // Texto profesional sugerido
+    // Aprendizajes pre-escritos para este curso (fallback: genéricos profesionales)
+    const learnings = COURSE_LEARNINGS[COURSE.id] || [
+        'Profundizar en los conceptos clave del libro original',
+        'Aplicar marcos prácticos directamente a mi trabajo',
+        'Entender por qué este clásico sigue vigente hoy'
+    ];
+    const learningsText = learnings.map(l => '• ' + l).join('\n');
+
+    // Texto profesional sugerido con los aprendizajes YA llenados
     const suggestedText =
 '🎓 ¡Acabo de certificarme en "' + courseTitle + '"' +
 (courseAuthor ? '\n📚 Basado en la obra de ' + courseAuthor : '') + ' — con TRIKLES!\n\n' +
 'Un curso profundo y profesional, adaptado al contexto latinoamericano. Incluyó lecciones detalladas, videos complementarios, ejercicios prácticos y un examen final riguroso que me obligó a aplicar cada concepto.\n\n' +
-'Cada libro clásico de gestión tiene algo que enseñarnos. Estas son algunas de las ideas que me llevo:\n' +
-'• (escribe aquí 2-3 aprendizajes concretos)\n' +
-'• ...\n\n' +
-'Gracias al LADE Germán Solís Muñoz por la curaduría y adaptación.\n' +
-'Si te interesa el catálogo: https://trikles-cursos.web.app\n\n' +
+'Estas son las ideas que más me llevo:\n\n' +
+learningsText + '\n\n' +
+'Gracias al LADE Germán Solís Muñoz por la curaduría y adaptación al contexto real de las empresas latinoamericanas.\n\n' +
+'Si te interesa el catálogo completo: https://trikles-cursos.web.app\n\n' +
 '#TRIKLES #AprendizajeContinuo #DesarrolloProfesional #Liderazgo #GestiónEmpresarial';
 
     // Crear el modal de compartir
@@ -1662,13 +1721,11 @@ function shareCertificateOnLinkedIn() {
         '</div>' +
     '</div>' +
     '<div class="linkedin-share-instructions">' +
-        '<strong>Cómo publicar:</strong>' +
+        '<strong>Cómo publicar en 3 pasos:</strong>' +
         '<ol>' +
-            '<li>Edita el texto si quieres (añade tus aprendizajes personales donde dice "escribe aquí").</li>' +
-            '<li>Click en <strong>📋 Copiar texto</strong>.</li>' +
-            '<li>Click en <strong>🔗 Abrir LinkedIn</strong>.</li>' +
-            '<li>En el cuadro "¿Sobre qué quieres hablar?" pega con <kbd>Ctrl</kbd>+<kbd>V</kbd>.</li>' +
-            '<li>¡Opcional pero recomendado! Adjunta una captura de tu certificado como imagen (botón de fotos 📸 en LinkedIn).</li>' +
+            '<li>Click en <strong>📋 Copiar texto</strong>. (Ya viene listo con los aprendizajes clave del curso — ajústalos si quieres reflejar tu experiencia personal.)</li>' +
+            '<li>Click en <strong>🔗 Abrir LinkedIn</strong> y pega con <kbd>Ctrl</kbd>+<kbd>V</kbd> en el cuadro "¿Sobre qué quieres hablar?".</li>' +
+            '<li><em>Opcional pero recomendado:</em> adjunta una captura de tu certificado como imagen (botón de fotos 📸 en LinkedIn). Los posts con imagen reciben 3× más interacciones.</li>' +
         '</ol>' +
     '</div>' +
     '<textarea class="linkedin-share-textarea" id="linkedinShareText" rows="14">' + suggestedText.replace(/</g, '&lt;') + '</textarea>' +
