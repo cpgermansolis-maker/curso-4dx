@@ -1362,6 +1362,83 @@ function goToCatalog() {
     window.location.href = 'index.html';
 }
 
+// Fix defensivo: algunos cursos (coaching, la-paradoja, gerencia-efectiva, food-beverage)
+// no tienen el bloque <div class="certificate" id="certificateEl"> ni .cert-actions.
+// Cuando se detecta que la lección actual es el certificado y faltan esos elementos,
+// los inyectamos al inicio del contenido con el nombre y fecha del alumno.
+function ensureCertificateElement() {
+    if (document.getElementById('certificateEl')) return;  // ya existe, no hacer nada
+    if (!COURSE || !currentUser) return;
+
+    const mainContent = document.getElementById('mainContent');
+    if (!mainContent) return;
+    const lessonEl = mainContent.querySelector('.lesson.active');
+    if (!lessonEl) return;
+
+    const meta = COURSE.meta || {};
+    const courseTitle = meta.title || 'Curso TRIKLES';
+    const courseAuthor = meta.author || '';
+    const certDesc = (COURSE.certificate && COURSE.certificate.description)
+        || ('Habiendo demostrado dominio de los conceptos y competencias del curso "' + courseTitle + '".');
+
+    // Construir el certificado con la misma estructura que 4dx.js
+    const certHTML =
+        '<div class="certificate" id="certificateEl">' +
+            '<div class="cert-seal">' +
+                '<div style="font-size:1.1em;">TRIKLES</div>' +
+                '<div style="font-size:0.6em;">CERTIFIED</div>' +
+                '<div style="font-size:0.58em;" id="certYear">' + new Date().getFullYear() + '</div>' +
+            '</div>' +
+            '<div class="cert-header">' +
+                '<img src="assets/logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-cert" onerror="this.style.display=\'none\';">' +
+                '<div class="cert-icon">&#127942;</div>' +
+                '<div class="cert-title">CERTIFICADO</div>' +
+                '<div class="cert-subtitle">de finalización satisfactoria</div>' +
+            '</div>' +
+            '<div class="cert-body">' +
+                '<div class="cert-award-text">Se otorga el presente a:</div>' +
+                '<div class="cert-name" id="certName">' + (currentUser.name || 'Alumno TRIKLES') + '</div>' +
+                '<div class="cert-award-text">Por haber completado exitosamente el curso:</div>' +
+                '<div class="cert-course">' + courseTitle + (courseAuthor ? '<br><span style="font-size:0.7em;opacity:0.85;">Basado en la obra de ' + courseAuthor + '</span>' : '') + '</div>' +
+                '<div class="cert-desc">' + certDesc + '</div>' +
+            '</div>' +
+            '<div class="cert-footer">' +
+                '<div class="cert-sig-block">' +
+                    '<div class="cert-sig-line">' +
+                        '<div class="cert-sig-name">LADE Germán Solís Muñoz</div>' +
+                        '<div class="cert-sig-title">Director de Gestión Empresarial — TRIKLES</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="cert-sig-block">' +
+                    '<div class="cert-sig-line">' +
+                        '<div class="cert-sig-name" id="certDate"></div>' +
+                        '<div class="cert-sig-title">Fecha de expedición</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        '<div class="cert-actions">' +
+            '<button class="btn btn-primary" onclick="window.print()">&#128424;&#65039; Imprimir / Guardar PDF</button>' +
+        '</div>';
+
+    // Insertar el certificado al inicio del contenido, después del .lesson-header
+    const header = lessonEl.querySelector('.lesson-header');
+    if (header && header.nextSibling) {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = certHTML;
+        while (wrapper.firstChild) {
+            lessonEl.insertBefore(wrapper.firstChild, header.nextSibling);
+        }
+    } else {
+        // Fallback: insertar al principio del lesson
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = certHTML;
+        while (wrapper.firstChild) {
+            lessonEl.insertBefore(wrapper.firstChild, lessonEl.firstChild);
+        }
+    }
+}
+
 // Inyecta botón "Compartir en LinkedIn" dentro de .cert-actions si no existe ya.
 // Los cursos tienen su propio bloque .cert-actions con el botón de Imprimir;
 // extendemos con LinkedIn de forma no invasiva.
@@ -1502,6 +1579,12 @@ function showLesson(idx) {
                 document.querySelectorAll('.cert-actions').forEach(a => a.style.display = 'none');
                 return;
             }
+
+            // FIX DEFENSIVO: si el curso no trae un #certificateEl (cursos nuevos
+            // como coaching, la-paradoja, gerencia-efectiva, food-beverage),
+            // inyectamos uno estándar al inicio del contenido de la lección.
+            ensureCertificateElement();
+
             const nameEl = document.getElementById('certName');
             const dateEl = document.getElementById('certDate');
             const yearEl = document.getElementById('certYear');
