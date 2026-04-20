@@ -357,13 +357,12 @@
         }
         .cert-sig-block { text-align: center; }
         .cert-sig-image {
-            /* Ajuste que se adapta sin importar la relación de aspecto original */
-            max-height: 70px; max-width: 220px;
+            /* La imagen ya viene procesada: fondo transparente, trazos en azul marino.
+               Solo ajustamos tamaño para que se vea elegante en el certificado. */
+            max-height: 80px; max-width: 240px;
             width: auto; height: auto;
             display: block; margin: 0 auto 4px;
             object-fit: contain;
-            /* Convierte cualquier color sólido a azul marino #0a2540 */
-            filter: brightness(0) saturate(100%) invert(11%) sepia(68%) saturate(2500%) hue-rotate(201deg) brightness(90%) contrast(98%);
         }
         .cert-sig-line {
             border-top: 1.5px solid #0a2540; padding-top: 6px; font-size: 0.82em;
