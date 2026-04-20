@@ -873,12 +873,16 @@ const COURSE_4DX = {
 
             <div class="cert-footer">
                 <div class="cert-sig-block">
+                    <img src="assets/firma-german.png" alt="Firma" class="cert-sig-image" onerror="this.style.display='none';">
                     <div class="cert-sig-line">
                         <div class="cert-sig-name">LADE Germán Solís Muñoz</div>
-                        <div class="cert-sig-title">Director de Gestión Empresarial - TRIKLES</div>
+                        <div class="cert-sig-title">Director de Gestión Empresarial · TRIKLES</div>
                     </div>
                 </div>
                 <div class="cert-sig-block">
+                    <div style="height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
+                        <div style="border:2px solid #d4af37;color:#d4af37;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.7em;transform:rotate(-8deg);">TRIKLES</div>
+                    </div>
                     <div class="cert-sig-line">
                         <div class="cert-sig-name" id="certDate">14 de Abril, 2026</div>
                         <div class="cert-sig-title">Fecha de expedición</div>

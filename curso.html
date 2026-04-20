@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso TRIKLES - Plataforma de cursos</title>
+    <!-- Fuentes elegantes para el certificado -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- Firebase SDK (compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -283,42 +287,106 @@
         }
         .logout-btn:hover { background: rgba(255,255,255,0.1); }
 
-        /* CERTIFICATE */
+        /* CERTIFICATE — rediseño profesional v2 */
         .certificate {
-            background: white; border: 12px double var(--gold); padding: 40px;
-            max-width: 800px; margin: 20px auto; position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2); font-family: Georgia, serif;
+            background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><text x='50' y='60' font-family='Georgia' font-size='32' fill='%230a2540' opacity='0.03' transform='rotate(-30 50 50)' text-anchor='middle'>TRIKLES</text></svg>");
+            border: 3px solid #d4af37;
+            padding: 50px 55px 40px; max-width: 880px; margin: 20px auto; position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 12px #fff, 0 0 0 14px #d4af37;
+            font-family: Georgia, 'Times New Roman', serif;
+            overflow: hidden;
         }
+        /* Guirnalda decorativa en las 4 esquinas */
         .certificate::before, .certificate::after {
-            content: ''; position: absolute; width: 60px; height: 60px;
-            border: 3px solid var(--blue);
+            content: ''; position: absolute; width: 80px; height: 80px;
+            border: 2px solid #0a2540;
+            opacity: 0.75;
         }
-        .certificate::before { top: 20px; left: 20px; border-right: none; border-bottom: none; }
-        .certificate::after { bottom: 20px; right: 20px; border-left: none; border-top: none; }
-        .cert-header { text-align: center; margin-bottom: 24px; }
-        .cert-icon { font-size: 4em; color: var(--gold); }
-        .cert-title { font-size: 1.8em; color: var(--blue); font-weight: 800; letter-spacing: 2px; margin: 8px 0; }
-        .cert-subtitle { font-size: 1em; color: var(--text-light); font-style: italic; }
-        .cert-body { text-align: center; margin: 30px 0; line-height: 2; }
-        .cert-award-text { font-size: 1.1em; color: var(--text); }
-        .cert-name { font-size: 2.4em; color: var(--blue); font-weight: 800; margin: 12px 0; font-family: Georgia, serif; border-bottom: 2px solid var(--gold); display: inline-block; padding: 0 20px 6px; }
-        .cert-course { font-size: 1.2em; color: var(--orange); font-weight: 700; margin: 12px 0; }
-        .cert-desc { font-size: 0.95em; color: var(--text-light); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .certificate::before { top: 14px; left: 14px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
+        .certificate::after { bottom: 14px; right: 14px; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
+        .certificate > .cert-flourish-tr, .certificate > .cert-flourish-bl {
+            position: absolute; width: 80px; height: 80px; border: 2px solid #0a2540; opacity: 0.75;
+        }
+        .certificate > .cert-flourish-tr { top: 14px; right: 14px; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
+        .certificate > .cert-flourish-bl { bottom: 14px; left: 14px; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
+
+        .cert-header {
+            text-align: center; margin-bottom: 20px; padding-bottom: 20px;
+            border-bottom: 2px solid #d4af37;
+            position: relative;
+        }
+        .cert-header::after {
+            content: ''; position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%);
+            width: 60px; height: 3px; background: #d4af37;
+        }
+        .cert-header .trikles-logo-cert {
+            max-height: 45px; display: block; margin: 0 auto 8px;
+        }
+        .cert-icon { font-size: 3em; color: #d4af37; margin: 4px 0; }
+        .cert-title {
+            font-size: 2.2em; color: #0a2540; font-weight: 800;
+            letter-spacing: 6px; margin: 6px 0 4px;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        .cert-subtitle {
+            font-size: 0.95em; color: #666; font-style: italic;
+            letter-spacing: 1px;
+        }
+        .cert-body { text-align: center; margin: 24px 0 18px; line-height: 1.9; }
+        .cert-award-text { font-size: 1em; color: #555; font-style: italic; }
+        .cert-name {
+            font-size: 2.6em; color: #0a2540; font-weight: 700;
+            margin: 14px auto; font-family: 'Great Vibes', 'Lucida Handwriting', cursive;
+            letter-spacing: 1px; padding: 4px 30px 2px;
+            border-bottom: 1.5px solid #0a2540;
+            display: inline-block;
+            text-shadow: 0 1px 0 rgba(10,37,64,0.1);
+        }
+        .cert-course {
+            font-size: 1.35em; color: #0a2540; font-weight: 700;
+            margin: 16px 0 4px; letter-spacing: 0.5px;
+        }
+        .cert-course span { font-size: 0.78em; opacity: 0.78; font-weight: 500; font-style: italic; }
+        .cert-desc {
+            font-size: 0.85em; color: #666; max-width: 680px; margin: 12px auto 0;
+            line-height: 1.6; font-style: italic;
+        }
         .cert-footer {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;
-            padding-top: 20px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+            margin-top: 30px; padding-top: 12px;
         }
         .cert-sig-block { text-align: center; }
-        .cert-sig-line { border-top: 1.5px solid var(--text); padding-top: 8px; font-size: 0.85em; }
-        .cert-sig-name { font-weight: 700; color: var(--blue); }
-        .cert-sig-title { font-size: 0.75em; color: var(--text-light); font-style: italic; }
-        .cert-date { text-align: right; color: var(--text-light); font-size: 0.85em; margin-top: 10px; }
+        .cert-sig-image {
+            height: 60px; display: block; margin: 0 auto 4px;
+            /* Convierte cualquier color sólido a azul marino #0a2540 */
+            filter: brightness(0) saturate(100%) invert(11%) sepia(68%) saturate(2500%) hue-rotate(201deg) brightness(90%) contrast(98%);
+        }
+        .cert-sig-line {
+            border-top: 1.5px solid #0a2540; padding-top: 6px; font-size: 0.82em;
+        }
+        .cert-sig-name { font-weight: 700; color: #0a2540; font-size: 1em; }
+        .cert-sig-title { font-size: 0.72em; color: #777; font-style: italic; margin-top: 2px; }
+        .cert-date { text-align: right; color: #777; font-size: 0.85em; margin-top: 10px; }
         .cert-seal {
-            position: absolute; right: 40px; top: 40%; transform: rotate(-15deg);
-            width: 100px; height: 100px; border: 3px solid var(--orange); border-radius: 50%;
+            position: absolute; right: 55px; top: 50%; transform: translateY(-50%) rotate(-12deg);
+            width: 110px; height: 110px;
+            border: 3px solid #d4af37; border-radius: 50%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--orange); font-weight: 800; text-align: center; font-size: 0.75em;
-            opacity: 0.85;
+            color: #d4af37; font-weight: 800; text-align: center; font-size: 0.75em;
+            opacity: 0.85; background: rgba(255,255,255,0.9);
+            box-shadow: 0 4px 10px rgba(212,175,55,0.3);
+        }
+        .cert-seal::before {
+            content: ''; position: absolute; inset: 4px;
+            border: 1px dashed #d4af37; border-radius: 50%;
+        }
+        @media (max-width: 720px) {
+            .cert-seal {
+                width: 80px; height: 80px;
+                right: 20px; top: 20%;
+            }
+            .cert-name { font-size: 1.9em; }
+            .cert-title { font-size: 1.6em; letter-spacing: 3px; }
         }
         .cert-actions { text-align: center; margin: 20px 0; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .btn-linkedin {
@@ -329,6 +397,95 @@
             box-shadow: 0 3px 10px rgba(0,119,181,0.35);
         }
         .btn-linkedin:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,119,181,0.5); }
+
+        /* Modal para compartir en LinkedIn */
+        .linkedin-share-modal {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; overflow-y: auto;
+        }
+        .linkedin-share-backdrop {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(4px);
+        }
+        .linkedin-share-body {
+            position: relative; background: white; border-radius: 16px;
+            max-width: 640px; width: 100%; padding: 28px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            animation: lnkModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 92vh; overflow-y: auto;
+        }
+        @keyframes lnkModalIn {
+            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .linkedin-share-close {
+            position: absolute; top: 14px; right: 16px;
+            background: #f5f5f5; border: 0; width: 34px; height: 34px;
+            border-radius: 50%; cursor: pointer; font-size: 1em; color: #666;
+        }
+        .linkedin-share-close:hover { background: #e0e0e0; }
+        .linkedin-share-header {
+            display: flex; gap: 16px; align-items: flex-start;
+            margin-bottom: 18px; padding-right: 30px;
+        }
+        .linkedin-share-icon { font-size: 2.4em; }
+        .linkedin-share-header h3 { color: #0077b5; margin: 0 0 4px; font-size: 1.2em; }
+        .linkedin-share-header p { margin: 0; color: #666; font-size: 0.92em; line-height: 1.4; }
+        .linkedin-share-instructions {
+            background: #f3f9fc; border-left: 3px solid #0077b5;
+            padding: 12px 16px; border-radius: 8px; margin-bottom: 14px;
+            font-size: 0.88em; color: #333;
+        }
+        .linkedin-share-instructions ol {
+            margin: 6px 0 0; padding-left: 20px; line-height: 1.6;
+        }
+        .linkedin-share-instructions li { margin: 3px 0; }
+        .linkedin-share-instructions kbd {
+            background: white; border: 1px solid #ccc; padding: 1px 6px;
+            border-radius: 4px; font-size: 0.85em; font-family: monospace;
+        }
+        .linkedin-share-textarea {
+            width: 100%; min-height: 280px; padding: 14px;
+            border: 2px solid #e0e0e0; border-radius: 10px;
+            font-family: inherit; font-size: 0.94em; line-height: 1.55;
+            color: #222; resize: vertical; box-sizing: border-box;
+            transition: border-color 0.15s;
+        }
+        .linkedin-share-textarea:focus {
+            outline: none; border-color: #0077b5;
+            box-shadow: 0 0 0 3px rgba(0,119,181,0.15);
+        }
+        .linkedin-share-actions {
+            display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+        }
+        .btn-lnk-copy, .btn-lnk-open {
+            flex: 1; min-width: 150px; border: 0; padding: 14px 20px;
+            border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.95em;
+            transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+        }
+        .btn-lnk-copy {
+            background: linear-gradient(135deg, #ff9800, #ff6f00); color: white;
+            box-shadow: 0 3px 10px rgba(255,111,0,0.35);
+        }
+        .btn-lnk-copy:hover { transform: translateY(-2px); }
+        .btn-lnk-copy.copied {
+            background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        }
+        .btn-lnk-open {
+            background: linear-gradient(135deg, #0077b5, #005582); color: white;
+            box-shadow: 0 3px 10px rgba(0,119,181,0.35);
+        }
+        .btn-lnk-open:hover { transform: translateY(-2px); }
+        .linkedin-share-tip {
+            margin-top: 16px; background: #fff3e0; border-left: 3px solid #e65100;
+            padding: 10px 14px; border-radius: 8px;
+            font-size: 0.85em; color: #5d4037; line-height: 1.5;
+        }
+        @media (max-width: 600px) {
+            .linkedin-share-body { padding: 20px 18px; }
+            .linkedin-share-actions { flex-direction: column; }
+        }
 
         /* Bloque de calificación */
         .rating-block {
@@ -1381,35 +1538,49 @@ function ensureCertificateElement() {
     const certDesc = (COURSE.certificate && COURSE.certificate.description)
         || ('Habiendo demostrado dominio de los conceptos y competencias del curso "' + courseTitle + '".');
 
-    // Construir el certificado con la misma estructura que 4dx.js
+    // Construir el certificado con la estructura rediseñada
     const certHTML =
         '<div class="certificate" id="certificateEl">' +
+            // Decoraciones esquinas faltantes (top-right y bottom-left)
+            '<span class="cert-flourish-tr"></span>' +
+            '<span class="cert-flourish-bl"></span>' +
+
             '<div class="cert-seal">' +
-                '<div style="font-size:1.1em;">TRIKLES</div>' +
-                '<div style="font-size:0.6em;">CERTIFIED</div>' +
-                '<div style="font-size:0.58em;" id="certYear">' + new Date().getFullYear() + '</div>' +
+                '<div style="font-size:1.15em;letter-spacing:1px;">TRIKLES</div>' +
+                '<div style="font-size:0.6em;margin-top:2px;">CERTIFIED</div>' +
+                '<div style="font-size:0.55em;margin-top:1px;" id="certYear">' + new Date().getFullYear() + '</div>' +
             '</div>' +
+
             '<div class="cert-header">' +
                 '<img src="assets/logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-cert" onerror="this.style.display=\'none\';">' +
                 '<div class="cert-icon">&#127942;</div>' +
                 '<div class="cert-title">CERTIFICADO</div>' +
                 '<div class="cert-subtitle">de finalización satisfactoria</div>' +
             '</div>' +
+
             '<div class="cert-body">' +
                 '<div class="cert-award-text">Se otorga el presente a:</div>' +
                 '<div class="cert-name" id="certName">' + (currentUser.name || 'Alumno TRIKLES') + '</div>' +
                 '<div class="cert-award-text">Por haber completado exitosamente el curso:</div>' +
-                '<div class="cert-course">' + courseTitle + (courseAuthor ? '<br><span style="font-size:0.7em;opacity:0.85;">Basado en la obra de ' + courseAuthor + '</span>' : '') + '</div>' +
+                '<div class="cert-course">' + courseTitle + (courseAuthor ? '<br><span>Basado en la obra de ' + courseAuthor + '</span>' : '') + '</div>' +
                 '<div class="cert-desc">' + certDesc + '</div>' +
             '</div>' +
+
             '<div class="cert-footer">' +
                 '<div class="cert-sig-block">' +
+                    // Firma digital del instructor (en azul marino por CSS filter)
+                    '<img src="assets/firma-german.png" alt="Firma" class="cert-sig-image" ' +
+                         'onerror="this.style.display=\'none\';">' +
                     '<div class="cert-sig-line">' +
                         '<div class="cert-sig-name">LADE Germán Solís Muñoz</div>' +
-                        '<div class="cert-sig-title">Director de Gestión Empresarial — TRIKLES</div>' +
+                        '<div class="cert-sig-title">Director de Gestión Empresarial · TRIKLES</div>' +
                     '</div>' +
                 '</div>' +
                 '<div class="cert-sig-block">' +
+                    // Sello TRIKLES visual (no la firma)
+                    '<div style="height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;">' +
+                        '<div style="border:2px solid #d4af37;color:#d4af37;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.7em;transform:rotate(-8deg);">TRIKLES</div>' +
+                    '</div>' +
                     '<div class="cert-sig-line">' +
                         '<div class="cert-sig-name" id="certDate"></div>' +
                         '<div class="cert-sig-title">Fecha de expedición</div>' +
@@ -1456,70 +1627,110 @@ function injectLinkedInShareButton() {
     });
 }
 
-// Abre LinkedIn con un post prellenado sobre el certificado.
-// El alumno puede editar el texto antes de publicar.
+// Abre un modal con texto sugerido + botones claros para compartir en LinkedIn.
+// Mejor UX que el flujo anterior que dejaba LinkedIn en blanco.
 function shareCertificateOnLinkedIn() {
     if (!COURSE || !currentUser) return;
     const courseTitle = COURSE.meta.title;
     const courseAuthor = COURSE.meta.author || '';
+    const firstName = (currentUser.name || '').split(' ')[0];
+
+    // Texto profesional sugerido
+    const suggestedText =
+'🎓 ¡Acabo de certificarme en "' + courseTitle + '"' +
+(courseAuthor ? '\n📚 Basado en la obra de ' + courseAuthor : '') + ' — con TRIKLES!\n\n' +
+'Un curso profundo y profesional, adaptado al contexto latinoamericano. Incluyó lecciones detalladas, videos complementarios, ejercicios prácticos y un examen final riguroso que me obligó a aplicar cada concepto.\n\n' +
+'Cada libro clásico de gestión tiene algo que enseñarnos. Estas son algunas de las ideas que me llevo:\n' +
+'• (escribe aquí 2-3 aprendizajes concretos)\n' +
+'• ...\n\n' +
+'Gracias al LADE Germán Solís Muñoz por la curaduría y adaptación.\n' +
+'Si te interesa el catálogo: https://trikles-cursos.web.app\n\n' +
+'#TRIKLES #AprendizajeContinuo #DesarrolloProfesional #Liderazgo #GestiónEmpresarial';
+
+    // Crear el modal de compartir
+    const modal = document.createElement('div');
+    modal.className = 'linkedin-share-modal';
+    modal.innerHTML =
+'<div class="linkedin-share-backdrop" onclick="closeLinkedInShareModal()"></div>' +
+'<div class="linkedin-share-body">' +
+    '<button class="linkedin-share-close" onclick="closeLinkedInShareModal()" aria-label="Cerrar">✕</button>' +
+    '<div class="linkedin-share-header">' +
+        '<div class="linkedin-share-icon">💼</div>' +
+        '<div>' +
+            '<h3>Compartir en LinkedIn</h3>' +
+            '<p>Tu logro merece ser compartido. Usa nuestro texto sugerido (editable) y súmale tus aprendizajes personales.</p>' +
+        '</div>' +
+    '</div>' +
+    '<div class="linkedin-share-instructions">' +
+        '<strong>Cómo publicar:</strong>' +
+        '<ol>' +
+            '<li>Edita el texto si quieres (añade tus aprendizajes personales donde dice "escribe aquí").</li>' +
+            '<li>Click en <strong>📋 Copiar texto</strong>.</li>' +
+            '<li>Click en <strong>🔗 Abrir LinkedIn</strong>.</li>' +
+            '<li>En el cuadro "¿Sobre qué quieres hablar?" pega con <kbd>Ctrl</kbd>+<kbd>V</kbd>.</li>' +
+            '<li>¡Opcional pero recomendado! Adjunta una captura de tu certificado como imagen (botón de fotos 📸 en LinkedIn).</li>' +
+        '</ol>' +
+    '</div>' +
+    '<textarea class="linkedin-share-textarea" id="linkedinShareText" rows="14">' + suggestedText.replace(/</g, '&lt;') + '</textarea>' +
+    '<div class="linkedin-share-actions">' +
+        '<button class="btn-lnk-copy" onclick="copyLinkedInText(this)">📋 Copiar texto</button>' +
+        '<button class="btn-lnk-open" onclick="openLinkedInShareWindow()">🔗 Abrir LinkedIn</button>' +
+    '</div>' +
+    '<div class="linkedin-share-tip">' +
+        '💡 <strong>Tip Pro:</strong> toma una captura de tu certificado (botón 🖨️ Imprimir / Guardar PDF) y súbela como imagen en el post. Los posts con imagen reciben 3× más interacciones que los solo texto.' +
+    '</div>' +
+'</div>';
+    document.body.appendChild(modal);
+    // Bloquear scroll del body mientras el modal está abierto
+    document.body.style.overflow = 'hidden';
+    // Foco en el textarea para edición rápida
+    setTimeout(() => {
+        const ta = document.getElementById('linkedinShareText');
+        if (ta) ta.focus();
+    }, 100);
+}
+
+function closeLinkedInShareModal() {
+    const modal = document.querySelector('.linkedin-share-modal');
+    if (modal) modal.remove();
+    document.body.style.overflow = '';
+}
+
+function copyLinkedInText(btn) {
+    const ta = document.getElementById('linkedinShareText');
+    if (!ta) return;
+    const text = ta.value;
+    const done = () => {
+        btn.textContent = '✓ ¡Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.innerHTML = '📋 Copiar texto';
+            btn.classList.remove('copied');
+        }, 2500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(() => {
+            // Fallback: seleccionar el texto en el textarea para que copien con Ctrl+C
+            ta.select();
+            document.execCommand('copy');
+            done();
+        });
+    } else {
+        ta.select();
+        document.execCommand('copy');
+        done();
+    }
+}
+
+function openLinkedInShareWindow() {
     const trikleHome = 'https://trikles-cursos.web.app';
-
-    // Mensaje sugerido que LinkedIn mostrará en la caja de texto del post
-    const msg = '¡Acabo de certificarme en "' + courseTitle + '"' +
-        (courseAuthor ? ' (' + courseAuthor + ')' : '') + ' con TRIKLES! 🎓\n\n' +
-        'Un curso profundo adaptado al contexto latinoamericano, con lecciones, ' +
-        'videos, ejercicios y un examen final riguroso.\n\n' +
-        '#TRIKLES #AprendizajeContinuo #Liderazgo #GestiónEmpresarial';
-
-    // LinkedIn Share API: comparte una URL con texto sugerido
-    // (LinkedIn toma la URL + meta tags para generar la preview automática)
     const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' +
         encodeURIComponent(trikleHome);
-
-    // Abrir en popup (LinkedIn auto-genera el post con la URL + meta preview)
-    const w = 600, h = 600;
+    const w = 600, h = 650;
     const left = (screen.width - w) / 2;
     const top = (screen.height - h) / 2;
     window.open(shareUrl, 'linkedinShare',
         'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes');
-
-    // Además, copiamos el mensaje sugerido al portapapeles para que el alumno
-    // lo pegue en el post de LinkedIn.
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(msg).then(() => {
-            // Aviso visual discreto
-            showLinkedInToast();
-        }).catch(() => {
-            showLinkedInToast(true);  // sin copiar al portapapeles
-        });
-    } else {
-        showLinkedInToast(true);
-    }
-}
-
-function showLinkedInToast(copyFailed) {
-    const toast = document.createElement('div');
-    toast.className = 'resume-toast';
-    const msg = copyFailed
-        ? '<span class="resume-toast-icon">💼</span>' +
-          '<div class="resume-toast-body">' +
-              '<div class="resume-toast-title">LinkedIn abierto</div>' +
-              '<div class="resume-toast-sub">Escribe tu mensaje y publica</div>' +
-          '</div>'
-        : '<span class="resume-toast-icon">✅</span>' +
-          '<div class="resume-toast-body">' +
-              '<div class="resume-toast-title">Mensaje copiado</div>' +
-              '<div class="resume-toast-sub">Pégalo en el post de LinkedIn (Ctrl+V)</div>' +
-          '</div>';
-    toast.innerHTML = msg +
-        '<button class="resume-toast-close" onclick="this.parentNode.remove()" aria-label="Cerrar">✕</button>';
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        if (toast.parentNode) {
-            toast.classList.add('fade-out');
-            setTimeout(() => toast.remove(), 400);
-        }
-    }, 6000);
 }
 
 function showLesson(idx) {
