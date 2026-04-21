@@ -181,6 +181,190 @@
             font-size: 0.8em; color: var(--text-light); display: none;
         }
 
+        /* ============================================================
+           ENROLLMENT SCREEN — editorial, marino + dorado
+           ============================================================ */
+        .enroll-card {
+            background: #fff;
+            max-width: 520px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 44px 48px 36px;
+            border: 1px solid #e8e3d8;
+            box-shadow: 0 30px 80px rgba(10, 37, 64, 0.18);
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            color: #0a2540;
+        }
+        .enroll-wordmark {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: #0a2540;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+        .enroll-rule {
+            height: 1px;
+            background: #d9d2c2;
+            margin: 0 auto 28px;
+            width: 48px;
+        }
+        .enroll-rule-full {
+            height: 1px;
+            background: #ede8dc;
+            margin: 24px 0;
+        }
+        .enroll-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #0a2540;
+            text-align: center;
+            margin: 0 0 8px;
+            letter-spacing: -0.01em;
+        }
+        .enroll-subtitle {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 16px;
+            font-style: italic;
+            color: #6b7280;
+            text-align: center;
+            margin: 0 0 6px;
+        }
+        .enroll-author {
+            text-align: center;
+            font-size: 12px;
+            color: #8a8578;
+            margin-bottom: 4px;
+        }
+        .enroll-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            text-align: center;
+        }
+        .enroll-meta > div {
+            padding: 4px 0;
+            border-right: 1px solid #ede8dc;
+        }
+        .enroll-meta > div:last-child { border-right: none; }
+        .enroll-meta-label {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #8a8578;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .enroll-meta-value {
+            font-size: 14px;
+            color: #0a2540;
+            font-weight: 500;
+        }
+        .enroll-price-block {
+            text-align: center;
+        }
+        .enroll-price-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #8a8578;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .enroll-price {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 40px;
+            font-weight: 700;
+            color: #0a2540;
+            line-height: 1;
+        }
+        .enroll-price .cur {
+            font-size: 14px;
+            font-weight: 500;
+            color: #8a8578;
+            margin-left: 6px;
+            letter-spacing: 1px;
+        }
+        .enroll-price-list {
+            font-size: 13px;
+            color: #8a8578;
+            margin-top: 6px;
+            text-decoration: line-through;
+        }
+        .enroll-price-save {
+            display: inline-block;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #8a6d2a;
+            background: #f5efdf;
+            border: 1px solid #e3d5a8;
+            padding: 3px 10px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .enroll-cta {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #0a2540;
+            color: #fff;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: background 0.2s;
+        }
+        .enroll-cta:hover { background: #1a3a5c; }
+        .enroll-cta:disabled {
+            background: #8a8578;
+            cursor: wait;
+        }
+        .enroll-secure {
+            text-align: center;
+            font-size: 11px;
+            color: #8a8578;
+            margin-top: 12px;
+            letter-spacing: 0.3px;
+        }
+        .enroll-error {
+            text-align: center;
+            color: #a33030;
+            font-size: 13px;
+            margin-top: 14px;
+            padding: 10px;
+            background: #fdf5f5;
+            border: 1px solid #eecfcf;
+            display: none;
+        }
+        .enroll-footer {
+            text-align: center;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid #ede8dc;
+            font-size: 12px;
+            color: #8a8578;
+        }
+        .enroll-footer a {
+            color: #0a2540;
+            text-decoration: none;
+            border-bottom: 1px solid #d9d2c2;
+            padding-bottom: 1px;
+        }
+        .enroll-footer a:hover { border-bottom-color: #0a2540; }
+
+        @media (max-width: 560px) {
+            .enroll-card { padding: 32px 24px; margin: 20px auto; }
+            .enroll-title { font-size: 22px; }
+            .enroll-price { font-size: 32px; }
+        }
+
         /* Voucher upload */
         .voucher-btn {
             display: flex; flex-direction: row; align-items: center; gap: 8px;
@@ -1986,111 +2170,112 @@ function isEnrolledInCurrentCourse() {
     return currentUser.enrollments && currentUser.enrollments[COURSE.id];
 }
 
+// Precios locales (la fuente de verdad para el cargo real es la Cloud Function)
+const ENROLL_PRICING = {
+    'food-beverage':     { listPrice: 2499, price: 1599 },
+    'coaching':          { listPrice: 1499, price:  799 },
+    'gerencia-efectiva': { listPrice: 1499, price:  799 },
+    'habilidades':       { listPrice: 1499, price:  799 },
+    'feum-inventarios':  { listPrice:  999, price:  499 },
+    'habitos':           { listPrice:  999, price:  499 },
+    '4dx':               { listPrice:  999, price:  499 }
+};
+
+function _fmtPriceEnroll(n) {
+    return '$' + Number(n).toLocaleString('es-MX');
+}
+
 function showEnrollmentScreen() {
-    // Ocultar splash y mostrar pantalla de inscripcion (pide boucher)
     document.getElementById('splash').style.display = 'none';
-    document.getElementById('authScreen').classList.remove('hide');
-    // Cambiar a formulario de boucher ya que ya tiene cuenta
-    document.getElementById('authScreen').innerHTML = `
-        <div class="auth-card" style="max-width:500px;">
-            <div class="auth-logo">
-                <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-auth" onerror="this.style.display='none';">
-                <h2>` + COURSE.meta.title + `</h2>
-                <div class="auth-sub">Inscripción al curso</div>
-            </div>
-            <div style="background:#fff3e0;padding:12px;border-radius:8px;margin-bottom:14px;font-size:0.85em;">
-                <strong>Hola ` + currentUser.name + `!</strong><br>
-                Para inscribirte a este curso necesitas subir tu boucher de pago a nombre de <strong>Germán Solís Muñoz</strong>.
-            </div>
-            <div class="form-group">
-                <label>Boucher de pago (foto)</label>
-                <div class="voucher-upload">
-                    <input type="file" id="enrollVoucher" accept="image/*" onchange="previewEnrollVoucher(this)" style="display:none;">
-                    <label for="enrollVoucher" class="voucher-btn" id="enrollVoucherLabel">
-                        <span>&#128247;</span>
-                        <div style="flex:1;"><div style="font-weight:700;">Subir foto del boucher</div><span class="voucher-hint">A nombre de Germán Solís Muñoz</span></div>
-                    </label>
-                    <img id="enrollVoucherPreview" class="voucher-preview" style="display:none;">
-                    <div id="enrollVoucherStatus" class="voucher-status"></div>
-                </div>
-            </div>
-            <button class="auth-btn" onclick="doEnroll()" id="enrollBtn">Validar e inscribirme &#127881;</button>
-            <div class="auth-error" id="enrollError"></div>
-            <div style="text-align:center;margin-top:12px;">
-                <a href="index.html" style="color:var(--blue);font-size:0.85em;">&larr; Volver al catálogo</a>
-            </div>
-        </div>`;
+    const authScreen = document.getElementById('authScreen');
+    authScreen.classList.remove('hide');
+
+    const meta = COURSE.meta || {};
+    const title = meta.title || 'Curso TRIKLES';
+    const subtitle = meta.subtitle || '';
+    const author = meta.author ? 'Basado en la obra de ' + meta.author : '';
+    const duration = meta.duration || '—';
+    const lessons = meta.lessonsCount ? meta.lessonsCount + ' lecciones' : '—';
+    const level = meta.level || 'Todos los niveles';
+
+    const pricing = ENROLL_PRICING[COURSE.id] || { price: 999, listPrice: null };
+    const priceHtml = _fmtPriceEnroll(pricing.price);
+    const listHtml = pricing.listPrice && pricing.listPrice > pricing.price
+        ? '<div class="enroll-price-list">Precio regular ' + _fmtPriceEnroll(pricing.listPrice) + ' MXN</div>'
+        : '';
+    const savePct = pricing.listPrice && pricing.listPrice > pricing.price
+        ? Math.round((1 - pricing.price / pricing.listPrice) * 100)
+        : 0;
+    const saveHtml = savePct > 0
+        ? '<div class="enroll-price-save">Lanzamiento · ahorra ' + savePct + '%</div>'
+        : '';
+
+    authScreen.innerHTML =
+        '<div class="enroll-card">' +
+            '<div class="enroll-wordmark">TRIKLES</div>' +
+            '<div class="enroll-rule"></div>' +
+
+            '<h1 class="enroll-title">' + title + '</h1>' +
+            (subtitle ? '<div class="enroll-subtitle">' + subtitle + '</div>' : '') +
+            (author ? '<div class="enroll-author">' + author + '</div>' : '') +
+
+            '<div class="enroll-rule-full"></div>' +
+
+            '<div class="enroll-meta">' +
+                '<div>' +
+                    '<div class="enroll-meta-label">Duración</div>' +
+                    '<div class="enroll-meta-value">' + duration + '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<div class="enroll-meta-label">Contenido</div>' +
+                    '<div class="enroll-meta-value">' + lessons + '</div>' +
+                '</div>' +
+                '<div>' +
+                    '<div class="enroll-meta-label">Nivel</div>' +
+                    '<div class="enroll-meta-value">' + level + '</div>' +
+                '</div>' +
+            '</div>' +
+
+            '<div class="enroll-rule-full"></div>' +
+
+            '<div class="enroll-price-block">' +
+                '<div class="enroll-price-label">Inversión única · acceso de por vida</div>' +
+                '<div class="enroll-price">' + priceHtml + '<span class="cur">MXN</span></div>' +
+                listHtml +
+                saveHtml +
+            '</div>' +
+
+            '<button class="enroll-cta" id="enrollStripeBtn" onclick="startStripeEnroll()">' +
+                'Pagar e inscribirme' +
+            '</button>' +
+            '<div class="enroll-secure">Pago seguro procesado por Stripe · Tarjeta, SPEI u OXXO</div>' +
+            '<div class="enroll-error" id="enrollError"></div>' +
+
+            '<div class="enroll-footer">' +
+                '<a href="index.html">Volver al catálogo</a>' +
+            '</div>' +
+        '</div>';
 }
 
-let enrollVoucherData = null;
-function previewEnrollVoucher(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        enrollVoucherData = e.target.result;
-        document.getElementById('enrollVoucherPreview').src = enrollVoucherData;
-        document.getElementById('enrollVoucherPreview').style.display = 'block';
-        document.getElementById('enrollVoucherLabel').classList.add('loaded');
-    };
-    reader.readAsDataURL(file);
-}
-
-async function doEnroll() {
-    const errEl = document.getElementById('enrollError');
-    const btn = document.getElementById('enrollBtn');
-    errEl.style.display = 'none';
-    if (!enrollVoucherData) {
-        errEl.textContent = 'Debes subir el boucher de pago.';
-        errEl.style.display = 'block';
-        return;
-    }
+async function startStripeEnroll() {
+    const btn = document.getElementById('enrollStripeBtn');
+    const err = document.getElementById('enrollError');
+    err.style.display = 'none';
+    err.textContent = '';
     btn.disabled = true;
-    btn.textContent = 'Validando boucher...';
-
-    const status = document.getElementById('enrollVoucherStatus');
-    status.className = 'voucher-status show checking';
-    status.textContent = 'Leyendo texto del boucher con OCR...';
-
+    btn.textContent = 'Redirigiendo a pago seguro…';
     try {
-        const result = await Tesseract.recognize(enrollVoucherData, 'spa+eng');
-        const text = normalize(result.data.text);
-        const variants = ['german solis munoz', 'german solis', 'solis munoz german'];
-        const matched = variants.some(v => text.includes(v));
-
-        if (!matched) {
-            status.className = 'voucher-status show bad';
-            status.innerHTML = '&#10060; No se detectó el nombre "Germán Solís Muñoz" en el boucher.';
-            btn.disabled = false;
-            btn.textContent = 'Validar e inscribirme 🎉';
-            return;
-        }
-
-        // Inscribir al alumno en el curso (Firestore)
-        const enrollment = {
-            enrolledAt: new Date().toISOString(),
-            voucher: enrollVoucherData,
-            voucherText: result.data.text.substring(0, 500),
-            progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
-        };
-        await TK.saveEnrollment(COURSE.id, enrollment);
-        currentUser = TK.getCurrentUser();
-
-        sendToWebhook('enroll', currentUser);
-
-        status.className = 'voucher-status show ok';
-        status.innerHTML = '&#9989; Inscripción exitosa! Entrando al curso...';
-        setTimeout(() => {
-            loadProgress();
-            location.reload();
-        }, 1500);
-    } catch (err) {
-        status.className = 'voucher-status show bad';
-        status.textContent = 'Error al leer la imagen. Intenta con otra foto.';
+        const result = await TK.createStripeCheckout(COURSE.id);
+        if (!result || !result.url) throw new Error('No se recibió la URL de pago.');
+        window.location.href = result.url;
+    } catch (e) {
         btn.disabled = false;
-        btn.textContent = 'Validar e inscribirme 🎉';
+        btn.textContent = 'Pagar e inscribirme';
+        err.textContent = (e && e.message) ? e.message : 'No se pudo iniciar el pago. Intenta de nuevo.';
+        err.style.display = 'block';
     }
 }
+
 
 // Track correct quiz answers per user
 let correctQuizzes = new Set();
