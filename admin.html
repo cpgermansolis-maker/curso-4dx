@@ -245,6 +245,109 @@
     @media (max-width: 400px) {
         .stats-grid { grid-template-columns: 1fr; }
     }
+
+    /* ===== FINANZAS (editorial) ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+    .fin-card {
+        max-width: 1040px !important; width: 96% !important;
+        background: #faf8f3 !important;
+        border-radius: 2px !important;
+        padding: 44px 48px !important;
+        font-family: 'Inter', sans-serif;
+    }
+    .fin-eyebrow {
+        font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 2.4px; color: #c9a961;
+        margin-bottom: 8px;
+    }
+    .fin-title {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 400 !important;
+        font-size: 2.4em !important;
+        color: #0a2540 !important;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px !important;
+    }
+    .fin-sub { font-size: 0.9em; color: #4a4a4a; font-weight: 300; max-width: 720px; line-height: 1.55; }
+    .fin-rule { width: 48px; height: 1px; background: #c9a961; margin: 24px 0 28px; }
+    .fin-rule-thin { width: 100%; height: 1px; background: rgba(10,37,64,0.1); margin: 36px 0 28px; }
+
+    .fin-kpi-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px;
+        background: rgba(10,37,64,0.1); border: 1px solid rgba(10,37,64,0.1);
+    }
+    .fin-kpi { background: #fff; padding: 24px 22px; }
+    .fin-kpi-label {
+        font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 1.8px; color: #4a4a4a; margin-bottom: 10px;
+    }
+    .fin-kpi-value {
+        font-family: 'Playfair Display', serif; font-weight: 500; font-size: 2em; color: #0a2540;
+        letter-spacing: -0.01em; line-height: 1;
+    }
+    .fin-kpi-note { font-size: 0.78em; color: #4a4a4a; margin-top: 8px; font-weight: 400; }
+    .fin-kpi-note .up { color: #2d5016; font-weight: 600; }
+    .fin-kpi-note .down { color: #8b2e2e; font-weight: 600; }
+
+    .fin-section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; gap: 16px; flex-wrap: wrap; }
+    .fin-h3 { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 1.4em; color: #0a2540; margin: 0; }
+    .fin-mini-note { font-size: 0.78em; color: #4a4a4a; font-style: italic; }
+
+    .fin-monthly { display: flex; align-items: flex-end; gap: 10px; height: 200px; padding: 0 2px 0; border-bottom: 1px solid rgba(10,37,64,0.18); position: relative; }
+    .fin-month-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; position: relative; }
+    .fin-month-bar {
+        width: 100%; max-width: 44px; background: #0a2540; min-height: 2px;
+        transition: background 0.2s, transform 0.2s; cursor: default;
+    }
+    .fin-month-col:hover .fin-month-bar { background: #c9a961; }
+    .fin-month-col.current .fin-month-bar { background: #c9a961; }
+    .fin-month-val {
+        position: absolute; top: -22px; font-size: 0.72em; font-weight: 600; color: #0a2540;
+        white-space: nowrap;
+    }
+    .fin-month-label {
+        font-family: 'Inter', sans-serif; font-size: 0.68em; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 1px; color: #4a4a4a; margin-top: 8px;
+    }
+
+    .fin-course-table-wrap { overflow-x: auto; }
+    .fin-course-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+    .fin-course-table th {
+        font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 1.8px; color: #4a4a4a;
+        text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(10,37,64,0.18);
+    }
+    .fin-course-table th.num, .fin-course-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .fin-course-table td {
+        padding: 14px; border-bottom: 1px solid rgba(10,37,64,0.08); color: #1a1a1a;
+    }
+    .fin-course-table td.title { font-family: 'Playfair Display', serif; font-weight: 500; color: #0a2540; }
+    .fin-course-table td.amount { font-family: 'Playfair Display', serif; font-weight: 500; color: #0a2540; font-size: 1.05em; }
+    .fin-course-table tr:last-child td { border-bottom: none; }
+    .fin-course-table tr.total-row td {
+        background: #0a2540; color: #fff; font-weight: 600;
+        border-bottom: none; letter-spacing: 0.3px;
+    }
+    .fin-course-table tr.total-row td.amount { color: #c9a961; font-family: 'Playfair Display', serif; }
+
+    .fin-footer { display: flex; justify-content: flex-end; }
+    .btn-fin-csv {
+        background: transparent; color: #0a2540; border: 1px solid #0a2540;
+        padding: 12px 20px; border-radius: 2px;
+        font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.78em;
+        text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer;
+    }
+    .btn-fin-csv:hover { background: #0a2540; color: #fff; }
+
+    @media (max-width: 700px) {
+        .fin-card { padding: 28px 20px !important; }
+        .fin-title { font-size: 1.8em !important; }
+        .fin-kpi { padding: 18px 16px; }
+        .fin-kpi-value { font-size: 1.5em; }
+        .fin-monthly { height: 150px; gap: 4px; }
+        .fin-month-label { font-size: 0.58em; letter-spacing: 0.4px; }
+        .fin-month-val { font-size: 0.62em; top: -18px; }
+    }
 </style>
 </head>
 <body>
@@ -302,10 +405,74 @@
             <button class="btn-action btn-clean-test" onclick="cleanTestStudents()">🧹 Borrar alumnos de prueba</button>
             <button class="btn-action btn-clean-all" onclick="cleanAllStudents()">⚠️ Borrar TODOS los alumnos</button>
             <button class="btn-action" style="background:#fff3e0;color:#e65100;border-color:#ffb300;" onclick="openRatingsPanel()">⭐ Calificaciones</button>
+            <button class="btn-action" style="background:#0a2540;color:#c9a961;border-color:#c9a961;" onclick="openFinanceModal()">Estado de cuenta</button>
         </div>
 
         <div class="table-wrap">
             <table id="mainTable"></table>
+        </div>
+    </div>
+</div>
+
+<!-- ======= PANEL FINANZAS ======= -->
+<div id="financeModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this) closeFinanceModal()">
+    <div class="modal-card fin-card">
+        <button class="modal-close" onclick="closeFinanceModal()" aria-label="Cerrar">✕</button>
+        <div class="fin-eyebrow">TRIKLES · Estado de cuenta</div>
+        <h2 class="fin-title">Ingresos</h2>
+        <div class="fin-sub">Resumen financiero basado en transacciones confirmadas de Stripe. Las becas no cuentan como ingreso.</div>
+        <div class="fin-rule"></div>
+
+        <div class="fin-kpi-grid">
+            <div class="fin-kpi">
+                <div class="fin-kpi-label">Ingresos totales</div>
+                <div class="fin-kpi-value" id="finTotal">—</div>
+                <div class="fin-kpi-note" id="finTotalNote"></div>
+            </div>
+            <div class="fin-kpi">
+                <div class="fin-kpi-label">Este mes</div>
+                <div class="fin-kpi-value" id="finThisMonth">—</div>
+                <div class="fin-kpi-note" id="finThisMonthNote"></div>
+            </div>
+            <div class="fin-kpi">
+                <div class="fin-kpi-label">Mes anterior</div>
+                <div class="fin-kpi-value" id="finPrevMonth">—</div>
+                <div class="fin-kpi-note" id="finPrevMonthNote"></div>
+            </div>
+            <div class="fin-kpi">
+                <div class="fin-kpi-label">Ticket promedio</div>
+                <div class="fin-kpi-value" id="finAvgTicket">—</div>
+                <div class="fin-kpi-note" id="finAvgTicketNote"></div>
+            </div>
+        </div>
+
+        <div class="fin-rule-thin"></div>
+
+        <div class="fin-section-head">
+            <div>
+                <div class="fin-eyebrow">01 · Serie mensual</div>
+                <h3 class="fin-h3">Últimos 12 meses</h3>
+            </div>
+        </div>
+        <div class="fin-monthly" id="finMonthly"></div>
+
+        <div class="fin-rule-thin"></div>
+
+        <div class="fin-section-head">
+            <div>
+                <div class="fin-eyebrow">02 · Por curso</div>
+                <h3 class="fin-h3">Ingresos y alumnos de pago</h3>
+            </div>
+            <div class="fin-mini-note">El bundle se prorratea entre los 7 cursos.</div>
+        </div>
+        <div class="fin-course-table-wrap">
+            <table class="fin-course-table" id="finCourseTable"></table>
+        </div>
+
+        <div class="fin-rule-thin"></div>
+
+        <div class="fin-footer">
+            <button class="btn-fin-csv" onclick="exportFinanceCSV()">Descargar CSV de transacciones</button>
         </div>
     </div>
 </div>
@@ -908,6 +1075,199 @@ async function adminToggleRating(ratingId, hide) {
     } catch (e) {
         alert('No se pudo actualizar: ' + (e.message || e));
     }
+}
+
+// ==========================================================
+// ESTADO DE CUENTA FINANCIERO
+// ==========================================================
+const FIN_MONTH_LABELS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+function _finFmtMXN(n, compact) {
+    if (!n) return '$0';
+    if (compact && n >= 1000) {
+        if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+        return '$' + (n/1000).toFixed(n >= 10000 ? 0 : 1) + 'k';
+    }
+    return '$' + Math.round(n).toLocaleString('es-MX');
+}
+function _finMonthKey(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'); }
+
+// Dedupe transactions por stripeSessionId y prorratea entre cursos del bundle
+function _finCollectTxs() {
+    const users = Object.values(getUsers() || {});
+    // Map<sessionId, { amount, date, email, courseIds[] }>
+    const sessions = {};
+    // Inscripciones sin sessionId (legacy/becas): las ignoramos en ingresos
+    users.forEach(u => {
+        const enrs = u.enrollments || {};
+        Object.keys(enrs).forEach(cid => {
+            const e = enrs[cid];
+            if (!e) return;
+            // Becas (method: 'scholarship' o amount 0 o sin stripeSessionId) no cuentan
+            if (e.method === 'scholarship' || !e.stripeSessionId || !e.amount) return;
+            const sid = e.stripeSessionId;
+            if (!sessions[sid]) {
+                sessions[sid] = {
+                    sessionId: sid,
+                    amount: Number(e.amount) || 0,
+                    date: new Date(e.enrolledAt || Date.now()),
+                    email: u.email || u.id,
+                    name: u.name || '',
+                    courseIds: [cid]
+                };
+            } else {
+                sessions[sid].courseIds.push(cid);
+                // El amount debería ser el mismo; si difiere, conservamos el primero
+            }
+        });
+    });
+    return Object.values(sessions);
+}
+
+function _finComputeStats() {
+    const txs = _finCollectTxs();
+    const now = new Date();
+    const thisKey = _finMonthKey(now);
+    const prev = new Date(now.getFullYear(), now.getMonth()-1, 1);
+    const prevKey = _finMonthKey(prev);
+
+    let total = 0, thisMonth = 0, prevMonth = 0;
+    const monthly = {}; // last 12 months
+    for (let i = 11; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+        monthly[_finMonthKey(d)] = { label: FIN_MONTH_LABELS[d.getMonth()], year: d.getFullYear(), amount: 0, count: 0 };
+    }
+
+    const perCourse = {}; // courseId -> { amount, count }
+    const catalog = getCatalog();
+    catalog.forEach(c => { perCourse[c.id] = { title: c.title, amount: 0, count: 0 }; });
+
+    txs.forEach(tx => {
+        total += tx.amount;
+        const mk = _finMonthKey(tx.date);
+        if (mk === thisKey) thisMonth += tx.amount;
+        if (mk === prevKey) prevMonth += tx.amount;
+        if (monthly[mk]) { monthly[mk].amount += tx.amount; monthly[mk].count++; }
+
+        // Prorratear entre los cursos de la transacción
+        const share = tx.amount / tx.courseIds.length;
+        tx.courseIds.forEach(cid => {
+            if (!perCourse[cid]) perCourse[cid] = { title: cid, amount: 0, count: 0 };
+            perCourse[cid].amount += share;
+            perCourse[cid].count++;
+        });
+    });
+
+    const avgTicket = txs.length ? total / txs.length : 0;
+    return {
+        total, thisMonth, prevMonth, avgTicket,
+        txCount: txs.length,
+        monthly: Object.entries(monthly).map(([k,v]) => Object.assign({key:k}, v)),
+        perCourse,
+        txs
+    };
+}
+
+function openFinanceModal() {
+    const m = document.getElementById('financeModal');
+    m.style.display = 'flex'; m.classList.add('show');
+    renderFinance();
+}
+function closeFinanceModal() {
+    const m = document.getElementById('financeModal');
+    m.style.display = 'none'; m.classList.remove('show');
+}
+
+function renderFinance() {
+    const s = _finComputeStats();
+
+    document.getElementById('finTotal').textContent = _finFmtMXN(s.total);
+    document.getElementById('finTotalNote').textContent = s.txCount + ' transacciones confirmadas';
+
+    document.getElementById('finThisMonth').textContent = _finFmtMXN(s.thisMonth);
+    const delta = s.prevMonth ? ((s.thisMonth - s.prevMonth) / s.prevMonth) * 100 : 0;
+    const deltaHtml = s.prevMonth
+        ? (delta >= 0 ? '<span class="up">▲ ' + delta.toFixed(0) + '%</span> vs. mes anterior'
+                      : '<span class="down">▼ ' + Math.abs(delta).toFixed(0) + '%</span> vs. mes anterior')
+        : 'sin base de comparación';
+    document.getElementById('finThisMonthNote').innerHTML = deltaHtml;
+
+    document.getElementById('finPrevMonth').textContent = _finFmtMXN(s.prevMonth);
+    document.getElementById('finPrevMonthNote').textContent = 'cerrado';
+
+    document.getElementById('finAvgTicket').textContent = _finFmtMXN(s.avgTicket);
+    document.getElementById('finAvgTicketNote').textContent = 'promedio por transacción';
+
+    // Gráfica mensual
+    const maxMonth = Math.max.apply(null, s.monthly.map(m => m.amount)) || 1;
+    const cur = _finMonthKey(new Date());
+    const monthlyHtml = s.monthly.map(m => {
+        const h = Math.max(2, (m.amount / maxMonth) * 160);
+        const cls = m.key === cur ? 'fin-month-col current' : 'fin-month-col';
+        return '<div class="' + cls + '" title="' + m.label + ' ' + m.year + ': ' + _finFmtMXN(m.amount) + ' (' + m.count + ' tx)">' +
+                    (m.amount > 0 ? '<div class="fin-month-val">' + _finFmtMXN(m.amount, true) + '</div>' : '') +
+                    '<div class="fin-month-bar" style="height:' + h + 'px;"></div>' +
+                    '<div class="fin-month-label">' + m.label + '</div>' +
+               '</div>';
+    }).join('');
+    document.getElementById('finMonthly').innerHTML = monthlyHtml;
+
+    // Tabla por curso
+    const rows = Object.keys(s.perCourse)
+        .map(cid => Object.assign({id: cid}, s.perCourse[cid]))
+        .filter(r => r.count > 0)
+        .sort((a,b) => b.amount - a.amount);
+
+    let tableHtml = '<thead><tr>' +
+        '<th>Curso</th>' +
+        '<th class="num">Alumnos pago</th>' +
+        '<th class="num">Ingresos</th>' +
+        '<th class="num">% total</th>' +
+        '</tr></thead><tbody>';
+    rows.forEach(r => {
+        const pct = s.total ? (r.amount / s.total) * 100 : 0;
+        tableHtml += '<tr>' +
+            '<td class="title">' + r.title + '</td>' +
+            '<td class="num">' + r.count + '</td>' +
+            '<td class="num amount">' + _finFmtMXN(r.amount) + '</td>' +
+            '<td class="num">' + pct.toFixed(1) + '%</td>' +
+            '</tr>';
+    });
+    if (!rows.length) {
+        tableHtml += '<tr><td colspan="4" style="text-align:center;color:#999;padding:28px;font-style:italic;">Aún no hay transacciones confirmadas.</td></tr>';
+    } else {
+        tableHtml += '<tr class="total-row">' +
+            '<td>TOTAL</td>' +
+            '<td class="num">' + rows.reduce((n,r) => n+r.count, 0) + '</td>' +
+            '<td class="num amount">' + _finFmtMXN(s.total) + '</td>' +
+            '<td class="num">100%</td>' +
+            '</tr>';
+    }
+    tableHtml += '</tbody>';
+    document.getElementById('finCourseTable').innerHTML = tableHtml;
+}
+
+function exportFinanceCSV() {
+    const s = _finComputeStats();
+    const catalog = getCatalog();
+    const titleOf = id => (catalog.find(c => c.id === id) || {}).title || id;
+    const rows = [['Fecha','Sesión Stripe','Alumno','Email','Cursos','Monto MXN']];
+    s.txs.sort((a,b) => b.date - a.date).forEach(tx => {
+        rows.push([
+            tx.date.toISOString().slice(0,10),
+            tx.sessionId,
+            tx.name,
+            tx.email,
+            tx.courseIds.map(titleOf).join(' + '),
+            tx.amount.toFixed(2)
+        ]);
+    });
+    const csv = rows.map(r => r.map(v => '"' + String(v).replace(/"/g,'""') + '"').join(',')).join('\r\n');
+    const blob = new Blob(['\ufeff' + csv], {type: 'text/csv;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'trikles-finanzas-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
 }
 </script>
 </body>
