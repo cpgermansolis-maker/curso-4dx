@@ -1005,6 +1005,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 // =========================================================
 async function openRatingsPanel() {
     const modal = document.getElementById('ratingsModal');
+    modal.style.display = 'flex';
     modal.classList.add('show');
     const summaryGrid = document.getElementById('ratingsSummaryGrid');
     const table = document.getElementById('ratingsTable');
@@ -1064,7 +1065,9 @@ async function openRatingsPanel() {
 }
 
 function closeRatingsPanel() {
-    document.getElementById('ratingsModal').classList.remove('show');
+    const modal = document.getElementById('ratingsModal');
+    modal.style.display = 'none';
+    modal.classList.remove('show');
 }
 
 async function adminToggleRating(ratingId, hide) {
