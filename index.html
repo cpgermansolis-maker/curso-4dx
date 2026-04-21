@@ -10,6 +10,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
 <script src="firebase-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
     :root {
         --blue: #1a237e; --blue-light: #3949ab;
@@ -484,6 +487,419 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .course-card { animation: fadeIn 0.4s ease both; }
 
+    /* ========================================================================
+       EDITORIAL OVERRIDE — TRIKLES 2026
+       Paleta: navy #0a2540 · crema #faf8f3 · dorado #c9a961
+       Tipografía: Playfair Display (display) + Inter (UI)
+       ======================================================================== */
+    :root {
+        --tk-navy: #0a2540;
+        --tk-navy-soft: #12375e;
+        --tk-cream: #faf8f3;
+        --tk-cream-deep: #f2ede0;
+        --tk-gold: #c9a961;
+        --tk-gold-soft: #d9bf83;
+        --tk-ink: #1a1a1a;
+        --tk-ink-soft: #4a4a4a;
+        --tk-hairline: rgba(10,37,64,0.1);
+        --tk-hairline-strong: rgba(10,37,64,0.18);
+    }
+    body {
+        font-family: 'Inter', -apple-system, sans-serif;
+        background: var(--tk-cream);
+        color: var(--tk-ink);
+        -webkit-font-smoothing: antialiased;
+    }
+    /* Eyebrow helper */
+    .tk-eyebrow {
+        font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 2.4px;
+        color: var(--tk-gold);
+    }
+
+    /* TOPBAR — navy sólido, sin gradiente */
+    .topbar {
+        background: var(--tk-navy) !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid rgba(201,169,97,0.25) !important;
+        padding: 16px 32px !important;
+    }
+    .topbar img.logo {
+        background: transparent !important;
+        padding: 0 !important;
+        filter: brightness(0) invert(1);
+        opacity: 0.92;
+    }
+    .greeting { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.88em; letter-spacing: 0.2px; }
+    .greeting strong { color: var(--tk-gold) !important; font-weight: 600; }
+    .btn-login {
+        border: 1px solid rgba(255,255,255,0.3) !important;
+        border-radius: 2px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.5px !important;
+        font-size: 0.82em !important;
+    }
+    .btn-register {
+        background: var(--tk-gold) !important;
+        border-color: var(--tk-gold) !important;
+        color: var(--tk-navy) !important;
+        border-radius: 2px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        font-size: 0.82em !important;
+    }
+    .btn-register:hover { background: var(--tk-gold-soft) !important; }
+    .user-avatar {
+        background: var(--tk-gold) !important;
+        color: var(--tk-navy) !important;
+        border-radius: 50% !important;
+        font-family: 'Playfair Display', serif !important;
+    }
+    .logout-btn { border-radius: 2px !important; font-weight: 500 !important; letter-spacing: 0.4px !important; }
+
+    /* HERO — editorial, sin gradiente */
+    .hero {
+        background: var(--tk-navy) !important;
+        padding: 90px 24px 70px !important;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+    }
+    .hero::before {
+        content: ''; position: absolute; left: 50%; top: 52px;
+        width: 64px; height: 1px; background: var(--tk-gold); transform: translateX(-50%);
+    }
+    .hero h1 {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 400 !important;
+        font-size: clamp(2.2em, 4.2vw, 3.4em) !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.01em;
+        margin: 18px auto 14px !important;
+        max-width: 820px;
+        color: #fff;
+    }
+    .hero h1 em { color: var(--tk-gold); font-style: italic; }
+    .hero p {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 300 !important;
+        font-size: 1.02em !important;
+        line-height: 1.6 !important;
+        color: rgba(232,228,217,0.85) !important;
+        max-width: 620px !important;
+    }
+    .hero-cta-row { margin-top: 32px !important; gap: 14px !important; }
+    .hero-cta-row button {
+        border-radius: 2px !important;
+        padding: 14px 28px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        letter-spacing: 1px !important;
+        text-transform: uppercase !important;
+        font-size: 0.78em !important;
+        box-shadow: none !important;
+        transition: all 0.2s ease !important;
+    }
+    .hero-cta-row button:hover { transform: none !important; }
+    .hero-cta-pricing {
+        background: var(--tk-gold) !important;
+        color: var(--tk-navy) !important;
+        border: 1px solid var(--tk-gold) !important;
+    }
+    .hero-cta-pricing:hover { background: var(--tk-gold-soft) !important; }
+    .hero-cta-scroll {
+        background: transparent !important;
+        color: #fff !important;
+        border: 1px solid rgba(255,255,255,0.4) !important;
+    }
+    .hero-cta-scroll:hover { background: rgba(255,255,255,0.08) !important; }
+
+    /* CONTAINER & SECTIONS */
+    .container { padding: 60px 24px !important; max-width: 1200px !important; }
+    .section { margin-bottom: 80px !important; }
+    .section-title {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 400 !important;
+        font-size: 2em !important;
+        color: var(--tk-navy) !important;
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 6px !important;
+        letter-spacing: -0.01em !important;
+        display: block !important;
+    }
+    .section-subtitle {
+        font-family: 'Inter', sans-serif !important;
+        color: var(--tk-ink-soft) !important;
+        font-size: 0.92em !important;
+        font-weight: 300 !important;
+        margin-bottom: 32px !important;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--tk-hairline);
+    }
+    .catalog-header { align-items: flex-end !important; margin-bottom: 32px !important; border-bottom: 1px solid var(--tk-hairline); padding-bottom: 20px; }
+    .catalog-header .section-title { margin-bottom: 4px !important; }
+    .catalog-header .section-subtitle { margin-bottom: 0 !important; border-bottom: none !important; padding-bottom: 0 !important; }
+    .sort-select {
+        border: 1px solid var(--tk-hairline-strong) !important;
+        border-radius: 2px !important;
+        background: transparent !important;
+        color: var(--tk-navy) !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        font-size: 0.82em !important;
+        padding: 8px 14px !important;
+    }
+
+    /* COURSE CARDS — editorial */
+    .course-grid { gap: 32px !important; }
+    .course-card {
+        background: #fff !important;
+        border: 1px solid var(--tk-hairline) !important;
+        border-radius: 2px !important;
+        box-shadow: none !important;
+        overflow: hidden;
+        transition: border-color 0.3s ease, transform 0.3s ease !important;
+    }
+    .course-card:hover {
+        transform: translateY(-3px) !important;
+        border-color: var(--tk-gold) !important;
+        box-shadow: 0 8px 24px rgba(10,37,64,0.08) !important;
+    }
+    .course-cover-wrap { background: var(--tk-navy) !important; }
+    .course-cover-overlay .course-category {
+        color: var(--tk-gold) !important;
+        font-family: 'Inter', sans-serif !important;
+        letter-spacing: 2px !important;
+        font-weight: 600 !important;
+    }
+    .course-cover-overlay .course-title {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 500 !important;
+        font-size: 1.15em !important;
+    }
+    .course-badge {
+        background: var(--tk-navy) !important;
+        color: #fff !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        font-family: 'Inter', sans-serif !important;
+        letter-spacing: 1.5px !important;
+        font-weight: 600 !important;
+        padding: 5px 10px !important;
+    }
+    .course-badge.done { background: #2d5016 !important; }
+    .course-badge.progress { background: var(--tk-gold) !important; color: var(--tk-navy) !important; }
+    .course-badge.new { background: var(--tk-navy) !important; }
+    .course-info { padding: 20px !important; }
+    .course-author {
+        font-style: normal !important;
+        font-family: 'Inter', sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        font-size: 0.68em !important;
+        font-weight: 600 !important;
+        color: var(--tk-ink-soft) !important;
+    }
+    .course-desc {
+        font-family: 'Inter', sans-serif !important;
+        color: var(--tk-ink-soft) !important;
+        line-height: 1.55 !important;
+    }
+    .course-meta { color: var(--tk-ink-soft) !important; font-size: 0.72em !important; letter-spacing: 0.3px !important; }
+    .course-btn {
+        background: var(--tk-navy) !important;
+        border-radius: 2px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        letter-spacing: 1px !important;
+        text-transform: uppercase !important;
+        font-size: 0.76em !important;
+        padding: 12px !important;
+    }
+    .course-btn:hover { background: var(--tk-navy-soft) !important; filter: none !important; }
+    .course-btn.continue { background: #2d5016 !important; }
+    .course-btn.certified { background: var(--tk-gold) !important; color: var(--tk-navy) !important; }
+    .course-progress { background: var(--tk-cream-deep) !important; height: 2px !important; }
+    .course-progress-fill { background: var(--tk-gold) !important; }
+
+    /* RATINGS — dorado, no naranja */
+    .rating-stars-chars .full { color: var(--tk-gold) !important; }
+    .rating-stars-chars .half { background: linear-gradient(90deg, var(--tk-gold) 50%, #d1d1d1 50%) !important; -webkit-background-clip: text !important; background-clip: text !important; }
+    .rating-avg { color: var(--tk-navy) !important; }
+
+    /* BADGES dinámicos — discretos */
+    .dbadge {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 600 !important;
+        letter-spacing: 1.5px !important;
+        padding: 5px 10px !important;
+    }
+    .dbadge.top-rated { background: var(--tk-gold) !important; color: var(--tk-navy) !important; animation: none !important; }
+    .dbadge.new-badge { background: var(--tk-navy) !important; }
+
+    /* INSTRUCTOR — editorial */
+    .instructor-section {
+        background: #fff !important;
+        border: 1px solid var(--tk-hairline) !important;
+        border-radius: 2px !important;
+        box-shadow: none !important;
+        padding: 40px !important;
+        gap: 32px !important;
+    }
+    .instructor-section img {
+        border: none !important;
+        border-radius: 0 !important;
+        width: 140px !important;
+        height: 180px !important;
+        filter: grayscale(0.15);
+    }
+    .instructor-section .info strong {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 500 !important;
+        color: var(--tk-navy) !important;
+        font-size: 1.4em !important;
+    }
+    .instructor-section .info .title {
+        color: var(--tk-gold) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        font-size: 0.72em !important;
+        font-weight: 600 !important;
+        margin-top: 4px;
+    }
+    .instructor-section .info p { color: var(--tk-ink-soft) !important; line-height: 1.65 !important; margin-top: 12px; }
+
+    /* AUTH CARD */
+    #authScreen { background: rgba(10,37,64,0.92) !important; }
+    .auth-card {
+        border-radius: 2px !important;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+        padding: 36px 34px !important;
+    }
+    .auth-card h2 {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 400 !important;
+        color: var(--tk-navy) !important;
+        font-size: 1.4em !important;
+    }
+    .auth-sub { font-size: 0.82em !important; letter-spacing: 0.2px !important; }
+    .auth-tab { font-size: 0.82em !important; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600 !important; }
+    .auth-tab.active { color: var(--tk-navy) !important; border-bottom-color: var(--tk-gold) !important; }
+    .form-group input {
+        border-radius: 2px !important;
+        border: 1px solid var(--tk-hairline-strong) !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    .form-group input:focus { border-color: var(--tk-navy) !important; }
+    .auth-btn {
+        background: var(--tk-navy) !important;
+        border-radius: 2px !important;
+        font-family: 'Inter', sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        font-size: 0.82em !important;
+        font-weight: 600 !important;
+        padding: 14px !important;
+    }
+    .auth-btn:hover { background: var(--tk-navy-soft) !important; }
+
+    /* COURSE MODAL */
+    .course-modal-body { border-radius: 2px !important; }
+    .course-modal-hero { background-color: var(--tk-navy) !important; height: 240px !important; }
+    .course-modal-hero h2 { font-family: 'Playfair Display', serif !important; font-weight: 500 !important; }
+    .course-modal h3 {
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 500 !important;
+        font-size: 1.25em !important;
+        color: var(--tk-navy) !important;
+        border-bottom: 1px solid var(--tk-hairline) !important;
+        width: 100% !important;
+        display: block !important;
+        padding-bottom: 8px !important;
+    }
+    .temario-list li {
+        background: transparent !important;
+        border-left: none !important;
+        border-bottom: 1px solid var(--tk-hairline) !important;
+        border-radius: 0 !important;
+        padding: 14px 4px !important;
+    }
+    .temario-list li .lesson-num {
+        background: transparent !important;
+        color: var(--tk-gold) !important;
+        font-family: 'Playfair Display', serif !important;
+        font-weight: 500 !important;
+        font-size: 1.05em !important;
+        border-radius: 0 !important;
+        width: 32px !important;
+        border-right: 1px solid var(--tk-hairline) !important;
+        height: 28px !important;
+        padding-right: 10px !important;
+    }
+    .temario-list li.exam-item, .temario-list li.cert-item { background: transparent !important; }
+    .temario-list li.exam-item .lesson-num, .temario-list li.cert-item .lesson-num { color: var(--tk-gold) !important; background: transparent !important; }
+    .incluye-grid { gap: 16px !important; }
+    .incluye-item {
+        background: #fff !important;
+        border: 1px solid var(--tk-hairline) !important;
+        border-radius: 2px !important;
+        text-align: left !important;
+        padding: 18px !important;
+    }
+    .incluye-item .label { font-family: 'Inter', sans-serif !important; color: var(--tk-navy) !important; text-transform: uppercase; letter-spacing: 1px; font-size: 0.78em !important; }
+    .incluye-item .sub { color: var(--tk-ink-soft) !important; }
+
+    .course-modal-cta { background: var(--tk-cream) !important; border-top: 1px solid var(--tk-hairline) !important; }
+    .cta-register {
+        background: var(--tk-navy) !important;
+        border-radius: 2px !important;
+        box-shadow: none !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        font-size: 0.82em !important;
+        font-weight: 600 !important;
+    }
+    .cta-register:hover { background: var(--tk-navy-soft) !important; transform: none !important; box-shadow: none !important; }
+    .cta-login {
+        color: var(--tk-navy) !important;
+        border-color: var(--tk-navy) !important;
+        border-radius: 2px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        font-size: 0.82em !important;
+    }
+
+    /* Pricing overrides (si renderizado) */
+    .price-card {
+        border-radius: 2px !important;
+        border: 1px solid var(--tk-hairline) !important;
+        box-shadow: none !important;
+    }
+    .bundle-banner {
+        border-radius: 2px !important;
+        border: 1px solid var(--tk-gold) !important;
+        background: var(--tk-cream) !important;
+        color: var(--tk-navy) !important;
+    }
+
+    /* Hero demo — menos "SaaS" */
+    .hero-demo-wrapper { margin-top: 36px !important; }
+    .hero-demo { border-radius: 2px !important; border: 1px solid rgba(201,169,97,0.3) !important; }
+
+    /* Mobile tweaks editoriales */
+    @media (max-width: 600px) {
+        .hero { padding: 60px 20px 50px !important; }
+        .hero h1 { font-size: 1.9em !important; }
+        .section-title { font-size: 1.5em !important; }
+        .container { padding: 40px 20px !important; }
+        .section { margin-bottom: 56px !important; }
+        .instructor-section { padding: 24px !important; gap: 20px !important; }
+        .instructor-section img { width: 120px !important; height: 150px !important; }
+    }
+
     /* ===== PRICING SECTION ===== */
     .hero-cta-row {
         display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px;
@@ -910,7 +1326,7 @@
         <form class="auth-form active" id="loginForm" onsubmit="doLogin(event)">
             <div class="form-group"><label>Correo electrónico</label><input type="email" id="loginEmail" required placeholder="tu@empresa.com"></div>
             <div class="form-group"><label>Contraseña</label><input type="password" id="loginPass" required placeholder="Tu contraseña"></div>
-            <button class="auth-btn" type="submit">Entrar al catálogo ➡️</button>
+            <button class="auth-btn" type="submit">Entrar al catálogo</button>
             <div class="auth-error" id="loginError"></div>
         </form>
         <form class="auth-form" id="registerForm" onsubmit="doRegister(event)">
@@ -919,7 +1335,7 @@
             <div class="form-group"><label>Empresa / Organización</label><input type="text" id="regCompany" required placeholder="Nombre de tu empresa"></div>
             <div class="form-group"><label>Cargo</label><input type="text" id="regRole" required placeholder="Ej: Gerente de Administración"></div>
             <div class="form-group"><label>Crea una contraseña</label><input type="password" id="regPass" required minlength="4" placeholder="Mínimo 4 caracteres"></div>
-            <button class="auth-btn" type="submit">Crear cuenta y explorar cursos 🎉</button>
+            <button class="auth-btn" type="submit">Crear cuenta</button>
             <div class="auth-error" id="regError"></div>
             <div class="auth-footer">Al registrarte solo creas tu cuenta. Los bouchers de pago se validan al inscribirte a cada curso.</div>
         </form>
@@ -945,8 +1361,9 @@
     </div>
 
     <div class="hero">
-        <h1>🎓 Catálogo de cursos TRIKLES</h1>
-        <p id="heroSubtitle">Desarrolla habilidades clave de gestión empresarial con los mejores libros adaptados a cursos interactivos. Cada curso incluye lecciones, quizzes, examen final y certificado.</p>
+        <div class="tk-eyebrow">TRIKLES · Educación ejecutiva</div>
+        <h1>Gestión empresarial, <em>en profundidad</em>.</h1>
+        <p id="heroSubtitle">Libros de referencia adaptados a cursos interactivos para gerentes y directivos latinoamericanos. Lecciones, quizzes, examen final y certificado — acceso de por vida.</p>
 
         <!-- Demo interactivo del producto -->
         <div class="hero-demo-wrapper">
@@ -961,23 +1378,25 @@
         </div>
 
         <div class="hero-cta-row" id="heroCtaRow">
-            <button class="hero-cta-pricing" onclick="scrollToPricing()">💰 Ver precios</button>
-            <button class="hero-cta-scroll" onclick="document.getElementById('catalogGrid').scrollIntoView({behavior:'smooth',block:'start'});">📚 Explorar catálogo</button>
+            <button class="hero-cta-scroll" onclick="document.getElementById('catalogGrid').scrollIntoView({behavior:'smooth',block:'start'});">Explorar catálogo</button>
+            <button class="hero-cta-pricing" onclick="scrollToPricing()">Ver precios</button>
         </div>
     </div>
 
     <div class="container">
         <div class="section" id="myCoursesSection" style="display:none;">
-            <div class="section-title">📚 Mis cursos</div>
-            <div class="section-subtitle">Continúa donde te quedaste</div>
+            <div class="tk-eyebrow">01 · Tu biblioteca</div>
+            <div class="section-title">Mis cursos</div>
+            <div class="section-subtitle">Continúa donde te quedaste.</div>
             <div class="course-grid" id="myCoursesGrid"></div>
             <div class="empty-state" id="myCoursesEmpty" style="display:none;">Aún no te has inscrito en ningún curso. Explora el catálogo abajo y elige el primero.</div>
         </div>
         <div class="section">
             <div class="catalog-header">
                 <div>
-                    <div class="section-title">🌟 Catálogo disponible</div>
-                    <div class="section-subtitle">Libros de gestión empresarial convertidos a cursos interactivos</div>
+                    <div class="tk-eyebrow">02 · Catálogo</div>
+                    <div class="section-title">Cursos disponibles</div>
+                    <div class="section-subtitle">Libros de gestión empresarial adaptados a cursos interactivos.</div>
                 </div>
                 <div>
                     <label for="catalogSort" style="font-size:0.82em;color:#666;margin-right:6px;">Ordenar por:</label>
@@ -993,13 +1412,16 @@
             <div class="course-grid" id="catalogGrid"></div>
         </div>
         <div class="section" id="pricingSection">
-            <div class="section-title">💰 Precios de lanzamiento</div>
-            <div class="section-subtitle">Acceso de por vida · Certificado incluido · Transferencia SPEI o depósito bancario</div>
+            <div class="tk-eyebrow">03 · Inversión</div>
+            <div class="section-title">Precios de lanzamiento</div>
+            <div class="section-subtitle">Acceso de por vida · Certificado incluido · Pago con tarjeta, SPEI u OXXO.</div>
             <div class="pricing-grid" id="pricingGrid"></div>
             <div class="bundle-banner" id="bundleBanner"></div>
         </div>
         <div class="section">
-            <div class="section-title">👨‍🏫 Tu instructor</div>
+            <div class="tk-eyebrow">04 · Instructor</div>
+            <div class="section-title">Quién te enseña</div>
+            <div class="section-subtitle">Experiencia directa en transformación organizacional y gerencia administrativa.</div>
             <div class="instructor-section">
                 <img src="assets/instructor-german.jpg" alt="Germán Solís Muñoz" onerror="this.style.display='none';">
                 <div class="info">
@@ -1031,7 +1453,7 @@
             </div>
             <p class="course-modal-desc" id="modalDesc"></p>
 
-            <h3>🎁 ¿Qué incluye este curso?</h3>
+            <h3>Qué incluye</h3>
             <div class="incluye-grid">
                 <div class="incluye-item">
                     <div class="ic">📖</div>
@@ -1055,7 +1477,7 @@
                 </div>
             </div>
 
-            <h3>📋 Temario</h3>
+            <h3>Temario</h3>
             <ul class="temario-list" id="modalTemario">
                 <li style="text-align:center;color:#999;">Cargando temario...</li>
             </ul>
