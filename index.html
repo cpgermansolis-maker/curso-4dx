@@ -626,54 +626,106 @@
     }
     .bundle-btn:hover { transform: translateY(-2px); }
 
-    /* Modal de depósito (reusa .deposit-info pero en overlay) */
+    /* ==========================================================
+       Modal de inscripción (editorial, marino + dorado)
+       ========================================================== */
     .deposit-modal {
-        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+        display: none; position: fixed; inset: 0;
+        background: rgba(10, 37, 64, 0.55);
         z-index: 9999; align-items: center; justify-content: center; padding: 20px;
         animation: fadeIn 0.2s ease;
+        font-family: 'Inter', -apple-system, system-ui, sans-serif;
     }
     .deposit-modal.open { display: flex; }
     .deposit-modal-body {
-        background: white; border-radius: 16px; max-width: 520px; width: 100%;
-        padding: 24px; position: relative; max-height: 90vh; overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+        background: #fff;
+        max-width: 480px; width: 100%;
+        padding: 40px 44px 32px;
+        position: relative; max-height: 90vh; overflow-y: auto;
+        border: 1px solid #e8e3d8;
+        box-shadow: 0 30px 80px rgba(10, 37, 64, 0.3);
+        color: #0a2540;
     }
     .deposit-modal-close {
-        position: absolute; top: 10px; right: 12px; background: #f5f5f5; border: 0;
-        width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1.1em;
+        position: absolute; top: 14px; right: 14px;
+        background: transparent; border: 1px solid #ede8dc;
+        width: 32px; height: 32px; border-radius: 50%;
+        cursor: pointer; font-size: 14px; color: #8a8578;
+        transition: all 0.15s;
     }
-    .deposit-modal-close:hover { background: #e0e0e0; }
-    .deposit-modal-title { color: var(--blue); font-weight: 800; font-size: 1.15em; margin-bottom: 4px; }
-    .deposit-modal-course {
-        background: #fff3e0; color: #e65100; border-radius: 10px; padding: 10px 14px;
-        margin: 10px 0 16px; font-weight: 700; font-size: 0.95em;
-        display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
-    }
-    .deposit-modal-course .amt { font-size: 1.3em; font-weight: 900; }
+    .deposit-modal-close:hover { background: #0a2540; color: #fff; border-color: #0a2540; }
 
-    /* Opción de pago con Stripe */
-    .pay-option-online { margin-bottom: 14px; }
-    .pay-option-label {
-        font-size: 0.78em; color: #2e7d32; font-weight: 800;
-        text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+    .deposit-modal-wordmark {
+        text-align: center; font-size: 11px; letter-spacing: 4px;
+        color: #0a2540; font-weight: 700; margin-bottom: 20px;
+    }
+    .deposit-modal-rule {
+        height: 1px; background: #d9d2c2; margin: 0 auto 24px; width: 48px;
+    }
+    .deposit-modal-title {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 24px; font-weight: 700; line-height: 1.25;
+        color: #0a2540; text-align: center;
+        margin: 0 0 6px; letter-spacing: -0.01em;
+    }
+    .deposit-modal-sub {
+        text-align: center; font-size: 12px;
+        color: #8a8578; letter-spacing: 2px;
+        text-transform: uppercase; font-weight: 600;
+        margin-bottom: 24px;
+    }
+    .deposit-modal-pricebox {
         text-align: center;
+        padding: 24px 16px;
+        border-top: 1px solid #ede8dc;
+        border-bottom: 1px solid #ede8dc;
+        margin-bottom: 24px;
     }
+    .deposit-modal-list-strike {
+        font-size: 13px; color: #8a8578;
+        text-decoration: line-through; margin-bottom: 4px;
+    }
+    .deposit-modal-price {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 40px; font-weight: 700; color: #0a2540; line-height: 1;
+    }
+    .deposit-modal-price .cur {
+        font-size: 14px; font-weight: 500; color: #8a8578;
+        margin-left: 6px; letter-spacing: 1px;
+    }
+    .deposit-modal-save {
+        display: inline-block; margin-top: 12px;
+        font-size: 10px; letter-spacing: 1.5px;
+        color: #8a6d2a; background: #f5efdf;
+        border: 1px solid #e3d5a8;
+        padding: 4px 12px;
+        text-transform: uppercase; font-weight: 700;
+    }
+    .deposit-modal-access {
+        font-size: 11px; color: #8a8578;
+        letter-spacing: 1.5px; text-transform: uppercase;
+        font-weight: 600; margin-top: 10px;
+    }
+
     .stripe-pay-btn {
-        width: 100%; background: linear-gradient(135deg, #635bff, #4a42d4);
-        color: white; border: 0; padding: 14px 20px; border-radius: 10px;
-        font-weight: 800; font-size: 1em; cursor: pointer;
-        box-shadow: 0 4px 14px rgba(99,91,255,0.35);
-        transition: transform 0.15s, box-shadow 0.15s;
+        width: 100%;
+        background: #0a2540; color: #fff;
+        border: 0; padding: 16px;
+        font-family: inherit;
+        font-size: 13px; font-weight: 600;
+        letter-spacing: 2px; text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.2s;
     }
-    .stripe-pay-btn:hover:not(:disabled) {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 18px rgba(99,91,255,0.5);
-    }
-    .stripe-pay-btn:disabled { opacity: 0.6; cursor: wait; }
+    .stripe-pay-btn:hover:not(:disabled) { background: #1a3a5c; }
+    .stripe-pay-btn:disabled { background: #8a8578; cursor: wait; }
     .pay-option-hint {
-        font-size: 0.78em; color: #666; text-align: center;
-        margin-top: 6px; font-style: italic;
+        font-size: 11px; color: #8a8578;
+        text-align: center; margin-top: 12px;
+        letter-spacing: 0.3px;
     }
+    .pay-option-online { margin-bottom: 0; }
+    .pay-option-label { display: none; }
     .stripe-error {
         background: #ffebee; color: #c62828; padding: 10px 12px;
         border-radius: 8px; font-size: 0.88em; margin-top: 8px;
@@ -1018,21 +1070,29 @@
     </div>
 </div>
 
-<!-- MODAL DE DEPÓSITO (desde sección de precios) -->
+<!-- MODAL DE INSCRIPCIÓN (Stripe Checkout) -->
 <div class="deposit-modal" id="depositModal" onclick="if(event.target===this) closeDepositModal()">
     <div class="deposit-modal-body">
         <button class="deposit-modal-close" onclick="closeDepositModal()" aria-label="Cerrar">✕</button>
-        <div class="deposit-modal-title">💳 Inscripción al curso</div>
-        <div class="section-subtitle" style="margin-bottom:10px;">Elige cómo quieres pagar. La tarjeta te inscribe automáticamente en segundos.</div>
-        <div class="deposit-modal-course" id="depositModalCourse"></div>
 
-        <!-- OPCIÓN 1 — Pago online con Stripe (inscripción automática) -->
+        <div class="deposit-modal-wordmark">TRIKLES</div>
+        <div class="deposit-modal-rule"></div>
+
+        <h2 class="deposit-modal-title" id="depositModalCourseTitle">—</h2>
+        <div class="deposit-modal-sub">Inscripción al curso</div>
+
+        <div class="deposit-modal-pricebox">
+            <div class="deposit-modal-list-strike" id="depositModalListPrice" style="display:none;"></div>
+            <div class="deposit-modal-price" id="depositModalPrice">—<span class="cur">MXN</span></div>
+            <div class="deposit-modal-save" id="depositModalSave" style="display:none;"></div>
+            <div class="deposit-modal-access">Acceso de por vida</div>
+        </div>
+
         <div class="pay-option-online">
-            <div class="pay-option-label">⚡ Recomendado — inscripción inmediata</div>
             <button class="stripe-pay-btn" id="stripePayBtn" onclick="payWithStripe()">
-                💳 Pagar con tarjeta / OXXO · <span id="stripeBtnAmount">—</span>
+                Pagar e inscribirme
             </button>
-            <div class="pay-option-hint">Tarjeta de crédito, débito, Apple Pay, Google Pay u OXXO. Serás redirigido a Stripe (seguro).</div>
+            <div class="pay-option-hint">Pago seguro procesado por Stripe · Tarjeta, SPEI u OXXO</div>
             <div class="stripe-error" id="stripeError" style="display:none;"></div>
         </div>
     </div>
@@ -1854,24 +1914,42 @@ let currentCheckoutTarget = null;
 
 function openDepositModal(idOrBundle) {
     const modal = document.getElementById('depositModal');
-    const courseBox = document.getElementById('depositModalCourse');
-    const stripeBtnAmount = document.getElementById('stripeBtnAmount');
+    const titleEl = document.getElementById('depositModalCourseTitle');
+    const priceEl = document.getElementById('depositModalPrice');
+    const listEl = document.getElementById('depositModalListPrice');
+    const saveEl = document.getElementById('depositModalSave');
     const stripeError = document.getElementById('stripeError');
-    let label, amount;
+
+    let title, amount, listPrice;
     if (idOrBundle === '__bundle') {
         const bundleCount = Object.keys(PRICING).length;
-        label = '🎁 Bundle completo — ' + bundleCount + ' cursos';
+        title = 'Bundle completo · ' + bundleCount + ' cursos';
         amount = BUNDLE.price;
+        listPrice = BUNDLE.listPrice;
     } else {
         const c = CATALOG.find(x => x.id === idOrBundle);
         const p = PRICING[idOrBundle];
         if (!c || !p) return;
-        label = (c.icon || '📘') + ' ' + c.title;
+        title = c.title;
         amount = p.price;
+        listPrice = p.listPrice;
     }
+
     currentCheckoutTarget = idOrBundle;
-    courseBox.innerHTML = `<span>${label}</span><span class="amt">${fmtPrice(amount)} MXN</span>`;
-    if (stripeBtnAmount) stripeBtnAmount.textContent = fmtPrice(amount) + ' MXN';
+    titleEl.textContent = title;
+    priceEl.innerHTML = '$' + Number(amount).toLocaleString('es-MX') + '<span class="cur">MXN</span>';
+
+    if (listPrice && listPrice > amount) {
+        listEl.textContent = 'Precio regular $' + Number(listPrice).toLocaleString('es-MX') + ' MXN';
+        listEl.style.display = 'block';
+        const savePct = Math.round((1 - amount / listPrice) * 100);
+        saveEl.textContent = 'Lanzamiento · ahorra ' + savePct + '%';
+        saveEl.style.display = 'inline-block';
+    } else {
+        listEl.style.display = 'none';
+        saveEl.style.display = 'none';
+    }
+
     if (stripeError) { stripeError.style.display = 'none'; stripeError.textContent = ''; }
     modal.classList.add('open');
 }
