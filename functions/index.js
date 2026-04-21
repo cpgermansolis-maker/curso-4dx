@@ -335,14 +335,41 @@ exports.stripeWebhook = onRequest(
             return;
         }
 
-        // Solo nos interesan sesiones completadas
-        if (event.type !== 'checkout.session.completed') {
+        // Eventos relevantes:
+        //   checkout.session.completed          → el cliente terminó el flow. Para tarjeta ya pagó (payment_status=paid);
+        //                                          para OXXO/SPEI solo generó el voucher (payment_status=unpaid) y hay que esperar.
+        //   checkout.session.async_payment_succeeded → el pago asíncrono (OXXO/SPEI) fue confirmado; ahora sí inscribir.
+        //   checkout.session.async_payment_failed    → el voucher expiró sin pagarse; solo log.
+        const VALID_EVENTS = [
+            'checkout.session.completed',
+            'checkout.session.async_payment_succeeded',
+            'checkout.session.async_payment_failed'
+        ];
+        if (!VALID_EVENTS.includes(event.type)) {
             logger.info('Evento ignorado: ' + event.type);
             res.status(200).send('Ignored');
             return;
         }
 
         const session = event.data.object;
+
+        if (event.type === 'checkout.session.async_payment_failed') {
+            logger.warn('Pago asíncrono falló/expiró', {sessionId: session.id, metadata: session.metadata});
+            res.status(200).send('Payment failed logged');
+            return;
+        }
+
+        // Para checkout.session.completed: solo inscribir si el pago ya está confirmado.
+        // OXXO/SPEI devuelven payment_status=unpaid y deben esperar a async_payment_succeeded.
+        if (event.type === 'checkout.session.completed' && session.payment_status !== 'paid') {
+            logger.info('Sesión creada pero pago aún pendiente (OXXO/SPEI)', {
+                sessionId: session.id,
+                payment_status: session.payment_status
+            });
+            res.status(200).send('Awaiting async payment');
+            return;
+        }
+
         const metadata = session.metadata || {};
         const userEmail = (metadata.userEmail || session.customer_email || '').trim().toLowerCase();
         const courseId = metadata.courseId;
