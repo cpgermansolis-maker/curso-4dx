@@ -525,10 +525,10 @@
         padding: 16px 32px !important;
     }
     .topbar img.logo {
-        background: transparent !important;
-        padding: 0 !important;
-        filter: brightness(0) invert(1);
-        opacity: 0.92;
+        background: #fff !important;
+        padding: 6px 12px !important;
+        border-radius: 2px !important;
+        height: 40px !important;
     }
     .greeting { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 0.88em; letter-spacing: 0.2px; }
     .greeting strong { color: var(--tk-gold) !important; font-weight: 600; }
@@ -1619,15 +1619,15 @@ const CATALOG = [
 // PRICING — precios de lanzamiento (MXN)
 // ==========================================================
 const PRICING = {
-    'food-beverage':     { listPrice: 2499, price: 1599, badge: 'Profesional' },
-    'coaching':          { listPrice: 1499, price:  799, badge: 'Premium' },
-    'gerencia-efectiva': { listPrice: 1499, price:  799, badge: 'Premium' },
-    'feum-inventarios':  { listPrice: 1999, price: 1299, badge: 'Técnico' },
-    'la-paradoja':       { listPrice: 1199, price:  599, badge: null },
-    'habitos':           { listPrice:  999, price:  499, badge: null },
-    '4dx':               { listPrice:  999, price:  499, badge: null }
+    'food-beverage':     { listPrice: 2499, price:  799, badge: 'Profesional' },
+    'coaching':          { listPrice: 1499, price:  399, badge: 'Premium' },
+    'gerencia-efectiva': { listPrice: 1499, price:  399, badge: 'Premium' },
+    'feum-inventarios':  { listPrice: 1999, price:  649, badge: 'Técnico' },
+    'la-paradoja':       { listPrice: 1199, price:  299, badge: null },
+    'habitos':           { listPrice:  999, price:  249, badge: null },
+    '4dx':               { listPrice:  999, price:  249, badge: null }
 };
-const BUNDLE = { listPrice: 6093, price: 3999 }; // 7 cursos total individual vs bundle
+const BUNDLE = { listPrice: 6093, price: 1999 };
 
 // Fechas de lanzamiento (para badge "NUEVO" — últimos 45 días)
 const LAUNCH_DATES = {

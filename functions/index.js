@@ -51,15 +51,15 @@ const COURSE_TITLES = {
 // Precios en centavos MXN (Stripe trabaja en la unidad más pequeña)
 // Mantener en sync con el objeto PRICING de index.html
 const COURSE_PRICES_CENTS = {
-    '4dx':               49900,   // $499.00
-    'habitos':           49900,   // $499.00
-    'feum-inventarios':  129900,  // $1,299.00
-    'gerencia-efectiva': 79900,   // $799.00
-    'la-paradoja':       59900,   // $599.00
-    'coaching':          79900,   // $799.00
-    'food-beverage':     159900   // $1,599.00
+    '4dx':               24900,   // $249.00
+    'habitos':           24900,   // $249.00
+    'feum-inventarios':  64900,   // $649.00
+    'gerencia-efectiva': 39900,   // $399.00
+    'la-paradoja':       29900,   // $299.00
+    'coaching':          39900,   // $399.00
+    'food-beverage':     79900    // $799.00
 };
-const BUNDLE_PRICE_CENTS = 399900;  // $3,999.00
+const BUNDLE_PRICE_CENTS = 199900;  // $1,999.00
 const BUNDLE_TITLE = 'Bundle completo TRIKLES — 7 cursos';
 
 // Dominio base para success_url / cancel_url (Firebase Hosting)
