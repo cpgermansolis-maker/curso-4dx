@@ -313,7 +313,8 @@ exports.stripeWebhook = onRequest(
     {
         secrets: [STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET],
         cors: false,
-        timeoutSeconds: 30
+        timeoutSeconds: 30,
+        invoker: 'public'
     },
     async (req, res) => {
         if (req.method !== 'POST') {
