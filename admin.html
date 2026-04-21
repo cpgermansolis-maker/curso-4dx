@@ -118,6 +118,12 @@
         font-size: 1em; transition: all .15s;
     }
     .row-del-btn:hover { background: #c62828; color: #fff; border-color: #c62828; transform: scale(1.1); }
+    .row-revoke-btn {
+        background: #fff; border: 1px solid #e0e0e0; color: #c62828;
+        padding: 2px 7px; border-radius: 6px; cursor: pointer; font-size: 0.75em;
+        font-weight: 700; margin-left: 4px; transition: all 0.15s;
+    }
+    .row-revoke-btn:hover { background: #c62828; color: #fff; border-color: #c62828; }
 
     /* Tabs per course */
     .course-tabs {
@@ -596,6 +602,22 @@ async function grantScholarship() {
     await init();
 }
 
+async function revokeScholarship(email, courseId) {
+    const u = getUsers()[email];
+    if (!u) return;
+    const courseTitle = getCatalog().find(c => c.id === courseId)?.title || courseId;
+    const studentName = u.name || email;
+    if (!confirm('¿Quitar la beca a "' + studentName + '" del curso "' + courseTitle + '"?\n\nPerderá el acceso al curso y su progreso. Esta acción no se puede deshacer.')) return;
+    try {
+        await TK.revokeEnrollment(email, courseId);
+    } catch (e) {
+        alert('Error al quitar la beca: ' + e.message);
+        return;
+    }
+    alert('✅ Beca revocada\n\n' + studentName + ' ya no tiene acceso al curso "' + courseTitle + '".');
+    await init();
+}
+
 async function init() {
     await refreshUsers();
     const users = Object.values(getUsers());
@@ -708,8 +730,12 @@ function renderTable() {
             else if (e && (p.completed?.length || 0) > 0) { badge = 'EN CURSO'; badgeClass = 'progress'; }
             else if (e) { badge = 'INSCRITO'; badgeClass = 'new'; }
 
-            // Si es beca, añadir segundo pill
-            const scholarshipPill = e && e.scholarship ? '<br><span class="pill scholarship" title="' + (e.scholarshipNote || '').replace(/"/g, '&quot;') + '">🎓 BECA</span>' : '';
+            // Si es beca, añadir segundo pill + botón para quitarla
+            const courseIdEsc = (r.courseId || '').replace(/'/g, "\\'");
+            const scholarshipPill = e && e.scholarship
+                ? '<br><span class="pill scholarship" title="' + (e.scholarshipNote || '').replace(/"/g, '&quot;') + '">🎓 BECA</span>'
+                  + ' <button class="row-revoke-btn" title="Quitar beca" onclick="revokeScholarship(\'' + u.email.replace(/'/g, "\\'") + '\',\'' + courseIdEsc + '\')">✕</button>'
+                : '';
 
             const voucherImg = e && e.voucher ?
                 '<img src="'+e.voucher+'" class="voucher-thumb" onclick="viewVoucher(\''+u.email+'\',\''+r.courseId+'\')">' :

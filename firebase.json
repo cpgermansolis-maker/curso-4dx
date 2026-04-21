@@ -12,5 +12,18 @@
       ],
       "predeploy": []
     }
-  ]
+  ],
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**",
+      "memory/**",
+      "*.md"
+    ],
+    "cleanUrls": true
+  }
 }

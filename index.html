@@ -1017,32 +1017,6 @@
         <div class="course-modal-cta">
             <button class="cta-register" onclick="closeCourseModal(); openAuth('register');">🎉 Registrarme para inscribirme</button>
             <button class="cta-login" onclick="closeCourseModal(); openAuth('login');">Ya tengo cuenta</button>
-            <button type="button" class="cta-deposit-toggle" onclick="toggleDepositInfo(this)">
-                <span>💳</span> ¿Cómo hago el depósito?
-            </button>
-            <div class="deposit-info" id="depositInfo" style="display:none;">
-                <div class="deposit-title">Datos para tu depósito</div>
-                <div class="deposit-row">
-                    <div class="deposit-label">Tarjeta (SPEI desde otro banco)</div>
-                    <div class="deposit-value">
-                        <span id="depositCard">4027 6600 3894 9030</span>
-                        <button type="button" class="deposit-copy" onclick="copyDeposit('4027660038949030', this)">Copiar</button>
-                    </div>
-                </div>
-                <div class="deposit-row">
-                    <div class="deposit-label">Banco</div>
-                    <div class="deposit-value">Banco Azteca</div>
-                </div>
-                <div class="deposit-row">
-                    <div class="deposit-label">A nombre de</div>
-                    <div class="deposit-value">Germán Solís Muñoz</div>
-                </div>
-                <div class="deposit-whats">
-                    📱 <strong>Notifica tu depósito por WhatsApp:</strong>
-                    <a href="https://wa.me/522464115513?text=Hola,%20acabo%20de%20realizar%20mi%20dep%C3%B3sito%20para%20el%20curso." target="_blank" rel="noopener">246 411 5513</a>
-                    <div class="deposit-hint">También úsalo si tienes algún inconveniente con tu acceso.</div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -1063,33 +1037,6 @@
             </button>
             <div class="pay-option-hint">Tarjeta de crédito, débito, Apple Pay, Google Pay u OXXO. Serás redirigido a Stripe (seguro).</div>
             <div class="stripe-error" id="stripeError" style="display:none;"></div>
-        </div>
-
-        <div class="pay-separator"><span>o también puedes</span></div>
-
-        <!-- OPCIÓN 2 — Depósito SPEI + WhatsApp (manual) -->
-        <div class="deposit-info" style="display:block; margin-top:0;">
-            <div class="deposit-title">📥 Hacer depósito SPEI o bancario</div>
-            <div class="deposit-row">
-                <div class="deposit-label">Tarjeta (SPEI desde otro banco)</div>
-                <div class="deposit-value">
-                    <span>4027 6600 3894 9030</span>
-                    <button type="button" class="deposit-copy" onclick="copyDeposit('4027660038949030', this)">Copiar</button>
-                </div>
-            </div>
-            <div class="deposit-row">
-                <div class="deposit-label">Banco</div>
-                <div class="deposit-value">Banco Azteca</div>
-            </div>
-            <div class="deposit-row">
-                <div class="deposit-label">A nombre de</div>
-                <div class="deposit-value">Germán Solís Muñoz</div>
-            </div>
-            <div class="deposit-whats">
-                📱 <strong>Notifica tu depósito por WhatsApp:</strong>
-                <a id="depositModalWa" href="https://wa.me/522464115513" target="_blank" rel="noopener">246 411 5513</a>
-                <div class="deposit-hint">Envíanos el comprobante. Te inscribimos manualmente en menos de 24 horas.</div>
-            </div>
         </div>
     </div>
 </div>
@@ -1884,26 +1831,22 @@ let currentCheckoutTarget = null;
 function openDepositModal(idOrBundle) {
     const modal = document.getElementById('depositModal');
     const courseBox = document.getElementById('depositModalCourse');
-    const waLink = document.getElementById('depositModalWa');
     const stripeBtnAmount = document.getElementById('stripeBtnAmount');
     const stripeError = document.getElementById('stripeError');
-    let label, amount, waText;
+    let label, amount;
     if (idOrBundle === '__bundle') {
-        const bundleCount = Object.keys(PRICING).length;  // dinámico: se adapta al agregar cursos
+        const bundleCount = Object.keys(PRICING).length;
         label = '🎁 Bundle completo — ' + bundleCount + ' cursos';
         amount = BUNDLE.price;
-        waText = 'Hola, quiero inscribirme al BUNDLE completo de TRIKLES (' + bundleCount + ' cursos) por $' + BUNDLE.price + ' MXN.';
     } else {
         const c = CATALOG.find(x => x.id === idOrBundle);
         const p = PRICING[idOrBundle];
         if (!c || !p) return;
         label = (c.icon || '📘') + ' ' + c.title;
         amount = p.price;
-        waText = 'Hola, quiero inscribirme al curso "' + c.title + '" por $' + p.price + ' MXN.';
     }
     currentCheckoutTarget = idOrBundle;
     courseBox.innerHTML = `<span>${label}</span><span class="amt">${fmtPrice(amount)} MXN</span>`;
-    waLink.href = 'https://wa.me/522464115513?text=' + encodeURIComponent(waText);
     if (stripeBtnAmount) stripeBtnAmount.textContent = fmtPrice(amount) + ' MXN';
     if (stripeError) { stripeError.style.display = 'none'; stripeError.textContent = ''; }
     modal.classList.add('open');

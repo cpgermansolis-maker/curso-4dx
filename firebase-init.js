@@ -203,6 +203,18 @@
             }
         },
 
+        // Elimina una inscripción (enrollment) de un alumno para un curso dado.
+        // Se usa para revocar becas o deshacer inscripciones manuales.
+        async revokeEnrollment(email, courseId) {
+            const id = emailToId(email);
+            const patch = {};
+            patch['enrollments.' + courseId] = firebase.firestore.FieldValue.delete();
+            await db.collection('users').doc(id).update(patch);
+            if (allUsersCache[id] && allUsersCache[id].enrollments) {
+                delete allUsersCache[id].enrollments[courseId];
+            }
+        },
+
         /* ===== Calificaciones de cursos (ratings) ===== */
 
         // ID compuesto que garantiza una calificación por alumno-curso
