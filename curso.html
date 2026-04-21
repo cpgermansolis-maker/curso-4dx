@@ -7,7 +7,7 @@
     <!-- Fuentes elegantes para el certificado -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <!-- Firebase SDK (compat) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -1126,6 +1126,272 @@
             .resume-toast-icon { font-size: 1.3em; }
             .resume-toast-title { font-size: 0.85em; }
             .resume-toast-sub { font-size: 0.78em; }
+        }
+
+        /* ============================================================
+           EDITORIAL OVERRIDE — TRIKLES 2026 · curso.html
+           navy #0a2540 · crema #faf8f3 · dorado #c9a961
+           Playfair Display + Inter
+           ============================================================ */
+        :root {
+            --tk-navy: #0a2540;
+            --tk-navy-soft: #12375e;
+            --tk-cream: #faf8f3;
+            --tk-cream-deep: #f2ede0;
+            --tk-gold: #c9a961;
+            --tk-gold-soft: #d9bf83;
+            --tk-ink: #1a1a1a;
+            --tk-ink-soft: #4a4a4a;
+            --tk-hairline: rgba(10,37,64,0.1);
+            --tk-hairline-strong: rgba(10,37,64,0.18);
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif !important;
+            background: var(--tk-cream) !important;
+            color: var(--tk-ink) !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* SPLASH — editorial */
+        #splash {
+            background: var(--tk-navy) !important;
+        }
+        #splash::before {
+            content: ''; position: absolute; left: 50%; top: 18%;
+            width: 64px; height: 1px; background: var(--tk-gold); transform: translateX(-50%);
+        }
+        #splash h1 {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 400 !important;
+            font-size: 2.6em !important;
+            letter-spacing: -0.01em;
+        }
+        #splash h1 em { color: var(--tk-gold); font-style: italic; }
+        #splash p {
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 300 !important;
+            opacity: 0.85 !important;
+        }
+        #splash .start-btn {
+            background: var(--tk-gold) !important;
+            color: var(--tk-navy) !important;
+            border-radius: 2px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 600 !important;
+            font-size: 0.82em !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            padding: 16px 36px !important;
+            animation: none !important;
+            box-shadow: none !important;
+        }
+        #splash .start-btn:hover { background: var(--tk-gold-soft) !important; transform: none !important; }
+        #splash .book-ref {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.78em !important;
+            letter-spacing: 0.3px;
+            max-width: 520px;
+        }
+
+        /* Instructor card en splash */
+        .instructor-card {
+            background: transparent !important;
+            backdrop-filter: none !important;
+            border: 1px solid rgba(201,169,97,0.3) !important;
+            border-radius: 2px !important;
+            padding: 20px 24px !important;
+        }
+        .instructor-label {
+            font-family: 'Inter', sans-serif !important;
+            letter-spacing: 2px !important;
+            font-weight: 600 !important;
+            color: var(--tk-gold) !important;
+            opacity: 1 !important;
+        }
+        .instructor-name {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 500 !important;
+            color: #fff !important;
+        }
+        .instructor-title { font-family: 'Inter', sans-serif !important; font-weight: 300 !important; }
+
+        /* TOPBAR en curso */
+        .topbar {
+            background: var(--tk-navy) !important;
+            box-shadow: none !important;
+            border-bottom: 1px solid rgba(201,169,97,0.25) !important;
+            padding: 14px 28px !important;
+        }
+        .topbar img.logo, .topbar .logo {
+            background: #fff !important;
+            padding: 6px 12px !important;
+            border-radius: 2px !important;
+        }
+
+        /* SIDEBAR — editorial */
+        .sidebar {
+            background: #fff !important;
+            border-right: 1px solid var(--tk-hairline) !important;
+            box-shadow: none !important;
+        }
+        .sidebar h2, .sidebar h3 {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 500 !important;
+            color: var(--tk-navy) !important;
+        }
+        .sidebar .lesson-item, .sidebar-item, .sidebar li {
+            font-family: 'Inter', sans-serif !important;
+            border-radius: 0 !important;
+        }
+        .sidebar .active, .sidebar .lesson-item.active, .sidebar-item.active {
+            background: var(--tk-cream-deep) !important;
+            border-left: 3px solid var(--tk-gold) !important;
+            color: var(--tk-navy) !important;
+        }
+
+        /* MAIN content — tipografía editorial */
+        .main, #mainContent {
+            background: var(--tk-cream) !important;
+        }
+        .lesson h1, .lesson-title, .lesson-header h1 {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 500 !important;
+            color: var(--tk-navy) !important;
+            letter-spacing: -0.01em !important;
+        }
+        .lesson h2, .lesson h3 {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 500 !important;
+            color: var(--tk-navy) !important;
+        }
+        .lesson p, .lesson li {
+            font-family: 'Inter', sans-serif !important;
+            color: var(--tk-ink) !important;
+            line-height: 1.7 !important;
+        }
+        .lesson-hero { border-radius: 2px !important; box-shadow: none !important; border: 1px solid var(--tk-hairline); }
+        .inline-img { border-radius: 2px !important; box-shadow: none !important; border: 1px solid var(--tk-hairline); }
+
+        /* Instructor note / callouts */
+        .instructor-note, .callout, .info-box, .tip-box {
+            border-radius: 2px !important;
+            border-left: 3px solid var(--tk-gold) !important;
+        }
+
+        /* BOTONES de lección */
+        .lesson-nav button, .btn-next, .btn-prev, .nav-btn,
+        .quiz-submit, .quiz-next, .start-exam, .continue-btn {
+            border-radius: 2px !important;
+            font-family: 'Inter', sans-serif !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.2px !important;
+            font-size: 0.78em !important;
+            font-weight: 600 !important;
+            box-shadow: none !important;
+            background: var(--tk-navy) !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 12px 24px !important;
+        }
+        .lesson-nav button:hover, .btn-next:hover, .btn-prev:hover, .nav-btn:hover {
+            background: var(--tk-navy-soft) !important;
+            transform: none !important;
+        }
+
+        /* Quiz */
+        .quiz-option, .quiz-question {
+            border-radius: 2px !important;
+            border: 1px solid var(--tk-hairline-strong) !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+        .quiz-option:hover { border-color: var(--tk-gold) !important; background: var(--tk-cream) !important; }
+        .quiz-option.correct { border-color: #2d5016 !important; background: #f0f5ea !important; }
+        .quiz-option.incorrect { border-color: #8b2e2e !important; background: #fbeeee !important; }
+
+        /* ENROLL CARD — refinar lo que ya existía */
+        .enroll-card {
+            background: #fff !important;
+            border: 1px solid var(--tk-hairline) !important;
+            border-radius: 2px !important;
+            box-shadow: 0 8px 32px rgba(10,37,64,0.06) !important;
+        }
+        .enroll-wordmark {
+            font-family: 'Inter', sans-serif !important;
+            letter-spacing: 6px !important;
+            font-weight: 600 !important;
+            color: var(--tk-navy) !important;
+        }
+        .enroll-rule, .enroll-rule-full { background: var(--tk-gold) !important; }
+        .enroll-title {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 500 !important;
+            color: var(--tk-navy) !important;
+        }
+        .enroll-subtitle, .enroll-author { color: var(--tk-ink-soft) !important; }
+        .enroll-meta-label {
+            font-family: 'Inter', sans-serif !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            font-size: 0.68em !important;
+            color: var(--tk-gold) !important;
+            font-weight: 600 !important;
+        }
+        .enroll-meta-value {
+            font-family: 'Playfair Display', serif !important;
+            color: var(--tk-navy) !important;
+            font-weight: 500 !important;
+        }
+        .enroll-price-label { color: var(--tk-ink-soft) !important; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.72em !important; }
+        .enroll-price {
+            font-family: 'Playfair Display', serif !important;
+            color: var(--tk-navy) !important;
+        }
+        .enroll-price-list { color: var(--tk-ink-soft) !important; text-decoration: line-through; }
+        .enroll-price-save {
+            background: var(--tk-gold) !important;
+            color: var(--tk-navy) !important;
+            font-weight: 600 !important;
+            letter-spacing: 1px !important;
+            border-radius: 0 !important;
+        }
+        .enroll-cta {
+            background: var(--tk-navy) !important;
+            color: #fff !important;
+            border-radius: 2px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            font-weight: 600 !important;
+            font-size: 0.82em !important;
+            padding: 16px !important;
+            box-shadow: none !important;
+        }
+        .enroll-cta:hover { background: var(--tk-navy-soft) !important; transform: none !important; }
+        .enroll-secure { color: var(--tk-ink-soft) !important; font-size: 0.78em !important; }
+
+        /* Resume toast */
+        .resume-toast {
+            background: var(--tk-navy) !important;
+            border-radius: 2px !important;
+            border: 1px solid var(--tk-gold) !important;
+        }
+
+        /* AUTH card (si aparece en curso.html) */
+        .auth-card {
+            border-radius: 2px !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+        }
+        .auth-card h2, .auth-card h1 {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 400 !important;
+            color: var(--tk-navy) !important;
+        }
+        .auth-btn {
+            background: var(--tk-navy) !important;
+            border-radius: 2px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            font-size: 0.82em !important;
+            font-weight: 600 !important;
         }
     </style>
 </head>
