@@ -1014,10 +1014,7 @@
                 <div id="modalReviewsList"></div>
             </div>
         </div>
-        <div class="course-modal-cta">
-            <button class="cta-register" onclick="closeCourseModal(); openAuth('register');">🎉 Registrarme para inscribirme</button>
-            <button class="cta-login" onclick="closeCourseModal(); openAuth('login');">Ya tengo cuenta</button>
-        </div>
+        <div class="course-modal-cta" id="courseModalCta"></div>
     </div>
 </div>
 
@@ -1425,6 +1422,11 @@ function goToCourse(id) {
         openCourseModal(id);
         return;
     }
+    const enrollments = currentUser.enrollments || {};
+    if (!enrollments[id]) {
+        openCourseModal(id);
+        return;
+    }
     window.location.href = 'curso.html?id=' + id;
 }
 
@@ -1449,9 +1451,31 @@ function openCourseModal(id) {
         hero.style.backgroundImage = 'linear-gradient(135deg,#1a237e,#3949ab)';
     }
     document.getElementById('modalTemario').innerHTML = '<li style="text-align:center;color:#999;">Cargando temario...</li>';
+    renderCourseModalCta(id);
     document.getElementById('courseModal').classList.add('show');
     loadTemario(id);
     loadReviewsForModal(id);
+}
+
+function renderCourseModalCta(id) {
+    const ctaEl = document.getElementById('courseModalCta');
+    if (!ctaEl) return;
+    if (!currentUser) {
+        ctaEl.innerHTML =
+            '<button class="cta-register" onclick="closeCourseModal(); openAuth(\'register\');">🎉 Registrarme para inscribirme</button>' +
+            '<button class="cta-login" onclick="closeCourseModal(); openAuth(\'login\');">Ya tengo cuenta</button>';
+        return;
+    }
+    const enrolled = currentUser.enrollments && currentUser.enrollments[id];
+    if (enrolled) {
+        ctaEl.innerHTML =
+            '<button class="cta-register" onclick="closeCourseModal(); window.location.href=\'curso.html?id=' + id + '\';">Entrar al curso</button>';
+        return;
+    }
+    const p = PRICING[id];
+    const priceLabel = p ? (' · $' + p.price.toLocaleString('es-MX') + ' MXN') : '';
+    ctaEl.innerHTML =
+        '<button class="cta-register" onclick="closeCourseModal(); openDepositModal(\'' + id + '\');">Inscribirme' + priceLabel + '</button>';
 }
 
 async function loadReviewsForModal(courseId) {
