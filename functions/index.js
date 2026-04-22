@@ -57,10 +57,11 @@ const COURSE_PRICES_CENTS = {
     'gerencia-efectiva': 39900,   // $399.00
     'la-paradoja':       29900,   // $299.00
     'coaching':          39900,   // $399.00
+    'codigo-honor':      44900,   // $449.00
     'food-beverage':     79900    // $799.00
 };
-const BUNDLE_PRICE_CENTS = 199900;  // $1,999.00
-const BUNDLE_TITLE = 'Bundle completo TRIKLES — 7 cursos';
+const BUNDLE_PRICE_CENTS = 229900;  // $2,299.00
+const BUNDLE_TITLE = 'Bundle completo TRIKLES — 8 cursos';
 
 // Dominio base para success_url / cancel_url (Firebase Hosting)
 const APP_BASE_URL = 'https://trikles-cursos.web.app';
@@ -74,11 +75,12 @@ const COURSE_LESSON_COUNTS = {
     'gerencia-efectiva': 22,
     'la-paradoja':       18,
     'coaching':          23,
+    'codigo-honor':      22,
     'food-beverage':     30
 };
 const COURSE_PASS_SCORES = {
     '4dx': 7, 'habitos': 7, 'feum-inventarios': 7, 'gerencia-efectiva': 7,
-    'la-paradoja': 7, 'coaching': 7, 'food-beverage': 12
+    'la-paradoja': 7, 'coaching': 7, 'codigo-honor': 11, 'food-beverage': 12
 };
 
 // Umbrales de recordatorio (en días)
