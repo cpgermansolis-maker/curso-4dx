@@ -156,7 +156,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_intro">
             <div class="quiz-label">Mini quiz de introducción</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿cuál es la diferencia real entre el equipo que ganó la Copa América de velero 1983 y el que perdió?</p></div>
             <div class="quiz-options">
@@ -165,6 +165,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_intro', this, true)">Uno era un "equipo de campeones" (estrellas individuales); el otro era un "equipo de campeonato" (con Código)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_intro', this, false)">El equipo ganador tenía el capitán con más experiencia</div>
             </div>
+            <div class="quiz-feedback" id="quiz_intro_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -245,7 +246,7 @@ const COURSE_CODIGO_HONOR = {
             <p>El equipo no se define por su propósito declarado, ni por su misión, ni por sus KPIs. Se define por las reglas invisibles que rigen su conducta cotidiana.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l1a">
             <div class="quiz-label">Quiz 1A</div>
             <div class="quiz-question"><p>Según la frase de Blair Singer, ¿qué define realmente a un equipo?</p></div>
             <div class="quiz-options">
@@ -254,6 +255,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1a', this, true)">Las reglas que realmente cumple cuando nadie está mirando</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1a', this, false)">El talento individual de sus jugadores estrella</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l1a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -282,7 +284,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Si marcas 3 o más, tu equipo necesita el Código explícito URGENTEMENTE. Sigue al siguiente módulo.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l1b">
             <div class="quiz-label">Quiz 1B</div>
             <div class="quiz-question"><p>¿Cuál de estas NO es una razón por la que el Código funciona según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -291,6 +293,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1b', this, false)">Blinda al equipo bajo presión</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1b', this, true)">Garantiza mayores utilidades en el primer trimestre</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l1b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -367,7 +370,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Observa: son reglas de conducta, no de resultados. Los resultados son consecuencia.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l2a">
             <div class="quiz-label">Quiz 2A</div>
             <div class="quiz-question"><p>¿Cuál es la regla central del Código de los Navy SEALs?</p></div>
             <div class="quiz-options">
@@ -376,6 +379,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2a', this, false)">Terminar la misión antes que nada</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2a', this, false)">Ganar a cualquier precio</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l2a_fb"></div>
         </div>
 
         <div class="content-card story">
@@ -399,7 +403,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l2b">
             <div class="quiz-label">Quiz 2B</div>
             <div class="quiz-question"><p>¿Cuál es el patrón común en los Códigos de los equipos ganadores (SEALs, All Blacks, Australianos 83, softbol mexicano)?</p></div>
             <div class="quiz-options">
@@ -408,6 +412,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2b', this, true)">Reglas concretas, pocas, escritas, reforzadas con ritual y con consecuencias reales</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2b', this, false)">Reglas impuestas por el líder sin participación del equipo</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l2b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -480,7 +485,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Pregúntate honestamente cómo responde hoy tu equipo en cada uno. Vas a tener tu diagnóstico real.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l3a">
             <div class="quiz-label">Quiz 3A</div>
             <div class="quiz-question"><p>¿Por qué los equipos pierden coherencia bajo presión, según la neurociencia que cita Blair Singer?</p></div>
             <div class="quiz-options">
@@ -489,6 +494,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3a', this, false)">Porque la presión les hace ser más racionales</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3a', this, false)">Porque los valores abstractos los sostienen</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l3a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -516,7 +522,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Si tienes menos de 4 SI claros, el Código no está haciendo su trabajo bajo presión. El resto del curso es para ti.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l3b">
             <div class="quiz-label">Quiz 3B</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿cuál es la función más importante del Código cuando el líder no está presente?</p></div>
             <div class="quiz-options">
@@ -525,6 +531,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3b', this, true)">Hacer el trabajo del líder — orientar la conducta del equipo sin supervisión directa</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3b', this, false)">Aumentar la carga de trabajo para compensar</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l3b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -606,7 +613,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Agrega a todos los que apliquen. El Código de Honor va a aplicar a las 3 capas, con distintas reglas específicas por capa si hace falta.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l4a">
             <div class="quiz-label">Quiz 4A</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿a quiénes debe incluir el Código de Honor?</p></div>
             <div class="quiz-options">
@@ -615,6 +622,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4a', this, true)">A todos los que afectan directamente tus resultados mensuales (nómina, proveedores, asesores, pareja influyente)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4a', this, false)">Sólo al dueño del negocio</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l4a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -629,7 +637,7 @@ const COURSE_CODIGO_HONOR = {
             <p>La decisión más difícil del líder es con los <strong>grupo B</strong>: el vendedor estrella que maltrata a administración, el chef brillante que grita al equipo, el gerente productivo que humilla al equipo operativo. Blair Singer es categórico: <em>"Conservar a un B es declararle a todo el equipo que el talento compra permiso para violar el Código. Es la muerte del Código"</em>.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l4b">
             <div class="quiz-label">Quiz 4B</div>
             <div class="quiz-question"><p>¿Cuál es la categoría más peligrosa de miembros de equipo según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -638,6 +646,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4b', this, false)">Los A- — alineados sin resultados todavía</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4b', this, false)">Los A+ — alineados y performantes</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l4b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -736,7 +745,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Si hay menos de 3 SI en cualquier puesto, ese puesto es una bomba de tiempo. Blair Singer recomienda no intentar construir Código hasta que los 8 puestos tengan persona responsable identificada.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l5a">
             <div class="quiz-label">Quiz 5A</div>
             <div class="quiz-question"><p>¿Cuáles son los 3 lados exteriores del Triángulo B-I de Kiyosaki?</p></div>
             <div class="quiz-options">
@@ -745,6 +754,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5a', this, false)">Ventas, Marketing, Operaciones</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5a', this, false)">Capital, Talento, Mercado</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l5a_fb"></div>
         </div>
 
         <div class="content-card tip">
@@ -759,7 +769,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Negocios construidos al revés son los que colapsan cuando algo falla: no tienen columna vertebral.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l5b">
             <div class="quiz-label">Quiz 5B</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿en qué orden se debe construir el Triángulo B-I?</p></div>
             <div class="quiz-options">
@@ -768,6 +778,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5b', this, false)">Simultáneamente en todos los niveles</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5b', this, false)">Empezando por el cash flow y terminando en la misión</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l5b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -875,7 +886,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Resultado esperado: entre 20 y 45 ideas, agrupadas en 8-15 temas.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l6a">
             <div class="quiz-label">Quiz 6A</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿cuál es el error más costoso al crear un Código de Honor?</p></div>
             <div class="quiz-options">
@@ -884,6 +895,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">Usar ejemplos de equipos deportivos</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">Hacer la sesión en menos de 2 horas</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l6a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -910,7 +922,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Esta pregunta saca las "reglas ocultas" más dolorosas y valiosas. Frecuentemente son reglas que atacan la toxicidad del propio líder. Por eso <strong>debes estar dispuesto a escucharlas y aceptarlas públicamente</strong>.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l6b">
             <div class="quiz-label">Quiz 6B</div>
             <div class="quiz-question"><p>¿Cuál es el rango ideal de reglas que debe tener un Código de Honor según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -919,6 +931,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, false)">Entre 20 y 30 reglas</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, false)">Entre 50 y 100 reglas</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l6b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1025,7 +1038,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Es preferible que la firma sea en papel físico, aunque también lo escaneen y guarden digitalmente. El acto físico de firmar tiene un peso psicológico que una firma electrónica no genera.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l7a">
             <div class="quiz-label">Quiz 7A</div>
             <div class="quiz-question"><p>¿Cuál es la forma correcta de redactar una regla del Código?</p></div>
             <div class="quiz-options">
@@ -1034,6 +1047,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, true)">Verbos + conducta observable + contexto (ej. "Saludamos al cliente mirando a los ojos en menos de 10 segundos")</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, false)">Redactarlas en segunda persona ("Tú debes...")</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l7a_fb"></div>
         </div>
 
         <div class="content-card story">
@@ -1055,7 +1069,7 @@ const COURSE_CODIGO_HONOR = {
             </div></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l7b">
             <div class="quiz-label">Quiz 7B</div>
             <div class="quiz-question"><p>¿Cuál de estos elementos NO es parte del paso 5 (ritualización)?</p></div>
             <div class="quiz-options">
@@ -1064,6 +1078,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, false)">Definir el ritual de la campana</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, true)">Registrar el Código en el notario para darle validez legal</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l7b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1151,7 +1166,7 @@ const COURSE_CODIGO_HONOR = {
             <p>¿Qué notas? Son conductas específicas, medibles, observables. Puede evaluarse cada semana si las está cumpliendo.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l8a">
             <div class="quiz-label">Quiz 8A</div>
             <div class="quiz-question"><p>¿Por qué Blair Singer insiste en que el Código personal viene ANTES que el del equipo?</p></div>
             <div class="quiz-options">
@@ -1160,6 +1175,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">Porque el Código personal es más fácil de cumplir</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">Porque el Código del equipo es opcional</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l8a_fb"></div>
         </div>
 
         <div class="content-card" style="background:#0a2540;color:#faf8f3;">
@@ -1174,7 +1190,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Este ritual, sostenido 3 meses, cambia la relación del líder con su propio Código — deja de ser una idea y se convierte en identidad.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l8b">
             <div class="quiz-label">Quiz 8B</div>
             <div class="quiz-question"><p>¿Qué ritual personal recomienda Blair Singer para sostener el Código personal?</p></div>
             <div class="quiz-options">
@@ -1183,6 +1199,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, false)">Cambiar las reglas cada mes</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, false)">No mencionarlo jamás a nadie</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l8b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1263,7 +1280,7 @@ const COURSE_CODIGO_HONOR = {
             <p>En los 3 momentos, todo el equipo está mirando. El Código sobrevive o muere en esos tres momentos.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l9a">
             <div class="quiz-label">Quiz 9A</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿cuál es la razón principal por la que mueren los Códigos de Honor?</p></div>
             <div class="quiz-options">
@@ -1272,6 +1289,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">Demasiadas reglas</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">Falta de presupuesto para capacitación</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l9a_fb"></div>
         </div>
 
         <div class="content-card" style="background:#0a2540;color:#faf8f3;">
@@ -1287,7 +1305,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Sostener este protocolo como líder es el acto más poderoso que puedes hacer por tu Código. Cada disculpa pública fortalece el Código en 10x.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l9b">
             <div class="quiz-label">Quiz 9B</div>
             <div class="quiz-question"><p>¿Cuál es el protocolo correcto cuando el líder rompe una regla del Código?</p></div>
             <div class="quiz-options">
@@ -1296,6 +1314,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, true)">Reconocimiento público + nombrar el daño + asumir consecuencia + compromiso concreto + agradecer</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, false)">Reescribir la regla para que ya no aplique al líder</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l9b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1380,7 +1399,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l10a">
             <div class="quiz-label">Quiz 10A</div>
             <div class="quiz-question"><p>¿Cuál es la función principal de la campana según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -1389,6 +1408,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, true)">Interrumpir el piloto automático, hacer visible el micro-quiebre del Código sin confrontación personal</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, false)">Medir cuántas reglas se rompen al día</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l10a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -1417,7 +1437,7 @@ const COURSE_CODIGO_HONOR = {
             </ul>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l10b">
             <div class="quiz-label">Quiz 10B</div>
             <div class="quiz-question"><p>En el protocolo de la campana, cuando alguien toca la campana, ¿qué dice primero?</p></div>
             <div class="quiz-options">
@@ -1426,6 +1446,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">"Te vi rompiendo la regla"</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">La consecuencia que debe pagar</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l10b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1526,7 +1547,7 @@ const COURSE_CODIGO_HONOR = {
             </div></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l11a">
             <div class="quiz-label">Quiz 11A</div>
             <div class="quiz-question"><p>¿Cuál es el principio central de la consecuencia justa según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -1535,6 +1556,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, true)">Proporcional, restaurativa, acordada con anticipación, uniforme para todos</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, false)">Dejar al líder decidir caso por caso según su criterio</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l11a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -1561,7 +1583,7 @@ const COURSE_CODIGO_HONOR = {
             <p>La restitución repara el tejido del equipo. Las multas lo rasgan más.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l11b">
             <div class="quiz-label">Quiz 11B</div>
             <div class="quiz-question"><p>Según Blair Singer, la regla correcta sobre dónde dar crítica y reconocimiento es:</p></div>
             <div class="quiz-options">
@@ -1570,6 +1592,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, true)">Crítica/consecuencia en privado, reconocimiento en público</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, false)">Todo en privado, siempre</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l11b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1670,7 +1693,7 @@ const COURSE_CODIGO_HONOR = {
             </div></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l12a">
             <div class="quiz-label">Quiz 12A</div>
             <div class="quiz-question"><p>Sin rituales de mantenimiento, ¿cuánto tarda típicamente en morir un Código según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -1679,6 +1702,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, true)">8-11 semanas (2-3 meses)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, false)">Nunca muere si está bien redactado</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l12a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -1712,7 +1736,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Si marcas 2 o más, convoca <strong>hoy mismo</strong> una sesión de re-alineación.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l12b">
             <div class="quiz-label">Quiz 12B</div>
             <div class="quiz-question"><p>¿Cuál es el propósito del "padrino del Código" en el onboarding?</p></div>
             <div class="quiz-options">
@@ -1721,6 +1745,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, true)">Transmitir al nuevo la cultura real, matices y "por qué" de cada regla durante sus primeros 30 días</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, false)">Reemplazar al líder en las evaluaciones</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l12b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1815,7 +1840,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Estas conversaciones deben existir con cada miembro del equipo, al menos cada trimestre. Si no las tienes, no eres líder — eres capataz.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l13a">
             <div class="quiz-label">Quiz 13A</div>
             <div class="quiz-question"><p>¿Cuál es la diferencia central entre un líder disminuidor y un líder multiplicador?</p></div>
             <div class="quiz-options">
@@ -1824,6 +1849,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, true)">El multiplicador hace que cada subordinado rinda 2x-3x lo que rendirían con cualquier otro jefe; el disminuidor los vuelve menos de lo que podrían ser</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, false)">La antigüedad en la empresa</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l13a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -1841,7 +1867,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Esta sesión, bien hecha, genera un compromiso 10x superior al de 10 sesiones de "evaluación de desempeño" tradicional.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l13b">
             <div class="quiz-label">Quiz 13B</div>
             <div class="quiz-question"><p>¿Cuántas conversaciones estructuradas con cada miembro debe tener el líder multiplicador al año según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -1850,6 +1876,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, true)">Las 5 conversaciones (propósito, fortalezas, crecimiento, retroalimentación, reconocimiento) al menos cada trimestre</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, false)">Diariamente, en reuniones de 5 minutos</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l13b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -1928,7 +1955,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l14a">
             <div class="quiz-label">Quiz 14A</div>
             <div class="quiz-question"><p>¿Cuál de los 4 cuadrantes de liderazgo genera equipos de verdadero alto rendimiento?</p></div>
             <div class="quiz-options">
@@ -1937,6 +1964,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, false)">Cuadrante C — baja exigencia, alto apoyo (el bonachón)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, true)">Cuadrante D — alta exigencia, alto apoyo (el líder-coach)</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l14a_fb"></div>
         </div>
 
         <div class="content-card" style="background:#0a2540;color:#faf8f3;">
@@ -1960,7 +1988,7 @@ const COURSE_CODIGO_HONOR = {
             </p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l14b">
             <div class="quiz-label">Quiz 14B</div>
             <div class="quiz-question"><p>¿Cuál es el principal riesgo del líder en el cuadrante A (alta exigencia, bajo apoyo)?</p></div>
             <div class="quiz-options">
@@ -1969,6 +1997,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, false)">Que el equipo se vuelva perezoso</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, false)">Que el líder no sea respetado</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l14b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2065,7 +2094,7 @@ const COURSE_CODIGO_HONOR = {
             <p>El feedback positivo específico (no "eres un crack" genérico) fortalece la conducta. El positivo genérico no hace nada.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l15a">
             <div class="quiz-label">Quiz 15A</div>
             <div class="quiz-question"><p>¿Cuáles son los 3 componentes del modelo SBI para dar retroalimentación?</p></div>
             <div class="quiz-options">
@@ -2074,6 +2103,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">Start, Begin, Improve</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">Sincero, Breve, Insistente</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l15a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -2095,7 +2125,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Lo correcto: feedback positivo separado del correctivo. En momentos distintos, no como estrategia para "ablandar".</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l15b">
             <div class="quiz-label">Quiz 15B</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿cuál es el ratio ideal de feedback positivo vs. correctivo del líder-coach?</p></div>
             <div class="quiz-options">
@@ -2104,6 +2134,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, true)">3:1 (tres feedbacks positivos por cada correctivo)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, false)">10:0 (sólo positivo, nada correctivo)</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l15b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2184,7 +2215,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l16a">
             <div class="quiz-label">Quiz 16A</div>
             <div class="quiz-question"><p>¿Cuál es la diferencia central entre un "grupo" y un "equipo" según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -2193,6 +2224,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, true)">El grupo tiene tarea común pero intereses divergentes; el equipo tiene compromiso con los resultados del otro (sinergia)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, false)">Los grupos duran poco, los equipos mucho</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l16a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -2222,7 +2254,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Ratio sano: 3:1 a favor del primer grupo. Si tu ratio es 1:1 o peor, tienes un grupo, no un equipo.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l16b">
             <div class="quiz-label">Quiz 16B</div>
             <div class="quiz-question"><p>¿Cuál es uno de los 4 enemigos principales de la sinergia?</p></div>
             <div class="quiz-options">
@@ -2231,6 +2263,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Horarios flexibles</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Reuniones frecuentes</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l16b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2316,7 +2349,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Ejemplo: "En 2031 seremos la red de farmacias independientes más confiable de la región Bajío, con 8 sucursales, atendiendo a 25,000 familias, con cero accidentes farmacológicos y con un equipo que decide quedarse con nosotros el resto de su carrera"</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l17a">
             <div class="quiz-label">Quiz 17A</div>
             <div class="quiz-question"><p>¿Cuál es la diferencia entre misión, visión y Código de Honor?</p></div>
             <div class="quiz-options">
@@ -2325,6 +2358,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, false)">Misión es para el jefe; visión para empleados; Código para clientes</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, false)">Visión es corto plazo, misión largo plazo, Código es fiscal</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l17a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -2353,7 +2387,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Observa cómo cada regla del Código sirve directamente a la misión. Esa es la alineación que buscas.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l17b">
             <div class="quiz-label">Quiz 17B</div>
             <div class="quiz-question"><p>¿Cuál es el "check de alineación" más importante entre misión, visión y Código?</p></div>
             <div class="quiz-options">
@@ -2362,6 +2396,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, true)">Que cada regla del Código sirva directamente para cumplir la misión y acercar a la visión</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, false)">Que usen las mismas palabras exactas</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l17b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2440,7 +2475,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Esta regla tiene efectos profundos. Cuando se cumple, el equipo deja de perder energía en justificaciones y empieza a resolver.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l18a">
             <div class="quiz-label">Quiz 18A</div>
             <div class="quiz-question"><p>¿Cuál es la frase que resume la postura del responsable según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -2449,6 +2484,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, true)">"La víctima puede tener razón, pero no tiene poder; el responsable puede o no tener razón, pero siempre tiene poder"</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, false)">"Yo sólo hago mi parte"</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l18a_fb"></div>
         </div>
 
         <div class="content-card">
@@ -2469,7 +2505,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Equipos con esta regla se vuelven imparables. Equipos sin esta regla se pasan la vida buscando culpables.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l18b">
             <div class="quiz-label">Quiz 18B</div>
             <div class="quiz-question"><p>¿Cuáles son las 3 fases de la responsabilidad radical según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -2478,6 +2514,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, true)">Reconocimiento + Propiedad + Corrección</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, false)">Planear, esperar, culpar</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l18b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2583,7 +2620,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l19a">
             <div class="quiz-label">Quiz 19A</div>
             <div class="quiz-question"><p>Según la fórmula de Maister, ¿qué factor disminuye la confianza cuando aumenta?</p></div>
             <div class="quiz-options">
@@ -2592,6 +2629,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, false)">Intimidad</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, true)">Auto-orientación (buscar el beneficio propio antes que el común)</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l19a_fb"></div>
         </div>
 
         <div class="content-card" style="background:#0a2540;color:#faf8f3;">
@@ -2604,7 +2642,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Una sola traición grande puede vaciar una cuenta que llevó años construir. Por eso el Código protege mediante reglas específicas esas cuentas.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l19b">
             <div class="quiz-label">Quiz 19B</div>
             <div class="quiz-question"><p>¿Cuál de estas conductas NO es un "depósito" en la cuenta bancaria emocional del equipo?</p></div>
             <div class="quiz-options">
@@ -2613,6 +2651,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, true)">Corregir al compañero en público delante del cliente</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, false)">Escuchar sin juzgar</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l19b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2703,7 +2742,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Cinco minutos. Impacto enorme.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l20a">
             <div class="quiz-label">Quiz 20A</div>
             <div class="quiz-question"><p>¿Cuál es el propósito principal del "huddle de 5 minutos" en momentos de presión?</p></div>
             <div class="quiz-options">
@@ -2712,6 +2751,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">Revisar presupuesto</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">Buscar culpables de la crisis</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l20a_fb"></div>
         </div>
 
         <div class="content-card" style="background:#0a2540;color:#faf8f3;">
@@ -2735,7 +2775,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Por eso la revisión post-crisis (las 24 horas siguientes) es fundamental. Es donde se consolida el aprendizaje y el vínculo.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l20b">
             <div class="quiz-label">Quiz 20B</div>
             <div class="quiz-question"><p>Cuando hay conflicto interno agudo entre 2 miembros del equipo, ¿qué debe hacer el líder primero?</p></div>
             <div class="quiz-options">
@@ -2744,6 +2784,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, true)">Reunir a los involucrados con un testigo neutral, aplicar protocolo de escucha, identificar la regla del Código rota y acordar restitución</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, false)">Anunciar a todo el equipo los detalles del conflicto para que juzguen</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l20b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -2875,7 +2916,7 @@ const COURSE_CODIGO_HONOR = {
             </ol>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l21a">
             <div class="quiz-label">Quiz 21A</div>
             <div class="quiz-question"><p>¿Cuál es el rol del Día 1 en el plan de implementación de 7 días?</p></div>
             <div class="quiz-options">
@@ -2884,9 +2925,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Imprimir la campana</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Hacer capacitación externa</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l21a_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l21b">
             <div class="quiz-label">Quiz 21B</div>
             <div class="quiz-question"><p>¿Cuál es la clave para superar la "luna de miel" (cuando decae la energía a las 2-3 semanas)?</p></div>
             <div class="quiz-options">
@@ -2895,6 +2937,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, true)">Ritualizar las revisiones semanales de 10 minutos sin excepción desde la primera semana</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, false)">Esperar a que pase solo</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l21b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -3005,7 +3048,7 @@ const COURSE_CODIGO_HONOR = {
             <p>Cuando uno de estos 5 faltó, los resultados fueron mediocres. Cuando estuvieron los 5, los resultados fueron espectaculares.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l22a">
             <div class="quiz-label">Quiz 22A</div>
             <div class="quiz-question"><p>¿Cuál es una consideración cultural específica al implementar el Código en México según esta lección?</p></div>
             <div class="quiz-options">
@@ -3014,6 +3057,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l22a', this, true)">Aprovechar el sentido de "familia de trabajo" y ritualizar la campana cuidadosamente para no parecer humillación</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l22a', this, false)">Pagar bonos extra por cumplir el Código</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l22a_fb"></div>
         </div>
 
         <div class="content-card" style="background:#0a2540;color:#faf8f3;">
@@ -3029,7 +3073,7 @@ const COURSE_CODIGO_HONOR = {
             <p style="margin-top:15px;">Si evitas estos 5 errores, tu probabilidad de éxito es muy alta. Si caes en 2 o más, el Código va a fracasar — mejor no empezar hasta estar listo.</p>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="quiz_l22b">
             <div class="quiz-label">Quiz 22B</div>
             <div class="quiz-question"><p>¿Cuál de estos NO es un patrón común de éxito identificado en los casos mexicanos?</p></div>
             <div class="quiz-options">
@@ -3038,6 +3082,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l22b', this, true)">El Código tenía al menos 25 reglas detalladas</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l22b', this, false)">Se aplicaron consecuencias iguales a todos, incluido el líder</div>
             </div>
+            <div class="quiz-feedback" id="quiz_l22b_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
@@ -3079,7 +3124,7 @@ const COURSE_CODIGO_HONOR = {
             </ul>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q1">
             <div class="quiz-label">Pregunta 1 de 15</div>
             <div class="quiz-question"><p>Según Blair Singer, ¿qué define realmente a un equipo?</p></div>
             <div class="quiz-options">
@@ -3088,9 +3133,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q1', this, true)">Las reglas que realmente cumple cuando nadie está mirando</div>
                 <div class="quiz-option" onclick="checkFinal('final_q1', this, false)">El talento individual de sus miembros estrella</div>
             </div>
+            <div class="quiz-feedback" id="final_q1_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q2">
             <div class="quiz-label">Pregunta 2 de 15</div>
             <div class="quiz-question"><p>¿Cuál es el rango óptimo de reglas que debe tener un Código de Honor?</p></div>
             <div class="quiz-options">
@@ -3099,9 +3145,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q2', this, false)">Entre 20 y 30 reglas</div>
                 <div class="quiz-option" onclick="checkFinal('final_q2', this, false)">Más de 50 reglas para cubrir todos los escenarios</div>
             </div>
+            <div class="quiz-feedback" id="final_q2_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q3">
             <div class="quiz-label">Pregunta 3 de 15</div>
             <div class="quiz-question"><p>En la categorización de Blair Singer (A+, A-, B, C), ¿cuál es la categoría más peligrosa para el Código?</p></div>
             <div class="quiz-options">
@@ -3110,9 +3157,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q3', this, false)">Los A- (alineados sin resultados todavía)</div>
                 <div class="quiz-option" onclick="checkFinal('final_q3', this, false)">Los A+ (alineados y performantes)</div>
             </div>
+            <div class="quiz-feedback" id="final_q3_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q4">
             <div class="quiz-label">Pregunta 4 de 15</div>
             <div class="quiz-question"><p>¿Cuáles son los 3 lados exteriores del Triángulo B-I de Kiyosaki?</p></div>
             <div class="quiz-options">
@@ -3121,9 +3169,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q4', this, false)">Ventas, Marketing, Operaciones</div>
                 <div class="quiz-option" onclick="checkFinal('final_q4', this, false)">Capital, Talento, Mercado</div>
             </div>
+            <div class="quiz-feedback" id="final_q4_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q5">
             <div class="quiz-label">Pregunta 5 de 15</div>
             <div class="quiz-question"><p>¿Cuál es el error más costoso al crear un Código de Honor?</p></div>
             <div class="quiz-options">
@@ -3132,9 +3181,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q5', this, false)">Usar ejemplos de equipos deportivos</div>
                 <div class="quiz-option" onclick="checkFinal('final_q5', this, false)">Hacer la sesión en una ubicación fuera de la oficina</div>
             </div>
+            <div class="quiz-feedback" id="final_q5_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q6">
             <div class="quiz-label">Pregunta 6 de 15</div>
             <div class="quiz-question"><p>¿Cuál es la forma correcta de redactar una regla del Código?</p></div>
             <div class="quiz-options">
@@ -3143,9 +3193,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q6', this, true)">Verbo + conducta observable + contexto (ej. "Saludamos al cliente mirando a los ojos en menos de 10 segundos")</div>
                 <div class="quiz-option" onclick="checkFinal('final_q6', this, false)">Expresar intenciones internas ("nos esforzamos por...")</div>
             </div>
+            <div class="quiz-feedback" id="final_q6_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q7">
             <div class="quiz-label">Pregunta 7 de 15</div>
             <div class="quiz-question"><p>¿Por qué Blair Singer insiste en que el Código personal del líder viene antes que el del equipo?</p></div>
             <div class="quiz-options">
@@ -3154,9 +3205,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q7', this, false)">Porque el Código personal se crea más rápido</div>
                 <div class="quiz-option" onclick="checkFinal('final_q7', this, false)">Porque el Código del equipo es opcional</div>
             </div>
+            <div class="quiz-feedback" id="final_q7_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q8">
             <div class="quiz-label">Pregunta 8 de 15</div>
             <div class="quiz-question"><p>¿Cuál es la función central de "la campana" como ritual?</p></div>
             <div class="quiz-options">
@@ -3165,9 +3217,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q8', this, false)">Medir métricas de productividad</div>
                 <div class="quiz-option" onclick="checkFinal('final_q8', this, false)">Reemplazar al líder en la disciplina</div>
             </div>
+            <div class="quiz-feedback" id="final_q8_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q9">
             <div class="quiz-label">Pregunta 9 de 15</div>
             <div class="quiz-question"><p>Sin rituales de mantenimiento, ¿en cuánto tiempo típicamente muere un Código según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -3176,9 +3229,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q9', this, false)">En 2-3 años</div>
                 <div class="quiz-option" onclick="checkFinal('final_q9', this, false)">En 5-10 años</div>
             </div>
+            <div class="quiz-feedback" id="final_q9_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q10">
             <div class="quiz-label">Pregunta 10 de 15</div>
             <div class="quiz-question"><p>¿Cuál es la diferencia central entre un líder multiplicador y uno disminuidor?</p></div>
             <div class="quiz-options">
@@ -3187,9 +3241,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q10', this, false)">La antigüedad en la empresa</div>
                 <div class="quiz-option" onclick="checkFinal('final_q10', this, false)">El presupuesto asignado</div>
             </div>
+            <div class="quiz-feedback" id="final_q10_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q11">
             <div class="quiz-label">Pregunta 11 de 15</div>
             <div class="quiz-question"><p>En el modelo de cuadrantes del líder, ¿cuál genera equipos de verdadero alto rendimiento?</p></div>
             <div class="quiz-options">
@@ -3198,9 +3253,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q11', this, false)">Baja exigencia + alto apoyo (bonachón)</div>
                 <div class="quiz-option" onclick="checkFinal('final_q11', this, true)">Alta exigencia + alto apoyo (líder-coach)</div>
             </div>
+            <div class="quiz-feedback" id="final_q11_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q12">
             <div class="quiz-label">Pregunta 12 de 15</div>
             <div class="quiz-question"><p>¿Cuáles son los 3 componentes del modelo SBI para dar retroalimentación?</p></div>
             <div class="quiz-options">
@@ -3209,9 +3265,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q12', this, false)">Sincero + Breve + Insistente</div>
                 <div class="quiz-option" onclick="checkFinal('final_q12', this, false)">Silencio + Bondad + Indulgencia</div>
             </div>
+            <div class="quiz-feedback" id="final_q12_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q13">
             <div class="quiz-label">Pregunta 13 de 15</div>
             <div class="quiz-question"><p>Según la fórmula de Maister, ¿qué factor disminuye la confianza cuando aumenta?</p></div>
             <div class="quiz-options">
@@ -3220,9 +3277,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q13', this, false)">Intimidad</div>
                 <div class="quiz-option" onclick="checkFinal('final_q13', this, true)">Auto-orientación (buscar el beneficio propio)</div>
             </div>
+            <div class="quiz-feedback" id="final_q13_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q14">
             <div class="quiz-label">Pregunta 14 de 15</div>
             <div class="quiz-question"><p>¿Cuál es el propósito del "huddle de 5 minutos" en momentos de presión?</p></div>
             <div class="quiz-options">
@@ -3231,9 +3289,10 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q14', this, false)">Revisar el presupuesto del trimestre</div>
                 <div class="quiz-option" onclick="checkFinal('final_q14', this, false)">Identificar al culpable de la crisis</div>
             </div>
+            <div class="quiz-feedback" id="final_q14_fb"></div>
         </div>
 
-        <div class="quiz-container">
+        <div class="quiz-container" id="final_q15">
             <div class="quiz-label">Pregunta 15 de 15</div>
             <div class="quiz-question"><p>¿Cuál es el ratio ideal de feedback positivo vs. correctivo del líder-coach según Blair Singer?</p></div>
             <div class="quiz-options">
@@ -3242,6 +3301,7 @@ const COURSE_CODIGO_HONOR = {
                 <div class="quiz-option" onclick="checkFinal('final_q15', this, false)">1:3 (más correctivo que positivo)</div>
                 <div class="quiz-option" onclick="checkFinal('final_q15', this, false)">Sólo positivo, nada correctivo</div>
             </div>
+            <div class="quiz-feedback" id="final_q15_fb"></div>
         </div>
 
         <div class="content-card" style="margin-top:30px;background:#0a2540;color:#faf8f3;">
