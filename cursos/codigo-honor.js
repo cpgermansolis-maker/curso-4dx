@@ -66,14 +66,14 @@ const COURSE_CODIGO_HONOR = {
         title: 'El Código de Honor: lo que separa a los equipos campeones',
         subtitle: 'Por qué dos equipos con el mismo talento terminan en lugares opuestos',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1400&q=80')">
             <div class="hero-caption">No gana el equipo con los mejores jugadores; gana el que juega mejor en equipo</div>
         </div>
 
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/0sfTm-x_Lbs?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/s7VT5QCpauQ?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
@@ -427,7 +427,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Por qué los equipos se deshacen bajo presión',
         subtitle: 'El momento exacto en que el Código hace o rompe al equipo',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1400&q=80')">
             <div class="hero-caption">Cuando sube la presión, caes al nivel de tu entrenamiento — no al nivel de tus intenciones</div>
         </div>
 
@@ -543,7 +543,7 @@ const COURSE_CODIGO_HONOR = {
         title: '¿Quiénes están realmente en tu equipo?',
         subtitle: 'El mapa del equipo antes de cambiar el Código',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1520333789090-1afc82db536a?w=1400&q=80')">
             <div class="hero-caption">Antes de cambiar el Código, mapea quién juega realmente</div>
         </div>
 
@@ -663,7 +663,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'El Triángulo B-I de Kiyosaki aplicado a tu equipo',
         subtitle: 'Los 8 puestos críticos que cubren la base de un negocio sólido',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1400&q=80')">
             <div class="hero-caption">Un negocio sólido se para en 8 puestos, no en 1</div>
         </div>
 
@@ -796,7 +796,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Los 5 pasos para crear tu Código · Paso 1, 2 y 3',
         subtitle: 'Cómo diseñar la sesión fundacional del Código con tu equipo',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1552581234-26160f608093?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1512626120412-faf41adb4874?w=1400&q=80')">
             <div class="hero-caption">El Código se redacta en equipo o no se redacta</div>
         </div>
 
@@ -1207,7 +1207,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Coherencia del líder: el Código se rompe por arriba',
         subtitle: 'El 80% de los Códigos muere porque el líder lo viola el primer mes',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1559526324-c1f275fbfa32?w=1400&q=80')">
             <div class="hero-caption">El equipo copia lo que el líder hace, no lo que dice</div>
         </div>
 
@@ -1606,7 +1606,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Mantener el Código vivo: la operación del día a día',
         subtitle: 'Rituales, revisiones, onboarding y cómo evitar el decaimiento',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1400&q=80')">
             <div class="hero-caption">El Código es un organismo vivo que necesita oxígeno diario</div>
         </div>
 
@@ -2255,7 +2255,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Alinear misión, visión y Código',
         subtitle: 'El Código no vive solo: se enmarca en un propósito mayor',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=1400&q=80')">
             <div class="hero-caption">Misión es el para qué; Visión es el hacia dónde; Código es el cómo</div>
         </div>
 
@@ -2508,7 +2508,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Lealtad y confianza: los cimientos emocionales del equipo',
         subtitle: 'Sin confianza no hay equipo; sin lealtad no hay duración',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1494887205043-c5f291293cf6?w=1400&q=80')">
             <div class="hero-caption">La confianza se gana con consistencia de conductas, no con intenciones</div>
         </div>
 
@@ -2768,7 +2768,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Tu Código en 7 días: plan de acción paso a paso',
         subtitle: 'De la teoría a la realidad con un plan concreto',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1400&q=80')">
             <div class="hero-caption">La única diferencia entre sueño y realidad es un plan con fecha</div>
         </div>
 
@@ -3064,7 +3064,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'Examen final del curso',
         subtitle: '15 preguntas · Aprobar con 11 o más para obtener certificado',
         content: `
-        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1400&q=80')">
+        <div class="lesson-hero" style="background-image:url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1400&q=80')">
             <div class="hero-caption">El último paso antes del certificado</div>
         </div>
 
