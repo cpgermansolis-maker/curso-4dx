@@ -1269,6 +1269,26 @@
             color: var(--tk-ink) !important;
             line-height: 1.7 !important;
         }
+        /* Dark content cards: override forced dark text inside navy panels */
+        .lesson .content-card[style*="#0a2540"] p,
+        .lesson .content-card[style*="#0a2540"] li,
+        .lesson .content-card[style*="#0a2540"] ol,
+        .lesson .content-card[style*="#0a2540"] ul,
+        .lesson .content-card[style*="#0a2540"] strong,
+        .lesson .content-card[style*="#0a2540"] em,
+        .lesson .content-card[style*="#12375e"] p,
+        .lesson .content-card[style*="#12375e"] li,
+        .lesson .content-card[style*="#12375e"] strong,
+        .lesson .content-card[style*="#12375e"] em {
+            color: var(--tk-cream) !important;
+        }
+        .lesson .content-card[style*="#0a2540"] h1,
+        .lesson .content-card[style*="#0a2540"] h2,
+        .lesson .content-card[style*="#0a2540"] h3,
+        .lesson .content-card[style*="#0a2540"] h4 {
+            color: var(--tk-gold) !important;
+        }
+        .lesson .content-card[style*="#0a2540"] a { color: var(--tk-gold-soft) !important; }
         .lesson-hero { border-radius: 2px !important; box-shadow: none !important; border: 1px solid var(--tk-hairline); }
         .inline-img { border-radius: 2px !important; box-shadow: none !important; border: 1px solid var(--tk-hairline); }
 
@@ -1393,6 +1413,447 @@
             font-size: 0.82em !important;
             font-weight: 600 !important;
         }
+
+        /* ============================================================
+           COURSE LANDING (Coursera-style)
+           Namespace: .cl-*
+           ============================================================ */
+        #courseLanding {
+            position: fixed; inset: 0; z-index: 9998; overflow-y: auto;
+            background: var(--tk-cream);
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            color: var(--tk-ink);
+            -webkit-overflow-scrolling: touch;
+        }
+        .cl-topbar {
+            position: sticky; top: 0; z-index: 50;
+            background: #fff;
+            border-bottom: 1px solid var(--tk-hairline);
+            padding: 14px 28px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px;
+        }
+        .cl-topbar-left { display: flex; align-items: center; gap: 14px; }
+        .cl-topbar-logo {
+            height: 28px;
+            background: var(--tk-navy);
+            color: #fff;
+            padding: 4px 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 2px;
+        }
+        .cl-topbar-logo img { height: 22px; display: block; }
+        .cl-topbar-back {
+            color: var(--tk-ink-soft);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .cl-topbar-back:hover { border-bottom-color: var(--tk-gold); color: var(--tk-navy); }
+        .cl-topbar-right { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+        .cl-topbar-enroll {
+            background: var(--tk-navy); color: #fff; border: none;
+            padding: 10px 22px; font-weight: 600; font-size: 12px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            cursor: pointer; border-radius: 2px;
+            transition: background 0.2s;
+        }
+        .cl-topbar-enroll:hover { background: var(--tk-navy-soft); }
+        .cl-topbar-enroll.secondary { background: var(--tk-gold); color: var(--tk-navy); }
+        .cl-topbar-enroll.secondary:hover { background: var(--tk-gold-soft); }
+
+        /* HERO */
+        .cl-hero {
+            background: linear-gradient(135deg, var(--tk-navy) 0%, #12375e 100%);
+            color: var(--tk-cream);
+            padding: 56px 28px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cl-hero::after {
+            content: ''; position: absolute; right: -80px; top: -80px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(201,169,97,0.15), transparent 70%);
+            pointer-events: none;
+        }
+        .cl-hero-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.4fr 1fr;
+            gap: 48px; align-items: center; position: relative; z-index: 1;
+        }
+        .cl-hero-partner {
+            font-size: 11px; letter-spacing: 3px; font-weight: 600;
+            color: var(--tk-gold); text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .cl-hero-partner-tag { color: rgba(250,248,243,0.6); margin-left: 8px; }
+        .cl-hero-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 42px; font-weight: 500; line-height: 1.15;
+            margin: 0 0 14px;
+            letter-spacing: -0.01em;
+            color: #fff;
+        }
+        .cl-hero-subtitle {
+            font-size: 18px; line-height: 1.6; color: rgba(250,248,243,0.9);
+            margin: 0 0 24px;
+            font-weight: 300;
+        }
+        .cl-hero-instructor {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 28px;
+        }
+        .cl-hero-instructor img {
+            width: 44px; height: 44px; border-radius: 50%;
+            object-fit: cover; border: 2px solid var(--tk-gold);
+        }
+        .cl-hero-instructor-text {
+            font-size: 13px; line-height: 1.4;
+        }
+        .cl-hero-instructor-text .lbl {
+            color: rgba(250,248,243,0.55); font-size: 11px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .cl-hero-instructor-text .nm { color: #fff; font-weight: 500; }
+        .cl-hero-cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+        .cl-cta-primary {
+            background: var(--tk-gold); color: var(--tk-navy);
+            border: none; padding: 16px 40px;
+            font-size: 13px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            cursor: pointer; border-radius: 2px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .cl-cta-primary:hover { background: var(--tk-gold-soft); }
+        .cl-cta-hint { color: rgba(250,248,243,0.7); font-size: 12px; letter-spacing: 0.3px; }
+
+        /* Hero card (right side) */
+        .cl-hero-card {
+            background: #fff; color: var(--tk-ink);
+            border: 1px solid rgba(201,169,97,0.3);
+            padding: 28px 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+        .cl-hero-card-price {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 40px; font-weight: 700; color: var(--tk-navy);
+            line-height: 1; margin-bottom: 4px;
+        }
+        .cl-hero-card-price .cur {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px; color: var(--tk-ink-soft); margin-left: 6px; letter-spacing: 1px;
+        }
+        .cl-hero-card-list {
+            font-size: 13px; color: var(--tk-ink-soft);
+            text-decoration: line-through; margin-bottom: 4px;
+        }
+        .cl-hero-card-save {
+            display: inline-block; font-size: 11px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--tk-navy); background: var(--tk-gold);
+            padding: 4px 10px; margin-bottom: 16px;
+        }
+        .cl-hero-card hr {
+            border: none; border-top: 1px solid var(--tk-hairline); margin: 16px 0;
+        }
+        .cl-hero-card-list-benefits {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .cl-hero-card-list-benefits li {
+            padding: 6px 0; font-size: 13px; color: var(--tk-ink);
+            display: flex; gap: 10px; align-items: flex-start;
+        }
+        .cl-hero-card-list-benefits li::before {
+            content: '✓'; color: var(--tk-gold); font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* STATS ROW */
+        .cl-stats {
+            background: #fff;
+            border-bottom: 1px solid var(--tk-hairline);
+            padding: 24px 28px;
+        }
+        .cl-stats-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;
+        }
+        .cl-stat {
+            padding: 8px 18px; text-align: left;
+            border-right: 1px solid var(--tk-hairline);
+        }
+        .cl-stat:last-child { border-right: none; }
+        .cl-stat-label {
+            font-size: 10px; font-weight: 600;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--tk-gold);
+            margin-bottom: 4px;
+        }
+        .cl-stat-value {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 20px; font-weight: 500;
+            color: var(--tk-navy); line-height: 1.2;
+        }
+        .cl-stat-value.small-line { font-size: 14px; font-family: 'Inter', sans-serif; font-weight: 500; }
+        .cl-stat-sub { font-size: 11px; color: var(--tk-ink-soft); margin-top: 2px; }
+        .cl-stat .star { color: var(--tk-gold); margin-right: 3px; }
+
+        /* TABS */
+        .cl-tabs-wrap {
+            background: #fff;
+            border-bottom: 1px solid var(--tk-hairline);
+            position: sticky; top: 56px; z-index: 40;
+        }
+        .cl-tabs {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; gap: 0; padding: 0 28px;
+        }
+        .cl-tab {
+            padding: 18px 24px;
+            font-size: 13px; font-weight: 500;
+            color: var(--tk-ink-soft);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            letter-spacing: 0.3px;
+            transition: color 0.2s, border-color 0.2s;
+            user-select: none;
+        }
+        .cl-tab:hover { color: var(--tk-navy); }
+        .cl-tab.active {
+            color: var(--tk-navy);
+            border-bottom-color: var(--tk-gold);
+            font-weight: 600;
+        }
+
+        /* CONTENT SECTIONS */
+        .cl-body {
+            max-width: 1200px; margin: 0 auto;
+            padding: 48px 28px 80px;
+            display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px;
+            align-items: start;
+        }
+        .cl-section {
+            background: #fff;
+            border: 1px solid var(--tk-hairline);
+            padding: 32px 36px;
+            margin-bottom: 24px;
+            scroll-margin-top: 120px;
+        }
+        .cl-section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 500; font-size: 26px; color: var(--tk-navy);
+            margin: 0 0 20px;
+            letter-spacing: -0.01em;
+        }
+        .cl-section h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 500; font-size: 18px; color: var(--tk-navy);
+            margin: 20px 0 10px;
+        }
+        .cl-section p {
+            font-size: 15px; line-height: 1.7; color: var(--tk-ink);
+            margin: 0 0 14px;
+        }
+
+        /* Learning outcomes grid */
+        .cl-outcomes {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px;
+            margin: 0; padding: 0; list-style: none;
+        }
+        .cl-outcomes li {
+            display: flex; gap: 12px; align-items: flex-start;
+            font-size: 14px; line-height: 1.55; color: var(--tk-ink);
+        }
+        .cl-outcomes li::before {
+            content: '✓'; color: var(--tk-gold);
+            font-weight: 700; font-size: 16px;
+            flex-shrink: 0; line-height: 1.3;
+        }
+
+        /* Skills tags */
+        .cl-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .cl-tag {
+            background: var(--tk-cream-deep);
+            border: 1px solid var(--tk-hairline);
+            color: var(--tk-navy);
+            padding: 6px 14px;
+            font-size: 13px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Tools list */
+        .cl-tools { list-style: none; padding: 0; margin: 0; }
+        .cl-tools li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--tk-hairline);
+            font-size: 14px; color: var(--tk-ink);
+            display: flex; gap: 12px; align-items: center;
+        }
+        .cl-tools li::before {
+            content: '▸'; color: var(--tk-gold); font-weight: 700;
+        }
+        .cl-tools li:last-child { border-bottom: none; }
+
+        /* Details */
+        .cl-details { list-style: none; padding: 0; margin: 0; }
+        .cl-details li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--tk-hairline);
+            display: grid; grid-template-columns: 140px 1fr; gap: 16px;
+            font-size: 14px;
+        }
+        .cl-details li:last-child { border-bottom: none; }
+        .cl-details .lbl {
+            color: var(--tk-gold);
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .cl-details .val { color: var(--tk-ink); }
+
+        /* Lessons list (tab "Cursos"/"Lecciones") */
+        .cl-lessons-list { list-style: none; padding: 0; margin: 0; }
+        .cl-lessons-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--tk-hairline);
+            display: grid; grid-template-columns: 32px 1fr auto; gap: 14px;
+            align-items: center;
+        }
+        .cl-lessons-list li:last-child { border-bottom: none; }
+        .cl-lessons-list .num {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--tk-gold); font-size: 16px; font-weight: 500;
+            text-align: center;
+        }
+        .cl-lessons-list .title {
+            color: var(--tk-navy); font-weight: 500; font-size: 14px;
+        }
+        .cl-lessons-list .sub {
+            color: var(--tk-ink-soft); font-size: 12px; margin-top: 2px;
+        }
+        .cl-lessons-list .dur {
+            color: var(--tk-ink-soft); font-size: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Testimonials */
+        .cl-testi-grid {
+            display: grid; grid-template-columns: 1fr; gap: 18px;
+        }
+        .cl-testi {
+            background: var(--tk-cream-deep);
+            border-left: 3px solid var(--tk-gold);
+            padding: 22px 26px;
+        }
+        .cl-testi-text {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic; font-size: 16px;
+            line-height: 1.6; color: var(--tk-navy);
+            margin: 0 0 12px;
+        }
+        .cl-testi-author {
+            font-size: 12px; color: var(--tk-ink-soft);
+            letter-spacing: 0.3px;
+        }
+        .cl-testi-author strong { color: var(--tk-navy); font-weight: 600; }
+
+        /* FAQ */
+        .cl-faq details {
+            border-bottom: 1px solid var(--tk-hairline);
+            padding: 14px 0;
+        }
+        .cl-faq details:last-child { border-bottom: none; }
+        .cl-faq summary {
+            cursor: pointer;
+            font-size: 15px; font-weight: 600; color: var(--tk-navy);
+            padding: 4px 0;
+            list-style: none;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .cl-faq summary::-webkit-details-marker { display: none; }
+        .cl-faq summary::after {
+            content: '+'; color: var(--tk-gold);
+            font-size: 22px; font-weight: 400;
+            transition: transform 0.2s;
+        }
+        .cl-faq details[open] summary::after { content: '−'; }
+        .cl-faq details p {
+            margin: 10px 0 4px;
+            color: var(--tk-ink); font-size: 14px; line-height: 1.6;
+        }
+
+        /* Right-column sticky */
+        .cl-side { position: sticky; top: 130px; }
+        .cl-side-card {
+            background: #fff;
+            border: 1px solid var(--tk-hairline);
+            padding: 28px 28px;
+        }
+        .cl-side-card h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 500; font-size: 18px; color: var(--tk-navy);
+            margin: 0 0 14px;
+        }
+        .cl-side-card ul {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .cl-side-card li {
+            padding: 8px 0; font-size: 13px; color: var(--tk-ink);
+            display: flex; gap: 10px; align-items: flex-start;
+        }
+        .cl-side-card li::before { content: '✓'; color: var(--tk-gold); font-weight: 700; }
+        .cl-side-cta {
+            display: block; width: 100%;
+            background: var(--tk-navy); color: #fff;
+            border: none; padding: 14px;
+            font-size: 12px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            cursor: pointer; border-radius: 2px;
+            margin-top: 18px;
+            transition: background 0.2s;
+        }
+        .cl-side-cta:hover { background: var(--tk-navy-soft); }
+        .cl-side-cta.gold { background: var(--tk-gold); color: var(--tk-navy); }
+        .cl-side-cta.gold:hover { background: var(--tk-gold-soft); }
+
+        .cl-enrolled-chip {
+            display: inline-block; font-size: 11px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--tk-navy); background: var(--tk-gold);
+            padding: 4px 10px; font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 960px) {
+            .cl-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+            .cl-body { grid-template-columns: 1fr; gap: 24px; }
+            .cl-side { position: static; }
+            .cl-stats-inner { grid-template-columns: repeat(2, 1fr); gap: 4px 0; }
+            .cl-stat { border-right: none; border-bottom: 1px solid var(--tk-hairline); padding: 10px 14px; }
+            .cl-stat:nth-last-child(-n+2) { border-bottom: none; }
+            .cl-hero { padding: 36px 20px 32px; }
+            .cl-hero-title { font-size: 30px; }
+            .cl-hero-subtitle { font-size: 15px; }
+            .cl-hero-card { padding: 22px; }
+            .cl-section { padding: 24px 22px; }
+            .cl-outcomes { grid-template-columns: 1fr; }
+            .cl-tabs { overflow-x: auto; padding: 0 20px; }
+            .cl-tab { padding: 14px 16px; white-space: nowrap; }
+            .cl-details li { grid-template-columns: 1fr; gap: 2px; }
+            .cl-topbar { padding: 12px 18px; }
+            .cl-topbar-right .cl-topbar-enroll { padding: 8px 14px; font-size: 11px; }
+        }
+        @media (max-width: 560px) {
+            .cl-hero-title { font-size: 24px; }
+            .cl-hero-card-price { font-size: 32px; }
+        }
     </style>
 </head>
 <body>
@@ -1501,8 +1962,11 @@
     </div>
 </div>
 
-<!-- SPLASH -->
-<div id="splash">
+<!-- COURSE LANDING (Coursera-style) -->
+<div id="courseLanding" style="display:none;"></div>
+
+<!-- SPLASH (legado — ya no se usa, el landing lo reemplaza) -->
+<div id="splash" style="display:none;">
     <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-hero" onerror="this.outerHTML='<div style=&quot;font-size:4em;margin-bottom:16px;&quot;>&#127919;</div>';">
     <h1 id="splashTitle">Las 4 Disciplinas de la Ejecución</h1>
     <p id="splashSubtitle">Curso interactivo para la Gerencia de Administración</p>
@@ -1736,7 +2200,8 @@ async function doRegister(e) {
         });
         currentUser = TK.getCurrentUser();
         sendToWebhook('register', currentUser);
-        enterCourse();
+        updateUserBadge();
+        showCourseLanding();
     } catch (err) {
         btn.disabled = false;
         document.getElementById('regBtnText').style.display = 'inline';
@@ -1790,9 +2255,9 @@ async function doLogin(e) {
         if (!data) { errEl.textContent = 'Tu cuenta no tiene perfil.'; errEl.style.display = 'block'; return; }
         currentUser = data;
         loadProgress();
-        // Si está inscrito al curso actual → entra; si no → pantalla de inscripción
-        if (isEnrolledInCurrentCourse()) enterCourse();
-        else showEnrollmentScreen();
+        updateUserBadge();
+        // Siempre landing estilo Coursera (el CTA se adapta según estado de inscripción)
+        showCourseLanding();
     } catch (err) {
         errEl.textContent = err.message;
         errEl.style.display = 'block';
@@ -1885,8 +2350,10 @@ function enterCourse() {
 function updateUserBadge() {
     if (!currentUser) return;
     const initials = currentUser.name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
-    document.getElementById('userInitials').textContent = initials;
-    document.getElementById('userDisplayName').textContent = currentUser.name.split(' ')[0];
+    const initEl = document.getElementById('userInitials');
+    const nameEl = document.getElementById('userDisplayName');
+    if (initEl) initEl.textContent = initials;
+    if (nameEl) nameEl.textContent = currentUser.name.split(' ')[0];
 }
 
 // ========== FUNCTIONS ==========
@@ -2420,11 +2887,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
     currentUser = data;
     loadProgress();
-    if (isEnrolledInCurrentCourse()) {
-        enterCourse();
-    } else {
-        showEnrollmentScreen();
-    }
+    updateUserBadge();
+    // Siempre mostrar el landing estilo Coursera primero
+    // (tanto para inscritos como no inscritos; el CTA se adapta al estado)
+    showCourseLanding();
 
     // Atajo admin (Ctrl+Shift+A) - ahora redirige a admin.html
     document.addEventListener('keydown', e => {
@@ -2529,8 +2995,7 @@ function showEnrollmentScreen() {
 async function startStripeEnroll() {
     const btn = document.getElementById('enrollStripeBtn');
     const err = document.getElementById('enrollError');
-    err.style.display = 'none';
-    err.textContent = '';
+    if (err) { err.style.display = 'none'; err.textContent = ''; }
     btn.disabled = true;
     btn.textContent = 'Redirigiendo a pago seguro…';
     try {
@@ -2539,9 +3004,349 @@ async function startStripeEnroll() {
         window.location.href = result.url;
     } catch (e) {
         btn.disabled = false;
-        btn.textContent = 'Pagar e inscribirme';
-        err.textContent = (e && e.message) ? e.message : 'No se pudo iniciar el pago. Intenta de nuevo.';
-        err.style.display = 'block';
+        btn.textContent = 'Inscribirme ahora';
+        if (err) {
+            err.textContent = (e && e.message) ? e.message : 'No se pudo iniciar el pago. Intenta de nuevo.';
+            err.style.display = 'block';
+        } else {
+            alert((e && e.message) ? e.message : 'No se pudo iniciar el pago. Intenta de nuevo.');
+        }
+    }
+}
+
+// ========== COURSERA-STYLE COURSE LANDING ==========
+function _clEsc(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function _clPrice(n) { return '$' + Number(n).toLocaleString('es-MX'); }
+
+function showCourseLanding() {
+    const meta = (COURSE && COURSE.meta) || {};
+    const enrolled = isEnrolledInCurrentCourse();
+    const hasProgress = completedLessons && completedLessons.size > 0;
+    const pricing = ENROLL_PRICING[COURSE.id] || { price: 999, listPrice: null };
+
+    // Hide other screens
+    const splash = document.getElementById('splash');
+    if (splash) splash.style.display = 'none';
+    const auth = document.getElementById('authScreen');
+    if (auth) auth.classList.add('hide');
+    const landing = document.getElementById('courseLanding');
+    if (!landing) return;
+    landing.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    // --- Build data ---
+    const title = meta.title || 'Curso TRIKLES';
+    const subtitle = meta.subtitle || meta.description || '';
+    const author = meta.author || '';
+    const partner = meta.partnerName || 'TRIKLES';
+    const partnerTag = meta.partnerTag || 'Formación Ejecutiva';
+    const level = meta.level || 'Todos los niveles';
+    const lessonsCount = meta.lessonsCount || (lessons ? lessons.length : 0);
+    const hours = meta.estimatedHours || meta.duration || '';
+    const rating = meta.rating || { score: 4.8, count: 120 };
+    const schedule = meta.schedule || 'Horario flexible · a tu ritmo';
+    const language = meta.language || 'Español';
+    const instructor = meta.instructor || {
+        name: 'LADE Germán Solís Muñoz',
+        title: 'Director de Gestión Empresarial · TRIKLES',
+        photo: 'assets/instructor-german.jpg',
+        bio: 'Instructor y fundador de TRIKLES. Adapta materiales de autores top al contexto mexicano.'
+    };
+    const outcomes = meta.learningOutcomes || [];
+    const skills = meta.skills || [];
+    const tools = meta.tools || [];
+    const details = meta.details || [
+        { label: 'Idioma', value: language },
+        { label: 'Modalidad', value: 'Online · 100% asíncrono' },
+        { label: 'Certificado', value: meta.includesCertificate !== false ? 'Certificado TRIKLES al aprobar' : 'Sin certificado' },
+        { label: 'Acceso', value: 'De por vida' }
+    ];
+    const testimonials = meta.testimonials || [];
+    const faq = meta.faq || [];
+    const description = meta.description || '';
+
+    // --- CTA text based on state ---
+    let ctaText, ctaAction, ctaPriceLine, secondaryHint;
+    if (enrolled) {
+        if (hasProgress) {
+            ctaText = '▶  Continuar curso';
+        } else {
+            ctaText = '▶  Comenzar curso';
+        }
+        ctaAction = 'clGoToLessons()';
+        ctaPriceLine = '';
+        secondaryHint = 'Ya estás inscrito · acceso completo';
+    } else {
+        ctaText = 'Inscribirme · ' + _clPrice(pricing.price) + ' MXN';
+        ctaAction = 'startStripeEnroll()';
+        const listHtml = (pricing.listPrice && pricing.listPrice > pricing.price)
+            ? '<div class="cl-hero-card-list">Precio regular ' + _clPrice(pricing.listPrice) + ' MXN</div>' : '';
+        const savePct = (pricing.listPrice && pricing.listPrice > pricing.price)
+            ? Math.round((1 - pricing.price / pricing.listPrice) * 100) : 0;
+        const saveHtml = savePct > 0 ? '<div class="cl-hero-card-save">Lanzamiento · ahorra ' + savePct + '%</div>' : '';
+        ctaPriceLine =
+            '<div class="cl-hero-card-price">' + _clPrice(pricing.price) + '<span class="cur">MXN</span></div>' +
+            listHtml + saveHtml;
+        secondaryHint = 'Pago único · acceso de por vida';
+    }
+
+    // --- Lessons preview list ---
+    const lessonsList = (lessons || []).map((l, i) => {
+        const sub = (l.module || l.tagLabel || '');
+        return (
+            '<li>' +
+                '<div class="num">' + (i + 1) + '</div>' +
+                '<div>' +
+                    '<div class="title">' + _clEsc(l.title || ('Lección ' + (i + 1))) + '</div>' +
+                    (sub ? '<div class="sub">' + _clEsc(sub) + '</div>' : '') +
+                '</div>' +
+                '<div class="dur">' + _clEsc(l.duration || '') + '</div>' +
+            '</li>'
+        );
+    }).join('');
+
+    // --- Testimonials ---
+    const testiHtml = testimonials.map(t =>
+        '<div class="cl-testi">' +
+            '<p class="cl-testi-text">' + _clEsc(t.text) + '</p>' +
+            '<div class="cl-testi-author"><strong>' + _clEsc(t.name) + '</strong> · ' + _clEsc(t.role) + '</div>' +
+        '</div>'
+    ).join('');
+
+    // --- FAQ ---
+    const faqHtml = faq.map(f =>
+        '<details><summary>' + _clEsc(f.q) + '</summary><p>' + _clEsc(f.a) + '</p></details>'
+    ).join('');
+
+    // --- Outcomes ---
+    const outcomesHtml = outcomes.length
+        ? '<ul class="cl-outcomes">' + outcomes.map(o => '<li>' + _clEsc(o) + '</li>').join('') + '</ul>'
+        : '<p>Al completar este curso, dominarás los conceptos clave y contarás con herramientas prácticas aplicables a tu equipo.</p>';
+
+    // --- Skills ---
+    const skillsHtml = skills.length
+        ? '<div class="cl-tags">' + skills.map(s => '<span class="cl-tag">' + _clEsc(s) + '</span>').join('') + '</div>'
+        : '';
+
+    // --- Tools ---
+    const toolsHtml = tools.length
+        ? '<ul class="cl-tools">' + tools.map(t => '<li>' + _clEsc(t) + '</li>').join('') + '</ul>'
+        : '';
+
+    // --- Details list ---
+    const detailsHtml = '<ul class="cl-details">' +
+        details.map(d => '<li><span class="lbl">' + _clEsc(d.label) + '</span><span class="val">' + _clEsc(d.value) + '</span></li>').join('') +
+    '</ul>';
+
+    // --- Rating display ---
+    const ratingHtml =
+        '<span class="star">★</span>' + rating.score.toFixed(1) +
+        '<div class="cl-stat-sub">(' + rating.count.toLocaleString('es-MX') + ' estudiantes)</div>';
+
+    const enrolledChip = enrolled
+        ? '<div class="cl-enrolled-chip">✓ Inscrito</div>'
+        : '';
+
+    // --- Render ---
+    landing.innerHTML =
+        // TOPBAR
+        '<div class="cl-topbar">' +
+            '<div class="cl-topbar-left">' +
+                '<div class="cl-topbar-logo">TRIKLES</div>' +
+                '<a class="cl-topbar-back" href="index.html">&larr; Catálogo</a>' +
+            '</div>' +
+            '<div class="cl-topbar-right">' +
+                (enrolled
+                    ? '<button class="cl-topbar-enroll secondary" onclick="' + ctaAction + '">' + (hasProgress ? 'Continuar' : 'Comenzar') + '</button>'
+                    : '<button class="cl-topbar-enroll" onclick="startStripeEnroll()">Inscribirme</button>') +
+            '</div>' +
+        '</div>' +
+
+        // HERO
+        '<section class="cl-hero">' +
+            '<div class="cl-hero-inner">' +
+                '<div>' +
+                    enrolledChip +
+                    '<div class="cl-hero-partner">' + _clEsc(partner) +
+                        '<span class="cl-hero-partner-tag">· ' + _clEsc(partnerTag) + '</span></div>' +
+                    '<h1 class="cl-hero-title">' + _clEsc(title) + '</h1>' +
+                    (subtitle ? '<p class="cl-hero-subtitle">' + _clEsc(subtitle) + '</p>' : '') +
+                    '<div class="cl-hero-instructor">' +
+                        '<img src="' + _clEsc(instructor.photo) + '" alt="' + _clEsc(instructor.name) + '" onerror="this.src=\'assets/instructor-german.jpg\';">' +
+                        '<div class="cl-hero-instructor-text">' +
+                            '<div class="lbl">Instructor</div>' +
+                            '<div class="nm">' + _clEsc(instructor.name) + '</div>' +
+                            (author ? '<div class="lbl" style="margin-top:3px;">Basado en: ' + _clEsc(author) + '</div>' : '') +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="cl-hero-cta-row">' +
+                        '<button class="cl-cta-primary" onclick="' + ctaAction + '" id="enrollStripeBtn">' + _clEsc(ctaText) + '</button>' +
+                        '<span class="cl-cta-hint">' + _clEsc(secondaryHint) + '</span>' +
+                    '</div>' +
+                    '<div id="enrollError" class="enroll-error" style="display:none;margin-top:16px;text-align:left;"></div>' +
+                '</div>' +
+
+                '<div class="cl-hero-card">' +
+                    ctaPriceLine +
+                    (!enrolled ? '<hr>' : '') +
+                    '<ul class="cl-hero-card-list-benefits">' +
+                        '<li>' + lessonsCount + ' lecciones con video y ejercicios</li>' +
+                        '<li>Quizzes por lección + examen final</li>' +
+                        (meta.includesCertificate !== false ? '<li>Certificado TRIKLES verificable</li>' : '') +
+                        '<li>Acceso de por vida, a tu ritmo</li>' +
+                        '<li>Material en español + ejemplos mexicanos</li>' +
+                    '</ul>' +
+                    (!enrolled
+                        ? '<button class="cl-side-cta gold" onclick="startStripeEnroll()" style="margin-top:20px;">' + _clEsc(ctaText) + '</button>'
+                        : '<button class="cl-side-cta gold" onclick="' + ctaAction + '" style="margin-top:20px;">' + (hasProgress ? 'Continuar aprendiendo' : 'Comenzar ahora') + '</button>'
+                    ) +
+                '</div>' +
+            '</div>' +
+        '</section>' +
+
+        // STATS ROW
+        '<div class="cl-stats">' +
+            '<div class="cl-stats-inner">' +
+                '<div class="cl-stat">' +
+                    '<div class="cl-stat-label">Calificación</div>' +
+                    '<div class="cl-stat-value">' + ratingHtml + '</div>' +
+                '</div>' +
+                '<div class="cl-stat">' +
+                    '<div class="cl-stat-label">Contenido</div>' +
+                    '<div class="cl-stat-value">' + lessonsCount + '</div>' +
+                    '<div class="cl-stat-sub">lecciones</div>' +
+                '</div>' +
+                '<div class="cl-stat">' +
+                    '<div class="cl-stat-label">Nivel</div>' +
+                    '<div class="cl-stat-value small-line">' + _clEsc(level) + '</div>' +
+                '</div>' +
+                '<div class="cl-stat">' +
+                    '<div class="cl-stat-label">Duración</div>' +
+                    '<div class="cl-stat-value small-line">' + _clEsc(hours) + '</div>' +
+                    '<div class="cl-stat-sub">aprox.</div>' +
+                '</div>' +
+                '<div class="cl-stat">' +
+                    '<div class="cl-stat-label">Cronograma</div>' +
+                    '<div class="cl-stat-value small-line">Flexible</div>' +
+                    '<div class="cl-stat-sub">a tu ritmo</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+
+        // TABS
+        '<div class="cl-tabs-wrap">' +
+            '<div class="cl-tabs">' +
+                '<div class="cl-tab active" onclick="clSelectTab(event,\'cl-about\')">Acerca de</div>' +
+                '<div class="cl-tab" onclick="clSelectTab(event,\'cl-outcomes-sec\')">Resultados</div>' +
+                '<div class="cl-tab" onclick="clSelectTab(event,\'cl-lessons-sec\')">Lecciones</div>' +
+                (testimonials.length ? '<div class="cl-tab" onclick="clSelectTab(event,\'cl-testi-sec\')">Testimonios</div>' : '') +
+                (faq.length ? '<div class="cl-tab" onclick="clSelectTab(event,\'cl-faq-sec\')">Preguntas</div>' : '') +
+            '</div>' +
+        '</div>' +
+
+        // BODY
+        '<div class="cl-body">' +
+            '<div>' +
+                // About
+                '<section class="cl-section" id="cl-about">' +
+                    '<h2>Acerca de este curso</h2>' +
+                    '<p>' + _clEsc(description) + '</p>' +
+                    (instructor.bio
+                        ? '<h3>Tu instructor</h3>' +
+                          '<p><strong>' + _clEsc(instructor.name) + '</strong> — ' + _clEsc(instructor.title) + '</p>' +
+                          '<p>' + _clEsc(instructor.bio) + '</p>'
+                        : '') +
+                '</section>' +
+
+                // Outcomes
+                '<section class="cl-section" id="cl-outcomes-sec">' +
+                    '<h2>Qué aprenderás</h2>' +
+                    outcomesHtml +
+                '</section>' +
+
+                // Skills
+                (skillsHtml ?
+                    '<section class="cl-section">' +
+                        '<h2>Habilidades que obtendrás</h2>' +
+                        skillsHtml +
+                    '</section>'
+                : '') +
+
+                // Tools
+                (toolsHtml ?
+                    '<section class="cl-section">' +
+                        '<h2>Herramientas y materiales</h2>' +
+                        toolsHtml +
+                    '</section>'
+                : '') +
+
+                // Lessons list
+                '<section class="cl-section" id="cl-lessons-sec">' +
+                    '<h2>Contenido del curso</h2>' +
+                    '<p style="color:var(--tk-ink-soft);font-size:13px;">' + lessonsCount + ' lecciones · ' + _clEsc(hours) + ' aprox.</p>' +
+                    '<ul class="cl-lessons-list">' + lessonsList + '</ul>' +
+                '</section>' +
+
+                // Testimonials
+                (testimonials.length ?
+                    '<section class="cl-section" id="cl-testi-sec">' +
+                        '<h2>Lo que dicen los alumnos</h2>' +
+                        '<div class="cl-testi-grid">' + testiHtml + '</div>' +
+                    '</section>'
+                : '') +
+
+                // FAQ
+                (faq.length ?
+                    '<section class="cl-section" id="cl-faq-sec">' +
+                        '<h2>Preguntas frecuentes</h2>' +
+                        '<div class="cl-faq">' + faqHtml + '</div>' +
+                    '</section>'
+                : '') +
+            '</div>' +
+
+            // Sidebar
+            '<aside class="cl-side">' +
+                '<div class="cl-side-card">' +
+                    '<h4>Detalles del curso</h4>' +
+                    detailsHtml +
+                    (!enrolled
+                        ? '<button class="cl-side-cta" onclick="startStripeEnroll()">' + _clEsc(ctaText) + '</button>'
+                        : '<button class="cl-side-cta" onclick="' + ctaAction + '">' + (hasProgress ? 'Continuar' : 'Comenzar') + '</button>'
+                    ) +
+                '</div>' +
+            '</aside>' +
+        '</div>';
+
+    // Tab scrollspy
+    window.clSelectTab = function(e, id) {
+        document.querySelectorAll('.cl-tab').forEach(t => t.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+}
+
+// Transición limpia landing -> lecciones (evita el fade de 600ms del splash)
+function clGoToLessons() {
+    const landing = document.getElementById('courseLanding');
+    const splash = document.getElementById('splash');
+    const topbar = document.getElementById('topbar');
+    const layout = document.getElementById('layout');
+    if (landing) landing.style.display = 'none';
+    if (splash) { splash.classList.add('hide'); splash.style.display = 'none'; }
+    document.body.style.overflow = '';
+    if (topbar) topbar.style.display = 'flex';
+    if (layout) layout.style.display = 'flex';
+    updateXPBar();
+    buildSidebar();
+    const resumeIdx = determineResumeLesson();
+    showLesson(resumeIdx);
+    if (resumeIdx > 0 && completedLessons.size > 0) {
+        showResumeToast(resumeIdx);
     }
 }
 

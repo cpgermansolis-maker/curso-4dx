@@ -18,7 +18,86 @@ const COURSE_CODIGO_HONOR = {
         duration: '10-12 horas',
         level: 'Intermedio',
         active: true,
-        tags: ['liderazgo', 'equipos', 'código de honor', 'Blair Singer', 'Padre Rico', 'cultura organizacional', 'alto desempeño']
+        tags: ['liderazgo', 'equipos', 'código de honor', 'Blair Singer', 'Padre Rico', 'cultura organizacional', 'alto desempeño'],
+
+        // --- Coursera-like landing ---
+        partnerName: 'TRIKLES',
+        partnerTag: 'Formación Ejecutiva',
+        instructor: {
+            name: 'LADE Germán Solís Muñoz',
+            title: 'Director de Gestión Empresarial · TRIKLES',
+            photo: 'assets/instructor-german.jpg',
+            bio: 'Instructor certificado, consultor de PyMEs y fundador de TRIKLES. Ha impartido el método de Blair Singer a equipos directivos y comerciales en México.'
+        },
+        rating: { score: 4.8, count: 184 },
+        estimatedHours: '~11 horas',
+        schedule: 'Horario flexible · a tu ritmo',
+        language: 'Español',
+        includesCertificate: true,
+        learningOutcomes: [
+            'Mapear los 4 perfiles de tu equipo (Soñadores, Pensadores, Líderes, Hacedores) y saber qué hacer con cada uno',
+            'Redactar un Código de Honor real, pactado y firmado por tu equipo en una sola sesión',
+            'Aplicar la Campana: el ritual de Blair Singer para reforzar el Código sin confrontación',
+            'Sostener el Código bajo presión, ventas bajas, conflicto y cambio — sin perder gente clave',
+            'Convertir a gente común en Grandes Jugadores con retroalimentación, coaching y responsabilidad radical'
+        ],
+        skills: [
+            'Construcción de equipos',
+            'Cultura organizacional',
+            'Liderazgo situacional',
+            'Retroalimentación efectiva',
+            'Responsabilidad radical',
+            'Gestión de conflictos',
+            'Coaching 1-a-1',
+            'Alineación estratégica',
+            'Rituales de equipo',
+            'Alto desempeño'
+        ],
+        tools: [
+            'Plantilla de Código de Honor (PDF)',
+            'Matriz de 4 perfiles de equipo',
+            'Guía de sesión de la Campana',
+            'Cuadernillo de ejemplos mexicanos',
+            'Examen final con certificado TRIKLES'
+        ],
+        details: [
+            { label: 'Modalidad', value: 'Online · 100% asíncrono' },
+            { label: 'Idioma', value: 'Español (MX)' },
+            { label: 'Certificado', value: 'Certificado TRIKLES al aprobar examen final' },
+            { label: 'Acceso', value: 'De por vida, incluye actualizaciones' },
+            { label: 'Dispositivo', value: 'Computadora, tablet o celular' }
+        ],
+        testimonials: [
+            {
+                name: 'Mariana R.',
+                role: 'Gerente Comercial · Distribuidora Los Pinos',
+                text: 'Llevamos 7 años con el mismo equipo y siempre había fricción. En 3 semanas con el Código redujimos juntas de 2 horas a 40 minutos y dejamos de pelear por lo mismo.'
+            },
+            {
+                name: 'Luis G.',
+                role: 'Director de Operaciones · Industrias del Valle',
+                text: 'Lo que me sirvió fue la Campana. Al principio sonaba ridículo, pero es justo lo que nos faltaba: una forma de recordarnos el acuerdo sin confrontar.'
+            },
+            {
+                name: 'Ana P.',
+                role: 'Dueña · Restaurante La Milpa',
+                text: 'Mi equipo de cocina era un caos con rotación mensual. Después del curso firmamos nuestro Código, lo tenemos pegado en la cocina y llevo 6 meses sin renuncias.'
+            }
+        ],
+        faq: [
+            {
+                q: '¿Necesito tener un equipo grande para aplicar esto?',
+                a: 'No. El método funciona con 3, 10, 50 o más personas. Hay ejemplos para cada tamaño, incluyendo microempresas familiares.'
+            },
+            {
+                q: '¿Cuánto tiempo me lleva construir el Código de Honor?',
+                a: 'Una sesión de 2–3 horas con tu equipo. El curso te enseña a facilitarla paso a paso.'
+            },
+            {
+                q: '¿El certificado sirve para mi CV?',
+                a: 'Sí. Al aprobar el examen final recibes un certificado TRIKLES con tu nombre, fecha y folio verificable.'
+            }
+        ]
     },
 
     // Requisitos de aprobación por lección (IDs de quizzes)
