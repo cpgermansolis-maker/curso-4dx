@@ -1891,13 +1891,13 @@ const COURSE_FEUM_INVENTARIOS = {
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/zjhKn_ctnYo?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/tLsUIOW8xNw?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Verificación COFEPRIS a una farmacia — Procedimiento"></iframe>
+                        title="Módulo 4 — Auditoría de Farmacia"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Verificación COFEPRIS a una farmacia — Procedimiento</div>
+            <div style="text-align:center;margin-top:10px;color:#bbb;font-size:0.88em;font-style:italic;">Módulo 4 — Auditoría de Farmacia</div>
         </div>
 
         <div class="instructor-note">

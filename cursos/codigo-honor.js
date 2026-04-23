@@ -518,13 +518,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/qU3uGUZrRFk?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/1co6zpbmvOk?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Gestión emocional en equipos bajo presión"></iframe>
+                        title="Las 5 disfunciones de un equipo — Lencioni"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo reacciona un equipo bajo presión — psicología organizacional en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Las 5 disfunciones de un equipo de Patrick Lencioni — Coach Pepe Villacís</div>
         </div>
 
         <div class="content-card">
@@ -636,13 +636,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/A9hbCCyKvNo?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/PJ1N5NmTySI?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Roles en equipos de alto desempeño"</iframe>
+                        title="Las cinco disfunciones de un equipo — Lencioni"</iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Los roles invisibles dentro de tu equipo — análisis en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Las cinco disfunciones de un equipo de Patrick Lencioni — IOX Asesores</div>
         </div>
 
         <div class="content-card">
@@ -758,13 +758,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/U7vWGnpN7iE?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/pYmUjlm-nNo?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="El triángulo B-I de Robert Kiyosaki"></iframe>
+                        title="Libro de la Semana: Las cinco disfunciones"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">El triángulo B-I explicado en español · Padre Rico</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Libro de la Semana: Las 5 disfunciones de un equipo — ActionCOACH Magallanes</div>
         </div>
 
         <div class="content-card">
@@ -893,13 +893,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/kYP81GaSkZg?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/3gp8Nkq3I58?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Cómo facilitar sesiones de trabajo con equipos"></iframe>
+                        title="Claves del trabajo en equipo — 5 disfunciones"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Facilitación de sesiones de equipo — guía en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Claves del trabajo en equipo — Coach Eulàlia Tort</div>
         </div>
 
         <div class="content-card">
@@ -1043,13 +1043,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/8gpg1pf-NKk?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/BBcP2FuKBmc?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Rituales de compromiso organizacional"></iframe>
+                        title="Las 5 disfunciones de un equipo — Torre Conecta"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">El poder de los rituales en organizaciones — análisis en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Las 5 disfunciones de un equipo de Patrick Lencioni — Torre Conecta</div>
         </div>
 
         <div class="content-card">
@@ -1188,13 +1188,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/QKD4cSgFoIQ?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/7HvYUlH4mkA?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Integridad personal del líder"></iframe>
+                        title="Cómo los grandes líderes inspiran la acción"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">La integridad personal como cimiento del liderazgo — charla en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">TED Simon Sinek: Cómo los grandes líderes inspiran la acción (español)</div>
         </div>
 
         <div class="content-card">
@@ -1310,13 +1310,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/Ci16zMGZijw?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/4bcB5FJq80Q?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Ejemplo del líder en la cultura organizacional"></iframe>
+                        title="Simon Sinek: líderes inspiran la acción"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">El ejemplo del líder como origen de toda cultura — video en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Simon Sinek — Cómo los grandes líderes inspiran la acción (en español)</div>
         </div>
 
         <div class="content-card">
@@ -1420,13 +1420,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/ZUsjLvOHbOY?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/lVWZXojr1p8?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Rituales de refuerzo en equipos de alto desempeño"></iframe>
+                        title="Resumen visual: Simon Sinek"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo los rituales sostienen las conductas — análisis en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Resumen visual del TED de Simon Sinek — Pensamiento Visual</div>
         </div>
 
         <div class="content-card">
@@ -1559,13 +1559,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/s-YpPrHajyE?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/DRzAqMgzxtA?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Disciplina positiva en equipos de trabajo"></iframe>
+                        title="TED Simon Sinek: líderes inspiran la acción"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Disciplina justa y firme en equipos — charla en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Simon Sinek — TED Talk con subtítulos en español</div>
         </div>
 
         <div class="content-card">
@@ -1715,13 +1715,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/mAT3HPhJvfg?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/1M0B5evfhC4?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Sostener cambios culturales en organizaciones"></iframe>
+                        title="Simon Sinek: Empieza con PORQUÉ"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo sostener un cambio cultural a largo plazo — video en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Simon Sinek en Las Vegas: Empieza con PORQUÉ (subtítulos en español)</div>
         </div>
 
         <div class="content-card">
@@ -1856,13 +1856,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/HLtFfF9JzTs?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/nqyHYUcEcZY?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Líder como multiplicador del talento"></iframe>
+                        title="Simon Sinek: How great leaders inspire action"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">El líder multiplicador vs. el líder disminuidor — análisis en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Simon Sinek TED — How great leaders inspire action (subtitulado)</div>
         </div>
 
         <div class="content-card">
@@ -1986,13 +1986,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/uOobwJXbu8A?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/PZuSrV0hsnA?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Exigencia y apoyo en el liderazgo"></iframe>
+                        title="Mettaliderazgo: líderes de alto desempeño"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">El balance entre exigir y apoyar — charla en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Mettaliderazgo — creando líderes de alto desempeño · TEDx Barrio del Encino</div>
         </div>
 
         <div class="content-card">
@@ -2108,13 +2108,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/bCLtuBnO9eU?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/AMk6yiFaoxM?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="El arte de dar retroalimentación"></iframe>
+                        title="Liderazgo y gestión de equipos"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo dar retroalimentación que transforma — guía en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Liderazgo y gestión de equipos — conferencia completa</div>
         </div>
 
         <div class="content-card">
@@ -2246,13 +2246,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/ZBmRuJGmyC8?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/YfYZdnX-E5s?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="La sinergia en equipos de trabajo"></iframe>
+                        title="Equipos de Alto Rendimiento"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Grupo vs. equipo — el concepto de sinergia explicado en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Podcast de Liderazgo y Gerencia — Equipos de Alto Rendimiento</div>
         </div>
 
         <div class="content-card">
@@ -2374,13 +2374,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/3-sqrk3v_zw?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/6e9fMej5w3A?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Misión, visión y valores en una organización"></iframe>
+                        title="Simon Sinek: Start with WHY"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Misión, visión y valores claros — cómo formularlos en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Simon Sinek TED — Start with WHY con subtítulos en español</div>
         </div>
 
         <div class="content-card">
@@ -2502,13 +2502,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/L9d3qRBRXDI?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/c3mrpMdo7t0?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Responsabilidad personal en equipos"></iframe>
+                        title="Kiyosaki: Si tuviera que empezar de cero"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">La responsabilidad radical como cultura de equipo — charla en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Robert Kiyosaki — Si tuviera que empezar de cero (en español)</div>
         </div>
 
         <div class="content-card">
@@ -2762,13 +2762,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/NPSKMohTMgU?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/vrovJIftuwc?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Liderazgo bajo presión y gestión de crisis"></iframe>
+                        title="Cómo liderar equipos en tiempos de cambio"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Gestión de crisis en equipos de alto desempeño — video en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Liderar equipos en tiempos de cambio — CENSA Costa Rica</div>
         </div>
 
         <div class="content-card">
@@ -2895,13 +2895,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/Lo7TxTnA_Fc?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/5ubXCsPkS8M?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Cómo implementar cambios culturales rápido"></iframe>
+                        title="Liderar un equipo de alto rendimiento"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Implementar cambios culturales rápidos — casos exitosos en español</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">5 ideas para liderar un equipo de alto rendimiento — Jesús Soler</div>
         </div>
 
         <div class="content-card">
@@ -3044,13 +3044,13 @@ const COURSE_CODIGO_HONOR = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/8OMWMdpGaoY?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/SAB35VyjkTk?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Cultura organizacional en empresas mexicanas"></iframe>
+                        title="Kiyosaki: Despierta tu mente financiera"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Transformación cultural en empresas mexicanas — casos reales</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Robert Kiyosaki — Despierta tu mente financiera (en español)</div>
         </div>
 
         <div class="content-card">
