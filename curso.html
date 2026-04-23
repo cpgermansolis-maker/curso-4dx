@@ -1858,6 +1858,127 @@
             .cl-hero-title { font-size: 24px; }
             .cl-hero-card-price { font-size: 32px; }
         }
+
+        /* ============================================================
+           ENROLL MODAL (Coursera-style benefits modal)
+           ============================================================ */
+        .cl-modal-backdrop {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(10, 37, 64, 0.55);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center; justify-content: center;
+            padding: 20px; overflow-y: auto;
+            opacity: 0; transition: opacity 0.18s ease;
+        }
+        .cl-modal-backdrop.show { display: flex; opacity: 1; }
+        .cl-modal {
+            background: #fff; max-width: 560px; width: 100%;
+            border: 1px solid var(--tk-hairline);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+            padding: 36px 40px 32px;
+            position: relative;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            color: var(--tk-ink);
+            transform: translateY(8px);
+            transition: transform 0.22s ease;
+        }
+        .cl-modal-backdrop.show .cl-modal { transform: translateY(0); }
+        .cl-modal-close {
+            position: absolute; top: 16px; right: 18px;
+            background: none; border: none; cursor: pointer;
+            font-size: 22px; color: var(--tk-ink-soft);
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; transition: background 0.15s, color 0.15s;
+        }
+        .cl-modal-close:hover { background: var(--tk-cream-deep); color: var(--tk-navy); }
+        .cl-modal-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 500; font-size: 26px;
+            color: var(--tk-navy);
+            margin: 0 0 6px;
+            letter-spacing: -0.01em;
+            padding-right: 32px;
+        }
+        .cl-modal-subtitle {
+            font-size: 14px; color: var(--tk-ink-soft);
+            margin: 0 0 24px;
+            line-height: 1.5;
+        }
+        .cl-modal-benefits {
+            list-style: none; padding: 0; margin: 0 0 26px;
+        }
+        .cl-modal-benefits li {
+            display: grid;
+            grid-template-columns: 28px 1fr; gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--tk-hairline);
+            align-items: flex-start;
+        }
+        .cl-modal-benefits li:last-child { border-bottom: none; }
+        .cl-modal-benefits .check {
+            color: var(--tk-gold);
+            font-size: 22px; font-weight: 700;
+            line-height: 1.2; text-align: center;
+        }
+        .cl-modal-benefits b {
+            display: block;
+            color: var(--tk-navy);
+            font-weight: 600; font-size: 15px;
+            margin-bottom: 3px;
+        }
+        .cl-modal-benefits .sub {
+            color: var(--tk-ink-soft);
+            font-size: 13px; line-height: 1.5;
+        }
+        .cl-modal-cta {
+            display: block; width: 100%;
+            background: var(--tk-navy); color: #fff;
+            border: none; padding: 16px;
+            font-size: 13px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            cursor: pointer; border-radius: 2px;
+            transition: background 0.18s;
+            font-family: inherit;
+        }
+        .cl-modal-cta:hover { background: var(--tk-navy-soft); }
+        .cl-modal-cta:disabled { background: var(--tk-ink-soft); cursor: wait; }
+        .cl-modal-secure {
+            text-align: center;
+            font-size: 11px; color: var(--tk-ink-soft);
+            margin-top: 14px;
+            letter-spacing: 0.3px;
+            line-height: 1.5;
+        }
+        .cl-modal-secondary {
+            background: none !important;
+            color: var(--tk-ink-soft) !important;
+            font-size: 12px !important;
+            text-transform: none !important;
+            letter-spacing: 0.3px !important;
+            font-weight: 500 !important;
+            padding: 10px !important;
+            margin-top: 6px;
+            border: none !important;
+        }
+        .cl-modal-secondary:hover { color: var(--tk-navy) !important; background: none !important; }
+        .cl-modal-error {
+            display: none;
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: #fdf5f5;
+            border: 1px solid #eecfcf;
+            color: #a33030;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 560px) {
+            .cl-modal { padding: 28px 22px 22px; }
+            .cl-modal-title { font-size: 22px; }
+            .cl-modal-benefits li { padding: 12px 0; gap: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -1968,6 +2089,19 @@
 
 <!-- COURSE LANDING (Coursera-style) -->
 <div id="courseLanding" style="display:none;"></div>
+
+<!-- ENROLL BENEFITS MODAL (Coursera-style) -->
+<div class="cl-modal-backdrop" id="enrollBenefitsModal" onclick="if(event.target===this)clCloseEnrollModal()">
+    <div class="cl-modal" role="dialog" aria-labelledby="clModalTitle">
+        <button class="cl-modal-close" onclick="clCloseEnrollModal()" aria-label="Cerrar">&times;</button>
+        <h2 class="cl-modal-title" id="clModalTitle">Inscríbete al curso</h2>
+        <p class="cl-modal-subtitle" id="clModalSubtitle">Empieza a aprender en menos de 2 minutos</p>
+        <ul class="cl-modal-benefits" id="clModalBenefits"></ul>
+        <button class="cl-modal-cta" id="clModalCta" onclick="clModalConfirm()">Pagar e inscribirme</button>
+        <div class="cl-modal-error" id="clModalError"></div>
+        <div class="cl-modal-secure" id="clModalSecure">Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía</div>
+    </div>
+</div>
 
 <!-- SPLASH (legado — ya no se usa, el landing lo reemplaza) -->
 <div id="splash" style="display:none;">
@@ -3086,7 +3220,7 @@ function showCourseLanding() {
         secondaryHint = 'Ya estás inscrito · acceso completo';
     } else {
         ctaText = 'Inscribirme · ' + _clPrice(pricing.price) + ' MXN';
-        ctaAction = 'startStripeEnroll()';
+        ctaAction = 'clOpenEnrollModal()';
         const listHtml = (pricing.listPrice && pricing.listPrice > pricing.price)
             ? '<div class="cl-hero-card-list">Precio regular ' + _clPrice(pricing.listPrice) + ' MXN</div>' : '';
         const savePct = (pricing.listPrice && pricing.listPrice > pricing.price)
@@ -3166,7 +3300,7 @@ function showCourseLanding() {
             '<div class="cl-topbar-right">' +
                 (enrolled
                     ? '<button class="cl-topbar-enroll secondary" onclick="' + ctaAction + '">' + (hasProgress ? 'Continuar' : 'Comenzar') + '</button>'
-                    : '<button class="cl-topbar-enroll" onclick="startStripeEnroll()">Inscribirme</button>') +
+                    : '<button class="cl-topbar-enroll" onclick="clOpenEnrollModal()">Inscribirme</button>') +
             '</div>' +
         '</div>' +
 
@@ -3205,7 +3339,7 @@ function showCourseLanding() {
                         '<li>Material en español + ejemplos mexicanos</li>' +
                     '</ul>' +
                     (!enrolled
-                        ? '<button class="cl-side-cta gold" onclick="startStripeEnroll()" style="margin-top:20px;">' + _clEsc(ctaText) + '</button>'
+                        ? '<button class="cl-side-cta gold" onclick="clOpenEnrollModal()" style="margin-top:20px;">' + _clEsc(ctaText) + '</button>'
                         : '<button class="cl-side-cta gold" onclick="' + ctaAction + '" style="margin-top:20px;">' + (hasProgress ? 'Continuar aprendiendo' : 'Comenzar ahora') + '</button>'
                     ) +
                 '</div>' +
@@ -3318,7 +3452,7 @@ function showCourseLanding() {
                     '<h4>Detalles del curso</h4>' +
                     detailsHtml +
                     (!enrolled
-                        ? '<button class="cl-side-cta" onclick="startStripeEnroll()">' + _clEsc(ctaText) + '</button>'
+                        ? '<button class="cl-side-cta" onclick="clOpenEnrollModal()">' + _clEsc(ctaText) + '</button>'
                         : '<button class="cl-side-cta" onclick="' + ctaAction + '">' + (hasProgress ? 'Continuar' : 'Comenzar') + '</button>'
                     ) +
                 '</div>' +
@@ -3332,6 +3466,116 @@ function showCourseLanding() {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
+}
+
+// ========== ENROLL BENEFITS MODAL (Coursera-style) ==========
+function clOpenEnrollModal() {
+    const meta = (COURSE && COURSE.meta) || {};
+    const pricing = ENROLL_PRICING[COURSE.id] || { price: 999, listPrice: null };
+    const title = meta.title || 'este curso';
+
+    const modalTitle = document.getElementById('clModalTitle');
+    const modalSub = document.getElementById('clModalSubtitle');
+    const benefitsEl = document.getElementById('clModalBenefits');
+    const ctaEl = document.getElementById('clModalCta');
+    const errEl = document.getElementById('clModalError');
+    const secEl = document.getElementById('clModalSecure');
+
+    if (modalTitle) modalTitle.textContent = 'Inscríbete a "' + title + '"';
+    if (modalSub) modalSub.textContent = 'Empieza a aprender hoy mismo · Pago único, acceso de por vida';
+
+    // Lista de beneficios estilo Coursera (4 puntos clave: bold + sub)
+    const lessonsCount = meta.lessonsCount || (lessons ? lessons.length : 24);
+    const benefits = [
+        {
+            head: 'Acceso completo de por vida',
+            sub: 'Las ' + lessonsCount + ' lecciones, plantillas, video en español y exámenes — disponibles a tu ritmo, las veces que quieras.'
+        },
+        {
+            head: 'Certificado TRIKLES verificable',
+            sub: 'Al aprobar el examen final recibes tu certificado con folio único. Compártelo en LinkedIn y CV.'
+        },
+        {
+            head: '30 días de garantía total',
+            sub: 'Si no te sirve, te devolvemos tu dinero sin preguntas. Soporte directo del instructor por WhatsApp.'
+        },
+        {
+            head: _clPrice(pricing.price) + ' MXN · pago único',
+            sub: 'Sin cargos recurrentes ni suscripciones. Pagas una vez y es tuyo para siempre.' +
+                (pricing.listPrice && pricing.listPrice > pricing.price
+                    ? ' Precio regular ' + _clPrice(pricing.listPrice) + ' MXN — ahorras ' +
+                      Math.round((1 - pricing.price / pricing.listPrice) * 100) + '%.'
+                    : '')
+        }
+    ];
+    if (benefitsEl) {
+        benefitsEl.innerHTML = benefits.map(b =>
+            '<li>' +
+                '<span class="check">✓</span>' +
+                '<div>' +
+                    '<b>' + _clEsc(b.head) + '</b>' +
+                    '<div class="sub">' + _clEsc(b.sub) + '</div>' +
+                '</div>' +
+            '</li>'
+        ).join('');
+    }
+
+    if (ctaEl) {
+        ctaEl.textContent = 'Pagar e inscribirme · ' + _clPrice(pricing.price) + ' MXN';
+        ctaEl.disabled = false;
+    }
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+    if (secEl) secEl.textContent = 'Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía';
+
+    const backdrop = document.getElementById('enrollBenefitsModal');
+    if (backdrop) {
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        // Cerrar con ESC
+        document.addEventListener('keydown', _clEscClose);
+    }
+}
+
+function _clEscClose(e) {
+    if (e.key === 'Escape') clCloseEnrollModal();
+}
+
+function clCloseEnrollModal() {
+    const backdrop = document.getElementById('enrollBenefitsModal');
+    if (backdrop) backdrop.classList.remove('show');
+    // Restaurar scroll del landing
+    if (document.getElementById('courseLanding') &&
+        document.getElementById('courseLanding').style.display !== 'none') {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+    document.removeEventListener('keydown', _clEscClose);
+}
+
+async function clModalConfirm() {
+    const ctaEl = document.getElementById('clModalCta');
+    const errEl = document.getElementById('clModalError');
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+    if (ctaEl) {
+        ctaEl.disabled = true;
+        ctaEl.textContent = 'Redirigiendo a pago seguro…';
+    }
+    try {
+        const result = await TK.createStripeCheckout(COURSE.id);
+        if (!result || !result.url) throw new Error('No se recibió la URL de pago.');
+        window.location.href = result.url;
+    } catch (e) {
+        if (ctaEl) {
+            ctaEl.disabled = false;
+            const pricing = ENROLL_PRICING[COURSE.id] || { price: 999 };
+            ctaEl.textContent = 'Pagar e inscribirme · ' + _clPrice(pricing.price) + ' MXN';
+        }
+        if (errEl) {
+            errEl.textContent = (e && e.message) ? e.message : 'No se pudo iniciar el pago. Intenta de nuevo.';
+            errEl.style.display = 'block';
+        }
+    }
 }
 
 // Transición limpia landing -> lecciones (evita el fade de 600ms del splash)

@@ -1915,15 +1915,14 @@ function renderCourseCard(course, enrollment) {
 }
 
 function goToCourse(id) {
+    // Visitantes (sin sesión): seguimos mostrando el modal del index con
+    // botones de Registro/Login (necesitan crear cuenta antes de inscribirse).
     if (!currentUser) {
         openCourseModal(id);
         return;
     }
-    const enrollments = currentUser.enrollments || {};
-    if (!enrollments[id]) {
-        openCourseModal(id);
-        return;
-    }
+    // Usuarios logueados (inscritos o no): siempre al landing estilo Coursera.
+    // El landing detecta si está inscrito y adapta el CTA (Comenzar/Inscribirme).
     window.location.href = 'curso.html?id=' + id;
 }
 
