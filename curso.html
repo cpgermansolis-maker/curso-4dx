@@ -1638,6 +1638,82 @@
             flex-shrink: 0;
         }
 
+        /* Promo overlay — "primer curso gratis" */
+        .cl-promo-banner {
+            background: var(--tk-navy);
+            color: var(--tk-cream);
+            padding: 14px 18px 14px 22px;
+            margin: 0 0 18px;
+            position: relative;
+            border-left: 3px solid var(--tk-gold);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .cl-promo-banner-mark {
+            display: inline-block;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            background: var(--tk-gold);
+            color: var(--tk-navy);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.05em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .cl-promo-banner-body { flex: 1; line-height: 1.45; }
+        .cl-promo-banner-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--tk-gold);
+            margin-bottom: 4px;
+        }
+        .cl-promo-banner-text {
+            font-size: 13.5px;
+            color: var(--tk-cream);
+            margin: 0;
+        }
+        .cl-promo-banner-text strong { color: var(--tk-gold); font-weight: 600; }
+        .cl-promo-card-badge {
+            display: inline-block;
+            background: var(--tk-gold);
+            color: var(--tk-navy);
+            font-family: 'Inter', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            padding: 5px 11px 4px;
+            margin-bottom: 14px;
+            border-radius: 2px;
+        }
+        .cl-promo-card-price-free {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 500;
+            font-style: italic;
+            color: var(--tk-gold);
+            font-size: 0.52em;
+            letter-spacing: 0;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+        .cl-promo-free-line {
+            font-size: 12px;
+            color: var(--tk-ink-soft);
+            margin-top: 8px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
         /* STATS ROW */
         .cl-stats {
             background: #fff;
@@ -3106,6 +3182,14 @@ function isEnrolledInCurrentCourse() {
     return currentUser.enrollments && currentUser.enrollments[COURSE.id];
 }
 
+// Elegibilidad para promoción "primer curso gratis":
+// invitado sin cuenta O miembro logueado con 0 inscripciones activas
+function isEligibleForFreeFirstCourse() {
+    if (!currentUser) return true; // invitado
+    const count = Object.keys(currentUser.enrollments || {}).length;
+    return count === 0;
+}
+
 // Precios locales (la fuente de verdad para el cargo real es la Cloud Function)
 const ENROLL_PRICING = {
     'food-beverage':     { listPrice: 2499, price:  799 },
@@ -3273,6 +3357,7 @@ function showCourseLanding() {
     const description = meta.description || '';
 
     // --- CTA text based on state ---
+    const eligibleFree = isEligibleForFreeFirstCourse();
     let ctaText, ctaAction, ctaPriceLine, secondaryHint;
     if (enrolled) {
         if (hasProgress) {
@@ -3283,6 +3368,15 @@ function showCourseLanding() {
         ctaAction = 'clGoToLessons()';
         ctaPriceLine = '';
         secondaryHint = 'Ya estás inscrito · acceso completo';
+    } else if (eligibleFree) {
+        // Promoción: primer curso gratis
+        ctaText = 'Activar mi curso gratis';
+        ctaAction = 'clOpenEnrollModal()';
+        ctaPriceLine =
+            '<div class="cl-promo-card-badge">Primer curso gratis</div>' +
+            '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Valor ' + _clPrice(pricing.price) + ' MXN</span></div>' +
+            '<div class="cl-promo-free-line">Activa tu método de pago para próximas inscripciones. Este curso no se te cobra.</div>';
+        secondaryHint = 'Oferta de lanzamiento · primer curso gratis';
     } else {
         ctaText = 'Inscribirme · ' + _clPrice(pricing.price) + ' MXN';
         ctaAction = 'clOpenEnrollModal()';
@@ -3296,6 +3390,17 @@ function showCourseLanding() {
             listHtml + saveHtml;
         secondaryHint = 'Pago único · acceso de por vida';
     }
+
+    // Banner promocional arriba del hero card (cuando es elegible)
+    const promoBanner = (!enrolled && eligibleFree)
+        ? '<div class="cl-promo-banner">' +
+            '<span class="cl-promo-banner-mark">★</span>' +
+            '<div class="cl-promo-banner-body">' +
+                '<div class="cl-promo-banner-title">Oferta de lanzamiento</div>' +
+                '<p class="cl-promo-banner-text">Tu <strong>primer curso es totalmente gratis</strong> al activar tu cuenta con método de pago listo para próximos cursos.</p>' +
+            '</div>' +
+          '</div>'
+        : '';
 
     // --- Lessons preview list ---
     const lessonsList = (lessons || []).map((l, i) => {
@@ -3394,6 +3499,7 @@ function showCourseLanding() {
                 '</div>' +
 
                 '<div class="cl-hero-card">' +
+                    promoBanner +
                     ctaPriceLine +
                     (!enrolled ? '<hr>' : '') +
                     '<ul class="cl-hero-card-list-benefits">' +
@@ -3538,6 +3644,7 @@ function clOpenEnrollModal() {
     const meta = (COURSE && COURSE.meta) || {};
     const pricing = ENROLL_PRICING[COURSE.id] || { price: 999, listPrice: null };
     const title = meta.title || 'este curso';
+    const eligibleFree = isEligibleForFreeFirstCourse();
 
     const modalTitle = document.getElementById('clModalTitle');
     const modalSub = document.getElementById('clModalSubtitle');
@@ -3546,12 +3653,37 @@ function clOpenEnrollModal() {
     const errEl = document.getElementById('clModalError');
     const secEl = document.getElementById('clModalSecure');
 
-    if (modalTitle) modalTitle.textContent = 'Inscríbete a "' + title + '"';
-    if (modalSub) modalSub.textContent = 'Empieza a aprender hoy mismo · Pago único, acceso de por vida';
+    if (modalTitle) {
+        modalTitle.textContent = eligibleFree
+            ? 'Activa tu primer curso — gratis'
+            : 'Inscríbete a "' + title + '"';
+    }
+    if (modalSub) {
+        modalSub.textContent = eligibleFree
+            ? '"' + title + '" — sin costo. Activa tu método de pago para próximas inscripciones.'
+            : 'Empieza a aprender hoy mismo · Pago único, acceso de por vida';
+    }
 
     // Lista de beneficios estilo Coursera (4 puntos clave: bold + sub)
     const lessonsCount = meta.lessonsCount || (lessons ? lessons.length : 24);
-    const benefits = [
+    const benefits = eligibleFree ? [
+        {
+            head: 'Este curso: gratis · valor ' + _clPrice(pricing.price) + ' MXN',
+            sub: 'Oferta de lanzamiento para nuevos miembros: obtienes acceso completo a "' + title + '" sin costo al activar tu cuenta.'
+        },
+        {
+            head: 'Método de pago listo para próximos cursos',
+            sub: 'Registras tu tarjeta, SPEI u OXXO para que tus siguientes inscripciones sean instantáneas. No se cobra nada por este curso.'
+        },
+        {
+            head: 'Acceso completo de por vida + certificado',
+            sub: 'Las ' + lessonsCount + ' lecciones, quizzes, examen final y certificado TRIKLES verificable — todo incluido, a tu ritmo.'
+        },
+        {
+            head: '30 días de garantía total',
+            sub: 'Si no te sirve, te devolvemos sin preguntas. Soporte directo del instructor por WhatsApp.'
+        }
+    ] : [
         {
             head: 'Acceso completo de por vida',
             sub: 'Las ' + lessonsCount + ' lecciones, plantillas, video en español y exámenes — disponibles a tu ritmo, las veces que quieras.'
@@ -3586,11 +3718,17 @@ function clOpenEnrollModal() {
     }
 
     if (ctaEl) {
-        ctaEl.textContent = 'Pagar e inscribirme · ' + _clPrice(pricing.price) + ' MXN';
+        ctaEl.textContent = eligibleFree
+            ? 'Activar mi curso gratis'
+            : 'Pagar e inscribirme · ' + _clPrice(pricing.price) + ' MXN';
         ctaEl.disabled = false;
     }
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
-    if (secEl) secEl.textContent = 'Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía';
+    if (secEl) {
+        secEl.textContent = eligibleFree
+            ? 'Activación segura por Stripe · Tarjeta, SPEI u OXXO · Sin cobro en este curso'
+            : 'Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía';
+    }
 
     const backdrop = document.getElementById('enrollBenefitsModal');
     if (backdrop) {

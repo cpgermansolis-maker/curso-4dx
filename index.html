@@ -1307,6 +1307,282 @@
         .demo-exam-mock .score { font-size: 2.6em; }
         .demo-cta-mock .cta-price { font-size: 1.4em; }
     }
+
+    /* ========================================================================
+       PROMOCIÓN DE LANZAMIENTO — "Primer curso gratis"
+       ======================================================================== */
+
+    /* Ribbon sticky al tope */
+    .promo-ribbon {
+        position: relative;
+        background: var(--tk-navy);
+        color: var(--tk-cream);
+        padding: 11px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.86em;
+        letter-spacing: 0.1px;
+        z-index: 110;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.35);
+    }
+    .promo-ribbon::before {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; top: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, var(--tk-gold) 20%, var(--tk-gold) 80%, transparent 100%);
+    }
+    .promo-ribbon-badge {
+        display: inline-block;
+        background: var(--tk-gold);
+        color: var(--tk-navy);
+        font-weight: 700;
+        font-size: 0.78em;
+        padding: 4px 11px 3px;
+        border-radius: 2px;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+    .promo-ribbon-text {
+        line-height: 1.45;
+    }
+    .promo-ribbon-text strong {
+        color: var(--tk-gold);
+        font-weight: 600;
+        letter-spacing: 0.2px;
+    }
+    .promo-ribbon-cta {
+        background: var(--tk-gold);
+        color: var(--tk-navy);
+        border: 0;
+        padding: 7px 16px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 0.82em;
+        letter-spacing: 0.8px;
+        cursor: pointer;
+        border-radius: 2px;
+        white-space: nowrap;
+        text-transform: uppercase;
+        transition: background 0.18s;
+    }
+    .promo-ribbon-cta:hover { background: #e2c988; }
+
+    /* Sección editorial promo — entre hero y biblioteca/catálogo */
+    .promo-hero {
+        background: var(--tk-cream-deep);
+        padding: 80px 24px;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--tk-hairline);
+    }
+    .promo-hero::before {
+        content: '';
+        position: absolute; left: 50%; top: 40px;
+        transform: translateX(-50%);
+        width: 44px; height: 1px;
+        background: var(--tk-gold);
+    }
+    .promo-hero-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 64px;
+        align-items: center;
+    }
+    .promo-hero-eyebrow {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--tk-gold);
+        margin-bottom: 24px;
+    }
+    .promo-hero-eyebrow::after {
+        content: '· promoción nuevos miembros';
+        color: var(--tk-ink-soft);
+        font-weight: 500;
+        letter-spacing: 2px;
+        margin-left: 6px;
+    }
+    .promo-hero h2 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 400;
+        font-size: 2.7em;
+        color: var(--tk-navy);
+        line-height: 1.1;
+        margin: 0 0 22px;
+        letter-spacing: -0.6px;
+    }
+    .promo-hero h2 em {
+        color: var(--tk-gold);
+        font-style: italic;
+        font-weight: 500;
+    }
+    .promo-hero-lead {
+        font-size: 1.04em;
+        color: var(--tk-ink-soft);
+        line-height: 1.68;
+        margin: 0 0 32px;
+        max-width: 480px;
+    }
+    .promo-hero-cta {
+        display: inline-block;
+        background: var(--tk-navy);
+        color: var(--tk-cream);
+        border: 0;
+        padding: 15px 30px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.82em;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: background 0.2s, transform 0.15s;
+    }
+    .promo-hero-cta:hover {
+        background: var(--tk-navy-soft);
+    }
+    .promo-hero-fine {
+        margin-top: 16px;
+        font-size: 0.82em;
+        color: var(--tk-ink-soft);
+        font-style: italic;
+        max-width: 460px;
+        line-height: 1.55;
+    }
+    .promo-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        padding: 28px 0 28px 32px;
+        border-left: 1px solid var(--tk-gold);
+        position: relative;
+    }
+    .promo-steps::before,
+    .promo-steps::after {
+        content: '';
+        position: absolute;
+        left: -4px;
+        width: 7px; height: 7px;
+        background: var(--tk-gold);
+        border-radius: 50%;
+    }
+    .promo-steps::before { top: -4px; }
+    .promo-steps::after { bottom: -4px; }
+    .promo-step {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 16px;
+        align-items: start;
+    }
+    .promo-step-num {
+        font-family: 'Playfair Display', serif;
+        font-size: 2em;
+        font-weight: 500;
+        color: var(--tk-gold);
+        line-height: 0.9;
+        padding-top: 2px;
+        font-style: italic;
+    }
+    .promo-step-title {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 0.86em;
+        color: var(--tk-navy);
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        margin-bottom: 6px;
+    }
+    .promo-step-desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.92em;
+        color: var(--tk-ink-soft);
+        line-height: 1.55;
+    }
+
+    /* Promo callout dentro del modal de registro */
+    .auth-promo {
+        background: var(--tk-navy);
+        color: var(--tk-cream);
+        padding: 18px 20px;
+        border-radius: 2px;
+        margin: 18px 0 6px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        position: relative;
+        overflow: hidden;
+    }
+    .auth-promo::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 3px;
+        background: var(--tk-gold);
+    }
+    .auth-promo-mark {
+        width: 34px; height: 34px;
+        background: var(--tk-gold);
+        color: var(--tk-navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        flex-shrink: 0;
+        font-family: 'Playfair Display', serif;
+        font-weight: 500;
+        font-size: 1.1em;
+        font-style: italic;
+    }
+    .auth-promo-body { flex: 1; }
+    .auth-promo-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.7em;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        color: var(--tk-gold);
+        margin-bottom: 6px;
+    }
+    .auth-promo-text {
+        font-size: 0.88em;
+        line-height: 1.48;
+        color: var(--tk-cream);
+        margin: 0;
+    }
+    .auth-promo-text strong { color: var(--tk-gold); font-weight: 600; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .promo-hero { padding: 60px 20px; }
+        .promo-hero-inner { grid-template-columns: 1fr; gap: 44px; }
+        .promo-hero h2 { font-size: 2.1em; }
+        .promo-hero-lead { font-size: 1em; }
+        .promo-steps { padding-left: 24px; }
+    }
+    @media (max-width: 640px) {
+        .promo-ribbon {
+            flex-direction: column;
+            padding: 14px 16px;
+            gap: 10px;
+            font-size: 0.8em;
+        }
+        .promo-ribbon-text { text-align: center; max-width: 100%; }
+        .promo-hero { padding: 50px 18px; }
+        .promo-hero h2 { font-size: 1.7em; }
+        .promo-hero-cta { padding: 13px 22px; font-size: 0.76em; letter-spacing: 1.5px; }
+        .promo-step { grid-template-columns: 40px 1fr; gap: 12px; }
+        .promo-step-num { font-size: 1.7em; }
+        .promo-hero-eyebrow::after { display: block; margin-left: 0; margin-top: 2px; }
+    }
 </style>
 </head>
 <body>
@@ -1337,12 +1613,26 @@
             <div class="form-group"><label>Crea una contraseña</label><input type="password" id="regPass" required minlength="4" placeholder="Mínimo 4 caracteres"></div>
             <button class="auth-btn" type="submit">Crear cuenta</button>
             <div class="auth-error" id="regError"></div>
-            <div class="auth-footer">Al registrarte solo creas tu cuenta. Los bouchers de pago se validan al inscribirte a cada curso.</div>
+            <div class="auth-promo">
+                <div class="auth-promo-mark">★</div>
+                <div class="auth-promo-body">
+                    <div class="auth-promo-title">Promoción de lanzamiento</div>
+                    <p class="auth-promo-text">Al crear tu cuenta y dejar tu <strong>método de pago listo</strong> para próximos cursos, <strong>tu primer curso es totalmente gratis</strong> — elige el que tú quieras del catálogo.</p>
+                </div>
+            </div>
+            <div class="auth-footer">Oferta válida para nuevos miembros. Los siguientes cursos se cobran desde tu método de pago.</div>
         </form>
     </div>
 </div>
 
 <div id="platform">
+    <!-- Promoción de lanzamiento — primer curso gratis -->
+    <div class="promo-ribbon" id="promoRibbon">
+        <span class="promo-ribbon-badge">Promoción</span>
+        <span class="promo-ribbon-text">Tu <strong>primer curso totalmente gratis</strong> al activar tu cuenta con método de pago listo.</span>
+        <button class="promo-ribbon-cta" onclick="openAuth('register')">Activar ahora</button>
+    </div>
+
     <div class="topbar">
         <div class="topbar-left">
             <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="logo" onerror="this.style.display='none';">
@@ -1382,6 +1672,46 @@
             <button class="hero-cta-pricing" onclick="scrollToPricing()">Ver precios</button>
         </div>
     </div>
+
+    <!-- Promoción editorial: primer curso gratis para nuevos miembros -->
+    <section class="promo-hero" id="promoHero">
+        <div class="promo-hero-inner">
+            <div class="promo-hero-copy">
+                <div class="promo-hero-eyebrow">Oferta de lanzamiento</div>
+                <h2>Tu primer curso, <em>totalmente gratis</em>.</h2>
+                <p class="promo-hero-lead">
+                    Al crear tu cuenta y dejar tu método de pago listo para futuras inscripciones, obtienes acceso completo — sin costo — al curso del catálogo que tú elijas. Sin descuentos, sin cupones: una formación ejecutiva íntegra, por cuenta de la casa.
+                </p>
+                <button class="promo-hero-cta" onclick="openAuth('register')">Activar mi curso gratis</button>
+                <div class="promo-hero-fine">
+                    Válido para nuevos miembros. Los siguientes cursos se cobran normalmente al precio de lanzamiento desde tu método de pago registrado.
+                </div>
+            </div>
+            <div class="promo-steps">
+                <div class="promo-step">
+                    <div class="promo-step-num">I</div>
+                    <div>
+                        <div class="promo-step-title">Crea tu cuenta</div>
+                        <div class="promo-step-desc">Dos minutos: nombre, correo, empresa y contraseña. Sin tarjeta todavía.</div>
+                    </div>
+                </div>
+                <div class="promo-step">
+                    <div class="promo-step-num">II</div>
+                    <div>
+                        <div class="promo-step-title">Activa tu método de pago</div>
+                        <div class="promo-step-desc">Tarjeta, SPEI u OXXO — queda listo para próximas inscripciones. No se cobra el primer curso.</div>
+                    </div>
+                </div>
+                <div class="promo-step">
+                    <div class="promo-step-num">III</div>
+                    <div>
+                        <div class="promo-step-title">Elige y accede</div>
+                        <div class="promo-step-desc">Cualquier curso del catálogo, acceso de por vida y certificado incluido — sin costo.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="container">
         <div class="section" id="myCoursesSection" style="display:none;">
@@ -1761,12 +2091,20 @@ function updateUIState() {
     document.getElementById('userMenu').style.display = isLogged ? 'flex' : 'none';
     document.getElementById('userGreetingBlock').style.display = isLogged ? 'block' : 'none';
     document.getElementById('myCoursesSection').style.display = isLogged ? 'block' : 'none';
+
+    // Promo de lanzamiento — visible para invitados y miembros sin inscripciones activas
+    const enrollmentCount = isLogged ? Object.keys(currentUser.enrollments || {}).length : 0;
+    const showPromo = !isLogged || enrollmentCount === 0;
+    const ribbon = document.getElementById('promoRibbon');
+    const promoHero = document.getElementById('promoHero');
+    if (ribbon) ribbon.style.display = showPromo ? 'flex' : 'none';
+    if (promoHero) promoHero.style.display = showPromo ? 'block' : 'none';
     // Hero subtitle distinto para invitados
     const hero = document.getElementById('heroSubtitle');
     if (isLogged) {
         hero.textContent = 'Desarrolla habilidades clave de gestión empresarial con los mejores libros adaptados a cursos interactivos. Cada curso incluye lecciones, quizzes, examen final y certificado.';
     } else {
-        hero.innerHTML = 'Explora nuestro catálogo de cursos basados en los mejores libros de gestión empresarial. <strong style="color:#ffb300;">Regístrate gratis</strong> cuando quieras inscribirte a uno.';
+        hero.innerHTML = 'Libros de referencia adaptados a cursos interactivos para gerentes y directivos latinoamericanos. <strong style="color:var(--tk-gold);">Tu primer curso es gratis</strong> al activar tu cuenta con método de pago.';
     }
     if (isLogged) {
         document.getElementById('userGreeting').textContent = currentUser.name.split(' ')[0];
