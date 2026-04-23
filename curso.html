@@ -1227,6 +1227,66 @@
             padding: 6px 12px !important;
             border-radius: 2px !important;
         }
+        .topbar-logo-img {
+            height: 30px;
+            background: #fff;
+            padding: 4px 10px;
+            border-radius: 2px;
+            display: block;
+        }
+        /* ACADEMIA TRIKLES — brand del topbar */
+        .topbar-brand {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.78em !important;
+            font-weight: 700 !important;
+            letter-spacing: 3px !important;
+            text-transform: uppercase !important;
+            color: #fff !important;
+            padding: 0 14px;
+            border-right: 1px solid rgba(201,169,97,0.35);
+            line-height: 1;
+            white-space: nowrap;
+        }
+        /* Nombre del curso actual (a la derecha del brand) */
+        .topbar-course {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.02em;
+            font-weight: 500;
+            color: var(--tk-gold);
+            letter-spacing: 0.2px;
+            line-height: 1.15;
+            padding: 0 4px;
+            max-width: 440px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex-shrink: 1;
+        }
+        .topbar-instructor-label {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 10px !important;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55) !important;
+            font-weight: 600;
+        }
+        .topbar-instructor-name {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 12px !important;
+            color: #fff !important;
+            font-weight: 500 !important;
+        }
+        @media (max-width: 980px) {
+            .topbar-course { max-width: 240px; font-size: 0.9em; }
+        }
+        @media (max-width: 760px) {
+            .topbar-course { display: none; }
+            .topbar-brand { font-size: 0.72em !important; padding: 0 10px; letter-spacing: 2px !important; }
+        }
+        @media (max-width: 480px) {
+            .topbar-brand { display: none; }
+            .topbar-logo-img { height: 24px; padding: 3px 7px; }
+        }
 
         /* SIDEBAR — editorial */
         .sidebar {
@@ -2139,11 +2199,12 @@
             <span class="back-icon">&#8592;</span>
             <span class="back-text">Catálogo</span>
         </button>
-        <img src="assets/logo-trikles.jpg" alt="TRIKLES" style="height:32px;background:white;padding:3px 8px;border-radius:6px;" onerror="this.style.display='none';">
-        <h2>&#127919; Curso 4DX</h2>
+        <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="topbar-logo-img" onerror="this.style.display='none';">
+        <h2 class="topbar-brand" id="academiaBrand">ACADEMIA TRIKLES</h2>
+        <div class="topbar-course" id="topbarCourseTitle">Cargando curso…</div>
         <div class="topbar-instructor">
-            <span style="opacity:0.7;font-size:0.78em;">Instructor:</span>
-            <strong style="color:var(--gold);font-size:0.85em;">LADE Germán Solís Muñoz</strong>
+            <span class="topbar-instructor-label">Instructor:</span>
+            <strong class="topbar-instructor-name" id="topbarInstructorName">LADE Germán Solís Muñoz</strong>
         </div>
         <div class="xp-bar">
             <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
@@ -3003,6 +3064,10 @@ function waitForCourse(callback, attempts = 0) {
         setTxt('splashSubtitle', m.subtitle || 'Curso interactivo TRIKLES');
         setHtml('splashBookRef', 'Basado en el libro de ' + (m.author || '') + '<br>Adaptación pedagógica TRIKLES');
         setTxt('authTitle', m.title);
+        // Topbar del curso: nombre del curso (derecha) + nombre del instructor
+        setTxt('topbarCourseTitle', m.title);
+        const instrName = (m.instructor && m.instructor.name) ? m.instructor.name : 'LADE Germán Solís Muñoz';
+        setTxt('topbarInstructorName', instrName);
         callback();
     } else if (attempts < 50) {
         setTimeout(() => waitForCourse(callback, attempts + 1), 100);
