@@ -1617,10 +1617,10 @@
                 <div class="auth-promo-mark">★</div>
                 <div class="auth-promo-body">
                     <div class="auth-promo-title">Promoción de lanzamiento</div>
-                    <p class="auth-promo-text">Al crear tu cuenta y dejar tu <strong>método de pago listo</strong> para próximos cursos, <strong>tu primer curso es totalmente gratis</strong> — elige el que tú quieras del catálogo.</p>
+                    <p class="auth-promo-text">Al crear tu cuenta, <strong>tu primer curso es totalmente gratis</strong> — elige el que tú quieras del catálogo. Sin tarjeta, sin compromisos.</p>
                 </div>
             </div>
-            <div class="auth-footer">Oferta válida para nuevos miembros. Los siguientes cursos se cobran desde tu método de pago.</div>
+            <div class="auth-footer">Oferta válida para nuevos miembros. Sólo necesitamos tus datos básicos para crear la cuenta.</div>
         </form>
     </div>
 </div>
@@ -1629,8 +1629,8 @@
     <!-- Promoción de lanzamiento — primer curso gratis -->
     <div class="promo-ribbon" id="promoRibbon">
         <span class="promo-ribbon-badge">Promoción</span>
-        <span class="promo-ribbon-text">Tu <strong>primer curso totalmente gratis</strong> al activar tu cuenta con método de pago listo.</span>
-        <button class="promo-ribbon-cta" onclick="openAuth('register')">Activar ahora</button>
+        <span class="promo-ribbon-text">Tu <strong>primer curso totalmente gratis</strong> con sólo crear tu cuenta. Sin tarjeta, sin compromisos.</span>
+        <button class="promo-ribbon-cta" onclick="openAuth('register')">Reclamar ahora</button>
     </div>
 
     <div class="topbar">
@@ -1680,11 +1680,11 @@
                 <div class="promo-hero-eyebrow">Oferta de lanzamiento</div>
                 <h2>Tu primer curso, <em>totalmente gratis</em>.</h2>
                 <p class="promo-hero-lead">
-                    Al crear tu cuenta y dejar tu método de pago listo para futuras inscripciones, obtienes acceso completo — sin costo — al curso del catálogo que tú elijas. Sin descuentos, sin cupones: una formación ejecutiva íntegra, por cuenta de la casa.
+                    Crea tu cuenta en dos minutos y elige el curso del catálogo que más te convenga — accedes sin costo, con certificado incluido. Sin tarjeta, sin pago, sin compromisos: nuestra forma de invitarte a conocer la plataforma.
                 </p>
-                <button class="promo-hero-cta" onclick="openAuth('register')">Activar mi curso gratis</button>
+                <button class="promo-hero-cta" onclick="openAuth('register')">Reclamar mi curso gratis</button>
                 <div class="promo-hero-fine">
-                    Válido para nuevos miembros. Los siguientes cursos se cobran normalmente al precio de lanzamiento desde tu método de pago registrado.
+                    Válido para nuevos miembros. Sólo se requiere tu nombre, correo y empresa para crear la cuenta.
                 </div>
             </div>
             <div class="promo-steps">
@@ -1692,21 +1692,21 @@
                     <div class="promo-step-num">I</div>
                     <div>
                         <div class="promo-step-title">Crea tu cuenta</div>
-                        <div class="promo-step-desc">Dos minutos: nombre, correo, empresa y contraseña. Sin tarjeta todavía.</div>
+                        <div class="promo-step-desc">Dos minutos: nombre, correo, empresa y contraseña. Sin datos bancarios.</div>
                     </div>
                 </div>
                 <div class="promo-step">
                     <div class="promo-step-num">II</div>
                     <div>
-                        <div class="promo-step-title">Activa tu método de pago</div>
-                        <div class="promo-step-desc">Tarjeta, SPEI u OXXO — queda listo para próximas inscripciones. No se cobra el primer curso.</div>
+                        <div class="promo-step-title">Elige tu curso favorito</div>
+                        <div class="promo-step-desc">Cualquier curso del catálogo — desde liderazgo hasta gestión de inventarios farmacéuticos.</div>
                     </div>
                 </div>
                 <div class="promo-step">
                     <div class="promo-step-num">III</div>
                     <div>
-                        <div class="promo-step-title">Elige y accede</div>
-                        <div class="promo-step-desc">Cualquier curso del catálogo, acceso de por vida y certificado incluido — sin costo.</div>
+                        <div class="promo-step-title">Acceso inmediato y de por vida</div>
+                        <div class="promo-step-desc">Lecciones con video, quizzes, examen final y certificado TRIKLES verificable — todo incluido, sin costo.</div>
                     </div>
                 </div>
             </div>
@@ -2104,7 +2104,7 @@ function updateUIState() {
     if (isLogged) {
         hero.textContent = 'Desarrolla habilidades clave de gestión empresarial con los mejores libros adaptados a cursos interactivos. Cada curso incluye lecciones, quizzes, examen final y certificado.';
     } else {
-        hero.innerHTML = 'Libros de referencia adaptados a cursos interactivos para gerentes y directivos latinoamericanos. <strong style="color:var(--tk-gold);">Tu primer curso es gratis</strong> al activar tu cuenta con método de pago.';
+        hero.innerHTML = 'Libros de referencia adaptados a cursos interactivos para gerentes y directivos latinoamericanos. <strong style="color:var(--tk-gold);">Tu primer curso es totalmente gratis</strong> con sólo crear tu cuenta — sin tarjeta, sin compromisos.';
     }
     if (isLogged) {
         document.getElementById('userGreeting').textContent = currentUser.name.split(' ')[0];
@@ -2693,6 +2693,10 @@ function openDepositModal(idOrBundle) {
     const listEl = document.getElementById('depositModalListPrice');
     const saveEl = document.getElementById('depositModalSave');
     const stripeError = document.getElementById('stripeError');
+    const accessEl = document.querySelector('#depositModal .deposit-modal-access');
+    const subEl = document.querySelector('#depositModal .deposit-modal-sub');
+    const ctaBtn = document.getElementById('stripePayBtn');
+    const hintEl = document.querySelector('#depositModal .pay-option-hint');
 
     let title, amount, listPrice;
     if (idOrBundle === '__bundle') {
@@ -2711,17 +2715,35 @@ function openDepositModal(idOrBundle) {
 
     currentCheckoutTarget = idOrBundle;
     titleEl.textContent = title;
-    priceEl.innerHTML = '$' + Number(amount).toLocaleString('es-MX') + '<span class="cur">MXN</span>';
 
-    if (listPrice && listPrice > amount) {
-        listEl.textContent = 'Precio regular $' + Number(listPrice).toLocaleString('es-MX') + ' MXN';
-        listEl.style.display = 'block';
-        const savePct = Math.round((1 - amount / listPrice) * 100);
-        saveEl.textContent = 'Lanzamiento · ahorra ' + savePct + '%';
-        saveEl.style.display = 'inline-block';
-    } else {
-        listEl.style.display = 'none';
+    // Estado promocional: si el usuario es elegible para "primer curso gratis"
+    // (no aplica al bundle), mostramos copy de promoción en vez de precio.
+    const eligibleFree = idOrBundle !== '__bundle' && isEligibleForFreeFirstCourseIndex();
+    if (eligibleFree) {
+        priceEl.innerHTML = 'Gratis<span class="cur" style="margin-left:10px;font-size:0.5em;font-weight:400;color:#c9a961;letter-spacing:1px;">VALOR $' + Number(amount).toLocaleString('es-MX') + ' MXN</span>';
+        listEl.textContent = 'Promoción de lanzamiento · primer curso sin costo';
+        listEl.style.cssText = 'display:block;text-decoration:none;color:#c9a961;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-size:11px;';
         saveEl.style.display = 'none';
+        if (subEl) subEl.textContent = 'Tu primer curso · cortesía de la casa';
+        if (accessEl) accessEl.textContent = 'Sin tarjeta · sin compromisos · acceso de por vida';
+        if (ctaBtn) ctaBtn.innerHTML = 'Reclamar mi curso gratis';
+        if (hintEl) hintEl.textContent = 'Inscripción inmediata · sólo necesitas tu cuenta TRIKLES';
+    } else {
+        priceEl.innerHTML = '$' + Number(amount).toLocaleString('es-MX') + '<span class="cur">MXN</span>';
+        if (listPrice && listPrice > amount) {
+            listEl.textContent = 'Precio regular $' + Number(listPrice).toLocaleString('es-MX') + ' MXN';
+            listEl.style.cssText = 'display:block;';
+            const savePct = Math.round((1 - amount / listPrice) * 100);
+            saveEl.textContent = 'Lanzamiento · ahorra ' + savePct + '%';
+            saveEl.style.display = 'inline-block';
+        } else {
+            listEl.style.display = 'none';
+            saveEl.style.display = 'none';
+        }
+        if (subEl) subEl.textContent = 'Inscripción al curso';
+        if (accessEl) accessEl.textContent = 'Acceso de por vida';
+        if (ctaBtn) ctaBtn.innerHTML = 'Pagar e inscribirme';
+        if (hintEl) hintEl.textContent = 'Pago seguro procesado por Stripe · Tarjeta, SPEI u OXXO';
     }
 
     if (stripeError) { stripeError.style.display = 'none'; stripeError.textContent = ''; }
@@ -2733,8 +2755,14 @@ function closeDepositModal() {
     if (modal) modal.classList.remove('open');
 }
 
-// Redirige al alumno a Stripe Checkout.
-// Si no está autenticado, le pide iniciar sesión/registrarse primero.
+// Helper local: el alumno es elegible para "primer curso gratis" si:
+// no tiene sesión (invitado) o si tiene sesión pero 0 inscripciones activas.
+function isEligibleForFreeFirstCourseIndex() {
+    if (!currentUser) return true;
+    return Object.keys(currentUser.enrollments || {}).length === 0;
+}
+
+// Redirige al alumno a Stripe Checkout, o lo inscribe gratis si aplica la promoción.
 async function payWithStripe() {
     const btn = document.getElementById('stripePayBtn');
     const errEl = document.getElementById('stripeError');
@@ -2748,8 +2776,36 @@ async function payWithStripe() {
     if (!currentUser) {
         // Cerrar modal de depósito y abrir auth
         closeDepositModal();
-        if (confirm('Para pagar con tarjeta necesitas una cuenta. ¿Quieres registrarte o iniciar sesión ahora?')) {
-            openAuth('register');
+        pendingCourseId = currentCheckoutTarget === '__bundle' ? null : currentCheckoutTarget;
+        openAuth('register');
+        return;
+    }
+
+    const courseId = currentCheckoutTarget === '__bundle' ? 'BUNDLE' : currentCheckoutTarget;
+
+    // Promoción: inscripción gratuita directa si es su primer curso (no aplica al bundle).
+    if (courseId !== 'BUNDLE' && isEligibleForFreeFirstCourseIndex()) {
+        btn.disabled = true;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Activando tu acceso…';
+        try {
+            await TK.saveEnrollment(courseId, {
+                enrolledAt: new Date().toISOString(),
+                source: 'free_first_course_promo',
+                progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
+            });
+            currentUser = TK.getCurrentUser ? TK.getCurrentUser() : currentUser;
+            if (!currentUser.enrollments) currentUser.enrollments = {};
+            currentUser.enrollments[courseId] = { enrolledAt: new Date().toISOString() };
+            try { sendToWebhook('enroll_free', currentUser, courseId); } catch (_) {}
+            closeDepositModal();
+            // Llevar al alumno directo al curso para que empiece a aprender
+            window.location.href = 'curso.html?id=' + encodeURIComponent(courseId);
+        } catch (err) {
+            console.error('Free enroll error:', err);
+            showStripeError((err && err.message) || 'No se pudo activar el acceso. Intenta de nuevo.');
+            btn.disabled = false;
+            btn.innerHTML = originalText;
         }
         return;
     }
@@ -2759,7 +2815,6 @@ async function payWithStripe() {
     btn.innerHTML = 'Procesando…';
 
     try {
-        const courseId = currentCheckoutTarget === '__bundle' ? 'BUNDLE' : currentCheckoutTarget;
         const result = await TK.createStripeCheckout(courseId);
         // Redirigir a Stripe
         window.location.href = result.url;

@@ -14,8 +14,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
     <script src="firebase-init.js"></script>
-    <!-- Tesseract.js para OCR del boucher (lee texto de imagenes) -->
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <!-- Cargar el curso segun el parametro ?id=xxx de la URL -->
     <script>
         const _urlParams = new URLSearchParams(window.location.search);
@@ -1714,6 +1712,22 @@
             font-style: italic;
         }
 
+        /* Inline promo callout dentro del form de registro */
+        .auth-promo-inline {
+            background: var(--tk-cream-deep, #f2ede0);
+            border-left: 3px solid var(--tk-gold, #c9a961);
+            color: var(--tk-ink, #1a1a1a);
+            padding: 12px 14px;
+            margin: 4px 0 14px;
+            font-size: 0.86em;
+            line-height: 1.5;
+            border-radius: 2px;
+        }
+        .auth-promo-inline strong {
+            color: var(--tk-navy, #0a2540);
+            font-weight: 700;
+        }
+
         /* STATS ROW */
         .cl-stats {
             background: #fff;
@@ -2169,55 +2183,17 @@
             </div>
             <div class="form-group">
                 <label>Crea una contraseña</label>
-                <input type="password" id="regPass" required minlength="4" placeholder="Mínimo 4 caracteres">
+                <input type="password" id="regPass" required minlength="6" placeholder="Mínimo 6 caracteres">
             </div>
-            <div class="form-group">
-                <label>Boucher de pago (foto) &#128196;</label>
-                <div class="voucher-upload">
-                    <input type="file" id="regVoucher" accept="image/*" required onchange="previewVoucher(this)" style="display:none;">
-                    <label for="regVoucher" class="voucher-btn" id="voucherLabel">
-                        <span>&#128247;</span>
-                        <div style="flex:1;">
-                            <div style="font-weight:700;">Subir foto del boucher</div>
-                            <span class="voucher-hint">A nombre de Germán Solís Muñoz</span>
-                        </div>
-                    </label>
-                    <img id="voucherPreview" class="voucher-preview" style="display:none;">
-                    <div id="voucherStatus" class="voucher-status"></div>
-                    <button type="button" class="deposit-toggle-btn" onclick="toggleDepositPanel(this)">
-                        <span>&#128179;</span> &iquest;C&oacute;mo hago el dep&oacute;sito?
-                    </button>
-                    <div class="deposit-panel" id="depositPanel" style="display:none;">
-                        <div class="deposit-panel-title">Datos para tu dep&oacute;sito</div>
-                        <div class="deposit-panel-row">
-                            <div class="deposit-panel-label">Tarjeta (SPEI desde otro banco)</div>
-                            <div class="deposit-panel-value">
-                                <span>4027 6600 3894 9030</span>
-                                <button type="button" class="deposit-panel-copy" onclick="copyDepositPanel('4027660038949030', this)">Copiar</button>
-                            </div>
-                        </div>
-                        <div class="deposit-panel-row">
-                            <div class="deposit-panel-label">Banco</div>
-                            <div class="deposit-panel-value">Banco Azteca</div>
-                        </div>
-                        <div class="deposit-panel-row">
-                            <div class="deposit-panel-label">A nombre de</div>
-                            <div class="deposit-panel-value">Germ&aacute;n Sol&iacute;s Mu&ntilde;oz</div>
-                        </div>
-                        <div class="deposit-panel-whats">
-                            &#128241; <strong>Notifica tu dep&oacute;sito por WhatsApp:</strong>
-                            <a href="https://wa.me/522464115513?text=Hola,%20acabo%20de%20realizar%20mi%20dep%C3%B3sito%20para%20el%20curso." target="_blank" rel="noopener">246 411 5513</a>
-                            <div style="font-size:0.78em;color:#558b2f;margin-top:3px;">Tambi&eacute;n &uacute;salo si tienes alg&uacute;n inconveniente con tu acceso.</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="auth-promo-inline">
+                <strong>Promoción de lanzamiento:</strong> al crear tu cuenta obtienes acceso completo a este curso de forma gratuita. Sin tarjeta, sin compromisos.
             </div>
             <button class="auth-btn" type="submit" id="regSubmitBtn">
-                <span id="regBtnText">Validar boucher y crear cuenta &#127881;</span>
-                <span id="regBtnLoading" style="display:none;">Validando boucher... &#8987;</span>
+                <span id="regBtnText">Crear cuenta y reclamar mi curso gratis</span>
+                <span id="regBtnLoading" style="display:none;">Creando tu cuenta&hellip;</span>
             </button>
             <div class="auth-error" id="regError"></div>
-            <div class="auth-footer">Tus datos se guardan localmente. El boucher se valida automáticamente con OCR.</div>
+            <div class="auth-footer">Sólo necesitamos tus datos básicos. La inscripción al curso se activa al instante.</div>
 
         </form>
     </div>
@@ -2440,37 +2416,25 @@ async function doRegister(e) {
     const errEl = document.getElementById('regError');
     errEl.style.display = 'none';
 
-    if (pass.length < 6) { errEl.textContent = 'La contraseña debe tener al menos 6 caracteres.'; errEl.style.display = 'block'; return; }
-
-    if (!voucherImageData) {
-        errEl.textContent = 'Debes subir la foto de tu boucher de pago.';
+    if (pass.length < 6) {
+        errEl.textContent = 'La contraseña debe tener al menos 6 caracteres.';
         errEl.style.display = 'block';
         return;
     }
 
     const btn = document.getElementById('regSubmitBtn');
     btn.disabled = true;
-    document.getElementById('regBtnText').style.display = 'none';
-    document.getElementById('regBtnLoading').style.display = 'inline';
-
-    const validation = await validateVoucher(voucherImageData);
-
-    if (!validation.ok) {
-        btn.disabled = false;
-        document.getElementById('regBtnText').style.display = 'inline';
-        document.getElementById('regBtnLoading').style.display = 'none';
-        errEl.textContent = 'El boucher no pudo ser validado. Sube una imagen clara del boucher a nombre de Germán Solís Muñoz.';
-        errEl.style.display = 'block';
-        return;
-    }
+    const txtEl = document.getElementById('regBtnText');
+    const loadEl = document.getElementById('regBtnLoading');
+    if (txtEl) txtEl.style.display = 'none';
+    if (loadEl) loadEl.style.display = 'inline';
 
     try {
         await TK.register({ name, email, company, role }, pass);
-        // Crear la inscripción al curso actual con el voucher
+        // Inscripción gratuita al curso actual (promoción primer curso gratis).
         await TK.saveEnrollment(COURSE.id, {
             enrolledAt: new Date().toISOString(),
-            voucher: voucherImageData,
-            voucherText: validation.text.substring(0, 500),
+            source: 'free_first_course_promo',
             progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
         });
         currentUser = TK.getCurrentUser();
@@ -2479,8 +2443,8 @@ async function doRegister(e) {
         showCourseLanding();
     } catch (err) {
         btn.disabled = false;
-        document.getElementById('regBtnText').style.display = 'inline';
-        document.getElementById('regBtnLoading').style.display = 'none';
+        if (txtEl) txtEl.style.display = 'inline';
+        if (loadEl) loadEl.style.display = 'none';
         errEl.textContent = err.message;
         errEl.style.display = 'block';
     }
@@ -3370,12 +3334,12 @@ function showCourseLanding() {
         secondaryHint = 'Ya estás inscrito · acceso completo';
     } else if (eligibleFree) {
         // Promoción: primer curso gratis
-        ctaText = 'Activar mi curso gratis';
+        ctaText = 'Reclamar mi curso gratis';
         ctaAction = 'clOpenEnrollModal()';
         ctaPriceLine =
             '<div class="cl-promo-card-badge">Primer curso gratis</div>' +
             '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Valor ' + _clPrice(pricing.price) + ' MXN</span></div>' +
-            '<div class="cl-promo-free-line">Activa tu método de pago para próximas inscripciones. Este curso no se te cobra.</div>';
+            '<div class="cl-promo-free-line">Acceso inmediato al crear tu cuenta. Sin tarjeta, sin compromisos.</div>';
         secondaryHint = 'Oferta de lanzamiento · primer curso gratis';
     } else {
         ctaText = 'Inscribirme · ' + _clPrice(pricing.price) + ' MXN';
@@ -3397,7 +3361,7 @@ function showCourseLanding() {
             '<span class="cl-promo-banner-mark">★</span>' +
             '<div class="cl-promo-banner-body">' +
                 '<div class="cl-promo-banner-title">Oferta de lanzamiento</div>' +
-                '<p class="cl-promo-banner-text">Tu <strong>primer curso es totalmente gratis</strong> al activar tu cuenta con método de pago listo para próximos cursos.</p>' +
+                '<p class="cl-promo-banner-text">Tu <strong>primer curso es totalmente gratis</strong> con sólo crear tu cuenta. Sin tarjeta, sin compromisos.</p>' +
             '</div>' +
           '</div>'
         : '';
@@ -3655,12 +3619,12 @@ function clOpenEnrollModal() {
 
     if (modalTitle) {
         modalTitle.textContent = eligibleFree
-            ? 'Activa tu primer curso — gratis'
+            ? 'Reclama tu primer curso — gratis'
             : 'Inscríbete a "' + title + '"';
     }
     if (modalSub) {
         modalSub.textContent = eligibleFree
-            ? '"' + title + '" — sin costo. Activa tu método de pago para próximas inscripciones.'
+            ? '"' + title + '" — sin costo. Acceso inmediato al confirmar.'
             : 'Empieza a aprender hoy mismo · Pago único, acceso de por vida';
     }
 
@@ -3669,19 +3633,19 @@ function clOpenEnrollModal() {
     const benefits = eligibleFree ? [
         {
             head: 'Este curso: gratis · valor ' + _clPrice(pricing.price) + ' MXN',
-            sub: 'Oferta de lanzamiento para nuevos miembros: obtienes acceso completo a "' + title + '" sin costo al activar tu cuenta.'
+            sub: 'Oferta de lanzamiento para nuevos miembros: obtienes acceso completo a "' + title + '" sin costo.'
         },
         {
-            head: 'Método de pago listo para próximos cursos',
-            sub: 'Registras tu tarjeta, SPEI u OXXO para que tus siguientes inscripciones sean instantáneas. No se cobra nada por este curso.'
+            head: 'Sin tarjeta, sin compromisos',
+            sub: 'No se te pide ningún dato bancario. La inscripción se activa al instante con tu cuenta TRIKLES.'
         },
         {
             head: 'Acceso completo de por vida + certificado',
             sub: 'Las ' + lessonsCount + ' lecciones, quizzes, examen final y certificado TRIKLES verificable — todo incluido, a tu ritmo.'
         },
         {
-            head: '30 días de garantía total',
-            sub: 'Si no te sirve, te devolvemos sin preguntas. Soporte directo del instructor por WhatsApp.'
+            head: 'Soporte directo del instructor',
+            sub: 'Acceso al instructor por WhatsApp para resolver dudas sobre los temas del curso.'
         }
     ] : [
         {
@@ -3719,14 +3683,14 @@ function clOpenEnrollModal() {
 
     if (ctaEl) {
         ctaEl.textContent = eligibleFree
-            ? 'Activar mi curso gratis'
+            ? 'Reclamar mi curso gratis'
             : 'Pagar e inscribirme · ' + _clPrice(pricing.price) + ' MXN';
         ctaEl.disabled = false;
     }
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
     if (secEl) {
         secEl.textContent = eligibleFree
-            ? 'Activación segura por Stripe · Tarjeta, SPEI u OXXO · Sin cobro en este curso'
+            ? 'Inscripción inmediata · sin tarjeta · acceso de por vida'
             : 'Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía';
     }
 
@@ -3759,7 +3723,60 @@ function clCloseEnrollModal() {
 async function clModalConfirm() {
     const ctaEl = document.getElementById('clModalCta');
     const errEl = document.getElementById('clModalError');
+    const eligibleFree = isEligibleForFreeFirstCourse();
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    // Caso 1 — invitado sin cuenta: cerrar el modal y abrir el form de registro.
+    // Al registrarse, doRegister() inscribe automáticamente al curso actual.
+    if (!currentUser) {
+        clCloseEnrollModal();
+        const auth = document.getElementById('authScreen');
+        if (auth) {
+            auth.classList.remove('hide');
+            // Cambiar a la pestaña de "Registrarse"
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            const regTab = document.querySelectorAll('.auth-tab')[1];
+            const regForm = document.getElementById('registerForm');
+            if (regTab) regTab.classList.add('active');
+            if (regForm) regForm.classList.add('active');
+        }
+        return;
+    }
+
+    // Caso 2 — miembro logueado elegible: inscripción gratuita directa, sin Stripe.
+    if (eligibleFree) {
+        if (ctaEl) {
+            ctaEl.disabled = true;
+            ctaEl.textContent = 'Activando tu acceso…';
+        }
+        try {
+            await TK.saveEnrollment(COURSE.id, {
+                enrolledAt: new Date().toISOString(),
+                source: 'free_first_course_promo',
+                progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
+            });
+            currentUser = TK.getCurrentUser();
+            try { sendToWebhook('enroll_free', currentUser); } catch (_) {}
+            updateUserBadge();
+            clCloseEnrollModal();
+            // Re-renderizar landing con estado "Inscrito" y luego enviar a las lecciones
+            showCourseLanding();
+            setTimeout(() => clGoToLessons(), 300);
+        } catch (e) {
+            if (ctaEl) {
+                ctaEl.disabled = false;
+                ctaEl.textContent = 'Reclamar mi curso gratis';
+            }
+            if (errEl) {
+                errEl.textContent = (e && e.message) ? e.message : 'No se pudo activar el acceso. Intenta de nuevo.';
+                errEl.style.display = 'block';
+            }
+        }
+        return;
+    }
+
+    // Caso 3 — miembro con inscripciones previas: flujo Stripe normal (cobros pausados).
     if (ctaEl) {
         ctaEl.disabled = true;
         ctaEl.textContent = 'Redirigiendo a pago seguro…';
