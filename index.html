@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRIKLES - Plataforma de cursos</title>
+<!-- Redirect a la URL canónica de Firebase Hosting si caen en github.io.
+     Firebase Auth sólo acepta logins desde dominios autorizados; cualquier
+     otra URL deja al alumno atorado en login. Esto se ejecuta antes de
+     cualquier otro script. -->
+<script>
+(function(){
+    var h = location.hostname;
+    if (h.endsWith('github.io') || h.endsWith('github.dev')) {
+        var path = location.pathname.replace(/^\/curso-4dx\/?/, '/');
+        location.replace('https://trikles-cursos.web.app' + path + location.search + location.hash);
+    }
+})();
+</script>
 <!-- Firebase SDK (compat) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
