@@ -110,6 +110,18 @@
             return data;
         },
 
+        async sendPasswordResetEmail(email) {
+            // Envía un correo a la dirección dada con un link para restablecer la contraseña.
+            // Firebase responde igual exista o no la cuenta (no revela información).
+            const e = emailToId(email);
+            try {
+                await auth.sendPasswordResetEmail(e);
+                return { ok: true };
+            } catch (err) {
+                throw new Error(friendlyAuthError(err));
+            }
+        },
+
         async login(email, password) {
             const e = emailToId(email);
             try {
@@ -332,11 +344,13 @@
             'auth/email-already-in-use': 'Este correo ya está registrado. Inicia sesión en su lugar.',
             'auth/invalid-email': 'El correo no tiene un formato válido.',
             'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
-            'auth/user-not-found': 'No existe una cuenta con ese correo.',
-            'auth/wrong-password': 'Contraseña incorrecta.',
-            'auth/invalid-credential': 'Correo o contraseña incorrectos.',
-            'auth/too-many-requests': 'Demasiados intentos. Espera unos minutos e intenta de nuevo.',
-            'auth/network-request-failed': 'Sin conexión a internet. Verifica tu red.'
+            'auth/user-not-found': 'No existe una cuenta con ese correo. ¿Quieres registrarte?',
+            'auth/wrong-password': 'Contraseña incorrecta. Si la olvidaste, usa "¿Olvidaste tu contraseña?" debajo del botón.',
+            'auth/invalid-credential': 'Correo o contraseña incorrectos. Si la olvidaste, usa "¿Olvidaste tu contraseña?" debajo del botón.',
+            'auth/invalid-login-credentials': 'Correo o contraseña incorrectos. Si la olvidaste, usa "¿Olvidaste tu contraseña?" debajo del botón.',
+            'auth/too-many-requests': 'Demasiados intentos fallidos. Por seguridad, Firebase bloqueó la cuenta temporalmente. Espera 15 minutos o usa "¿Olvidaste tu contraseña?" para restablecerla ahora.',
+            'auth/network-request-failed': 'Sin conexión a internet. Verifica tu red.',
+            'auth/user-disabled': 'Esta cuenta fue deshabilitada. Contacta al administrador.'
         };
         return map[code] || (e && e.message) || 'Error de autenticación.';
     }

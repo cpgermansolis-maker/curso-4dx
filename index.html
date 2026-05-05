@@ -1573,6 +1573,32 @@
     }
     .auth-promo-text strong { color: var(--tk-gold); font-weight: 600; }
 
+    /* Link de "olvidaste tu contraseña" */
+    .auth-forgot {
+        text-align: center;
+        margin-top: 12px;
+    }
+    .auth-forgot a {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.78em;
+        color: var(--tk-ink-soft, #4a4a4a);
+        text-decoration: none;
+        letter-spacing: 0.3px;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 1px;
+        transition: color 0.15s, border-color 0.15s;
+    }
+    .auth-forgot a:hover {
+        color: var(--tk-navy, #0a2540);
+        border-bottom-color: var(--tk-gold, #c9a961);
+    }
+    /* Mensaje de éxito (mismo elemento que loginError reusado) */
+    .auth-error.auth-error-success {
+        background: #e8f5e9 !important;
+        color: #1b5e20 !important;
+        border-color: #a5d6a7 !important;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
         .promo-hero { padding: 60px 20px; }
@@ -1617,6 +1643,7 @@
             <div class="form-group"><label>Contraseña</label><input type="password" id="loginPass" required placeholder="Tu contraseña"></div>
             <button class="auth-btn" type="submit">Entrar al catálogo</button>
             <div class="auth-error" id="loginError"></div>
+            <div class="auth-forgot"><a href="#" onclick="doForgotPassword(event)">¿Olvidaste tu contraseña?</a></div>
         </form>
         <form class="auth-form" id="registerForm" onsubmit="doRegister(event)">
             <div class="form-group"><label>Nombre completo</label><input type="text" id="regName" required placeholder="Ej: Juan Pérez López"></div>
@@ -2042,6 +2069,7 @@ async function doLogin(e) {
     const pass = document.getElementById('loginPass').value;
     const errEl = document.getElementById('loginError');
     errEl.style.display = 'none';
+    errEl.classList.remove('auth-error-success');
     try {
         const data = await TK.login(email, pass);
         if (!data) { errEl.textContent = 'Tu cuenta existe pero no tiene perfil. Contacta al administrador.'; errEl.style.display = 'block'; return; }
@@ -2049,6 +2077,28 @@ async function doLogin(e) {
         handlePostAuth();
     } catch (err) {
         errEl.textContent = err.message;
+        errEl.style.display = 'block';
+    }
+}
+
+async function doForgotPassword(ev) {
+    if (ev) ev.preventDefault();
+    const errEl = document.getElementById('loginError');
+    const inputEl = document.getElementById('loginEmail');
+    let email = (inputEl && inputEl.value || '').trim().toLowerCase();
+    if (!email) {
+        email = (prompt('Escribe el correo con el que te registraste para enviarte el link de recuperación:') || '').trim().toLowerCase();
+    }
+    if (!email) return;
+    errEl.classList.remove('auth-error-success');
+    errEl.style.display = 'none';
+    try {
+        await TK.sendPasswordResetEmail(email);
+        errEl.textContent = '✓ Te enviamos un correo a ' + email + ' con el link para restablecer tu contraseña. Revisa tu bandeja (y la carpeta de spam).';
+        errEl.classList.add('auth-error-success');
+        errEl.style.display = 'block';
+    } catch (err) {
+        errEl.textContent = (err && err.message) || 'No se pudo enviar el correo. Intenta de nuevo.';
         errEl.style.display = 'block';
     }
 }
