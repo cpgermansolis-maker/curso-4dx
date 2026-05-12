@@ -2169,8 +2169,8 @@
         </div>
 
         <div class="auth-tabs">
-            <div class="auth-tab active" onclick="switchAuthTab('login')">Iniciar sesión</div>
-            <div class="auth-tab" onclick="switchAuthTab('register')">Registrarse</div>
+            <div class="auth-tab active" onclick="switchAuthTab('login', event)">Iniciar sesión</div>
+            <div class="auth-tab" onclick="switchAuthTab('register', event)">Registrarse</div>
         </div>
 
         <!-- LOGIN FORM -->
@@ -2186,17 +2186,19 @@
             <button class="auth-btn" type="submit">Iniciar sesión &#10145;&#65039;</button>
             <div class="auth-error" id="loginError"></div>
             <div class="auth-forgot"><a href="#" onclick="showForgotForm(event)">¿Olvidaste tu contraseña?</a></div>
-            <div class="auth-forgot-form" id="forgotForm" style="display:none;">
-                <div class="form-group">
-                    <label>Correo electrónico para recuperación</label>
-                    <input type="email" id="forgotEmail" required placeholder="tu@empresa.com">
-                </div>
-                <button class="auth-btn" type="button" onclick="doForgotPassword()">Enviar link de recuperación</button>
-                <div class="auth-error" id="forgotError"></div>
-                <div class="auth-forgot"><a href="#" onclick="hideForgotForm(event)">Volver al login</a></div>
-            </div>
             <div class="auth-footer">Si ya te registraste antes, usa el mismo correo y contraseña</div>
         </form>
+
+        <!-- FORGOT PASSWORD FORM (paralelo a login/register, no anidado) -->
+        <div class="auth-forgot-form" id="forgotForm" style="display:none;">
+            <div class="form-group">
+                <label>Correo electrónico para recuperación</label>
+                <input type="email" id="forgotEmail" required placeholder="tu@empresa.com">
+            </div>
+            <button class="auth-btn" type="button" onclick="doForgotPassword()">Enviar link de recuperación</button>
+            <div class="auth-error" id="forgotError"></div>
+            <div class="auth-forgot"><a href="#" onclick="hideForgotForm(event)">Volver al login</a></div>
+        </div>
 
         <!-- REGISTER FORM -->
         <form class="auth-form" id="registerForm" onsubmit="doRegister(event)">
@@ -2367,11 +2369,21 @@ let finalAnswered = 0;
 let currentUser = null;
 
 // ========== AUTH FUNCTIONS (Firebase-backed) ==========
-function switchAuthTab(tab) {
+function switchAuthTab(tab, evt) {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById(tab + 'Form').classList.add('active');
+    // Resetear el modo "forgot" (cualquier display inline) al cambiar de tab
+    const forgot = document.getElementById('forgotForm');
+    if (forgot) forgot.style.display = 'none';
+    // Activar la tab: si llegó evento (click humano) usa el target; si no, busca por índice.
+    let tabEl = (evt && evt.target && evt.target.classList && evt.target.classList.contains('auth-tab')) ? evt.target : null;
+    if (!tabEl) {
+        const tabs = document.querySelectorAll('.auth-tab');
+        tabEl = tabs[tab === 'register' ? 1 : 0];
+    }
+    if (tabEl) tabEl.classList.add('active');
+    const formEl = document.getElementById(tab + 'Form');
+    if (formEl) formEl.classList.add('active');
 }
 
 // ========== VOUCHER OCR ==========
