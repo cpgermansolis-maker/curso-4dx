@@ -31,9 +31,12 @@
     <script>
         const _urlParams = new URLSearchParams(window.location.search);
         const _courseId = _urlParams.get('id') || '4dx';
-        // Inyectar el script del curso dinamicamente
+        // Inyectar el script del curso dinamicamente con cache-buster
+        // basado en la hora actual redondeada a minutos (evita caché agresivo
+        // durante despliegues, pero permite caché normal dentro del minuto).
         const _courseScript = document.createElement('script');
-        _courseScript.src = 'cursos/' + _courseId + '.js';
+        const _cb = Math.floor(Date.now() / 60000);
+        _courseScript.src = 'cursos/' + _courseId + '.js?v=' + _cb;
         _courseScript.onerror = () => {
             document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif;"><h1>Curso no encontrado</h1><p>El curso con ID "' + _courseId + '" no existe.</p><a href="index.html">← Volver al catálogo</a></div>';
         };
