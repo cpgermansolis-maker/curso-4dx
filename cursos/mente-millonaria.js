@@ -609,3 +609,10 @@ const COURSE_MENTE_MILLONARIA = {
 
     ] // fin lessons
 };
+
+// Registro global (igual que los demás cursos)
+if (typeof window !== 'undefined') {
+    window.COURSE_MENTE_MILLONARIA = COURSE_MENTE_MILLONARIA;
+    window.TRIKLES_COURSES = window.TRIKLES_COURSES || {};
+    window.TRIKLES_COURSES['mente-millonaria'] = COURSE_MENTE_MILLONARIA;
+}
