@@ -115,7 +115,11 @@
             // Firebase responde igual exista o no la cuenta (no revela información).
             const e = emailToId(email);
             try {
-                await auth.sendPasswordResetEmail(e);
+                const actionCodeSettings = {
+                    url: 'https://trikles-cursos.web.app/reset-password.html',
+                    handleCodeInApp: false
+                };
+                await auth.sendPasswordResetEmail(e, actionCodeSettings);
                 return { ok: true };
             } catch (err) {
                 throw new Error(friendlyAuthError(err));

@@ -198,6 +198,7 @@
             padding-bottom: 1px; transition: color 0.15s, border-color 0.15s;
         }
         .auth-forgot a:hover { color: #0a2540; border-bottom-color: #c9a961; }
+        .auth-forgot-form { margin-top: 18px; }
         .auth-footer { text-align: center; margin-top: 16px; font-size: 0.8em; color: var(--text-light); }
         .user-list-preview {
             background: #f5f5f5; border-radius: 8px; padding: 10px; margin-top: 10px;
@@ -2184,7 +2185,16 @@
             </div>
             <button class="auth-btn" type="submit">Iniciar sesión &#10145;&#65039;</button>
             <div class="auth-error" id="loginError"></div>
-            <div class="auth-forgot"><a href="#" onclick="doForgotPassword(event)">¿Olvidaste tu contraseña?</a></div>
+            <div class="auth-forgot"><a href="#" onclick="showForgotForm(event)">¿Olvidaste tu contraseña?</a></div>
+            <div class="auth-forgot-form" id="forgotForm" style="display:none;">
+                <div class="form-group">
+                    <label>Correo electrónico para recuperación</label>
+                    <input type="email" id="forgotEmail" required placeholder="tu@empresa.com">
+                </div>
+                <button class="auth-btn" type="button" onclick="doForgotPassword()">Enviar link de recuperación</button>
+                <div class="auth-error" id="forgotError"></div>
+                <div class="auth-forgot"><a href="#" onclick="hideForgotForm(event)">Volver al login</a></div>
+            </div>
             <div class="auth-footer">Si ya te registraste antes, usa el mismo correo y contraseña</div>
         </form>
 
@@ -2531,8 +2541,8 @@ async function doLogin(e) {
 
 async function doForgotPassword(ev) {
     if (ev) ev.preventDefault();
-    const errEl = document.getElementById('loginError');
-    const inputEl = document.getElementById('loginEmail');
+    const errEl = document.getElementById('forgotError');
+    const inputEl = document.getElementById('forgotEmail');
     let email = (inputEl && inputEl.value || '').trim().toLowerCase();
     if (!email) {
         email = (prompt('Escribe el correo con el que te registraste para enviarte el link de recuperación:') || '').trim().toLowerCase();
@@ -2541,14 +2551,29 @@ async function doForgotPassword(ev) {
     errEl.classList.remove('auth-error-success');
     errEl.style.display = 'none';
     try {
+        console.log('Enviando email de reset a:', email);
         await TK.sendPasswordResetEmail(email);
+        console.log('Email enviado exitosamente');
         errEl.textContent = '✓ Te enviamos un correo a ' + email + ' con el link para restablecer tu contraseña. Revisa tu bandeja (y la carpeta de spam).';
         errEl.classList.add('auth-error-success');
         errEl.style.display = 'block';
     } catch (err) {
+        console.error('Error enviando email de reset:', err);
         errEl.textContent = (err && err.message) || 'No se pudo enviar el correo. Intenta de nuevo.';
         errEl.style.display = 'block';
     }
+}
+
+function showForgotForm(ev) {
+    if (ev) ev.preventDefault();
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('forgotForm').style.display = 'block';
+}
+
+function hideForgotForm(ev) {
+    if (ev) ev.preventDefault();
+    document.getElementById('forgotForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
 }
 
 async function doLogout() {

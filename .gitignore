@@ -34,3 +34,6 @@ desktop.ini
 
 # Claude Code
 .claude/
+
+# Firebase CLI cache local
+.firebase/
