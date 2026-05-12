@@ -26,6 +26,10 @@
     // Usar persistencia LOCAL (el login sobrevive a recargas y a cerrar el navegador)
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
 
+    // Forzar idioma español para los emails automáticos de Firebase Auth
+    // (reset de contraseña, verificación de email, etc.)
+    auth.languageCode = 'es';
+
     // Cache en memoria
     let currentUserData = null;   // datos del doc Firestore del usuario logueado
     let currentEmail = null;      // email (lowercase) del usuario logueado
