@@ -199,6 +199,13 @@
         }
         .auth-forgot a:hover { color: #0a2540; border-bottom-color: #c9a961; }
         .auth-forgot-form { margin-top: 18px; }
+        .auth-forgot-hint {
+            margin-top: 12px; padding: 10px 12px;
+            background: #fff8e1; border-left: 3px solid #c9a961;
+            border-radius: 6px; font-size: 0.82em;
+            color: #5a4a1f; line-height: 1.45;
+        }
+        .auth-forgot-hint strong { color: #3d3210; }
         .auth-footer { text-align: center; margin-top: 16px; font-size: 0.8em; color: var(--text-light); }
         .user-list-preview {
             background: #f5f5f5; border-radius: 8px; padding: 10px; margin-top: 10px;
@@ -2196,6 +2203,7 @@
                 <input type="email" id="forgotEmail" required placeholder="tu@empresa.com">
             </div>
             <button class="auth-btn" type="button" onclick="doForgotPassword()">Enviar link de recuperación</button>
+            <div class="auth-forgot-hint">💡 El correo llega en 1-2 minutos. <strong>Si no lo ves, revisa también tu carpeta de Spam o Promociones.</strong></div>
             <div class="auth-error" id="forgotError"></div>
             <div class="auth-forgot"><a href="#" onclick="hideForgotForm(event)">Volver al login</a></div>
         </div>
@@ -2566,7 +2574,7 @@ async function doForgotPassword(ev) {
         console.log('Enviando email de reset a:', email);
         await TK.sendPasswordResetEmail(email);
         console.log('Email enviado exitosamente');
-        errEl.textContent = '✓ Te enviamos un correo a ' + email + ' con el link para restablecer tu contraseña. Revisa tu bandeja (y la carpeta de spam).';
+        errEl.innerHTML = '✓ Link enviado a <strong>' + email + '</strong>.<br>Si no lo ves en 2 minutos, <strong>revisa tu carpeta de Spam o Promociones</strong> — los correos automáticos a veces llegan ahí.';
         errEl.classList.add('auth-error-success');
         errEl.style.display = 'block';
     } catch (err) {
