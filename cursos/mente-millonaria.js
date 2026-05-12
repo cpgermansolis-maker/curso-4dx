@@ -165,16 +165,13 @@ const COURSE_MENTE_MILLONARIA = {
             </ul>
         </div>
 
-        <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
-            <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO · T. HARV EKER</div>
-            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/ULSGCmZK0CY?rel=0&modestbranding=1"
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen loading="lazy"
-                        title="T. Harv Eker - The Speed of a Millionaire"></iframe>
+        <div class="video-pending">
+            <div class="video-pending-label">▶ VIDEO COMPLEMENTARIO · T. HARV EKER</div>
+            <div class="video-pending-frame">
+                <div class="video-pending-play">▶</div>
+                <div class="video-pending-title">Video en preparación</div>
+                <div class="video-pending-desc">Aquí irá una entrevista de T. Harv Eker en español, curada por TRIKLES.<br>Reemplazar antes del lanzamiento.</div>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">T. Harv Eker explica por qué la mayoría nunca alcanza la libertad financiera (subtítulos en español disponibles desde el ⚙ del reproductor)</div>
         </div>
 
         <div class="instructor-note">
@@ -374,16 +371,13 @@ const COURSE_MENTE_MILLONARIA = {
             </div>
         </div>
 
-        <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
-            <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
-            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/0bsAPLNcXAk?rel=0&modestbranding=1"
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen loading="lazy"
-                        title="T. Harv Eker - Take Responsibility"></iframe>
+        <div class="video-pending">
+            <div class="video-pending-label">▶ VIDEO COMPLEMENTARIO · ARCHIVO #1</div>
+            <div class="video-pending-frame">
+                <div class="video-pending-play">▶</div>
+                <div class="video-pending-title">Video en preparación</div>
+                <div class="video-pending-desc">Aquí irá una entrevista de T. Harv Eker sobre responsabilidad radical, en español.<br>Reemplazar antes del lanzamiento.</div>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">T. Harv Eker sobre responsabilidad radical (activa subtítulos en español desde ⚙)</div>
         </div>
 
         <div class="aha-moment">
