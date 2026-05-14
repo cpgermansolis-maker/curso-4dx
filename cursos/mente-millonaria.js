@@ -278,7 +278,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_intro', this, true)">Tu programación subconsciente sobre el dinero ("patrón financiero")</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_intro', this, false)">La cantidad de horas que dedicas a trabajar</div>
             </div>
-            <div class="quiz-feedback" id="quiz_intro_feedback"></div>
+            <div class="quiz-feedback" id="quiz_intro_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -386,7 +386,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1a', this, false)">Educación → Esfuerzo → Suerte → Resultados</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1a', this, false)">Acción → Reflexión → Aprendizaje → Resultados</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l1a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l1a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -412,7 +412,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1b', this, true)">Porque su patrón heredado decía "rico = cerdo" y su subconsciente saboteaba para no decepcionar a su madre</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l1b', this, false)">Porque no había leído los libros correctos</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l1b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l1b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -515,7 +515,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2a', this, false)">Porque genéticamente heredamos las creencias</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2a', this, false)">Porque la cultura latinoamericana las refuerza socialmente</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l2a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l2a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -541,7 +541,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2b', this, false)">3 a 5 — depende del país</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l2b', this, true)">Casi nadie marca menos de 5 — la mayoría marca 5 o más</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l2b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l2b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -673,7 +673,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3a', this, false)">Porque la cultura te obliga a regresar al modelo familiar</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3a', this, false)">No es cierto — rebelarse SÍ libera, según Eker</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l3a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l3a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -700,7 +700,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3b', this, true)">Elegir conscientemente qué conservar y qué descartar, sin idealizar ni demonizar</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l3b', this, false)">Mezclar lo mejor de cada uno automáticamente</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l3b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l3b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -803,7 +803,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4a', this, false)">Reacondicionamiento → Conciencia → Comprensión → Disociación</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4a', this, false)">Conciencia → Disociación → Comprensión → Reacondicionamiento</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l4a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l4a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -830,7 +830,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4b', this, true)">Porque viene con carga emocional, y el cerebro prioriza experiencias emocionales sobre las solo verbales</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l4b', this, false)">Porque los incidentes son más recientes que las frases</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l4b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l4b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -963,7 +963,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5a', this, false)">Soñar, planear y postergar</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5a', this, false)">Ahorrar, gastar e invertir mal</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l5a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l5a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -995,7 +995,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5b', this, true)">La culpa paraliza; la responsabilidad libera porque te devuelve el poder de cambiar</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l5b', this, false)">La responsabilidad es para los ricos; la culpa es de los pobres</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l5b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l5b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1109,7 +1109,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">Porque genera ansiedad por la falta</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">Porque los expertos dicen que es mejor no tener metas</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l6a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l6a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1134,7 +1134,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, true)">"Quiero $1,500,000 MXN de patrimonio neto para diciembre de 2029"</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, false)">"Quiero ahorrar lo suficiente para mi retiro"</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l6b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l6b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1236,7 +1236,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, true)">El universo entrega una vida de oportunidades a medias y resultados a medias — confirmando todos los mensajes a la vez</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, false)">El universo te castiga por indeciso</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l7a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l7a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1262,7 +1262,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, false)">El compromiso es para ricos, el deseo es para principiantes</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, false)">Son sinónimos prácticamente</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l7b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l7b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1368,7 +1368,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">Educación, experiencia, network, geografía</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">Ingresos, ahorro, inversión, deuda</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l8a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l8a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1393,7 +1393,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, true)">A cuántos sirves (escala)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, false)">Cuánto paga el mercado (precio)</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l8b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l8b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1502,7 +1502,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">Espera la oportunidad perfecta antes de actuar</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">Solo actúa cuando tengas el 100% de la información</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l9a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l9a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1527,7 +1527,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, true)">La preparación real tiene objetivo, plazo y métrica concretos. La duda no — es vaga e indefinida.</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, false)">La preparación real toma menos de 1 mes</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l9b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l9b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1626,7 +1626,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, false)">Te haces inmune al éxito</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, false)">Atraes karma negativo según la tradición</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l10a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l10a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1651,7 +1651,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">Depende del nivel educativo de cada uno</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">No hay diferencia real, son perspectivas válidas</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l10b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l10b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1735,7 +1735,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, true)">El promedio del ingreso de las 5 personas con las que pasas más tiempo</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, false)">Tu IQ</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l11a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l11a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1761,7 +1761,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, false)">Porque la motivación es caprichosa</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, false)">No es cierto — la motivación sí basta</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l11b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l11b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -1870,7 +1870,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, false)">No pasa nada, la gente te encuentra de todos modos</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, false)">Acumulas karma positivo</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l12a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l12a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -1895,7 +1895,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, false)">El precio: caro = servicio, barato = presión</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, false)">El servicio es para profesionales, la presión es para vendedores</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l12b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l12b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2008,7 +2008,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, true)">Crecer hasta ser más grande que cualquier problema</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, false)">Delegar todos los problemas a otros</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l13a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l13a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2033,7 +2033,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, true)">"¿Quién tendría que ser yo para que este problema sea fácil?"</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, false)">"¿Cómo puedo evitar este problema en el futuro?"</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l13b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l13b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2116,7 +2116,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, false)">Que la gente honesta nunca toma el billete</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, false)">Que es solo un truco, no significa nada</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l14a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l14a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2141,7 +2141,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, true)">"Gracias" — sin justificar, sin minimizar</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, false)">"No es necesario"</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l14b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l14b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2251,7 +2251,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">Porque la escuela no enseña valores</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">Porque la felicidad no se logra trabajando</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l15a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l15a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2276,7 +2276,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, true)">5% de las ventas que genere personalmente</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, false)">Pago por proyecto de $40,000 fijos</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l15b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l15b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2358,7 +2358,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, true)">"¿Cómo logro ambas?"</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, false)">"¿Cuál duele menos sacrificar?"</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l16a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l16a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2383,7 +2383,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Porque somos egoístas por naturaleza</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Porque la abundancia es una ilusión moderna</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l16b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l16b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2477,7 +2477,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, true)">Activos − Pasivos</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, false)">Tu sueldo anual + estimación de ingreso futuro</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l17a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l17a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2502,7 +2502,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, false)">Educación, contactos, disciplina, sacrificio</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, false)">Ahorro, deuda, gasto, inversión</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l17b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l17b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2593,7 +2593,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, false)">15%</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, false)">20%</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l18a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l18a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2619,7 +2619,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, true)">Se gasta TODA cada mes en algo que disfrutes — sin culpa</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, false)">Se invierte en activos especulativos</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l18b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l18b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2729,7 +2729,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, false)">Tu sueldo mensual × 1000</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, false)">No se puede calcular, depende de muchos factores</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l19a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l19a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2755,7 +2755,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, true)">Tu sueldo como profesor o consultor (depende de tus horas)</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, false)">Dividendos de FIBRAs</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l19b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l19b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -2866,7 +2866,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">Los ricos eliminan el miedo con técnicas mentales</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">El miedo es una invención cultural de los pobres</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l20a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l20a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -2891,7 +2891,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, false)">Para calmar el miedo antes de tomar decisiones</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, false)">Para sincronizarte con la energía del universo</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l20b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l20b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
@@ -3002,7 +3002,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Saber es leer 10 libros del tema, oír es leer solo uno</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Son sinónimos prácticamente</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l21a_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l21a_fb"></div>
         </div>
 
         <div class="next-step-24h">
@@ -3028,7 +3028,7 @@ const COURSE_MENTE_MILLONARIA = {
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, false)">Solo lo que te enseñen en la escuela</div>
                 <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, false)">Aprender es opcional si ya tienes éxito</div>
             </div>
-            <div class="quiz-feedback" id="quiz_l21b_feedback"></div>
+            <div class="quiz-feedback" id="quiz_l21b_fb"></div>
         </div>
 
         <div class="lesson-okr-post">
