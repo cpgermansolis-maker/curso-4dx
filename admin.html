@@ -8,6 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
 <script src="firebase-init.js"></script>
 <style>
     :root {
@@ -355,10 +356,14 @@
 <div id="authScreen">
     <div class="admin-auth-card">
         <h2>🔐 Panel de Administrador</h2>
-        <div class="sub">TRIKLES - Gestión de cursos y alumnos</div>
-        <input type="password" id="adminPass" placeholder="Contraseña de administrador" autofocus>
-        <button onclick="tryAdminLogin()">Entrar</button>
+        <div class="sub">TRIKLES — accede con tu cuenta de Firebase</div>
+        <input type="email" id="adminEmail" placeholder="Correo de administrador" autocomplete="username" autofocus>
+        <input type="password" id="adminPass" placeholder="Contraseña" autocomplete="current-password">
+        <button id="adminLoginBtn" onclick="tryAdminLogin()">Entrar</button>
         <div class="admin-error" id="adminError"></div>
+        <div style="text-align:center;margin-top:14px;font-size:0.78em;color:var(--text-light);">
+            Solo cuentas con permiso de administrador pueden entrar.
+        </div>
     </div>
 </div>
 
@@ -525,26 +530,105 @@
 </div>
 
 <script>
-const ADMIN_PASSWORD = 'trikles4dx2026';
 let selectedCourse = 'all';
 let _usersCache = {}; // se llena desde Firestore en init()
 
-async function tryAdminLogin() {
-    const pass = document.getElementById('adminPass').value;
+// =========================================================
+// AUTH del admin: Firebase Auth + custom claim "admin"
+// =========================================================
+// Solo accede al panel quien:
+//   1) tiene una cuenta valida en Firebase Auth, Y
+//   2) su token tiene el custom claim admin === true.
+//
+// El claim se asigna llamando a la Cloud Function `bootstrapAdmin`, que
+// SOLO acepta el correo cpgermansolis@gmail.com. Si llegas aqui con esa
+// cuenta y todavia no tienes el claim, el flujo lo dispara automaticamente
+// en el primer login exitoso.
+// =========================================================
+
+function _showAdminError(msg) {
     const errEl = document.getElementById('adminError');
-    if (pass === ADMIN_PASSWORD) {
-        sessionStorage.setItem('trikles_admin_session', '1');
-        document.getElementById('authScreen').classList.add('hide');
-        document.getElementById('adminPanel').style.display = 'block';
-        await init();
-    } else {
-        errEl.textContent = 'Contraseña incorrecta';
-        errEl.style.display = 'block';
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+}
+
+function _hideAdminError() {
+    const errEl = document.getElementById('adminError');
+    errEl.textContent = '';
+    errEl.style.display = 'none';
+}
+
+// Lee el ID token forzando refresh para que veamos los claims mas recientes.
+async function _getFreshClaims() {
+    const user = TK._auth.currentUser;
+    if (!user) return null;
+    const result = await user.getIdTokenResult(true);
+    return result.claims || {};
+}
+
+// Pasa de pantalla de login al panel; arranca la carga de datos.
+async function _enterAdminPanel() {
+    document.getElementById('authScreen').classList.add('hide');
+    document.getElementById('adminPanel').style.display = 'block';
+    await init();
+}
+
+// Intenta auto-asignar el claim admin a la cuenta logueada (solo funciona
+// para cpgermansolis@gmail.com; cualquier otro correo recibe permission-denied).
+async function _attemptBootstrapAdmin() {
+    if (!TK._functions) {
+        throw new Error('Firebase Functions no esta cargado. Refresca la pagina.');
+    }
+    const call = TK._functions.httpsCallable('bootstrapAdmin');
+    const result = await call({});
+    return result.data; // { ok, alreadyAdmin }
+}
+
+async function tryAdminLogin() {
+    _hideAdminError();
+    const email = (document.getElementById('adminEmail').value || '').trim().toLowerCase();
+    const pass = document.getElementById('adminPass').value;
+    const btn = document.getElementById('adminLoginBtn');
+    if (!email || !pass) {
+        _showAdminError('Escribe tu correo y contraseña.');
+        return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Entrando…';
+    try {
+        await TK.login(email, pass);
+        // Tras login, ver si ya somos admin
+        let claims = await _getFreshClaims();
+        if (claims && claims.admin === true) {
+            await _enterAdminPanel();
+            return;
+        }
+        // No somos admin todavia: intentar bootstrap (solo funcionara si el
+        // correo es el ADMIN_BOOTSTRAP_EMAIL configurado en la Cloud Function).
+        try {
+            await _attemptBootstrapAdmin();
+            claims = await _getFreshClaims();
+            if (claims && claims.admin === true) {
+                await _enterAdminPanel();
+                return;
+            }
+            _showAdminError('Tu cuenta entro pero no quedo marcada como admin. Intenta de nuevo o avisa al desarrollador.');
+            await TK.logout();
+        } catch (bootErr) {
+            const msg = (bootErr && (bootErr.message || bootErr.code)) || 'No autorizado';
+            _showAdminError('Esta cuenta no tiene permiso de administrador. (' + msg + ')');
+            await TK.logout();
+        }
+    } catch (err) {
+        _showAdminError((err && err.message) || 'No se pudo iniciar sesión.');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
     }
 }
 
-function logoutAdmin() {
-    sessionStorage.removeItem('trikles_admin_session');
+async function logoutAdmin() {
+    try { await TK.logout(); } catch(e) {}
     location.reload();
 }
 
@@ -987,19 +1071,37 @@ function exportAllData() {
     link.click();
 }
 
-// Auto-login si hay sesión admin en esta pestaña
+// Auto-entrar si Firebase Auth ya tiene una sesion con claim admin
 window.addEventListener('DOMContentLoaded', async () => {
-    if (sessionStorage.getItem('trikles_admin_session') === '1') {
-        document.getElementById('authScreen').classList.add('hide');
-        document.getElementById('adminPanel').style.display = 'block';
-        await init();
-    } else {
-        setTimeout(() => document.getElementById('adminPass').focus(), 100);
-    }
-
-    document.getElementById('adminPass').addEventListener('keydown', e => {
-        if (e.key === 'Enter') tryAdminLogin();
+    // Submit con Enter desde cualquier input del login
+    ['adminEmail','adminPass'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') tryAdminLogin(); });
     });
+
+    // Esperar a que Firebase determine si ya hay sesion abierta
+    try {
+        const { email } = await TK.ready();
+        if (!email) {
+            // No hay sesion: dejar el formulario de login a la vista
+            setTimeout(() => document.getElementById('adminEmail').focus(), 100);
+            return;
+        }
+        // Hay sesion: ver si esa cuenta tiene claim admin
+        const claims = await _getFreshClaims();
+        if (claims && claims.admin === true) {
+            await _enterAdminPanel();
+        } else {
+            // Sesion abierta pero NO es admin: cerrarla para evitar confusion
+            // y mostrar el formulario de login con aviso
+            await TK.logout();
+            _showAdminError('La cuenta con la que estabas logueado no es admin. Inicia sesión con una cuenta autorizada.');
+            setTimeout(() => document.getElementById('adminEmail').focus(), 100);
+        }
+    } catch (e) {
+        console.error('Error inicializando admin auth:', e);
+        _showAdminError('No se pudo verificar tu sesión. Refresca la página.');
+    }
 });
 
 // =========================================================

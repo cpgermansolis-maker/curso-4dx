@@ -677,3 +677,40 @@ exports.unsubscribeReminders = onRequest(
         }
     }
 );
+
+/**
+ * bootstrapAdmin (callable)
+ * Asigna el custom claim { admin: true } al usuario que invoca, SOLO si su
+ * correo autenticado en Firebase Auth es cpgermansolis@gmail.com.
+ *
+ * Es la pieza que permite que admin.html migrado a Firebase Auth pase de
+ * "anónimo con contraseña hardcoded" a "tu cuenta personal con permiso real".
+ *
+ * Es idempotente: si ya tiene el claim, no hace nada y devuelve { ok:true }.
+ * Cualquier otro email obtiene permission-denied. Por eso es seguro dejarla
+ * desplegada (no es una puerta trasera).
+ *
+ * Después de invocarla, el cliente DEBE forzar refresh del ID token
+ * (auth.currentUser.getIdToken(true)) para que las reglas de Firestore vean
+ * el claim recién asignado.
+ */
+const ADMIN_BOOTSTRAP_EMAIL = 'cpgermansolis@gmail.com';
+
+exports.bootstrapAdmin = onCall(
+    { cors: true },
+    async (request) => {
+        if (!request.auth || !request.auth.token.email) {
+            throw new HttpsError('unauthenticated', 'Debes iniciar sesión.');
+        }
+        const callerEmail = String(request.auth.token.email).trim().toLowerCase();
+        if (callerEmail !== ADMIN_BOOTSTRAP_EMAIL) {
+            throw new HttpsError('permission-denied', 'No autorizado.');
+        }
+        if (request.auth.token.admin === true) {
+            return { ok: true, alreadyAdmin: true };
+        }
+        await admin.auth().setCustomUserClaims(request.auth.uid, { admin: true });
+        logger.info('Admin claim asignado', { email: callerEmail, uid: request.auth.uid });
+        return { ok: true, alreadyAdmin: false };
+    }
+);

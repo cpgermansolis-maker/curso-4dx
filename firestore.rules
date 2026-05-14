@@ -1,37 +1,68 @@
 // =========================================================
-// REGLAS DE SEGURIDAD DE FIRESTORE para TRIKLES
+// REGLAS DE SEGURIDAD DE FIRESTORE — TRIKLES
 // =========================================================
-// ESTADO ACTUAL (2026-05-14): RESTAURACIÓN POST-TRIAL
+// Modelo de acceso:
 //
-// El modo "prueba" inicial de 30 días expiró y bloqueó el acceso de los
-// alumnos a sus cursos. Estas reglas reabren temporalmente la base de
-// datos con el mismo perfil de acceso que el modo prueba tenía: lectura/
-// escritura libre para cualquier cliente. Es lo mínimo necesario para
-// que el sitio actual (que usa lecturas anónimas desde admin.html y
-// lecturas autenticadas desde curso.html / index.html) vuelva a operar
-// SIN cambios de código.
+// users/{email}
+//   - Lectura/escritura: dueño del doc (correo autenticado coincide con
+//     el ID del doc, en minúsculas) o admin.
 //
-// IMPORTANTE — esto NO es un estado final.
+// ratings/{ratingId}   (formato del ID: "email__courseId")
+//   - Lectura: pública (el catálogo público muestra promedio y reseñas).
+//   - Crear/actualizar: solo el autor (ratingId arranca con su correo
+//     autenticado) o admin.
+//   - Borrar: solo admin.
 //
-// PRÓXIMO PASO (cuando se aborde): endurecer las reglas para que:
-//   - Cada alumno solo pueda leer/escribir su propio doc users/{email}
-//     (regla: request.auth.token.email.lower() == email)
-//   - admin.html sea migrado a Firebase Auth con un custom claim
-//     "admin = true" sobre la cuenta cpgermansolis@gmail.com, y las
-//     reglas permitan lectura global cuando request.auth.token.admin == true
-//   - Las colecciones ratings, enrollments, etc. queden similarmente acotadas
+// Quien es "admin": cualquier usuario autenticado que tenga el custom
+// claim { admin: true } en su token. Ese claim se asigna vía la Cloud
+// Function `bootstrapAdmin`, que solo lo otorga a cpgermansolis@gmail.com.
 //
-// Cómo aplicar (desde la raíz del repo, requiere que firebase.json incluya
-// la sección "firestore" apuntando a este archivo):
+// Cualquier otra colección queda denegada por defecto.
+//
+// Despliegue:
 //   npx firebase-tools deploy --only firestore:rules --project trikles-cursos
 // =========================================================
 
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    function callerEmail() {
+      return request.auth != null && request.auth.token.email != null
+              ? request.auth.token.email.lower()
+              : '';
+    }
+
+    function isOwnerOfEmailDoc(emailId) {
+      return callerEmail() != '' && callerEmail() == emailId;
+    }
+
+    // === Usuarios (perfil + enrollments + progreso por curso) ===
+    match /users/{email} {
+      allow read, write: if isOwnerOfEmailDoc(email) || isAdmin();
+    }
+
+    // === Calificaciones de cursos ===
+    // ratingId tiene formato "email__courseId" (ver firebase-init.js _ratingId).
+    // Comparamos prefijo por split en vez de regex para evitar metachars en
+    // correos (los puntos y el + de un correo "ana+test@example.com" serian
+    // metachars en regex y debilitarian la verificacion de pertenencia).
+    match /ratings/{ratingId} {
+      allow read: if true;
+
+      allow create, update: if isAdmin()
+          || (callerEmail() != '' && ratingId.split('__')[0] == callerEmail());
+
+      allow delete: if isAdmin();
+    }
+
+    // === Cualquier otra ruta: denegado ===
     match /{document=**} {
-      // TEMPORAL: acceso abierto post-trial — endurecer en próxima iteración
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }
