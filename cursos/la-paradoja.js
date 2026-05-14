@@ -14,7 +14,7 @@ const COURSE_LA_PARADOJA = {
         title: 'La Paradoja',
         subtitle: 'Un relato sobre la verdadera esencia del liderazgo — James C. Hunter',
         author: 'James C. Hunter',
-        cover: 'assets/covers/la-paradoja.jpg',
+        cover: 'assets/covers/la-paradoja.svg',
         description: 'El clásico moderno que transformó la manera de entender el liderazgo. A través de la historia de John Daily y el hermano Simeón, Hunter revela que para liderar hay que servir, y que el amor no es un sentimiento sino un verbo: una decisión diaria de comportamiento. Este curso recorre los 7 capítulos del libro con citas, ejercicios reflexivos, quizzes y videos recomendados. Aprende a construir autoridad real, crear entornos sanos y elegir el cambio.',
         descripcionCorta: 'El liderazgo de servicio explicado como nunca: poder vs autoridad, amor como verbo, paradigmas y la elección de cambiar.',
         category: 'Liderazgo y desarrollo personal',

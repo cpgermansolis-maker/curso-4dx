@@ -14,7 +14,7 @@ const COURSE_GERENCIA_EFECTIVA = {
         title: 'La Gerencia Efectiva',
         subtitle: 'El método de Peter F. Drucker para producir resultados económicos',
         author: 'Peter F. Drucker',
-        cover: 'assets/covers/gerencia-efectiva.jpg',
+        cover: 'assets/covers/gerencia-efectiva.svg',
         description: 'El tratado que fundó el management moderno. Drucker explica con claridad quirúrgica por qué la mayoría de los ejecutivos gasta su tiempo donde no hay resultados, y cómo convertir recursos en desempeño económico real. Este curso recorre los 14 capítulos del libro con citas textuales, casos, quizzes y cuatro herramientas descargables: análisis ABC (Pareto 80/20), matriz de cartera de productos, checklist "Ésta es nuestra empresa" y plan de implementación de 90 días.',
         descripcionCorta: 'El clásico de Drucker convertido en método: oportunidades, análisis de cartera, decisiones clave y ejecución.',
         category: 'Dirección y estrategia',

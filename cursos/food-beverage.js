@@ -13,7 +13,7 @@ const COURSE_FOOD_BEVERAGE = {
         title: 'Control de Costos en Alimentos y Bebidas',
         subtitle: 'El método profesional para restaurantes rentables — Dopson & Hayes, adaptado a Latinoamérica',
         author: 'Lea R. Dopson & David K. Hayes (traducción y adaptación TRIKLES)',
-        cover: 'assets/covers/food-beverage.jpg',
+        cover: 'assets/covers/food-beverage.svg',
         description: 'El curso más completo en español sobre control de costos de alimentos y bebidas, adaptado desde el libro de referencia mundial de Dopson & Hayes. 30 lecciones profundas que te llevan paso a paso desde los fundamentos (estado de resultados, pronóstico de ventas) hasta la ingeniería de menú, el análisis CVP, el presupuesto anual y la seguridad del efectivo. Adaptado a la realidad mexicana y latinoamericana: pesos MXN, IVA, IMSS, proveedores locales, costos de apertura y operación de restaurantes en México. Incluye citas textuales del libro (traducción libre), fórmulas, casos de estudio, ejercicios, videos en español y examen final de 15 preguntas con umbral de 80% para certificarse.',
         descripcionCorta: 'Curso profesional de control de costos F&B: del estado de resultados al análisis CVP. 30 lecciones, adaptado a México.',
         category: 'Gastronomía y hospitalidad',

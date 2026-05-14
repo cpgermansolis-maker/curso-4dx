@@ -10,7 +10,7 @@ const COURSE_4DX = {
         title: 'Las 4 Disciplinas de la Ejecución',
         subtitle: 'Aplicadas a Gerencia de Administración',
         author: 'Chris McChesney, Sean Covey y Jim Huling',
-        cover: 'assets/covers/4dx-cover.jpg',
+        cover: 'assets/covers/4dx.svg',
         description: 'El método probado por FranklinCovey para convertir cualquier estrategia en resultados reales. Aprende a enfocar a tu equipo en las Metas Crucialmente Importantes, identificar las Medidas de Predicción, llevar un Tablero de Resultados convincente y crear una Cadencia de Rendición de Cuentas semanal.',
         descripcionCorta: 'Domina el modelo 4DX para ejecutar estrategias en tu gerencia de administración',
         category: 'Ejecución estratégica',

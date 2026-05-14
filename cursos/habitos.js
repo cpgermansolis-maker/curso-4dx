@@ -10,7 +10,7 @@ const COURSE_HABITOS = {
         title: 'Los 7 Hábitos de la Gente Altamente Efectiva',
         subtitle: 'La revolución ética en la vida cotidiana y en la empresa',
         author: 'Stephen R. Covey',
-        cover: 'assets/covers/habitos.jpg',
+        cover: 'assets/covers/habitos.svg',
         description: 'El método universal probado por más de 40 años para transformar tu carácter, tus relaciones y tus resultados. Aprende de adentro hacia afuera los 7 hábitos que distinguen a las personas verdaderamente efectivas en la vida personal, familiar y profesional.',
         descripcionCorta: 'Transforma tu carácter y multiplica tu efectividad con los principios universales de Covey',
         category: 'Liderazgo personal',

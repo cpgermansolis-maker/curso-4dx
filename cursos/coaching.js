@@ -15,7 +15,7 @@ const COURSE_COACHING = {
         title: 'Coaching',
         subtitle: 'El método para mejorar el rendimiento de las personas — John Whitmore',
         author: 'Sir John Whitmore',
-        cover: 'assets/covers/coaching.jpg',
+        cover: 'assets/covers/coaching.svg',
         description: 'El libro definitivo sobre coaching en organizaciones. John Whitmore, considerado el padre del coaching para el rendimiento, presenta el modelo GROW y explica cómo el coaching transforma el liderazgo y libera el potencial de las personas. Este curso recorre los 23 capítulos del libro — desde el juego interior de Gallwey hasta el coaching avanzado — con citas, ejercicios, preguntas potentes, estudios de caso y videos recomendados. Aprende a preguntar en lugar de ordenar, a escuchar de verdad, y a convertirte en un líder-coach que produce alto rendimiento sostenible.',
         descripcionCorta: 'El clásico del coaching empresarial: modelo GROW, preguntas potentes, conciencia y responsabilidad como motor del rendimiento.',
         category: 'Liderazgo y coaching',

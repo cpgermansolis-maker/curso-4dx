@@ -10,7 +10,7 @@ const COURSE_CODIGO_HONOR = {
         title: 'El ABC para crear un equipo de negocios exitoso',
         subtitle: 'El Código de Honor invisible que transforma grupos en equipos campeones',
         author: 'Blair Singer (Padre Rico Advisors)',
-        cover: 'assets/covers/codigo-honor.jpg',
+        cover: 'assets/covers/codigo-honor.svg',
         description: 'El método probado por Blair Singer —asesor de Robert Kiyosaki y entrenador de equipos de alto desempeño en más de 20 países— para construir un Código de Honor que mantenga a tu equipo unido, enfocado y rendido bajo presión. Aprende a mapear tu equipo, a crear un Código que se cumpla, a reforzarlo con la campana y a liderar para convertir a gente común en grandes jugadores. Curso profundo con 24 lecciones, video complementario en español en cada módulo, ejemplos mexicanos reales, quizzes por lección, plantillas descargables y examen final con certificado.',
         descripcionCorta: 'Domina el Código de Honor de Blair Singer para construir equipos de negocio campeones',
         category: 'Liderazgo y equipos de alto desempeño',

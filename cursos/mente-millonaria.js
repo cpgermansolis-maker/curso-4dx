@@ -11,7 +11,7 @@ const COURSE_MENTE_MILLONARIA = {
         title: 'Los Secretos de la Mente Millonaria',
         subtitle: 'Cómo dominar el juego interior de la riqueza y reprogramar tu patrón financiero',
         author: 'T. Harv Eker (Sirio · 38ª edición · #1 NYT / WSJ / USA Today)',
-        cover: 'assets/covers/mente-millonaria.jpg',
+        cover: 'assets/covers/mente-millonaria.svg',
         description: 'El best-seller mundial de T. Harv Eker, adaptado al contexto mexicano y profundizado a nivel ejecutivo en TRIKLES. Aprenderás a diagnosticar y reprogramar tu “patrón financiero” —ese termostato invisible que decide cuánto dinero puedes tener antes de auto-sabotearte— y a instalar los 17 Archivos de Riqueza que separan a quien acumula patrimonio de quien vive de quincena. Curso profundo con 22 lecciones de contenido en 2 grandes módulos, video complementario en español por lección, casos mexicanos reales, 44 quizzes, examen final y certificado.',
         descripcionCorta: 'Reprograma tu patrón financiero con los 17 Archivos de Riqueza de T. Harv Eker',
         category: 'Mentalidad financiera y construcción de riqueza',
