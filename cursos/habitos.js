@@ -56,7 +56,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta introducción:</div>
+            <ul>
+                <li>Reconocerás por qué las técnicas sin carácter no funcionan a largo plazo</li>
+                <li>Entenderás el concepto de <em>paradigma</em> como mapa mental distinto del territorio</li>
+                <li>Conocerás el Continuum de la Madurez: dependencia → independencia → interdependencia</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -184,6 +192,39 @@ const COURSE_HABITOS = {
             </div>
             <p style="text-align:center;color:#666;font-style:italic;margin-top:8px;">1. Proactivo · 2. Fin en mente · 3. Primero lo primero · 4. Ganar/Ganar · 5. Comprender · 6. Sinergia · 7. Afilar la sierra</p>
         </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">El problema de Covey con su hijo no era el niño — era el paradigma con que lo miraban.</div>
+            <div class="aha-body">Cambiaron el mapa, no la técnica. Y la realidad cambió sola. Esto es lo que hace que este libro sea diferente: no te da nuevas técnicas sobre el viejo paradigma. Te pide que cambies el mapa primero.</div>
+        </div>
+
+        <div class="pull-quote-xl">
+            <div class="pq-icon">&ldquo;</div>
+            <div class="pq-text">Si queremos hacer cambios significativos en nuestras vidas, necesitamos trabajar sobre nuestros paradigmas básicos.</div>
+            <div class="pq-author">— Stephen R. Covey · Los 7 Hábitos de la Gente Altamente Efectiva</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Por qué 150 años de ética del carácter son más poderosos que décadas de ética de la personalidad</li>
+                <li>Que cambiar el paradigma (el mapa) transforma los resultados sin esfuerzo superficial</li>
+                <li>Que el camino es de <em>adentro hacia afuera</em> — y que el Continuum va de la dependencia a la interdependencia</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 1 · Sea Proactivo</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Identifica UNA área de tu vida donde llevas tiempo aplicando técnicas sin resultados</li>
+                    <li>Pregúntate: ¿qué paradigma tengo sobre esa área? ¿es el mapa correcto o simplemente heredado?</li>
+                    <li>Escríbelo en papel — ese es el primer paso de un cambio real de adentro hacia afuera</li>
+                </ol>
+            </div>
+        </div>
         `
     },
 
@@ -201,7 +242,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Distinguirás respuestas proactivas de reactivas en situaciones cotidianas</li>
+                <li>Sabrás dirigir tu energía al círculo de influencia y ver cómo se expande</li>
+                <li>Descubrirás cómo tu vocabulario revela tu paradigma — y cómo cambiarlo</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -326,13 +375,36 @@ const COURSE_HABITOS = {
             <div class="quiz-feedback" id="quiz_h1b_fb"></div>
         </div>
 
-        <div class="content-card">
-            <h3>&#128221; Tu compromiso de esta semana</h3>
-            <ol class="concept-list">
-                <li>Durante 3 días, <strong>escucha tu lenguaje</strong>: cuenta cuántas veces dices "tengo que", "no puedo", "me hace sentir..."</li>
-                <li>Identifica <strong>una preocupación reciente</strong> que te ha quitado energía. Pregúntate: ¿qué parte de esto SÍ está en mi círculo de influencia?</li>
-                <li>Haz un compromiso pequeño contigo mismo y <strong>cúmplelo</strong>. La autoconfianza nace de cumplirte a ti.</li>
-            </ol>
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">Viktor Frankl perdió todo — familia, hogar, libertad física. Y nadie pudo quitarle su libertad interior.</div>
+            <div class="aha-body">Entre estímulo y respuesta hay un espacio. Ese espacio es tu poder. Si él pudo elegir su respuesta en Auschwitz, tú puedes elegirla en tu oficina, en tu tráfico, en tu conversación difícil de hoy.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 Caso México — Ciudad de México</div>
+            <div class="case-body">Un gerente de ventas en la CDMX llevaba 2 años culpando a la competencia, al tipo de cambio y a los clientes por sus resultados. Tras aplicar el Hábito 1, hizo una lista de todo lo que SÍ estaba en su círculo de influencia: la calidad de sus propuestas, su seguimiento postventa, su preparación antes de cada reunión. En 90 días cerró 3 contratos que llevaba un año persiguiendo — sin que la competencia ni el mercado cambiaran.</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Que entre estímulo y respuesta hay un espacio — y en ese espacio está tu libertad real</li>
+                <li>La diferencia entre el círculo de preocupación y el de influencia, y cuál expande tu poder</li>
+                <li>El lenguaje reactivo que te delata — y las frases proactivas que lo reemplazan</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 2 · Empiece con un Fin en Mente</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Durante las próximas 24 horas, atrapa cada vez que digas "tengo que…", "no puedo…" o "me hace enojar..."</li>
+                    <li>Cámbialo en voz alta: "elijo…", "decido…", "controlo mis sentimientos ante…"</li>
+                    <li>Al final del día cuenta cuántas veces lo atrapaste — ese número es tu punto de partida real</li>
+                </ol>
+            </div>
         </div>
         `
     },
@@ -351,7 +423,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Comprenderás el principio de la doble creación: mental primero, física después</li>
+                <li>Explorarás el ejercicio del funeral propio de Covey para clarificar tu misión de vida</li>
+                <li>Aprenderás a identificar tu "centro" y a construirlo sobre principios estables</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -485,6 +565,39 @@ const COURSE_HABITOS = {
             <button class="quiz-option" onclick="checkQuiz('quiz_h2b', this, false)">Porque así evitas involucrarte emocionalmente con otros</button>
             <div class="quiz-feedback" id="quiz_h2b_fb"></div>
         </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">Muchas personas escalan una escalera durante toda su carrera, solo para descubrir al llegar arriba que estaba apoyada en la pared equivocada.</div>
+            <div class="aha-body">La eficiencia al subir peldaños no sirve si el destino es incorrecto. El Hábito 2 no es sobre trabajar más duro: es sobre asegurarte de que estás construyendo la vida que de verdad quieres.</div>
+        </div>
+
+        <div class="pull-quote-xl">
+            <div class="pq-icon">&ldquo;</div>
+            <div class="pq-text">Si no tienes claro cómo quieres que sea el final, no sabes si el camino que recorres hoy te lleva hacia allá o te aleja.</div>
+            <div class="pq-author">— Stephen R. Covey · Los 7 Hábitos de la Gente Altamente Efectiva</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Que todas las cosas se crean dos veces: primero en la mente, después en la realidad física</li>
+                <li>Si no diseñas tu vida deliberadamente, las circunstancias y los demás la diseñarán por ti</li>
+                <li>Que centrar la vida en principios —no en cosas cambiantes— es la única fuente de estabilidad real</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 3 · Establezca Primero lo Primero</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Pon un timer de 20 minutos y escribe: "Si hoy fuera mi funeral, ¿qué diría quien más me conoce de cómo viví?"</li>
+                    <li>No edites lo que escribes — deja fluir honestamente lo que surge</li>
+                    <li>Guarda ese papel: será el borrador de tu enunciado de misión personal</li>
+                </ol>
+            </div>
+        </div>
         `
     },
 
@@ -502,7 +615,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Dominarás la Matriz de Administración del Tiempo y clasificarás tu agenda en los 4 cuadrantes</li>
+                <li>Aprenderás por qué vivir en el Cuadrante II es la clave de la efectividad real</li>
+                <li>Entenderás la diferencia entre delegar en recaderos y delegar en encargados</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -611,6 +732,38 @@ const COURSE_HABITOS = {
             <button class="quiz-option" onclick="checkQuiz('quiz_h3b', this, false)">Empoderamiento puro</button>
             <div class="quiz-feedback" id="quiz_h3b_fb"></div>
         </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">La urgencia se disfraza de importancia. El correo "urgente" se revisa 40 veces al día; la conversación estratégica lleva 6 meses pendiente.</div>
+            <div class="aha-body">El torbellino de lo urgente consume lo importante. La gente altamente efectiva no "encuentra tiempo" para el QIII — lo bloquea intencionalmente, antes de que lo urgente ocupe ese espacio.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 Caso México — Monterrey</div>
+            <div class="case-body">Un equipo directivo de una manufacturera regiomontana tenía el 70% de sus reuniones clasificadas como "emergencia". Tras mapear sus actividades en la Matriz de Covey descubrieron que el 80% de esas urgencias provenían de no haber atendido la planificación (QII) la semana anterior. Bloquearon 3 horas semanales exclusivas para QII y las protegieron como reuniones sagradas. En 8 semanas, las emergencias cayeron un 60% — sin que el negocio perdiera un solo cliente.</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Clasificar cualquier actividad en los 4 cuadrantes según urgencia e importancia</li>
+                <li>Que vivir en QII (planificación, prevención, relaciones) es lo que genera resultados sostenibles</li>
+                <li>La diferencia entre delegar en recaderos (genera dependencia) y en encargados (libera al líder)</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 4 · Piense en Ganar/Ganar</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Toma las últimas 5 horas de trabajo de hoy y clasifícalas en los 4 cuadrantes</li>
+                    <li>Cuenta cuántas horas fueron QII (planificación, aprendizaje, relaciones estratégicas)</li>
+                    <li>Agenda un bloque de 90 minutos para QII en tu calendario de la próxima semana — márcalo como inamovible</li>
+                </ol>
+            </div>
+        </div>
         `
     },
 
@@ -628,7 +781,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Conocerás los 6 paradigmas de interacción humana y cuál es realmente el más maduro</li>
+                <li>Entenderás la mecánica de la Cuenta Bancaria Emocional y cómo construir confianza real</li>
+                <li>Aprenderás las 5 dimensiones del Ganar/Ganar para estructurar acuerdos duraderos</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -739,6 +900,39 @@ const COURSE_HABITOS = {
             <button class="quiz-option" onclick="checkQuiz('quiz_h4b', this, false)">Aceptar que hay personas que siempre tendrán más que uno</button>
             <div class="quiz-feedback" id="quiz_h4b_fb"></div>
         </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">Ganar/Ganar no es altruismo ni debilidad: es el único paradigma que funciona a largo plazo en relaciones de interdependencia.</div>
+            <div class="aha-body">En transacciones únicas puede funcionar Gano/Pierdes. Pero en relaciones continuas —con equipos, proveedores, familias, socios— si alguien pierde constantemente, la relación termina. Y con ella, todos los beneficios futuros.</div>
+        </div>
+
+        <div class="pull-quote-xl">
+            <div class="pq-icon">&ldquo;</div>
+            <div class="pq-text">La mentalidad de abundancia fluye de un profundo sentido interior de valía y seguridad personal. Significa compartir el reconocimiento, los beneficios, las ganancias. Significa que hay suficiente para todos.</div>
+            <div class="pq-author">— Stephen R. Covey · Los 7 Hábitos de la Gente Altamente Efectiva</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Los 6 paradigmas de interacción y por qué "Ganar/Ganar o no hay trato" es el más maduro</li>
+                <li>Qué son los depósitos y retiros de la Cuenta Bancaria Emocional — y cómo construir saldo real</li>
+                <li>Las 5 dimensiones del G/G: carácter, relaciones, acuerdos, sistemas y procesos</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 5 · Procure Primero Comprender</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Identifica la relación más importante donde el saldo de tu cuenta bancaria emocional esté bajo</li>
+                    <li>Haz hoy UN depósito concreto: cumple una pequeña promesa, agradece genuinamente, pide disculpas si debes</li>
+                    <li>No menciones que lo estás haciendo — los depósitos reales no buscan reconocimiento inmediato</li>
+                </ol>
+            </div>
+        </div>
         `
     },
 
@@ -756,7 +950,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Reconocerás los 5 niveles de escucha y dónde está habitualmente la tuya</li>
+                <li>Aprenderás las 4 respuestas autobiográficas que sabotean la comunicación empática</li>
+                <li>Entenderás el orden Ethos-Pathos-Logos y por qué determina si te escuchan o no</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -866,6 +1068,33 @@ const COURSE_HABITOS = {
             <button class="quiz-option" onclick="checkQuiz('quiz_h5b', this, false)">No importa el orden si el argumento es correcto</button>
             <div class="quiz-feedback" id="quiz_h5b_fb"></div>
         </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">Pasamos años aprendiendo a leer, escribir y hablar. Casi nadie nos enseñó a escuchar — la habilidad que más usamos y que más impacta nuestras relaciones.</div>
+            <div class="aha-body">La mayoría escucha con la intención de responder. La escucha empática escucha con la intención de comprender. La diferencia es total: cuando el otro se siente realmente comprendido, baja las defensas y entonces sí estás listo para influir.</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Los 5 niveles de escucha — y cuál es el único que constituye comunicación real</li>
+                <li>Las 4 respuestas autobiográficas (evaluar, sondear, aconsejar, interpretar) que bloquean la empatía</li>
+                <li>Que la escucha empática te gana el derecho de ser escuchado — no al revés</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 6 · Sinergice</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>En tu próxima conversación importante, escucha sin preparar tu respuesta mientras el otro habla</li>
+                    <li>Al terminar, refleja lo que escuchaste: "Entonces lo que me dices es que..."</li>
+                    <li>Espera a que el otro confirme que lo entendiste — solo entonces comparte tu punto de vista</li>
+                </ol>
+            </div>
+        </div>
         `
     },
 
@@ -883,7 +1112,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Aprenderás que sinergia no es compromiso 50/50: es crear algo mejor que ninguna parte individual propuso</li>
+                <li>Entenderás los niveles de comunicación (defensiva, respetuosa, sinérgica) y qué los habilita</li>
+                <li>Descubrirás el proceso de la Tercera Alternativa para resolver conflictos sin ceder posición</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -981,6 +1218,38 @@ const COURSE_HABITOS = {
             <button class="quiz-option" onclick="checkQuiz('quiz_h6b', this, false)">Que todos estén de acuerdo desde el principio</button>
             <div class="quiz-feedback" id="quiz_h6b_fb"></div>
         </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">En sinergia, la diferencia de opiniones no es el problema — es el recurso.</div>
+            <div class="aha-body">Ahí donde yo tengo un punto ciego, tú puedes ver con claridad. Si dos personas siempre están de acuerdo en todo, una de las dos es innecesaria. La sinergia florece precisamente donde hay diferencia honesta y voluntad de crear algo nuevo juntos.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 Caso México — Guadalajara</div>
+            <div class="case-body">Un equipo de ventas y uno de producción de una empresa de bebidas tapatía llevaban 8 meses en conflicto: ventas exigía plazos de entrega de 48 h, producción defendía 5 días por estándares de calidad. Aplicando la Tercera Alternativa de Covey ("¿estaríamos dispuestos a buscar algo mejor que ambas propuestas?") diseñaron un sistema de pedidos anticipados con incentivo de precio para el cliente. Ventas no cedió en urgencia; producción no cedió en calidad. Y surgió una solución que ninguno había previsto — que además redujo los costos de almacén un 18%.</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Que sinergia es la Tercera Alternativa — no un punto medio sino algo nuevo que ninguno tenía</li>
+                <li>La diferencia entre comunicación defensiva, respetuosa y sinérgica — y qué habilita cada nivel</li>
+                <li>El proceso de 5 pasos para buscar la 3ª alternativa en cualquier conflicto real</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Hábito 7 · Afile la Sierra</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Identifica un desacuerdo actual con alguien — colega, familiar, socio o proveedor</li>
+                    <li>Pregúntale: "¿Estarías dispuesto a buscar una solución que sea mejor que lo que ambos proponemos ahora?"</li>
+                    <li>Si dice sí: escucha su propuesta sin atacarla — busca primero sus méritos antes que sus fallas</li>
+                </ol>
+            </div>
+        </div>
         `
     },
 
@@ -998,7 +1267,15 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>
+                <li>Comprenderás las 4 dimensiones de renovación (física, mental, espiritual, social/emocional)</li>
+                <li>Entenderás el equilibrio P/CP y por qué descuidar la capacidad destruye la producción</li>
+                <li>Aprenderás por qué el Hábito 7 no es el "bonus final" sino el que hace posibles los otros seis</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -1118,6 +1395,39 @@ const COURSE_HABITOS = {
             <button class="quiz-option" onclick="checkQuiz('quiz_h7b', this, false)">Productividad corporativa y personal</button>
             <button class="quiz-option" onclick="checkQuiz('quiz_h7b', this, false)">Precio vs. costo de producción</button>
             <div class="quiz-feedback" id="quiz_h7b_fb"></div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">Invertir en ti mismo no es egoísmo — es el requisito previo de cualquier contribución que quieras hacer al mundo.</div>
+            <div class="aha-body">Sin la sierra afilada, con el tiempo no puedes cortar nada. Los demás hábitos requieren energía, claridad, carácter. Si no renuevas constantemente el instrumento que ejecuta todo eso — tú mismo — los otros seis hábitos se degradan solos.</div>
+        </div>
+
+        <div class="pull-quote-xl">
+            <div class="pq-icon">&ldquo;</div>
+            <div class="pq-text">Preservar y realzar el mayor bien que posee — usted mismo — no es egoísmo: es preservar y realzar el instrumento con el que sirve a todo lo demás.</div>
+            <div class="pq-author">— Stephen R. Covey · Los 7 Hábitos de la Gente Altamente Efectiva</div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>
+                <li>Las 4 dimensiones de renovación (física, mental, espiritual, social/emocional) y una actividad para cada una</li>
+                <li>El equilibrio P/CP: si solo cosechas y nunca inviertes en la capacidad, la fuente se agota</li>
+                <li>Que la espiral ascendente requiere práctica continua — la efectividad no es un destino, es un hábito diario</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Examen Final Integrador</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Elige la dimensión donde más te has descuidado en los últimos 30 días (física, mental, espiritual o social)</li>
+                    <li>Elige UNA actividad concreta para esa dimensión y agéndala para mañana con hora fija — no "cuando tenga tiempo"</li>
+                    <li>Al final de la semana compara cómo te sientes con respecto a hoy — ese delta es el ROI de afilar la sierra</li>
+                </ol>
+            </div>
         </div>
         `
     },
