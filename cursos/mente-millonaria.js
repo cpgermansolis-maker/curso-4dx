@@ -1432,13 +1432,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/pHY6FX3oJjc?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/wfzFyljSWNo?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Los Secretos de la Mente Millonaria - Aldea Financiera"></iframe>
+                        title="Actúa a Pesar del Miedo - Salvador Mingo"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Mentalidad de oportunidad en Eker (canal Aldea Financiera)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo vencer la parálisis por análisis y actuar (Salvador Mingo)</div>
         </div>
 
         <div class="aha-moment">
@@ -1566,13 +1566,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/mZNmz92ctiA?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/EmfqGSX-O4Y?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Principios de Riqueza"></iframe>
+                        title="De la Escasez a la Abundancia - Marta Salerno"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Principios de Riqueza incluyendo la actitud hacia los ricos (canal DINERO D7)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo cambiar de mentalidad de escasez a abundancia (Marta Salerno)</div>
         </div>
 
         <div class="aha-moment">
@@ -1690,13 +1690,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/kalRAwphKWM?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/9uXej9Kl0lI?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="T. Harv Eker - Aprender a ser financieramente libre"</iframe>
+                        title="Cómo Rodearse de Gente Exitosa - Juan Diego Gómez"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Sobre el entorno de los financieramente libres (canal Tony Robbins en Español)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">El poder del círculo social en tu éxito financiero (Juan Diego Gómez - Invertir Mejor)</div>
         </div>
 
         <div class="aha-moment">
@@ -1800,13 +1800,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/FpLllDhrK8E?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/2BFxDuNm7xc?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="10 Mejores Frases de T. Harv Eker"></iframe>
+                        title="Marca Personal y Ventas - Sin Atajos Podcast"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Sobre la promoción y mercadotecnia personal (canal Diverdocus - Finanzas Personales)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Cómo promoverte sin sentirte cínico — vender es servir (Sin Atajos Podcast)</div>
         </div>
 
         <div class="aha-moment">
@@ -1934,13 +1934,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/pA1Vz-WNwWk?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/s7kuFi0Hgg4?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Los secretos de la mente millonaria"></iframe>
+                        title="Sé Más Fuerte que Tus Problemas - Evan en Español"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Mentalidad para enfrentar dificultades (canal OwlCast)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Zig Ziglar: cómo volverse más grande que tus problemas (Evan en Español)</div>
         </div>
 
         <div class="aha-moment">
@@ -2180,13 +2180,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/pHY6FX3oJjc?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/m475DwpI_bY?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Los Secretos de la Mente Millonaria"></iframe>
+                        title="El Techo Salarial - Jonny vs System"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Sobre escapar del techo del sueldo fijo (canal Aldea Financiera)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Por qué el sueldo fijo es un techo, no un piso (Jonny vs System)</div>
         </div>
 
         <div class="aha-moment">
@@ -2315,13 +2315,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/t1UUx-6Hvj4?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/uLQ7Vp-Fs_M?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Resumen Animado - Mente Millonaria"></iframe>
+                        title="Mentalidad de Abundancia vs Escasez - inconfundibleMENTE"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Mentalidad de abundancia explicada (canal Visual Ananda)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Pensar "ambos/y" en lugar de "uno u otro" — mentalidad de abundancia (inconfundibleMENTE)</div>
         </div>
 
         <div class="aha-moment">
@@ -2658,13 +2658,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/kalRAwphKWM?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/P5SKpIa_ewg?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Aprender a ser financieramente libre"></iframe>
+                        title="Gana Dinero Mientras Duermes - Franromerooriginal"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Eker sobre libertad financiera real (canal Tony Robbins en Español)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">5 fuentes de ingreso pasivo para que tu dinero trabaje para ti (Franromerooriginal)</div>
         </div>
 
         <div class="aha-moment">
@@ -2930,13 +2930,13 @@ const COURSE_MENTE_MILLONARIA = {
         <div class="content-card video-embed-card" style="background:#0a2540;padding:18px;border-radius:2px;border:1px solid rgba(201,169,97,0.3);">
             <div style="color:#c9a961;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:2px;background:#000;">
-                <iframe src="https://www.youtube-nocookie.com/embed/AmKMiO3QJe8?rel=0&modestbranding=1"
+                <iframe src="https://www.youtube-nocookie.com/embed/cklpzn_6_uc?rel=0&modestbranding=1"
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen loading="lazy"
-                        title="Los Secretos de la Mente Millonaria - Audiolibro"></iframe>
+                        title="Los Ricos Trabajan para Aprender - ANUOR AGUILAR"></iframe>
             </div>
-            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Audiolibro completo de Eker — material para volver a escuchar (canal Finanzas inteligentes)</div>
+            <div style="text-align:center;margin-top:10px;color:#faf8f3;font-size:0.88em;font-style:italic;">Por qué "ya lo sé" cancela el aprendizaje — los ricos estudian siempre (ANUOR AGUILAR)</div>
         </div>
 
         <div class="aha-moment">
