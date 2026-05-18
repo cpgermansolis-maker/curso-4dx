@@ -21,7 +21,6 @@ const COURSE_4DX = {
         tags: ['ejecución', 'estrategia', 'gerencia', 'administración']
     },
 
-    // Requisitos de aprobación por lección (IDs de quizzes)
     lessonRequirements: {
         0: ['quiz_intro'],
         1: ['quiz_d1a', 'quiz_d1b'],
@@ -40,7 +39,6 @@ const COURSE_4DX = {
         description: 'Habiendo demostrado dominio de los conceptos de Meta Crucialmente Importante (MCI), Medidas de Predicción, Tablero de Resultados y Cadencia de Rendición de Cuentas, según el modelo de McChesney, Covey y Huling.'
     },
 
-    // Lecciones del curso
     lessons: [
     {
         id: 'intro', module: 'Introducción', tag: 'tag-intro', tagLabel: 'INTRODUCCION',
@@ -51,7 +49,15 @@ const COURSE_4DX = {
             <div class="hero-caption">Entre la estrategia y la ejecución hay un abismo: las 4DX son el puente</div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La diferencia entre el torbellino y la ejecución estratégica — y por qué casi todos viven atrapados en el primero</li>
+                <li>Los dos tipos de estrategia y cuál es el que las 4DX están diseñadas para resolver</li>
+                <li>La razón real por la que las estrategias fracasan (no es la que crees)</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -80,29 +86,37 @@ const COURSE_4DX = {
             </div></div>
         </div>
 
+        <div class="aha-moment">
+            <div class="aha-label">💡 AHA! MOMENT</div>
+            <div class="aha-quote">El torbellino no es tu enemigo — es tu trabajo. El problema es que sin un método, lo consume todo.</div>
+            <div class="aha-author">— Germán Solís · TRIKLES</div>
+            <div class="aha-body">La mayoría de los líderes no fallan por falta de esfuerzo ni de inteligencia. Fallan porque el torbellino del día a día absorbe el 100% de su energía y nunca queda nada para lo que realmente importa. Las 4DX no eliminan el torbellino — te enseñan a coexistir con él sin que te devore.</div>
+        </div>
+
         <div class="content-card">
             <h3>&#9889; El dato que lo cambia todo</h3>
             <p>Una encuesta internacional revelo que solo <span class="highlight">1 de cada 7 empleados</span> puede citar los objetivos más importantes de su organización. El 15% ni siquiera podía nombrar UNA meta.</p>
             <p>Esto significa que si tu gerencia tiene 14 personas, estadisticamente solo 2 saben cual es la meta principal.</p>
         </div>
 
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Si tu estrategia requiere que las personas cambien su comportamiento, estás ante el problema de ejecución más difícil del mundo.</div>
+            <div class="pq-author">— McChesney, Covey y Huling · Las 4 Disciplinas de la Ejecución</div>
+        </div>
+
         <div class="content-card tip">
             <h3>&#128161; Concepto clave: El Torbellino</h3>
             <p>El <strong>torbellino</strong> es la enorme cantidad de energía necesaria solo para mantener las operaciones del día a día. No es malo, pero si lo dejas, consumira toda tu atención y no quedará nada para lo estrategico.</p>
             <svg class="svg-illustration" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
-                <!-- Panel izquierdo: Torbellino con iconos dispersos -->
                 <g>
                     <text x="110" y="25" text-anchor="middle" fill="#455a64" font-weight="700" font-size="13" letter-spacing="1.5">EL TORBELLINO</text>
                     <text x="110" y="43" text-anchor="middle" fill="#90a4ae" font-size="10" font-style="italic">operaciones del día a dia</text>
-
-                    <!-- Icono Email/Pagos -->
                     <g transform="translate(40,70)">
                         <rect width="36" height="26" rx="3" fill="none" stroke="#607d8b" stroke-width="2"/>
                         <path d="M2 2 L18 16 L34 2" fill="none" stroke="#607d8b" stroke-width="2"/>
                         <text x="18" y="42" text-anchor="middle" font-size="9" fill="#607d8b">Pagos</text>
                     </g>
-
-                    <!-- Icono Calendario/Juntas -->
                     <g transform="translate(110,85) rotate(-8 16 16)">
                         <rect width="32" height="32" rx="3" fill="none" stroke="#607d8b" stroke-width="2"/>
                         <line x1="0" y1="10" x2="32" y2="10" stroke="#607d8b" stroke-width="2"/>
@@ -110,16 +124,12 @@ const COURSE_4DX = {
                         <line x1="24" y1="0" x2="24" y2="6" stroke="#607d8b" stroke-width="2"/>
                         <text x="16" y="48" text-anchor="middle" font-size="9" fill="#607d8b">Juntas</text>
                     </g>
-
-                    <!-- Icono Reloj/Urgencias -->
                     <g transform="translate(170,75) rotate(12 15 15)">
                         <circle cx="15" cy="15" r="15" fill="none" stroke="#607d8b" stroke-width="2"/>
                         <line x1="15" y1="15" x2="15" y2="6" stroke="#607d8b" stroke-width="2"/>
                         <line x1="15" y1="15" x2="21" y2="15" stroke="#607d8b" stroke-width="2"/>
                         <text x="15" y="48" text-anchor="middle" font-size="9" fill="#607d8b">Urgencias</text>
                     </g>
-
-                    <!-- Icono Burbuja/Quejas -->
                     <g transform="translate(50,140) rotate(-5 17 15)">
                         <path d="M5 5 L30 5 L30 20 L20 20 L15 25 L15 20 L5 20 Z" fill="none" stroke="#607d8b" stroke-width="2"/>
                         <circle cx="12" cy="12" r="1.5" fill="#607d8b"/>
@@ -127,15 +137,11 @@ const COURSE_4DX = {
                         <circle cx="22" cy="12" r="1.5" fill="#607d8b"/>
                         <text x="17" y="40" text-anchor="middle" font-size="9" fill="#607d8b">Quejas</text>
                     </g>
-
-                    <!-- Icono Alerta -->
                     <g transform="translate(130,150) rotate(10 15 15)">
                         <path d="M15 0 L30 25 L0 25 Z" fill="none" stroke="#ff8f00" stroke-width="2"/>
                         <text x="15" y="20" text-anchor="middle" font-size="14" fill="#ff8f00" font-weight="700">!</text>
                         <text x="15" y="40" text-anchor="middle" font-size="9" fill="#607d8b">Alertas</text>
                     </g>
-
-                    <!-- Icono Reporte -->
                     <g transform="translate(185,145) rotate(-12 14 11)">
                         <rect width="28" height="22" rx="2" fill="none" stroke="#607d8b" stroke-width="2"/>
                         <line x1="4" y1="8" x2="24" y2="8" stroke="#607d8b" stroke-width="1.5"/>
@@ -143,15 +149,11 @@ const COURSE_4DX = {
                         <text x="14" y="38" text-anchor="middle" font-size="9" fill="#607d8b">Reportes</text>
                     </g>
                 </g>
-
-                <!-- Centro: Flecha 4DX -->
                 <g transform="translate(240,110)">
                     <text x="47" y="-10" text-anchor="middle" fill="#1a237e" font-weight="800" font-size="15" letter-spacing="1">4DX</text>
                     <path d="M0 8 L75 8 L75 0 L100 15 L75 30 L75 22 L0 22 Z" fill="#1a237e"/>
                     <text x="47" y="50" text-anchor="middle" fill="#455a64" font-size="10" font-style="italic">enfoque</text>
                 </g>
-
-                <!-- Panel derecho: Target MCI -->
                 <g transform="translate(475,125)">
                     <text y="-75" text-anchor="middle" fill="#1a237e" font-weight="800" font-size="14" letter-spacing="2">META MCI</text>
                     <circle r="55" fill="none" stroke="#e3f2fd" stroke-width="4"/>
@@ -198,6 +200,27 @@ const COURSE_4DX = {
                 <li><strong>Crear una Cadencia de Rendición de Cuentas</strong> - Reuniones semanales de compromiso</li>
             </ol>
         </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✅ YA SABES:</div>
+            <ul>
+                <li>Qué es el torbellino y por qué coexistir con él es inevitable — pero no es excusa para no ejecutar</li>
+                <li>Que las estrategias de cambio de conducta son las más difíciles y las que las 4DX resuelven</li>
+                <li>El mapa de ruta: D1 (enfoque) → D2 (predicción) → D3 (tablero) → D4 (rendición de cuentas)</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Enfocarse en lo Crucialmente Importante (MCI)</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ ACCIÓN EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Abre tu agenda de la semana pasada y marca cada actividad como "torbellino" u "estratégica"</li>
+                    <li>Cuenta el porcentaje: si más del 80% es torbellino, tienes el diagnóstico</li>
+                    <li>Identifica UNA actividad estratégica que postergaste y agéndala para esta semana</li>
+                </ol>
+            </div>
+        </div>
         `
     },
     {
@@ -209,7 +232,15 @@ const COURSE_4DX = {
             <div class="hero-caption">Una meta clara, un equipo enfocado: así se logra lo imposible</div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Qué hace que una meta sea "Crucialmente Importante" — y la diferencia con una meta simplemente importante</li>
+                <li>La fórmula exacta "de X a Y para [fecha]" y por qué convierte deseos vagos en compromisos reales</li>
+                <li>Las 4 reglas del enfoque que blindan tu MCI del torbellino</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -238,6 +269,13 @@ const COURSE_4DX = {
             </div></div>
         </div>
 
+        <div class="aha-moment">
+            <div class="aha-label">💡 AHA! MOMENT</div>
+            <div class="aha-quote">Tener 10 metas es estadísticamente igual a tener cero metas.</div>
+            <div class="aha-author">— Germán Solís · TRIKLES</div>
+            <div class="aha-body">La mente humana no puede sostener compromisos genuinos con más de dos objetivos simultáneos. Elegir UNA meta no es rendirse — es la única forma real de ganar. El enfoque extremo no es un lujo: es el prerequisito de la ejecución.</div>
+        </div>
+
         <div class="content-card">
             <h3>&#128270; Qué es una MCI?</h3>
             <p>La <strong>MCI (Meta Crucialmente Importante)</strong> es la meta cuyo logro lo cambia todo. Sí todas las demas metas se cumplieran pero está no, nada de lo otro importaria demasiado.</p>
@@ -255,6 +293,12 @@ const COURSE_4DX = {
                 <text x="250" y="125" text-anchor="middle" font-size="13" fill="#666" font-style="italic">La formula mágica de toda MCI</text>
             </svg>
             <p>Ejemplo: "Reducir el tiempo de cierre contable <strong>de 15 días a 5 dias</strong> para el <strong>31 de diciembre de 2026</strong>"</p>
+        </div>
+
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">La disciplina del enfoque requiere que hagas lo más difícil posible para un líder: elegir UNA cosa y sacrificar las demás.</div>
+            <div class="pq-author">— Chris McChesney · Las 4 Disciplinas de la Ejecución</div>
         </div>
 
         <div class="content-card tip">
@@ -301,6 +345,27 @@ const COURSE_4DX = {
             <button class="quiz-option" onclick="checkQuiz('quiz_d1b', this, false)">3 a 5 es lo optimo</button>
             <div class="quiz-feedback" id="quiz_d1b_fb"></div>
         </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✅ YA SABES:</div>
+            <ul>
+                <li>Que la MCI es la meta cuyo logro cambia todo lo demás — y que identificarla requiere el filtro correcto</li>
+                <li>La fórmula "de X a Y para [fecha]" que convierte un deseo vago en un compromiso medible y rastreable</li>
+                <li>Las 4 reglas del enfoque: máximo 2 MCIs, alineación con la organización, participación del equipo, fecha clara</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Taller — Construye tu MCI</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ ACCIÓN EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Escribe 5-7 cosas que "querrías mejorar" en tu gerencia</li>
+                    <li>Aplica el filtro: ¿cuál es la UNA cuyo logro haría que las demás importaran menos?</li>
+                    <li>Formula esa meta con "de [número actual] a [número meta] para [fecha específica]"</li>
+                </ol>
+            </div>
+        </div>
         `
     },
     {
@@ -312,7 +377,15 @@ const COURSE_4DX = {
             <div class="hero-caption">Taller práctico: construyamos juntos la MCI de tu gerencia</div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Cómo usar las 3 preguntas de descubrimiento para encontrar la MCI de TU gerencia</li>
+                <li>Cómo validar tu MCI con el checklist de 5 puntos antes de presentarla al equipo</li>
+                <li>El error de formulación más común — y cómo evitarlo desde el inicio</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -336,6 +409,13 @@ const COURSE_4DX = {
         <div class="content-card">
             <h3>&#128736;&#65039; Ejercicio: El filtro de la MCI</h3>
             <p>Vamos a aplicar las 3 preguntas de descubrimiento del libro para encontrar la MCI de tu gerencia.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 AHA! MOMENT</div>
+            <div class="aha-quote">Una MCI mal formulada es funcionalmente idéntica a no tener MCI.</div>
+            <div class="aha-author">— Germán Solís · TRIKLES</div>
+            <div class="aha-body">"Mejorar el área de compras" no es una MCI — es un deseo. "Reducir el tiempo de cierre de requisiciones de 22 a 7 días hábiles para el 30 de septiembre" sí lo es. La precisión no es burocracia: es lo que separa un compromiso real de una intención sin tracción.</div>
         </div>
 
         <div class="scenario-box">
@@ -376,6 +456,11 @@ const COURSE_4DX = {
             <div class="quiz-feedback" id="quiz_d1p2_fb"></div>
         </div>
 
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO</div>
+            <div class="case-body">Una empresa manufacturera en Querétaro tenía su área de compras procesando requisiciones en 22 días promedio. Definieron su MCI: "reducir el tiempo promedio de cierre de requisiciones de 22 a 7 días hábiles para el 30 de septiembre". En 90 días llegaron a 8.5 días — sin contratar personal adicional. La clave fue que el equipo mismo redactó la MCI y se apropió del número.</div>
+        </div>
+
         <div class="content-card">
             <h3>&#128203; Checklist rápido de tu MCI</h3>
             <div id="mciChecklist">
@@ -386,6 +471,27 @@ const COURSE_4DX = {
                 <label style="display:block;padding:8px 0;cursor:pointer"><input type="checkbox" onchange="checkMCI()"> Es una sola meta (máximo 2)</label>
             </div>
             <div id="mciResult" style="margin-top:10px;padding:12px;border-radius:8px;display:none;font-weight:600;"></div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✅ YA SABES:</div>
+            <ul>
+                <li>Cómo aplicar las preguntas de descubrimiento para filtrar entre todas las posibles metas la que realmente importa</li>
+                <li>Los 5 criterios de validación que debe pasar cualquier MCI antes de presentarla al equipo</li>
+                <li>Que una MCI que el equipo define genera más compromiso que una que el jefe impone</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Disciplina 2 — Actuar sobre las Medidas de Predicción</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ ACCIÓN EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Completa el checklist de los 5 puntos con la MCI que redactaste en la lección anterior</li>
+                    <li>Si falla algún criterio, reescríbela hasta que pase los 5</li>
+                    <li>Compártela con al menos UN miembro de tu equipo mañana para recibir retroalimentación</li>
+                </ol>
+            </div>
         </div>
         `
     },
@@ -398,7 +504,15 @@ const COURSE_4DX = {
             <div class="hero-caption">Deja de mirar el espejo retrovisor: enfócate en lo que mueve la aguja</div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La diferencia entre medidas históricas y de predicción — y por qué la mayoría de los líderes usa solo las primeras</li>
+                <li>Las 2 condiciones que debe cumplir toda buena medida de predicción: predictiva e influenciable</li>
+                <li>Cómo dejar de "manejar mirando el espejo retrovisor" y tomar control del futuro</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -424,6 +538,12 @@ const COURSE_4DX = {
                 <h3>La analogia del auto</h3>
                 <p>No puedes controlar cada cuanto se descompone tu auto (<strong>medida histórica</strong>), pero SI puedes controlar cada cuanto le das mantenimiento (<strong>medida de predicción</strong>). Mientras más actues sobre lo segúndo, menos problemas tendras.</p>
             </div></div>
+        </div>
+
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Dirigir una organización solo con resultados económicos es como manejar un auto mirando solo el espejo retrovisor.</div>
+            <div class="pq-author">— W. Edwards Deming (citado en Las 4 Disciplinas de la Ejecución)</div>
         </div>
 
         <div class="content-card">
@@ -457,6 +577,13 @@ const COURSE_4DX = {
                 <tr><td style="padding:10px;border:1px solid #eee;">Dificil de influenciar directamente</td><td style="padding:10px;border:1px solid #eee;">El equipo puede influir en ella</td></tr>
                 <tr><td style="padding:10px;border:1px solid #eee;">Ej: Gasto total del trimestre</td><td style="padding:10px;border:1px solid #eee;">Ej: Revisiones de gastos por semana</td></tr>
             </table>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 AHA! MOMENT</div>
+            <div class="aha-quote">Tus resultados de hoy son consecuencia de las acciones que tomaste hace semanas. Si solo mides resultados, siempre llegarás tarde.</div>
+            <div class="aha-author">— Germán Solís · TRIKLES</div>
+            <div class="aha-body">Las medidas de predicción son el timón; las históricas son el retrovisor. Necesitas ambas para navegar, pero solo puedes controlar el timón. Enfocar el sistema de gestión en las acciones semanales — no en los resultados mensuales — es el cambio de paradigma que separa a los equipos que ejecutan de los que solo reportan.</div>
         </div>
 
         <div class="content-card warning">
@@ -508,6 +635,27 @@ const COURSE_4DX = {
             <button class="quiz-option" onclick="checkQuiz('quiz_d2b', this, false)">Depende del contexto de la empresa</button>
             <div class="quiz-feedback" id="quiz_d2b_fb"></div>
         </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✅ YA SABES:</div>
+            <ul>
+                <li>Que las medidas históricas miden resultados que ya no puedes cambiar; las de predicción miden las acciones que sí controlas</li>
+                <li>Que una buena medida de predicción debe ser predictiva (causa-efecto real) e influenciable (el equipo actúa sobre ella)</li>
+                <li>Que "producción mensual" de una MCI "anual" no es medida de predicción — es la misma medida en menor escala temporal</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Disciplina 3 — El Tablero de Resultados</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ ACCIÓN EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Toma la MCI de tu gerencia y pregunta: "¿Qué acción semanal repetida garantiza que lleguemos?"</li>
+                    <li>Escribe 3 candidatos a medida de predicción</li>
+                    <li>Evalúa cada uno: ¿es predictiva? ¿es influenciable? Solo queda la que cumple AMBAS condiciones</li>
+                </ol>
+            </div>
+        </div>
         `
     },
     {
@@ -519,7 +667,15 @@ const COURSE_4DX = {
             <div class="hero-caption">Un tablero visible convierte el trabajo en un juego que todos quieren ganar</div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Por qué las personas se comportan diferente cuando se lleva la puntuación visible</li>
+                <li>La distinción crítica entre tablero de entrenadores y tablero de jugadores</li>
+                <li>Las 4 características que hacen convincente a un tablero — y cómo diseñar el tuyo</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -547,6 +703,12 @@ const COURSE_4DX = {
             </div></div>
         </div>
 
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Las personas juegan de manera diferente cuando llevan la puntuación. Y cuando ellas mismas diseñan el marcador, juegan aún mejor.</div>
+            <div class="pq-author">— Sean Covey · Las 4 Disciplinas de la Ejecución</div>
+        </div>
+
         <div class="content-card">
             <h3>&#128202; Tablero de entrenadores vs. Tablero de jugadores</h3>
             <p>Hay una diferencia importante:</p>
@@ -554,6 +716,13 @@ const COURSE_4DX = {
                 <li><strong>Tablero de entrenadores:</strong> Complejo, con muchos datos, solo lo entienden los lideres. Piensa en esos reportes de 50 páginas que nadie lee.</li>
                 <li><strong>Tablero de jugadores:</strong> Simple, visual, y en 5 segundos cualquiera sabe si va ganando o perdiendo. <span class="highlight">ESTE es el que necesitas!</span></li>
             </ul>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 AHA! MOMENT</div>
+            <div class="aha-quote">Un tablero que solo ve el gerente es una herramienta de control. Un tablero que diseña el equipo es un espejo de identidad colectiva.</div>
+            <div class="aha-author">— Germán Solís · TRIKLES</div>
+            <div class="aha-body">La diferencia no es técnica — es psicológica. Cuando el equipo diseña, actualiza y puede leer el tablero en 5 segundos, el orgullo de ver los números en verde se convierte en un motivador más poderoso que cualquier bono. El tablero pasa de ser vigilancia a ser propiedad.</div>
         </div>
 
         <div class="content-card tip">
@@ -608,6 +777,27 @@ const COURSE_4DX = {
             <button class="quiz-option" onclick="checkQuiz('quiz_d3b', this, false)">Para ahorrar tiempo del lider</button>
             <div class="quiz-feedback" id="quiz_d3b_fb"></div>
         </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✅ YA SABES:</div>
+            <ul>
+                <li>Que las personas se comprometen más cuando pueden ver en tiempo real si van ganando o perdiendo</li>
+                <li>Que el tablero de jugadores es simple, visible, muestra predicción e histórico, e indica el resultado al instante</li>
+                <li>Que el tablero más poderoso es el que el equipo diseña — no el que el jefe impone</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Disciplina 4 — Cadencia de Rendición de Cuentas</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ ACCIÓN EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Dibuja en papel (no en Excel) tu tablero ideal: ¿qué dos datos mostraría?</li>
+                    <li>Identifica la pared física de tu área donde lo colocarías</li>
+                    <li>Propón a tu equipo diseñarlo juntos en la próxima junta — máximo 30 minutos</li>
+                </ol>
+            </div>
+        </div>
         `
     },
     {
@@ -619,7 +809,15 @@ const COURSE_4DX = {
             <div class="hero-caption">20 minutos a la semana que cambian el destino de cualquier proyecto</div>
         </div>
 
-        
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La anatomía exacta de una Sesión de MCI de 20-30 minutos que transforma la cultura del equipo</li>
+                <li>Por qué los compromisos son incondicionales — y cómo sostenerlos cuando el torbellino aprieta</li>
+                <li>Las 5 fases de adopción que todo equipo atraviesa al implementar las 4DX</li>
+            </ul>
+        </div>
+
         <div class="content-card video-embed-card" style="background:#1a1a2e;padding:18px;border-radius:14px;border:1px solid #2d2d44;">
             <div style="color:#ff9800;font-weight:800;letter-spacing:1.5px;font-size:0.82em;margin-bottom:10px;">🎬 VIDEO COMPLEMENTARIO</div>
             <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">
@@ -648,6 +846,12 @@ const COURSE_4DX = {
             </div></div>
         </div>
 
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Sin rendición de cuentas, la MCI muere. Con ella, incluso los equipos más escépticos terminan por creer en el proceso.</div>
+            <div class="pq-author">— McChesney, Covey y Huling · Las 4 Disciplinas de la Ejecución</div>
+        </div>
+
         <div class="content-card">
             <h3>&#128337; La Sesión de MCI: Anatomia perfecta</h3>
             <p>Dura <strong>20-30 minutos máximo</strong>. Tiene exactamente 3 partes:</p>
@@ -662,6 +866,13 @@ const COURSE_4DX = {
                     <strong>3. Nuevos compromisos:</strong> Cada persona elige 1-2 compromisos para la próxima semana que muevan las medidas de predicción.
                 </div>
             </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 AHA! MOMENT</div>
+            <div class="aha-quote">La D4 no es solo una reunión — es el mecanismo que mantiene vivas a las otras tres disciplinas.</div>
+            <div class="aha-author">— Germán Solís · TRIKLES</div>
+            <div class="aha-body">Sin la sesión semanal de MCI, la D1 se olvida en dos semanas, la D2 se ignora y el tablero se desactualiza. La cadencia de rendición de cuentas es el latido del corazón del sistema 4DX: si se detiene, todo lo demás muere con él.</div>
         </div>
 
         <div class="content-card warning">
@@ -702,6 +913,11 @@ const COURSE_4DX = {
             </ol>
         </div>
 
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO</div>
+            <div class="case-body">Una distribuidora de consumo en Guadalajara implementó sesiones semanales de MCI con su equipo de 8 personas. La primera semana solo 3 de 8 cumplieron sus compromisos. A la semana 6 el cumplimiento fue del 100% — no por presión, sino porque el equipo empezó a competir consigo mismo. El gerente reportó que fue la única "junta" a la que nadie faltaba voluntariamente.</div>
+        </div>
+
         <div class="quiz-container" id="quiz_d4b">
             <div class="quiz-q">&#127917; Sí un compromiso se repite por más de 2 semanas consecutivas, que debes hacer?</div>
             <button class="quiz-option" onclick="checkQuiz('quiz_d4b', this, false)">Mantenerlo porque la consistencia es importante</button>
@@ -720,6 +936,27 @@ const COURSE_4DX = {
                 <li><strong>9:20-9:25</strong> - Cada persona elige 1-2 compromisos para la semana</li>
             </ul>
             <p style="margin-top:10px;"><strong>CLAVE:</strong> Esta sesión NO es la junta operativa del torbellino. No se habla de pagos pendientes, ni de requisiciones urgentes. Solo MCI.</p>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✅ YA SABES:</div>
+            <ul>
+                <li>La estructura exacta de la sesión: rendir cuentas → revisar tablero → nuevos compromisos (20-30 min máximo)</li>
+                <li>Que los compromisos son incondicionales — aceptar el torbellino como excusa invalida todo el sistema</li>
+                <li>Las 5 fases de adopción: claridad → lanzamiento → adopción → optimización → hábitos</li>
+            </ul>
+            <div class="okr-next">→ Siguiente: Examen Final Integrador</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ ACCIÓN EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <ol>
+                    <li>Abre tu calendario ahora y bloquea 30 minutos para tu primera Sesión de MCI la próxima semana</li>
+                    <li>Manda hoy mismo un mensaje a tu equipo con el día, la hora y la agenda de 3 partes</li>
+                    <li>Prepara tu PROPIO compromiso para esa primera sesión — el líder va primero</li>
+                </ol>
+            </div>
         </div>
         `
     },
