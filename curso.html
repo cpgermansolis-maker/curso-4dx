@@ -339,6 +339,14 @@
             text-transform: uppercase;
             font-weight: 700;
         }
+        .enroll-perks {
+            text-align: center;
+            font-size: 11.5px;
+            color: #4a7c59;
+            letter-spacing: 0.4px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
         .enroll-cta {
             display: block;
             width: 100%;
@@ -1694,6 +1702,7 @@
         }
         .enroll-cta:hover { background: var(--tk-navy-soft) !important; transform: none !important; }
         .enroll-secure { color: var(--tk-ink-soft) !important; font-size: 0.78em !important; }
+        .enroll-perks { color: #5a9e72 !important; }
 
         /* Resume toast */
         .resume-toast {
@@ -3541,6 +3550,7 @@ function showEnrollmentScreen() {
                 saveHtml +
             '</div>' +
 
+            '<div class="enroll-perks">✓ Acceso de por vida &nbsp;·&nbsp; ✓ Certificado al terminar</div>' +
             '<button class="enroll-cta" id="enrollStripeBtn" onclick="startStripeEnroll()">' +
                 'Pagar e inscribirme' +
             '</button>' +

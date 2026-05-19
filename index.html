@@ -1898,7 +1898,7 @@
             <div class="deposit-modal-list-strike" id="depositModalListPrice" style="display:none;"></div>
             <div class="deposit-modal-price" id="depositModalPrice">—<span class="cur">MXN</span></div>
             <div class="deposit-modal-save" id="depositModalSave" style="display:none;"></div>
-            <div class="deposit-modal-access">Acceso de por vida</div>
+            <div class="deposit-modal-access">✓ Acceso de por vida &nbsp;·&nbsp; ✓ Certificado incluido</div>
         </div>
 
         <div class="pay-option-online">
@@ -2369,7 +2369,7 @@ function renderCourseCard(course, enrollment) {
             '<div class="course-author">'+course.author+'</div>' +
             renderRatingDisplay(course.id) +
             '<div class="course-desc">'+course.description+'</div>' +
-            '<div class="course-meta"><span>📚 '+course.lessonsCount+' lec.</span><span>⏱ '+course.duration+'</span></div>' +
+            '<div class="course-meta"><span>📚 '+course.lessonsCount+' lecciones · '+course.duration+'</span></div>' +
             (enrolled && !completed ? '<div class="course-progress"><div class="course-progress-fill" style="width:'+pct+'%"></div></div>' : '') +
             '<button class="course-btn '+btnClass+'">'+btnText+'</button>' +
         '</div>' +
