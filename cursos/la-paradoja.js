@@ -129,6 +129,57 @@ const COURSE_LA_PARADOJA = {
         </div>`;
     }
 
+    function okrPre(items) {
+        return `
+        <div class="lesson-okr-pre">
+            <div class="okr-label">Al terminar esta lección:</div>
+            <ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>
+        </div>`;
+    }
+
+    function okrPost(items, next) {
+        return `
+        <div class="lesson-okr-post">
+            <div class="okr-label">Ahora ya sabes:</div>
+            <ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>
+            <div class="okr-next">→ Siguiente: ${next}</div>
+        </div>`;
+    }
+
+    function aha(quote, body) {
+        return `
+        <div class="aha-moment">
+            <div class="aha-label">💡 Momento Aha!</div>
+            <div class="aha-quote">${quote}</div>
+            <div class="aha-body">${body}</div>
+        </div>`;
+    }
+
+    function pq(text, author) {
+        return `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">&ldquo;</div>
+            <div class="pq-text">${text}</div>
+            <div class="pq-author">— ${author}</div>
+        </div>`;
+    }
+
+    function casoMx(city, body) {
+        return `
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 Caso México — ${city}</div>
+            <div class="case-body">${body}</div>
+        </div>`;
+    }
+
+    function nextStep(items) {
+        return `
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ Tu acción en las próximas 24 horas</div>
+            <div class="next-step-body"><ol>${items.map(i => `<li>${i}</li>`).join('')}</ol></div>
+        </div>`;
+    }
+
     // ==============================================================
     // 0 — INTRODUCCIÓN
     // ==============================================================
@@ -145,6 +196,7 @@ const COURSE_LA_PARADOJA = {
             </div>
         </div>
 
+        ${okrPre(['Conocerás la historia de John Daily y el hermano Simeón — y por qué cambió la vida de millones de lectores','Entenderás qué es la paradoja del liderazgo: para tener más influencia, hay que servir más','Explorarás la estructura de los 7 módulos y lo que obtendrás al completar el curso'])}
         ${note('Este libro cambió la forma en que millones de personas entienden el liderazgo. No es un manual de técnicas, es una historia. La historia de John Daily, un ejecutivo que "lo tenía todo" pero estaba perdiendo a su familia, a sus empleados y a sí mismo. Una semana en un monasterio, guiado por un ex-CEO convertido en monje, le enseña que <strong>para liderar hay que servir</strong>, y que el amor no es lo que sientes, sino lo que haces. Este curso es un trabajo profundo sobre cada capítulo. Prepárate para que te incomode, te cuestione y te transforme.', 'Bienvenida del instructor · LADE Germán Solís Muñoz')}
 
         ${videoLink('Resumen: La Paradoja — Liderazgo (LibrosImparables)', '58ilPL-K8gQ')}
@@ -208,6 +260,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Que su esposa Rachael lo había inscrito en un programa de terapia de pareja', correct: false},
             {text: 'Que el abad del monasterio era su antiguo jefe de la fábrica', correct: false}
         ])}
+        ${aha('John Daily "lo tenía todo": casa, dinero, familia, éxito. Y lo estaba perdiendo todo.','La paradoja: cuanto más intentaba controlarlo todo con poder, más perdía lo que más quería. Hunter nos muestra desde la primera página que el problema no era la estrategia — era el paradigma del liderazgo.')}
+        ${okrPost(['Conoces la historia central del libro y la definición de liderazgo de Hunter','Sabes por qué "la paradoja" es que servir — no dominar — es el camino al liderazgo real','Tienes claro qué aprenderás en cada uno de los 7 módulos del curso'],'Módulo 1 · Liderazgo: el arte de influir')}
+        ${nextStep(['Escribe los 3 roles de liderazgo que ya tienes: trabajo, familia, comunidad o equipo','En cuál de ellos estás más satisfecho con tu influencia — y en cuál menos','Guarda esa respuesta: al final del curso la compararás con quién eres como líder entonces'])}
         `
     });
 
@@ -220,6 +275,7 @@ const COURSE_LA_PARADOJA = {
         title: 'Liderazgo: el arte de influir',
         subtitle: 'Capítulo 1 — Que es realmente el liderazgo y por qué no es lo mismo que gestionar',
         content: hero(heroGradients.m1, 'LECCIÓN 1', 'Liderazgo: el arte de influir — Cap. 1') + `
+        ${okrPre(['Aprenderás la definición exacta del liderazgo según Hunter — y entenderás cada palabra clave','Distinguirás por qué gestionar cosas es diferente a liderar personas','Descubrirás que el liderazgo es un arte aprendible: cualquiera puede desarrollarlo'])}
         ${note('Hunter no empieza con teoría. Empieza con una pregunta simple: ¿qué es liderazgo? La respuesta del grupo — construida entre todos — es una de las definiciones más poderosas que he leído. Prestá atención: cada palabra fue elegida con precisión.')}
 
         ${videoLink('La diferencia entre poder y autoridad — Liderazgo', '913nEj1aCAk')}
@@ -268,6 +324,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Un talento innato que solo tienen algunas personas privilegiadas', correct: false},
             {text: 'La habilidad de gestionar recursos humanos de forma eficiente', correct: false}
         ])}
+        ${aha('El liderazgo no es un talento de nacimiento — es un arte.','Eso significa que tú puedes desarrollarlo, deliberadamente, como cualquier otra destreza. La pregunta no es si eres líder. La pregunta es qué clase de líder eres hoy — y qué clase quieres ser.')}
+        ${okrPost(['Tienes la definición central del libro memorizada y entiendes cada palabra clave','Distingues liderazgo (influir para que la gente quiera actuar) de gestión (administrar cosas)'],'Módulo 1 · Lección 2 — Poder vs. Autoridad')}
+        ${nextStep(['Elige un momento de esta semana donde lideraste en lugar de gestionar a alguien','¿Cómo lo notaste? ¿Cuál fue la diferencia en la respuesta de esa persona?','Mañana, elige UNA situación donde intentarás influir en lugar de ordenar'])}
         `
     });
 
@@ -276,6 +335,7 @@ const COURSE_LA_PARADOJA = {
         title: 'Poder vs. Autoridad',
         subtitle: 'Capítulo 1 — La diferencia que cambia todo en el liderazgo',
         content: hero(heroGradients.m1, 'LECCIÓN 2', 'Poder vs. Autoridad — Cap. 1') + `
+        ${okrPre(['Comprenderás la distinción fundamental entre poder (posición) y autoridad (influencia)','Verás por qué el poder desgasta las relaciones a largo plazo','Evaluarás qué tipo de influencia usas tú hoy en tus roles de liderazgo'])}
         ${note('Esta es, para mi, la lección más importante del libro. Si entiendes la diferencia entre poder y autoridad, entiendes por qué algunos líderes inspirán lealtad de por vida y otros solo consiguen obediencia temporal. Max Weber lo escribio hace un siglo. Simeón lo hace inolvidable.')}
 
         ${videoLink('Poder vs. Autoridad — El Mejor Líder de la Historia (Dr. Lucas Leys)', 'ZR0VGYOtSLo')}
@@ -340,6 +400,11 @@ const COURSE_LA_PARADOJA = {
             {text: 'El poder fuerza a la gente a obedecer por posición; la autoridad consigue que quieran hacerlo por influencia personal', correct: true},
             {text: 'El poder es para empresas grandes y la autoridad para empresas pequeñas', correct: false}
         ])}
+        ${aha('Tienes el título, el cargo, el organigrama. Pero si mañana te fueran, ¿la gente te seguiría voluntariamente?','Si la respuesta es no, tienes poder sin autoridad. Y con el tiempo, ese vacío se cobra en rotación, descontento, y la sensación de que "nadie se compromete". La solución no es más control — es más servicio.')}
+        ${pq('El poder puede comprar el cuerpo de un hombre, pero no puede comprar su corazón. Y el corazón es donde residen el entusiasmo, la lealtad y la creatividad.','Hermano Simeón · La Paradoja, James C. Hunter')}
+        ${casoMx('Guadalajara','Un director de operaciones de una empresa familiar tapatía gobernaba con poder posicional constante: órdenes, castigos, amenazas. El equipo obedecía — y rotaba al 40% anual. Cuando fue promovido a un rol asesor (sin autoridad posicional), nadie lo consultó. Su sucesor — con menos título pero más autoridad construida con consistencia y respeto — redujo la rotación al 12% en 18 meses. El equipo no cambió. El paradigma del liderazgo sí.')}
+        ${okrPost(['Distingues poder (posición) de autoridad (carácter) y sus efectos a largo plazo','Sabes que el poder tiene límite y la autoridad se construye acto a acto, con el tiempo'],'Módulo 1 · Lección 3 — La tarea y la relación humana')}
+        ${nextStep(['Identifica UNA situación de esta semana donde usaste poder en lugar de autoridad','¿Qué habrías hecho diferente si hubieras buscado influencia en lugar de compliance?','Escríbelo — eso es el primer paso de cambiar de paradigma'])}
         `
     });
 
@@ -348,6 +413,8 @@ const COURSE_LA_PARADOJA = {
         title: 'La tarea y la relación humana',
         subtitle: 'Capítulo 1 — El equilibrio que todo líder debe dominar',
         content: hero(heroGradients.m1, 'LECCIÓN 3', 'La tarea y la relación humana — Cap. 1') + `
+        ${okrPre(['Entenderás por qué la relación humana es el fundamento de la tarea — no su opuesto','Conocerás el concepto de amor como base de la influencia auténtica según Simeón','Sabrás cuál es el ingrediente más importante para que una relación de liderazgo funcione'])}
+
         ${note('Este concepto me hizo repensar mi carrera completa. Si solo te enfocas en la tarea, pierdes a la gente. Si solo te enfocas en la relación, no produces resultados. El líder maestro hace ambas cosas. Y todo empieza con una palabra: confianza.')}
 
         ${videoLink('Como tener un equipo comprometido y ser un líder de gran influencia', 'BSXyDMlMo_g')}
@@ -405,6 +472,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'La confianza — sin ella las relaciones, familias y empresas se desmoronan', correct: true},
             {text: 'La amistad — hay que ser amigo de todos para liderar', correct: false}
         ])}
+        ${aha('No puedes separar la tarea de la relación. Si la relación está rota, la tarea sufre.','Hunter lo ilustra en cada capítulo: los resultados de John en la fábrica, con su hijo, con el equipo de béisbol — todos estaban deteriorados porque la relación estaba deteriorada. Invertir en la relación ES invertir en los resultados.')}
+        ${okrPost(['Sabes que relación y tarea se refuerzan mutuamente — no son opuestas','Entiendes que Simeón identifica el amor (como decisión de conducta) como el ingrediente clave'],'Módulo 2 · Paradigmas: tus mapas mentales')}
+        ${nextStep(['Elige a una persona de tu equipo o familia con quien la relación esté fría','Haz hoy un acto concreto de servicio hacia ella — sin agenda ni esperar reciprocidad','Observa si cambia algo en la relación antes de que terminen los próximos 3 días'])}
         `
     });
 
@@ -417,6 +487,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Paradigmas: tus mapas mentales',
         subtitle: 'Capítulo 2 — Por qué vemos el mundo como somos, no como es',
         content: hero(heroGradients.m2, 'LECCIÓN 4', 'Paradigmas: tus mapas mentales — Cap. 2') + `
+        ${okrPre(['Aprenderás qué es un paradigma y por qué los paradigmas obsoletos son peligrosos','Entenderás cómo un mapa mental equivocado puede destruir un equipo aunque la estrategia sea correcta','Identificarás un paradigma propio que podría estar limitando tu liderazgo'])}
+
         ${note('Antes de cambiar cómo lideras, necesitas entender por qué lideras cómo lideras. La respuesta está en tus paradigmas: esos modelos mentales que adoptaste sin cuestionarlos. Algunos te salvaron la vida, otros te están paralizando.')}
 
         ${videoLink('¿Qué es el cambio de paradigma? — Borja Vilaseca', 'h5ksLhlPZNs')}
@@ -458,6 +530,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Porque solo aplican a personas sin educación formal', correct: false},
             {text: 'Porque los paradigmas no tienen ninguna utilidad práctica', correct: false}
         ])}
+        ${aha('El problema no siempre es la gente. A veces es el mapa que usamos para ver a la gente.','Un líder que ve a sus empleados como "recursos" los tratará de optimizar como máquinas — y se preguntará por qué no hay compromiso. El paradigma no es neutral: determina qué vemos, qué buscamos y qué encontramos.')}
+        ${okrPost(['Entiendes qué es un paradigma y cómo afecta todo lo que percibes y decides','Sabes que cambiar de paradigma (no solo de técnica) es el primer paso real del liderazgo'],'Módulo 2 · Lección 5 — La pirámide invertida')}
+        ${nextStep(['Identifica un paradigma que tienes sobre tu equipo o familia que podría estar limitando tu liderazgo','Escríbelo honestamente: "Creo que mi equipo/familia es..."','Pregúntate: si ese paradigma fuera incorrecto, ¿qué cambiaría en tu forma de liderarlos?'])}
         `
     });
 
@@ -466,6 +541,8 @@ const COURSE_LA_PARADOJA = {
         title: 'La pirámide invertida',
         subtitle: 'Capítulo 2 — Del modelo militar al modelo de servicio',
         content: hero(heroGradients.m2, 'LECCIÓN 5', 'La pirámide invertida — Cap. 2') + `
+        ${okrPre(['Conocerás el modelo de pirámide invertida de Simeón y qué cambia en el rol del líder','Entenderás qué significa que el líder sirve al equipo en lugar de ser servido por él','Verás que servir no significa ausencia de estándares, sino presencia de apoyo real'])}
+
         ${note('Aquí es donde Simeón literalmente le da la vuelta a todo lo que la mayoría de los ejecutivos creen. La pirámide de la empresa no tiene al jefe arriba y a los empleados abajo. O al menos, no debería.')}
 
         ${videoLink('Liderazgo de servicio', '7KyKkWouleA')}
@@ -514,6 +591,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Que el líder está al servicio de quiénes sirven al cliente, invirtiendo la jerarquía tradicional', correct: true},
             {text: 'Que la pirámide debe eliminarse por completo sin reemplazo', correct: false}
         ])}
+        ${aha('En la pirámide tradicional, el equipo existe para servir al jefe. En la pirámide invertida, el jefe existe para servir al equipo.','Esa inversión de 180° no es debilidad — es la fuente de mayor desempeño, menor rotación y más compromiso. Los equipos más productivos del mundo tienen líderes que se preguntan "¿cómo sirvo a mi gente hoy?" en lugar de "¿qué quiero que hagan hoy?"')}
+        ${okrPost(['Conoces el modelo de pirámide invertida y qué implica para el rol del líder','Sabes que servir al equipo no significa ausencia de estándares — significa presencia de apoyo'],'Módulo 3 · Liderazgo de servicio')}
+        ${nextStep(['Escribe 3 necesidades legítimas de tu equipo (o familia) que no estás atendiendo bien','¿Qué te impide atenderlas: tiempo, recursos, comodidad o prioridades erróneas?','Elige UNA para trabajar esta semana con acción concreta'])}
         `
     });
 
@@ -526,6 +606,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Liderazgo de servicio: el modelo',
         subtitle: 'Capítulo 3 — Para mandar hay que servir',
         content: hero(heroGradients.m3, 'LECCIÓN 6', 'Liderazgo de servicio — Cap. 3') + `
+        ${okrPre(['Aprenderás la estructura completa del modelo de Hunter: carácter → autoridad → servicio','Distinguirás necesidades legítimas (que el líder atiende) de deseos (que no siempre puede satisfacer)','Entenderás por qué el liderazgo de servicio exige fortaleza, no debilidad'])}
+
         ${note('Aquí Simeón conecta todo: liderazgo, autoridad, servicio y sacrificio forman una cadena lógica e inseparable. Si quieres influir (liderar), necesitas autoridad. Para tener autoridad, necesitas servir. Y servir requiere sacrificio. Esa es la paradoja del título.')}
 
         ${videoLink('Liderazgo de servicio — Robert K. Greenleaf (Resumen)', 'ha-RoxzQ4j4')}
@@ -580,6 +662,10 @@ const COURSE_LA_PARADOJA = {
             {text: 'En la inteligencia superior del líder', correct: false},
             {text: 'En la experiencia acumulada por los años', correct: false}
         ])}
+        ${aha('Servir no es obedecer los caprichos de la gente. Es atender sus necesidades legítimas — lo que a veces implica decirles lo que no quieren escuchar.','Eso requiere más coraje que dar órdenes. El liderazgo de servicio no es el camino fácil — es el camino más efectivo. Son dos cosas completamente diferentes.')}
+        ${pq('El liderazgo de servicio no es agradar a la gente. Es identificar y satisfacer sus necesidades legítimas, a menudo con el coraje de decir lo que no quieren oír.','Hermano Simeón · La Paradoja, James C. Hunter')}
+        ${okrPost(['Tienes el modelo completo de Hunter: amor → servicio → sacrificio → autoridad','Distingues necesidades (que el líder atiende) de deseos (que no siempre puede ni debe satisfacer)'],'Módulo 3 · Lección 7 — Líderes de autoridad histórica')}
+        ${nextStep(['Identifica una necesidad legítima de alguien que lideras que llevas tiempo sin atender','¿Qué te ha impedido atenderla — comodidad, miedo, falta de tiempo o falta de habilidad?','Da hoy un paso concreto — aunque sea pequeño — hacia esa necesidad'])}
         `
     });
 
@@ -588,6 +674,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Jesús, Gandhi, King: líderes de autoridad',
         subtitle: 'Capítulo 3 — Ejemplos reales de influencia sin poder',
         content: hero(heroGradients.m3, 'LECCIÓN 7', 'Líderes de autoridad — Cap. 3') + `
+        ${okrPre(['Descubrirás qué tienen en común los grandes líderes históricos de autoridad moral','Entenderás por qué la coherencia entre palabras y acciones es la fuente de la influencia que dura','Reflexionarás sobre qué atributo de estos líderes puedes aplicar hoy en tu rol'])}
+
         ${note('Cuando Greg pide ejemplos del "mundo real", Simeón entrega tres casos históricos irrefutables. Ninguno de estos líderes tenía poder. Todos cambiaron el mundo con pura autoridad — servicio y sacrificio.')}
 
         ${videoLink('Mahatma Gandhi: Liderazgo', 'ACZ2Esaxq50')}
@@ -627,6 +715,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Los tres cambiaron el mundo sin poder, solo con autoridad basada en servicio y sacrificio', correct: true},
             {text: 'Los tres tuvieron éxito porque nacieron en familias poderosas', correct: false}
         ])}
+        ${aha('Los líderes más influyentes de la historia no tenían ejércitos ni dinero cuando empezaron.','Tenían autoridad moral ganada con coherencia entre sus palabras y sus acciones. Esa es la fuente de influencia que sobrevive siglos — y que no puede comprarse, heredarse ni copiarse. Solo construirse.')}
+        ${okrPost(['Entiendes que el liderazgo de servicio tiene raíces históricas profundas — no es una teoría nueva','Sabes que la coherencia entre carácter y conducta es la fuente de la autoridad más duradera'],'Módulo 4 · Amor: ágape, el verbo')}
+        ${nextStep(['¿Cuál de los líderes históricos del capítulo te inspira más? Escribe por qué','Identifica UNA de sus características que podrías expresar en tu rol actual','Plantea cómo la expresarías esta semana en una situación concreta'])}
         `
     });
 
@@ -639,6 +730,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Amor: ágape, el verbo',
         subtitle: 'Capítulo 4 — El amor no es un sentimiento, es una decisión de comportamiento',
         content: hero(heroGradients.m4, 'LECCIÓN 8', 'Amor: ágape, el verbo — Cap. 4') + `
+        ${okrPre(['Aprenderás la distinción entre amor-sentimiento (eros) y amor-decisión (ágape)','Entenderás por qué Hunter dice que el amor es el fundamento real del liderazgo','Conocerás las 8 cualidades del ágape como conductas concretas del líder'])}
+
         ${note('Este capítulo cambió mi vida. En serio. Cuando entendi que amar no significa "sentir bonito" sino "comportarte bien con alguien aunque no te caiga bien", todo encajo. Es el corazón del libro. Lee despacio.')}
 
         ${videoLink('La Paradoja — James Hunter — La verdadera esencia del liderazgo', 'aT_VjTK-qpE')}
@@ -686,6 +779,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Un amor incondicional basado en el comportamiento y la elección deliberada, no en sentimientos', correct: true},
             {text: 'La amistad reciproca entre personas que se caen bien', correct: false}
         ])}
+        ${aha('El amor que Hunter describe no tiene nada que ver con el sentimiento. Es una decisión de conducta.','Elegir tratar bien a alguien independientemente de cómo te sientes ese día. Eso es más difícil — y más poderoso — que cualquier técnica de liderazgo. El ágape es un verbo, no un estado emocional.')}
+        ${okrPost(['Distingues eros (sentimiento) de ágape (decisión de conducta) y entiendes por qué el segundo lidera','Conoces las 8 cualidades del amor-ágape como conductas concretas que puedes practicar hoy'],'Módulo 4 · Lección 9 — Paciencia y afabilidad')}
+        ${nextStep(['De las 8 cualidades del amor-ágape, ¿cuál es la que más te cuesta en tu liderazgo?','Escríbela sin excusas — el reconocimiento honesto es el primer paso del cambio','Elige UNA situación de mañana donde la practicarás deliberadamente — aunque no "sientas" hacerlo'])}
         `
     });
 
@@ -694,6 +790,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Paciencia y afabilidad',
         subtitle: 'Capítulo 4 — Dominio propio y la escucha activa',
         content: hero(heroGradients.m4, 'LECCIÓN 9', 'Paciencia y afabilidad — Cap. 4') + `
+        ${okrPre(['Aprenderás qué demostró el Efecto Hawthorne sobre la motivación humana','Entenderás por qué la atención y el cuidado tienen más impacto que las condiciones materiales','Descubrirás cómo aplicar paciencia y afabilidad como estrategia de liderazgo'])}
+
         ${note('Simeón desglosa cada cualidad del amor-ágape con el diccionario en mano. Las dos primeras — paciencia y afabilidad — son, en mi experiencia, las que más impacto tienen en el día a día de un líder. Especialmente la escucha activa.')}
 
         ${videoLink('Víctor Küppers: Por qué es tan importante aprender a escuchar', 'LtMQDPAnauE')}
@@ -735,6 +833,10 @@ const COURSE_LA_PARADOJA = {
             {text: 'Que los trabajadores producen más cuando nadie los observa', correct: false},
             {text: 'Que la temperatura ambiente es más importante que el liderazgo', correct: false}
         ])}
+        ${aha('Elton Mayo quería demostrar que la iluminación aumenta la productividad. Lo que descubrió es que lo que realmente importa es que alguien preste atención y se preocupe.','Ese experimento de 1927 sigue siendo el argumento más poderoso para el liderazgo de servicio. No necesitas más dinero ni mejores instalaciones: necesitas que la gente sienta que alguien se ocupa de ella.')}
+        ${casoMx('Monterrey','Un supervisor de planta en Monterrey implementó el concepto del Efecto Hawthorne: dedicó 10 minutos diarios a conversar individualmente con cada operario sobre cómo estaba, qué necesitaba, qué le preocupaba. Sin cambiar ni un peso de salario ni una condición laboral, la productividad subió 23% en 3 meses. El equipo no cambió — cambió la sensación de que alguien se preocupaba por ellos.')}
+        ${okrPost(['Entiendes el Efecto Hawthorne: la atención genuina del líder impacta más que las condiciones materiales','Sabes que la paciencia y la afabilidad no son "bonus" de carácter — son palancas de desempeño'],'Módulo 4 · Lección 10 — Humildad, respeto y generosidad')}
+        ${nextStep(['Elige a un miembro de tu equipo (o familia) que sientes que se ha sentido ignorado últimamente','Dedícale 10 minutos de atención genuina hoy — sin agenda, solo para escuchar cómo está','No menciones que lo estás haciendo "por el curso" — hazlo porque importa'])}
         `
     });
 
@@ -743,6 +845,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Humildad, respeto y generosidad',
         subtitle: 'Capítulo 4 — Ser auténtico y tratar a todos como personas importantes',
         content: hero(heroGradients.m4, 'LECCIÓN 10', 'Humildad, respeto y generosidad — Cap. 4') + `
+        ${okrPre(['Entenderás qué es la humildad según Hunter: no negación del talento sino ausencia de arrogancia','Aprenderás a distinguir humildad real de falsa modestia','Verás por qué la humildad del líder crea seguridad psicológica en el equipo'])}
+
         ${note('Estas tres cualidades van juntas porque forman un solo mensaje: "Tu importas". La humildad dice "yo no soy más que tu". El respeto dice "te trato como alguien valioso". La generosidad dice "estoy aquí para satisfacer tus necesidades, no las mías".')}
 
         ${videoLink('Liderazgo basado en valores — Ser ejemplo', 'oH5T5GKH6aY')}
@@ -781,6 +885,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Ser auténtico, sin pretensiones ni arrogancia — pensar menos en ti mismo', correct: true},
             {text: 'Ocultar tus logros para que nadie se sienta mal', correct: false}
         ])}
+        ${aha('La humildad no es decir "no sé nada". Es tener suficiente seguridad interior para admitir que no sabes algo.','Para pedir ayuda. Para cambiar de opinión cuando los hechos lo justifican. Eso requiere mucho más fortaleza que el orgullo defensivo. Los líderes más inseguros son los más arrogantes — porque usan la arrogancia como escudo.')}
+        ${okrPost(['Tienes la definición de humildad de Hunter: no negación de talento sino ausencia de arrogancia','Sabes que la humildad del líder crea seguridad psicológica — y la seguridad psicológica crea innovación'],'Módulo 4 · Lección 11 — Indulgencia, honradez y compromiso')}
+        ${nextStep(['Identifica una situación actual donde el orgullo te está impidiendo pedir ayuda o admitir un error','Da ese paso hoy — y observa qué pasa con la relación y con tu credibilidad','El líder que admite que no sabe algo genera más confianza que el que finge saberlo todo'])}
         `
     });
 
@@ -789,6 +896,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Indulgencia, honradez y compromiso',
         subtitle: 'Capítulo 4 — Perdonar, ser integro y mantenerse fiel',
         content: hero(heroGradients.m4, 'LECCIÓN 11', 'Indulgencia, honradez y compromiso — Cap. 4') + `
+        ${okrPre(['Aprenderás qué significa "indulgencia" en Hunter y por qué no es permisividad','Entenderás cómo combinar altos estándares con alta paciencia en el desarrollo de personas','Verás que honradez y compromiso del líder son los cimientos de la confianza del equipo'])}
+
         ${note('Las últimas tres cualidades del amor-ágape son las más difíciles de prácticar. Perdonar cuando te han hecho daño. Ser honesto cuando mentir es más fácil. Mantener el compromiso cuando todo indica que deberias renunciar. Pero son exactamente las que separan al líder ordinario del extraordinario.')}
 
         ${videoLink('Empatía y aprender a escuchar — Brene Brown', 'gyH3lJfxC9U')}
@@ -836,6 +945,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Ignorar todos los errores de los demás para mantener la paz', correct: false},
             {text: 'Dar premios y bonificaciones a los empleados constantemente', correct: false}
         ])}
+        ${aha('Indulgencia no es permisividad. Es la paciencia estratégica de entender que las personas crecen a ritmos distintos.','La prisa del líder puede destruir el crecimiento que está tratando de acelerar. Pero la falta de estándares destruye al equipo igual de rápido. La indulgencia no baja el listón — te da más tiempo para ayudar a alguien a llegar a él.')}
+        ${okrPost(['Distingues indulgencia (paciencia con el crecimiento) de permisividad (ausencia de estándares)','Sabes que honradez y compromiso del líder son los cimientos sin los cuales la confianza no se construye'],'Módulo 5 · La metáfora del jardín')}
+        ${nextStep(['¿Con quién de tu equipo estás siendo demasiado impaciente en su proceso de crecimiento?','¿Qué pasaría si le ampliaras el margen de tiempo con más acompañamiento antes de emitir juicio?','Diseña el próximo paso de apoyo que le darás — no el juicio, sino la escalera'])}
         `
     });
 
@@ -848,6 +960,8 @@ const COURSE_LA_PARADOJA = {
         title: 'La metáfora del jardín',
         subtitle: 'Capítulo 5 — Crear ambientes donde la gente pueda crecer y prosperar',
         content: hero(heroGradients.m5, 'LECCIÓN 12', 'La metáfora del jardín — Cap. 5') + `
+        ${okrPre(['Aprenderás que el liderazgo no crea personas: crea las condiciones para que crezcan','Entenderás la metáfora del jardinero de Hunter y qué implica para tu rol','Identificarás las condiciones de crecimiento que tu entorno de liderazgo fomenta o destruye'])}
+
         ${note('Este capítulo me hizo ver mi empresa de una forma completamente diferente. Deje de verla como una maquína que produce resultados y empece a verla como un jardín que necesita cuidados diarios. La diferencia en resultados fue enorme.')}
 
         ${videoLink('Como crear una cultura organizacional exitosa — Alejandro Kasuga', 'd8dXJjAHlIA')}
@@ -887,6 +1001,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Que algunos empleados son como malas hierbas y hay que eliminarlos inmediatamente', correct: false},
             {text: 'Que el crecimiento solo es posible en ambientes perfectos sin ningun problema', correct: false}
         ])}
+        ${aha('El jardinero no hace crecer las plantas. Las condiciones adecuadas de luz, agua y tierra hacen crecer las plantas.','El líder tampoco hace crecer a su gente. Pero sí puede crear o destruir las condiciones para que eso ocurra. Esa es toda la diferencia entre un jefe que agota y un líder que potencia.')}
+        ${okrPost(['Entiendes que el líder es jardinero: crea condiciones de crecimiento, no crece en lugar de la gente','Sabes qué condiciones concretas fomentan el compromiso, la seguridad y el desarrollo del equipo'],'Módulo 5 · Lección 13 — Las cuentas bancarias de relaciones')}
+        ${nextStep(['Evalúa tu entorno de liderazgo en esta semana: comunicación, estándares, reconocimiento, rendición de cuentas','¿Cuál de estas condiciones está más descuidada en tu equipo o familia?','Elige UNA acción concreta para mejorarla antes de que termine la semana'])}
         `
     });
 
@@ -895,6 +1012,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Las cuentas bancarias de relaciones',
         subtitle: 'Capítulo 5 — Ingresos, reintegros y la regla de 4 a 1',
         content: hero(heroGradients.m5, 'LECCIÓN 13', 'Las cuentas bancarias de relaciones — Cap. 5') + `
+        ${okrPre(['Aprenderás el concepto de cuenta bancaria de relaciones: depósitos, retiros y saldo','Entenderás cuántos depósitos se necesitan para compensar un solo gran retiro','Verás que la relación es el capital más importante del líder — más que cualquier habilidad técnica'])}
+
         ${note('Kim introduce una metáfora brillante de Stephen Covey que Simeón adopta inmediatamente. Es tan práctica que la puedes usar HOY MISMO para diagnosticar el estado de tus relaciones.')}
 
         ${videoLink('Como crear un ambiente laboral sano y exitoso', 'XbyW3kQQbsk')}
@@ -962,6 +1081,10 @@ const COURSE_LA_PARADOJA = {
             {text: 'Cuatro ingresos por cada reintegro', correct: true},
             {text: 'Diez ingresos por cada reintegro', correct: false}
         ])}
+        ${aha('Una sola gran traición puede borrar cien actos de amabilidad. Las relaciones tienen memoria acumulativa.','Las deudas relacionales a veces se cobran con intereses cuando menos lo esperas. Eso no es malo — es una palanca: los líderes que invierten consistentemente en depósitos relacionales tienen un colchón que absorbe los errores inevitables del camino.')}
+        ${casoMx('Ciudad de México','Un director técnico en CDMX había construido 3 años de depósitos relacionales fuertes con su equipo: cumplía promesas, reconocía logros, era transparente en tiempos difíciles. Cuando tuvieron que hacer recortes salariales temporales del 15%, su equipo no solo aceptó — los más valiosos eligieron quedarse aunque recibieron ofertas externas. El saldo acumulado de la cuenta bancaria absorbió el mayor retiro de la historia del equipo.')}
+        ${okrPost(['Entiendes la metáfora de la cuenta bancaria de relaciones: depósitos, retiros y saldo acumulado','Sabes que 1 gran retiro puede requerir múltiples depósitos para compensarse — y por eso la inversión continua es clave'],'Módulo 6 · Determinismo vs. libre albedrío')}
+        ${nextStep(['Haz un inventario mental de tu relación más importante en el trabajo','¿Cuánto tiempo llevas sin hacer un depósito intencional — sin agenda ni motivo ulterior?','Haz uno hoy: un reconocimiento, un gracias genuino, un cumplimiento de promesa'])}
         `
     });
 
@@ -974,6 +1097,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Determinismo vs. libre albedrío',
         subtitle: 'Capítulo 6 — Deja de echarle la culpa al abuelo, al jefe o a la infancia',
         content: hero(heroGradients.m6, 'LECCIÓN 14', 'Determinismo vs. libre albedrío — Cap. 6') + `
+        ${okrPre(['Aprenderás la postura de Hunter sobre la responsabilidad personal y el libre albedrío','Entenderás por qué Simeón critica el determinismo radical de Freud','Verás que asumir responsabilidad es el fundamento de la madurez y el liderazgo real'])}
+
         ${note('Este capítulo es un balde de agua fria. Simeón desmonta todas las excusas que usamos para no asumir responsabilidad. No es tu herencia genetica. No es tu infancia difícil. No es tu jefe toxico. Es TU ELECCIÓN. Duele, pero libera.')}
 
         ${videoLink('¿Existe la libertad? Lo que dice la Filosofía (en 10 minutos)', 'htRChYdMCYk')}
@@ -1022,6 +1147,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Porque la psicología no tiene ninguna utilidad práctica en el liderazgo', correct: false},
             {text: 'Porque Simeón es un monje y rechaza toda la ciencia moderna', correct: false}
         ])}
+        ${aha('Si todo está determinado por tu infancia, tu biología o tu entorno, entonces el liderazgo es imposible.','Hunter toma partido: sí puedes elegir. Esa es la tesis más importante del libro y la más incómoda — porque cierra cualquier excusa. Si puedes elegir, eres responsable. Y la responsabilidad es el primer requisito del liderazgo real.')}
+        ${okrPost(['Entiendes la postura de Hunter: las personas tienen la capacidad de elegir su respuesta en cualquier circunstancia','Sabes que asumir esa responsabilidad — sin excusas — es el fundamento de la madurez y del liderazgo auténtico'],'Módulo 6 · Lección 15 — La praxis')}
+        ${nextStep(['Identifica una conducta en tu liderazgo que has estado atribuyendo a factores externos','Reformúlala asumiendo tu parte: "Yo puedo cambiar..."','Eso no es rendirse — es recuperar el control. El liderazgo empieza cuando dejas de esperar que el entorno cambie primero'])}
         `
     });
 
@@ -1030,6 +1158,8 @@ const COURSE_LA_PARADOJA = {
         title: 'La praxis: de los actos a los sentimientos',
         subtitle: 'Capítulo 6 — Fíngelo hasta que lo hagas bueno',
         content: hero(heroGradients.m6, 'LECCIÓN 15', 'La praxis — Cap. 6') + `
+        ${okrPre(['Aprenderás el concepto de praxis: el conocimiento que se convierte en conducta, hábito y carácter','Entenderás por qué comprender algo sin practicarlo no produce ningún cambio real','Verás que la praxis es el paso que separa a quien entiende de quien transforma'])}
+
         ${note('Este concepto es oro puro. Todos pensamos que primero hay que sentir para actuar. "Cuando me sienta motivado, empezaré a tratar bien a mi equipo." Simeón dice lo contrario: primero actúa, y los sentimientos vendrán. La praxis es el puente entre la decisión y la transformación.')}
 
         ${videoLink('Las 12 leyes de la disciplina que cambiarán tu vida — Brian Tracy', 'DZl0S5buCSk')}
@@ -1070,6 +1200,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Que nuestros comportamientos influyen en nuestros sentimientos — actuando bien, los sentimientos positivos vendrán', correct: true},
             {text: 'Que fingir emociones es la clave del éxito en el liderazgo', correct: false}
         ])}
+        ${aha('Saber que debes servir y servir son cosas completamente diferentes. Hunter lo llama praxis.','El conocimiento que se hace conducta, que se hace hábito, que se hace carácter. Sin praxis, este curso es solo entretenimiento intelectual. Con praxis, puede cambiar todo lo que toca tu liderazgo.')}
+        ${okrPost(['Entiendes el concepto de praxis: conocimiento → conducta → hábito → carácter — esa es la cadena del cambio real','Sabes que la comprensión intelectual sin práctica deliberada no produce ninguna transformación'],'Módulo 7 · Disciplina y recompensa')}
+        ${nextStep(['Elige UNA enseñanza de este curso que hayas entendido pero no hayas aplicado todavía','Define la acción específica y concreta que la convertiría en praxis hoy — no "algún día"','Comprométete a hacerla antes de que termine el día: eso es praxis'])}
         `
     });
 
@@ -1082,6 +1215,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Disciplina y recompensa múltiple',
         subtitle: 'Capítulo 7 — Todo esfuerzo disciplinado tiene una recompensa múltiple',
         content: hero(heroGradients.m7, 'LECCIÓN 16', 'Disciplina y recompensa — Cap. 7') + `
+        ${okrPre(['Aprenderás qué tipo de resultados produce el liderazgo de servicio sostenido en el tiempo','Entenderás la relación entre disciplina, gozo y eficacia a largo plazo','Conocerás la encuesta de mayores de 90 años y sus 3 grandes arrepentimientos'])}
+
         ${note('El último módulo responde la pregunta que todos nos hacemos: ¿vale la pena tanto esfuerzo? La respuesta de Simeón es contundente: la disciplina del liderazgo de servicio no es un costo, es una inversión con retornos múltiples.')}
 
         ${videoLink('Yokoi Kenji — Disciplina', 'd6KleH5mLms')}
@@ -1122,6 +1257,9 @@ const COURSE_LA_PARADOJA = {
             {text: 'Trabajarian menos y se dedicarian solo a su familia', correct: false},
             {text: 'Cambiarian de profesión y se harían monjes como Simeón', correct: false}
         ])}
+        ${aha('Los mayores de 90 años no lamentaron trabajar demasiado ni ganar poco. Lamentaron haber invertido en las cosas equivocadas.','No haber arriesgado. No haber amado más. El liderazgo de servicio es, en el fondo, la decisión de no tener ese arrepentimiento — elegir hoy invertir en lo que importará cuando mires atrás.')}
+        ${okrPost(['Sabes qué resultados produce el liderazgo de servicio: compromiso real, no compliance temporal','Entiendes la conexión entre servir bien hoy y el gozo de haber liderado con sentido al final del camino'],'Módulo 7 · Lección 17 — Gozo y trascendencia')}
+        ${nextStep(['De los tres grandes arrepentimientos (tiempo, coraje, amor), ¿cuál resuena más contigo hoy?','Escribe UNA acción de esta semana que corrija esa dirección — concreta, fechada, sin vaguedades','Ese es el puente entre entender la paradoja y vivirla'])}
         `
     });
 
@@ -1130,6 +1268,8 @@ const COURSE_LA_PARADOJA = {
         title: 'Gozo, propósito y trascendencia',
         subtitle: 'Capítulo 7 — La recompensa definitiva del liderazgo de servicio',
         content: hero(heroGradients.m7, 'LECCIÓN 17', 'Gozo y trascendencia — Cap. 7') + `
+        ${okrPre(['Entenderás qué es exactamente "la paradoja" del título y por qué servir es el camino al liderazgo real','Comprenderás por qué los líderes de servicio experimentan gozo genuino en su rol','Reflexionarás sobre el legado que tu liderazgo dejará — y si estás construyéndolo hoy'])}
+
         ${note('Esta es la última lección antes del examen, y es la más profunda. Simeón distingue entre felicidad (que depende de lo que pasa) y gozo (que depende de quién eres). El liderazgo de servicio no te promete que todo saldrá bien. Te promete algo mejor: una vida con sentido.')}
 
         ${videoLink('Basa tu liderazgo en el servicio — Abdiel Ledesma | TEDx', '44Po-MfGLVI')}
@@ -1180,6 +1320,10 @@ const COURSE_LA_PARADOJA = {
             {text: 'Que los monasterios son mejores escuelas de negocios que las universidades', correct: false},
             {text: 'Que la religion es más importante que la ciencia en el liderazgo', correct: false}
         ])}
+        ${aha('La paradoja es que para tener más influencia, hay que servir más. Para ganar autoridad, hay que sacrificar el ego.','Para liderar con poder real, hay que renunciar a la dominación. Esta inversión de lógica es lo que John Daily tuvo que aprender en el monasterio — y es lo que este curso espera que tú hayas aprendido también.')}
+        ${pq('Para ser el primero entre vosotros, deberá ser el servidor de todos.','Jesús de Nazaret · citado en La Paradoja, James C. Hunter')}
+        ${okrPost(['Entiendes la paradoja completa: servir para liderar, sacrificar el ego para ganar autoridad real','Tienes una visión clara del tipo de líder que quieres ser — y del legado que quieres construir'],'Examen Final — La Paradoja')}
+        ${nextStep(['Escribe en una sola línea: "El tipo de líder que quiero ser es..."','Guárdala donde la veas cada mañana — en el espejo, en el escritorio, en el teléfono','Ese es tu fin en mente. El examen final confirma que tienes las herramientas. Ahora elige vivirlas.'])}
         `
     });
 
