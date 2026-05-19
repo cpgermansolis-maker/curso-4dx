@@ -407,6 +407,7 @@
         <!-- Acciones rápidas -->
         <div class="quick-actions">
             <button class="btn-action btn-scholarship" onclick="openScholarshipModal()">🎓 Otorgar beca</button>
+            <button class="btn-action" style="background:#e8f5e9;color:#1b5e20;border-color:#43a047;" onclick="openAdminMgmtModal()">👑 Gestionar admins</button>
             <button class="btn-action btn-clean-test" onclick="cleanTestStudents()">🧹 Borrar alumnos de prueba</button>
             <button class="btn-action btn-clean-all" onclick="cleanAllStudents()">⚠️ Borrar TODOS los alumnos</button>
             <button class="btn-action" style="background:#fff3e0;color:#e65100;border-color:#ffb300;" onclick="openRatingsPanel()">⭐ Calificaciones</button>
@@ -525,6 +526,37 @@
         <div class="modal-actions">
             <button class="btn-modal-cancel" onclick="closeScholarshipModal()">Cancelar</button>
             <button class="btn-modal-confirm" id="schConfirmBtn" onclick="grantScholarship()" disabled>🎓 Otorgar beca</button>
+        </div>
+    </div>
+</div>
+
+<!-- ======= MODAL GESTIONAR ADMINS ======= -->
+<div id="adminMgmtModal" class="modal-backdrop" style="display:none;" onclick="if(event.target===this) closeAdminMgmtModal()">
+    <div class="modal-body">
+        <button class="modal-close" onclick="closeAdminMgmtModal()">✕</button>
+        <h2>👑 Gestionar administradores</h2>
+        <p style="color:var(--text-light);margin:6px 0 18px;font-size:0.9em;">El correo debe pertenecer a una cuenta ya registrada en TRIKLES.</p>
+
+        <div class="form-group">
+            <label>Otorgar acceso de admin:</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <input type="email" id="grantAdminEmail" placeholder="correo@ejemplo.com" style="flex:1;">
+                <button class="btn-modal-confirm" onclick="grantAdminAccess()" style="white-space:nowrap;">👑 Otorgar</button>
+            </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid #e0e0e0;margin:18px 0;">
+
+        <div class="form-group">
+            <label>Revocar acceso de admin:</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <input type="email" id="revokeAdminEmail" placeholder="correo@ejemplo.com" style="flex:1;">
+                <button onclick="revokeAdminAccess()" style="white-space:nowrap;padding:10px 16px;background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;border-radius:8px;cursor:pointer;font-size:0.9em;">🚫 Revocar</button>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-modal-cancel" onclick="closeAdminMgmtModal()">Cerrar</button>
         </div>
     </div>
 </div>
@@ -869,6 +901,49 @@ async function revokeScholarship(email, courseId) {
     }
     alert('✅ Beca revocada\n\n' + studentName + ' ya no tiene acceso al curso "' + courseTitle + '".');
     await init();
+}
+
+// =========================================================
+// GESTIONAR ADMINS
+// =========================================================
+function openAdminMgmtModal() {
+    document.getElementById('grantAdminEmail').value = '';
+    document.getElementById('revokeAdminEmail').value = '';
+    document.getElementById('adminMgmtModal').style.display = 'flex';
+}
+function closeAdminMgmtModal() {
+    document.getElementById('adminMgmtModal').style.display = 'none';
+}
+
+async function grantAdminAccess() {
+    const email = (document.getElementById('grantAdminEmail').value || '').trim().toLowerCase();
+    if (!email) { alert('Escribe el correo del usuario.'); return; }
+    try {
+        const call = TK._functions.httpsCallable('grantAdmin');
+        const result = await call({ email });
+        if (result.data.alreadyAdmin) {
+            alert('ℹ️ ' + email + ' ya tiene acceso de administrador.');
+        } else {
+            alert('✅ Acceso de administrador otorgado a:\n' + email + '\n\nDeberá cerrar sesión y volver a entrar para que el cambio surta efecto.');
+        }
+        closeAdminMgmtModal();
+    } catch (e) {
+        alert('Error: ' + (e.message || e));
+    }
+}
+
+async function revokeAdminAccess() {
+    const email = (document.getElementById('revokeAdminEmail').value || '').trim().toLowerCase();
+    if (!email) { alert('Escribe el correo del administrador a revocar.'); return; }
+    if (!confirm('¿Revocar el acceso de administrador a:\n' + email + '?\n\nEsta persona perderá acceso al panel de administración.')) return;
+    try {
+        const call = TK._functions.httpsCallable('revokeAdmin');
+        await call({ email });
+        alert('✅ Acceso de administrador revocado para:\n' + email);
+        closeAdminMgmtModal();
+    } catch (e) {
+        alert('Error: ' + (e.message || e));
+    }
 }
 
 async function init() {

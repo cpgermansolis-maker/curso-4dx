@@ -714,3 +714,57 @@ exports.bootstrapAdmin = onCall(
         return { ok: true, alreadyAdmin: false };
     }
 );
+
+// Otorga el claim admin a otro usuario. Solo puede llamarla quien ya es admin.
+exports.grantAdmin = onCall(
+    { cors: true },
+    async (request) => {
+        if (!request.auth || request.auth.token.admin !== true) {
+            throw new HttpsError('permission-denied', 'Requiere privilegios de administrador.');
+        }
+        const targetEmail = String(request.data.email || '').trim().toLowerCase();
+        if (!targetEmail) {
+            throw new HttpsError('invalid-argument', 'Se requiere el campo email.');
+        }
+        let userRecord;
+        try {
+            userRecord = await admin.auth().getUserByEmail(targetEmail);
+        } catch (e) {
+            throw new HttpsError('not-found', 'No existe una cuenta con ese correo: ' + targetEmail);
+        }
+        if (userRecord.customClaims && userRecord.customClaims.admin === true) {
+            return { ok: true, alreadyAdmin: true };
+        }
+        await admin.auth().setCustomUserClaims(userRecord.uid, { admin: true });
+        logger.info('grantAdmin', { by: request.auth.token.email, target: targetEmail });
+        return { ok: true, alreadyAdmin: false };
+    }
+);
+
+// Revoca el claim admin de otro usuario. Solo puede llamarla quien ya es admin.
+// No permite auto-revocación (para evitar que el último admin se bloquee).
+exports.revokeAdmin = onCall(
+    { cors: true },
+    async (request) => {
+        if (!request.auth || request.auth.token.admin !== true) {
+            throw new HttpsError('permission-denied', 'Requiere privilegios de administrador.');
+        }
+        const targetEmail = String(request.data.email || '').trim().toLowerCase();
+        if (!targetEmail) {
+            throw new HttpsError('invalid-argument', 'Se requiere el campo email.');
+        }
+        const callerEmail = String(request.auth.token.email).trim().toLowerCase();
+        if (targetEmail === callerEmail) {
+            throw new HttpsError('failed-precondition', 'No puedes revocar tu propio acceso de administrador.');
+        }
+        let userRecord;
+        try {
+            userRecord = await admin.auth().getUserByEmail(targetEmail);
+        } catch (e) {
+            throw new HttpsError('not-found', 'No existe una cuenta con ese correo: ' + targetEmail);
+        }
+        await admin.auth().setCustomUserClaims(userRecord.uid, { admin: false });
+        logger.info('revokeAdmin', { by: request.auth.token.email, target: targetEmail });
+        return { ok: true };
+    }
+);
