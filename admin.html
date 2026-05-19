@@ -539,6 +539,11 @@
 
         <div class="form-group">
             <label>Otorgar acceso de admin:</label>
+            <div style="background:#f1f8e9;border:1px solid #c5e1a5;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:0.82em;color:#33691e;line-height:1.5;">
+                <strong>¿Cuándo usarlo?</strong> Cuando quieras que otra persona pueda entrar a este panel (ej. un asistente, socio o colaborador de confianza).<br>
+                <strong>Requisito:</strong> La persona primero debe haberse registrado en la plataforma con ese correo y haber iniciado sesión al menos una vez.<br>
+                <strong>Después de otorgar:</strong> La persona debe cerrar sesión y volver a entrar para que el acceso surta efecto.
+            </div>
             <div style="display:flex;gap:8px;align-items:center;">
                 <input type="email" id="grantAdminEmail" placeholder="correo@ejemplo.com" style="flex:1;">
                 <button class="btn-modal-confirm" onclick="grantAdminAccess()" style="white-space:nowrap;">👑 Otorgar</button>
@@ -549,6 +554,11 @@
 
         <div class="form-group">
             <label>Revocar acceso de admin:</label>
+            <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:0.82em;color:#6d4c00;line-height:1.5;">
+                <strong>¿Cuándo usarlo?</strong> Si un colaborador deja de tener el rol o quieres retirarle el acceso al panel de administración.<br>
+                <strong>Importante:</strong> No puedes revocar tu propio correo (cpgermansolis@gmail.com) — eso evita quedarse sin ningún admin.<br>
+                <strong>Después de revocar:</strong> La persona pierde el acceso de inmediato en su próxima petición al servidor.
+            </div>
             <div style="display:flex;gap:8px;align-items:center;">
                 <input type="email" id="revokeAdminEmail" placeholder="correo@ejemplo.com" style="flex:1;">
                 <button onclick="revokeAdminAccess()" style="white-space:nowrap;padding:10px 16px;background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;border-radius:8px;cursor:pointer;font-size:0.9em;">🚫 Revocar</button>
