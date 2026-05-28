@@ -106,6 +106,10 @@ const COURSE_CLAUDE_SISTEMA = {
         ],
         faq: [
             {
+                q: '¿Esto no quedará obsoleto cuando salga un modelo nuevo de Claude?',
+                a: 'Al contrario: el curso ya incluye un módulo bonus sobre Claude Opus 4.8 (el modelo más potente que existe hoy, lanzado en mayo de 2026) con su comparativa frente a 4.7 y frente a la competencia. Pero lo más importante es que aprendes un sistema de trabajo, no trucos de una versión: el método sigue funcionando con cada modelo nuevo — de hecho, cada motor mejor lo vuelve más poderoso. Y recibes las actualizaciones del curso sin costo.'
+            },
+            {
                 q: '¿Necesito saber programar para este curso?',
                 a: 'No. Las lecciones de Claude Code están diseñadas específicamente para profesionales que no escriben código. Usarás lenguaje natural en todo momento.'
             },
