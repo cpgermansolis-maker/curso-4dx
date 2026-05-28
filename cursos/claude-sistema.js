@@ -140,8 +140,9 @@ const COURSE_CLAUDE_SISTEMA = {
         25: ['quiz_m4l25a', 'quiz_m4l25b'],
         26: ['quiz_m4l26a', 'quiz_m4l26b'],
         27: ['quiz_m4l27a', 'quiz_m4l27b'],
-        28: ['final_q1','final_q2','final_q3','final_q4','final_q5','final_q6','final_q7','final_q8','final_q9','final_q10','final_q11','final_q12','final_q13','final_q14','final_q15'],
-        29: []
+        28: ['quiz_bonus_a', 'quiz_bonus_b'],
+        29: ['final_q1','final_q2','final_q3','final_q4','final_q5','final_q6','final_q7','final_q8','final_q9','final_q10','final_q11','final_q12','final_q13','final_q14','final_q15'],
+        30: []
     },
 
     examPassScore: 11,
@@ -2606,6 +2607,143 @@ Siempre respóndeme en español latinoamericano.</pre>
                 <li>Las 3 fuentes para evolucionar sin ahogarse en el ruido</li>
             </ul>
             <div class="okr-next">→ <strong>Examen de certificación:</strong> 15 preguntas sobre los 4 módulos. Necesitas 11 respuestas correctas para obtener tu certificado VIP TRIKLES.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // MÓDULO BONUS — Claude Opus 4.8 vs 4.7 y vs la competencia (lbonus)
+    // ==========================================================
+    {
+        id: 'lbonus', module: 'Módulo Bonus', tag: 'tag-bonus', tagLabel: 'BONUS',
+        title: 'Claude Opus 4.8 — qué cambió frente a 4.7 y por qué tu sistema acaba de volverse más poderoso',
+        subtitle: 'El motor sobre el que corre todo lo que aprendiste: qué mejoró en la versión más reciente, qué ventajas tienes frente a la competencia, y por qué el sistema sigue importando más que el modelo',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(43,26,0,0.82),rgba(13,0,51,0.72)),url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1400&q=80')">
+            <div class="hero-caption">Bonus · El modelo más capaz que existe hoy — y cómo aprovecharlo con tu sistema</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎁 EN ESTE MÓDULO BONUS:</div>
+            <ul>
+                <li>Qué es exactamente Claude Opus 4.8 y en qué mejoró frente a Opus 4.7</li>
+                <li>Los números reales: dónde subió el rendimiento y qué significan para tu trabajo</li>
+                <li>El cambio más importante que casi nadie nota: honestidad y fiabilidad</li>
+                <li>Cómo se posiciona Claude frente a la competencia (GPT, Gemini) — sin marketing</li>
+                <li>Por qué un modelo mejor multiplica tu sistema, pero no lo reemplaza</li>
+            </ul>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Nota del instructor · LADE Germán Solís Muñoz</div>
+                <div class="instructor-note-text">Agregué este módulo el día que Anthropic lanzó Opus 4.8 (28 de mayo de 2026), porque me hicieron la misma pregunta tres veces en un día: "¿vale la pena el cambio?". La respuesta corta es sí — pero la respuesta importante es <em>otra</em>: el modelo es el motor, tu sistema es el volante. Un motor mejor en manos de alguien sin método sigue produciendo resultados inconsistentes. Por eso este módulo es <strong>bonus</strong> y no parte del núcleo: lo que te certifica no es saber qué versión usas, es tener el sistema que aprendiste.</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>Qué es Claude Opus 4.8</h3>
+            <p>Opus es la línea más capaz de modelos de Anthropic — el "tope de gama". <strong>Opus 4.8</strong> es la versión lanzada el <strong>28 de mayo de 2026</strong>, apenas seis semanas después de Opus 4.7 (16 de abril de 2026). Es el modelo que mueve hoy a Claude.ai, la Desktop App y Claude Code cuando eliges el modelo más potente.</p>
+            <p>El salto 4.7 → 4.8 no es una reinvención: es una <strong>mejora incremental pero tangible</strong>. Anthropic afina la misma familia para que razone mejor, programe mejor de forma autónoma y — el punto que más te conviene como usuario profesional — sea más honesta sobre lo que no sabe.</p>
+        </div>
+
+        <div class="content-card">
+            <h3>Los números reales: 4.8 vs 4.7</h3>
+            <p>Estos son datos publicados por Anthropic en el lanzamiento. No memorices las cifras — entiende la <em>dirección</em>: lo que más mejoró fue el trabajo agéntico (Claude ejecutando tareas de varios pasos por sí mismo).</p>
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;margin:12px 0;">
+                    <tr style="background:#2b1a00;color:#faf8f3;">
+                        <th style="padding:10px;text-align:left;border:1px solid #b8860b;">Medición</th>
+                        <th style="padding:10px;text-align:left;border:1px solid #b8860b;">Opus 4.7</th>
+                        <th style="padding:10px;text-align:left;border:1px solid #b8860b;">Opus 4.8</th>
+                        <th style="padding:10px;text-align:left;border:1px solid #b8860b;">Qué mide</th>
+                    </tr>
+                    <tr><td style="padding:8px;border:1px solid #ddd;"><strong>SWE-bench Verified</strong></td><td style="padding:8px;border:1px solid #ddd;">87.6%</td><td style="padding:8px;border:1px solid #ddd;"><strong>88.6%</strong></td><td style="padding:8px;border:1px solid #ddd;">Resolver problemas reales de software</td></tr>
+                    <tr><td style="padding:8px;border:1px solid #ddd;"><strong>SWE-bench Pro</strong></td><td style="padding:8px;border:1px solid #ddd;">64.3%</td><td style="padding:8px;border:1px solid #ddd;"><strong>69.2%</strong></td><td style="padding:8px;border:1px solid #ddd;">Tareas de código más difíciles</td></tr>
+                    <tr><td style="padding:8px;border:1px solid #ddd;"><strong>Terminal-Bench 2.1</strong></td><td style="padding:8px;border:1px solid #ddd;">66.1%</td><td style="padding:8px;border:1px solid #ddd;"><strong>74.6%</strong></td><td style="padding:8px;border:1px solid #ddd;">Operar en una terminal de forma autónoma</td></tr>
+                    <tr><td style="padding:8px;border:1px solid #ddd;"><strong>Razonamiento con herramientas</strong></td><td style="padding:8px;border:1px solid #ddd;">54.7%</td><td style="padding:8px;border:1px solid #ddd;"><strong>57.9%</strong></td><td style="padding:8px;border:1px solid #ddd;">Pensar usando herramientas externas</td></tr>
+                </table>
+            </div>
+            <p>La subida más grande está en <strong>Terminal-Bench</strong> (de 66% a 75%): justo el tipo de trabajo del Módulo 3 — Claude Code ejecutando tareas en tu computadora. Si esa parte del curso te interesó, esta versión la hace notablemente más confiable.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 EL CAMBIO QUE IMPORTA MÁS QUE LOS BENCHMARKS</div>
+            <div class="aha-quote">"Opus 4.8 es unas cuatro veces menos propenso que su predecesor a dejar pasar fallos en el código que escribe sin señalarlos."</div>
+            <div class="aha-author">— Equipo de alineación de Anthropic</div>
+            <div class="aha-body">Este es el dato que cambia tu forma de trabajar. Las versiones nuevas no solo son "más inteligentes" — son <strong>más honestas</strong>. Opus 4.8 marca con más frecuencia lo que <em>no</em> sabe y hace menos afirmaciones sin respaldo. Para ti significa menos revisión a ciegas: cuando Claude dice "no estoy seguro de esto", ahora puedes confiar más en esa advertencia. Es exactamente lo que el <strong>Revisor Crítico</strong> del Módulo 2 intenta forzar — y ahora el modelo lo trae de fábrica con más fuerza.</div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Lo nuevo que sí cambia tu día a día</h3>
+            <ul>
+                <li><strong>Fast mode más rápido y más barato:</strong> el modo rápido es ahora ~2.5× más veloz y cuesta 3× menos que antes. Misma calidad de Opus, respuestas casi inmediatas. Ideal para iterar prompts sin esperar.</li>
+                <li><strong>Mismo precio en el tier estándar:</strong> el costo por uso intensivo no subió respecto a 4.7. Más capacidad, mismo precio.</li>
+                <li><strong>Dynamic workflows en Claude Code (research preview):</strong> para tareas demasiado grandes para una sola conversación, Claude planea el trabajo, lanza muchos subagentes en paralelo y <em>verifica su propio resultado</em> antes de reportar. Es el Módulo 3 llevado a escala.</li>
+                <li><strong>Más fiable en tareas largas:</strong> mantiene mejor el contexto y las instrucciones a lo largo de conversaciones extensas — menos Context Rot (lo que viste en el Módulo 0).</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Claude frente a la competencia — sin humo</h3>
+            <p>La pregunta honesta no es "¿cuál es el mejor modelo?" sino "¿en qué es mejor cada uno para <em>mi</em> trabajo?". Con Opus 4.8, Claude lidera o empata en los benchmarks de programación agéntica frente a modelos como GPT-5.5, y estos son los terrenos donde Anthropic mantiene ventaja real:</p>
+            <ol class="concept-list">
+                <li><strong>Obediencia literal y seguimiento de instrucciones:</strong> Claude hace exactamente lo que pides. Es la base de todo el curso — tus prompts de 5 elementos funcionan <em>porque</em> el modelo respeta tus restricciones al pie de la letra.</li>
+                <li><strong>Trabajo agéntico y código:</strong> el ecosistema de Claude Code (agentes que ejecutan tareas reales en tu máquina) es donde Anthropic puntea más alto. Terminal-Bench y SWE-bench lo confirman.</li>
+                <li><strong>Honestidad y alineación:</strong> Anthropic mide y publica qué tan poco "alucina" o se desvía su modelo. Opus 4.8 está a la par de su modelo mejor alineado. Para uso profesional, eso es confianza.</li>
+                <li><strong>Coherencia en contexto largo:</strong> Claude sostiene documentos y conversaciones extensas sin perder el hilo — clave para análisis de varios archivos.</li>
+            </ol>
+            <p>¿Dónde puede convenirte otra herramienta? Para generación de imágenes nativa o integración profunda con un ecosistema concreto (p. ej. Google Workspace con Gemini), otra opción puede encajar mejor. <strong>Madurez profesional es saber esto</strong> — no defender una marca.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">⚙️ EL PRINCIPIO QUE CIERRA EL CURSO</div>
+            <div class="aha-quote">"El modelo es el motor. Tu sistema es el volante. Un Ferrari sin conductor sigue estrellado en el muro."</div>
+            <div class="aha-body">Opus 4.8 es un motor extraordinario. Pero el usuario que abre Claude, escribe "ayúdame con esto" y cierra — obtiene resultados inconsistentes <em>aunque tenga el mejor modelo del mundo</em>. El usuario que aplica el mapa de decisión, los prompts de 5 elementos, el Revisor Crítico y sus flujos documentados — obtiene resultados predecibles <em>incluso cuando salga la versión 4.9, 5.0 o la que sea</em>. Por eso tu sistema es a prueba de versiones: cuando Anthropic mejora el motor, tu volante simplemente se vuelve más poderoso.</div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">⚡ TU TURNO — BONUS</div>
+            <div class="next-step-body">
+                <p>1) Verifica qué modelo estás usando ahora mismo en Claude.ai (selector de modelo, arriba de la conversación). 2) Si tienes Opus 4.8 disponible, prueba el <strong>fast mode</strong> en una tarea repetitiva de tu sistema y compara la velocidad. 3) Anota en tu Project "Mi sistema Claude" una línea nueva en tu auditoría mensual: <em>"¿La versión actual del modelo cambia alguno de mis flujos?"</em></p>
+                <p><strong>Criterio de éxito:</strong> sabes exactamente qué versión de Claude usas, y tu auditoría mensual ya contempla revisar el modelo — no solo las funciones.</p>
+            </div>
+        </div>
+
+        <div class="quiz-container" id="quiz_bonus_a">
+            <div class="quiz-label">Quiz · Bonus</div>
+            <div class="quiz-question">Según el módulo, ¿cuál fue la mejora MÁS grande de Opus 4.8 frente a 4.7, y por qué es relevante para este curso?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_a', this, false)">La generación de imágenes, porque permite crear las portadas de los cursos automáticamente</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_a', this, true)">El salto en Terminal-Bench (de 66% a 75%), porque mide el trabajo agéntico en la terminal — justo el tipo de automatización del Módulo 3 con Claude Code</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_a', this, false)">La reducción de precio a la mitad, porque hace el curso accesible para más alumnos</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_a', this, false)">La velocidad de respuesta en el chat estándar, porque elimina por completo el Context Rot</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_bonus_a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_bonus_b">
+            <div class="quiz-label">Quiz · Bonus</div>
+            <div class="quiz-question">¿Cuál es el mensaje central de este módulo bonus respecto a la relación entre el modelo y tu sistema de trabajo?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_b', this, false)">Que solo vale la pena tener un sistema si usas la última versión del modelo más caro</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_b', this, false)">Que con Opus 4.8 ya no hace falta aplicar prompts de 5 elementos ni el Revisor Crítico</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_b', this, true)">Que el modelo es el motor y el sistema es el volante: un mejor modelo multiplica tus resultados, pero sin método produce resultados inconsistentes aunque sea el mejor modelo del mundo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_bonus_b', this, false)">Que conviene cambiar de herramienta cada vez que un competidor saca un modelo nuevo</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_bonus_b_fb"></div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ MÓDULO BONUS COMPLETADO. AHORA SABES:</div>
+            <ul>
+                <li>Qué es Opus 4.8 y en qué mejoró real y medible frente a 4.7</li>
+                <li>Que la mejora más valiosa es la honestidad y fiabilidad — menos afirmaciones sin respaldo</li>
+                <li>Dónde Claude lidera frente a la competencia: obediencia, trabajo agéntico, alineación y contexto largo</li>
+                <li>Que tu sistema es a prueba de versiones — cada motor nuevo lo vuelve más poderoso</li>
+            </ul>
+            <div class="okr-next">→ <strong>Ahora sí: el examen de certificación.</strong> 15 preguntas sobre los 4 módulos del núcleo. (Este bonus no entra en el examen — es tuyo, de regalo.)</div>
         </div>
         `
     },
