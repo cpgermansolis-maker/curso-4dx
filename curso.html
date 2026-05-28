@@ -2242,6 +2242,104 @@
             margin-bottom: 14px;
         }
 
+        /* ── HELP WIDGET (chat de preventa) ── */
+        .help-widget {
+            position: fixed; bottom: 24px; right: 24px; z-index: 10010;
+            display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+        }
+        .help-trigger {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--tk-navy); color: var(--tk-cream);
+            border: none; border-radius: 50px; padding: 13px 22px;
+            font-size: 14px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 4px 20px rgba(10,37,64,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .help-trigger:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(10,37,64,0.45); }
+        .help-trigger-icon { font-size: 1.1em; }
+        .help-panel {
+            background: white; border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+            width: 340px; max-height: 480px;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform: translateY(20px) scale(0.95);
+            opacity: 0; pointer-events: none;
+            transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease;
+        }
+        .help-panel.open {
+            transform: translateY(0) scale(1);
+            opacity: 1; pointer-events: auto;
+        }
+        .help-panel-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 18px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .help-panel-title {
+            font-size: 14px; font-weight: 800; color: var(--tk-navy);
+            letter-spacing: 0.3px;
+        }
+        .help-panel-close {
+            background: #f5f5f5; border: none; width: 28px; height: 28px;
+            border-radius: 50%; cursor: pointer; font-size: 12px; color: #666;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .help-panel-close:hover { background: #e8e8e8; }
+        .help-panel-body {
+            overflow-y: auto; flex: 1;
+            padding: 8px 0;
+        }
+        .help-panel-body details {
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .help-panel-body summary {
+            padding: 13px 18px;
+            font-size: 13px; font-weight: 600; color: var(--tk-navy);
+            cursor: pointer; list-style: none;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px;
+        }
+        .help-panel-body summary::-webkit-details-marker { display: none; }
+        .help-panel-body summary::after {
+            content: '+'; color: var(--tk-gold); font-size: 18px;
+            font-weight: 400; flex-shrink: 0;
+        }
+        .help-panel-body details[open] summary::after { content: '−'; }
+        .help-panel-body details p {
+            padding: 0 18px 14px; margin: 0;
+            font-size: 13px; color: #555; line-height: 1.55;
+        }
+        .help-panel-cta {
+            padding: 14px 18px; border-top: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        .help-panel-cta-btn {
+            display: block; width: 100%;
+            background: var(--tk-navy); color: white;
+            border: none; border-radius: 8px; padding: 11px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .help-panel-cta-btn:hover { opacity: 0.85; }
+        @media (max-width: 600px) {
+            .help-panel { width: calc(100vw - 32px); right: 16px; }
+            .help-widget { right: 16px; bottom: 16px; }
+        }
+        /* VIP variant */
+        body.vip-mode .help-trigger {
+            background: linear-gradient(135deg, #4a0080, #7b00d4);
+            box-shadow: 0 4px 20px rgba(123,0,212,0.4);
+        }
+        body.vip-mode .help-panel-title { color: #3b0764; }
+        body.vip-mode .help-panel-body summary { color: #3b0764; }
+        body.vip-mode .help-panel-body summary::after { color: #7b00d4; }
+        body.vip-mode .help-panel-cta-btn {
+            background: linear-gradient(135deg, #5b21b6, #7b00d4);
+        }
+
         /* ── ANTI-OBJECIONES ── */
         .cl-section-antiobjections {
             background: linear-gradient(135deg, #faf8f3, #f5f0e8);
@@ -4413,6 +4511,45 @@ function showCourseLanding() {
                     '<div class="cl-bottom-cta-guarantee">30 días de garantía · Pago único</div>' +
                 '</div>' +
               '</div>'
+            : '') +
+
+        // HELP WIDGET — flotante inferior derecho, solo para no inscritos
+        (!enrolled
+            ? '<div class="help-widget" id="helpWidget">' +
+                '<div class="help-panel" id="helpPanel">' +
+                    '<div class="help-panel-header">' +
+                        '<div class="help-panel-title">💬 Preguntas frecuentes</div>' +
+                        '<button class="help-panel-close" onclick="toggleHelpPanel()">✕</button>' +
+                    '</div>' +
+                    '<div class="help-panel-body">' +
+                        '<details><summary>¿Este curso es para mí si no tengo experiencia previa?</summary>' +
+                            '<p>Sí. Cada lección explica los conceptos desde cero con ejemplos del contexto mexicano. No necesitas haber leído el libro ni tener conocimientos previos.</p>' +
+                        '</details>' +
+                        '<details><summary>¿Cómo funciona el pago? ¿Aceptan OXXO o SPEI?</summary>' +
+                            '<p>Aceptamos tarjeta de crédito/débito, OXXO y transferencia bancaria (SPEI). El acceso se activa de forma inmediata al confirmar el pago.</p>' +
+                        '</details>' +
+                        '<details><summary>¿Cuánto tiempo tengo para terminar el curso?</summary>' +
+                            '<p>Acceso de por vida. Puedes avanzar a tu ritmo, pausar y regresar cuando quieras. Sin fechas límite ni presión de ningún tipo.</p>' +
+                        '</details>' +
+                        '<details><summary>¿Hay garantía si el curso no es lo que esperaba?</summary>' +
+                            '<p>Sí, 30 días de garantía total. Si no estás satisfecho por cualquier razón, te devolvemos el 100% de tu inversión sin preguntas.</p>' +
+                        '</details>' +
+                        '<details><summary>¿El certificado tiene validez? ¿Cómo lo obtengo?</summary>' +
+                            '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio único y verificable. Puedes compartirlo en LinkedIn o descargarlo en PDF.</p>' +
+                        '</details>' +
+                        '<details><summary>¿Puedo ver el contenido completo antes de comprar?</summary>' +
+                            '<p>Sí. En la pestaña "Lecciones" de esta misma página encuentras el temario completo con todos los temas del curso.</p>' +
+                        '</details>' +
+                    '</div>' +
+                    '<div class="help-panel-cta">' +
+                        '<button class="help-panel-cta-btn" onclick="clOpenEnrollModal(); toggleHelpPanel();">Inscribirme ahora →</button>' +
+                    '</div>' +
+                '</div>' +
+                '<button class="help-trigger" onclick="toggleHelpPanel()">' +
+                    '<span class="help-trigger-icon">💬</span>' +
+                    '<span class="help-trigger-text">¿Tienes dudas?</span>' +
+                '</button>' +
+              '</div>'
             : '');
 
     // Tab scrollspy
@@ -4421,6 +4558,13 @@ function showCourseLanding() {
         e.currentTarget.classList.add('active');
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    // Help widget toggle
+    window.toggleHelpPanel = function() {
+        const panel = document.getElementById('helpPanel');
+        if (!panel) return;
+        panel.classList.toggle('open');
     };
 }
 
