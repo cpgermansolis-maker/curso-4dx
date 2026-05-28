@@ -2242,6 +2242,22 @@
             margin-bottom: 14px;
         }
 
+        /* ── ANTI-OBJECIONES ── */
+        .cl-section-antiobjections {
+            background: linear-gradient(135deg, #faf8f3, #f5f0e8);
+            border-left: 3px solid var(--tk-gold);
+        }
+        .cl-antiobjections-eyebrow {
+            font-size: 10px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--tk-gold);
+            margin-bottom: 8px;
+        }
+        body.vip-mode .cl-section-antiobjections {
+            background: linear-gradient(135deg, #f5f0ff, #ede9fe);
+            border-left-color: #7b00d4;
+        }
+        body.vip-mode .cl-antiobjections-eyebrow { color: #7b00d4; }
+
         /* ── CTA BOTTOM BANNER ── */
         .cl-bottom-cta {
             background: var(--tk-navy);
@@ -4154,13 +4170,35 @@ function showCourseLanding() {
                     '</section>'
                 : '') +
 
-                // FAQ
+                // FAQ (específico del curso, si existe)
                 (faq.length ?
                     '<section class="cl-section" id="cl-faq-sec">' +
                         '<h2>Preguntas frecuentes</h2>' +
                         '<div class="cl-faq">' + faqHtml + '</div>' +
                     '</section>'
                 : '') +
+
+                // Anti-objeciones — siempre visible para no inscritos
+                (!enrolled
+                    ? '<section class="cl-section cl-section-antiobjections" id="cl-antiobjections">' +
+                        '<div class="cl-antiobjections-eyebrow">Antes de inscribirte</div>' +
+                        '<h2>Respuestas rápidas</h2>' +
+                        '<div class="cl-faq">' +
+                            '<details><summary>¿Necesito haber leído el libro primero?</summary>' +
+                                '<p>No. El curso es completamente autosuficiente — cada lección explica los conceptos desde cero con ejemplos y ejercicios prácticos. El libro es el punto de partida intelectual, pero todo lo que necesitas está aquí.</p>' +
+                            '</details>' +
+                            '<details><summary>¿Cuánto tiempo necesito para terminarlo?</summary>' +
+                                '<p>La mayoría de alumnos termina en 2 a 3 semanas dedicando 30–45 minutos por sesión. Tienes acceso de por vida, así que puedes avanzar completamente a tu ritmo.</p>' +
+                            '</details>' +
+                            '<details><summary>¿El certificado está incluido en el precio?</summary>' +
+                                '<p>Sí. Al aprobar el examen final recibes tu Certificado TRIKLES con folio único y verificable, listo para compartir en LinkedIn o agregar a tu CV. Sin costo extra.</p>' +
+                            '</details>' +
+                            '<details><summary>¿Qué pasa si no apruebo el examen?</summary>' +
+                                '<p>Puedes repetirlo todas las veces que necesites, sin penalización. El acceso es de por vida: revisa el material, practica y vuelve a intentarlo cuando estés listo.</p>' +
+                            '</details>' +
+                        '</div>' +
+                      '</section>'
+                    : '') +
             '</div>' +
 
             // Sidebar
