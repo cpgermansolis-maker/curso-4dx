@@ -349,9 +349,18 @@
     .dbadge.new-badge {
         background: linear-gradient(135deg, #2e7d32, #66bb6a);
     }
+    .dbadge.updated {
+        background: linear-gradient(135deg, #7b00d4, #f5c542);
+        color: #1a0033;
+        animation: dbadgeUpdatedPulse 2.4s ease-in-out infinite;
+    }
     @keyframes dbadgePulse {
         0%, 100% { box-shadow: 0 3px 10px rgba(229,57,53,0.35); }
         50% { box-shadow: 0 3px 14px rgba(229,57,53,0.7); }
+    }
+    @keyframes dbadgeUpdatedPulse {
+        0%, 100% { box-shadow: 0 3px 10px rgba(245,197,66,0.4); }
+        50% { box-shadow: 0 3px 16px rgba(245,197,66,0.85); }
     }
     /* En tarjetas de pricing */
     .price-card .dynamic-badges {
@@ -2256,6 +2265,11 @@ const BADGE_CONFIG = {
     newDays: 45                                // 🆕 NUEVO si launchDate < 45 días
 };
 
+// Cursos con actualización destacada → chip ⚡ en el catálogo (texto editable)
+const UPDATE_BADGES = {
+    'claude-sistema': '⚡ Opus 4.8'
+};
+
 let currentUser = null;
 
 function switchAuthTab(tab, evt) {
@@ -2478,6 +2492,10 @@ function renderDynamicBadges(courseId) {
         if (daysSince >= 0 && daysSince <= BADGE_CONFIG.newDays) {
             badges.push('<span class="dbadge new-badge">🆕 Nuevo</span>');
         }
+    }
+    // ACTUALIZADO (modelo/contenido destacado)
+    if (UPDATE_BADGES[courseId]) {
+        badges.push('<span class="dbadge updated">' + UPDATE_BADGES[courseId] + '</span>');
     }
     if (badges.length === 0) return '';
     return '<div class="dynamic-badges">' + badges.join('') + '</div>';

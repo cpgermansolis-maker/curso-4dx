@@ -13,6 +13,19 @@ const COURSE_CLAUDE_SISTEMA = {
         cover: 'assets/covers/claude-sistema.svg',
         description: 'El primer curso de nivel avanzado de TRIKLES sobre Claude: los tres pilares (Chat, Co-work y Code) convertidos en un sistema de trabajo personal que produce resultados predecibles. 27 lecciones con demos en vivo, ejercicios con criterio de éxito medible y un proyecto final que certifica que tienes un sistema funcionando — no solo el concepto.',
         descripcionCorta: 'Aprende a usar Chat, Co-work y Code como un sistema integrado — no como tres herramientas separadas',
+
+        // Banda destacada en el landing (vende el módulo bonus)
+        spotlight: {
+            eyebrow: '🎁 Módulo bonus incluido · sin costo extra',
+            title: 'Actualizado con Claude Opus 4.8 — el modelo de IA más potente que existe hoy',
+            text: 'El 28 de mayo de 2026 Anthropic lanzó Opus 4.8. Sumamos un módulo bonus exclusivo que explica qué cambió frente a 4.7, sus ventajas reales frente a la competencia (GPT, Gemini) y cómo exprimirlo con tu sistema. Te certificas sobre la versión más avanzada — no sobre material que ya quedó viejo.',
+            bullets: [
+                'Comparativa real 4.8 vs 4.7 con benchmarks',
+                'Ventajas frente a GPT y Gemini, sin humo',
+                'Fast mode 2.5× más rápido y 3× más barato',
+                'Tu sistema, a prueba de futuras versiones'
+            ]
+        },
         category: 'Productividad con inteligencia artificial',
         lessonsCount: 27,
         duration: '9-12 horas',

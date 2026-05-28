@@ -2356,6 +2356,51 @@
         }
         body.vip-mode .cl-antiobjections-eyebrow { color: #7b00d4; }
 
+        /* ── SPOTLIGHT BAND (vende el bonus / actualización destacada) ── */
+        .cl-spotlight {
+            background: linear-gradient(135deg, #1a0050 0%, #2b1a00 100%);
+            border-top: 3px solid #f5c542;
+            border-bottom: 3px solid #f5c542;
+            padding: 44px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cl-spotlight::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 85% 20%, rgba(245,197,66,0.16), transparent 55%);
+            pointer-events: none;
+        }
+        .cl-spotlight-inner { max-width: 920px; margin: 0 auto; text-align: center; position: relative; }
+        .cl-spotlight-eyebrow {
+            display: inline-block;
+            background: linear-gradient(135deg, #b8860b, #f5c542);
+            color: #2a1a00; font-weight: 900; font-size: 0.76em; letter-spacing: 1px;
+            text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 16px;
+            box-shadow: 0 4px 14px rgba(245,197,66,0.35);
+        }
+        .cl-spotlight-title {
+            color: #fff; font-size: 1.6em; font-weight: 800; margin: 0 0 12px; line-height: 1.25;
+        }
+        .cl-spotlight-text {
+            color: rgba(255,255,255,0.84); font-size: 1.03em; max-width: 740px; margin: 0 auto 20px; line-height: 1.6;
+        }
+        .cl-spotlight-bullets {
+            list-style: none; padding: 0; margin: 0;
+            display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+        }
+        .cl-spotlight-bullets li {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(245,197,66,0.4);
+            color: #f8f8f3; padding: 10px 16px; border-radius: 12px;
+            font-size: 0.92em; font-weight: 500; display: flex; align-items: center; gap: 8px;
+        }
+        .cl-spotlight-bullets li::before { content: '⚡'; }
+        @media (max-width: 720px) {
+            .cl-spotlight-title { font-size: 1.3em; }
+            .cl-spotlight-bullets li { font-size: 0.85em; padding: 8px 12px; }
+        }
+
         /* ── CTA BOTTOM BANNER ── */
         .cl-bottom-cta {
             background: var(--tk-navy);
@@ -4247,6 +4292,21 @@ function showCourseLanding() {
           '</div>'
         : '';
 
+    // --- Spotlight band (opcional, via meta.spotlight) — vende un bonus/actualización destacada ---
+    const sp = meta.spotlight;
+    const spotlightHtml = (sp && sp.title)
+        ? '<section class="cl-spotlight">' +
+            '<div class="cl-spotlight-inner">' +
+                (sp.eyebrow ? '<div class="cl-spotlight-eyebrow">' + _clEsc(sp.eyebrow) + '</div>' : '') +
+                '<h2 class="cl-spotlight-title">' + _clEsc(sp.title) + '</h2>' +
+                (sp.text ? '<p class="cl-spotlight-text">' + _clEsc(sp.text) + '</p>' : '') +
+                (Array.isArray(sp.bullets) && sp.bullets.length
+                    ? '<ul class="cl-spotlight-bullets">' + sp.bullets.map(b => '<li>' + _clEsc(b) + '</li>').join('') + '</ul>'
+                    : '') +
+            '</div>' +
+          '</section>'
+        : '';
+
     // --- Lessons preview list ---
     const lessonsList = (lessons || []).map((l, i) => {
         const sub = (l.module || l.tagLabel || '');
@@ -4361,6 +4421,9 @@ function showCourseLanding() {
                 '</div>' +
             '</div>' +
         '</section>' +
+
+        // SPOTLIGHT (bonus / actualización destacada)
+        spotlightHtml +
 
         // STATS ROW
         '<div class="cl-stats">' +
