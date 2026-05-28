@@ -377,6 +377,7 @@
     .rating-display.large .rating-avg { font-size: 1.15em; }
     .rating-display.mini { font-size: 0.75em; margin-bottom: 4px; }
     .rating-none { font-size: 0.72em; color: #aaa; font-style: italic; }
+    .rating-recommend { color: #2e7d32; font-size: 0.85em; font-weight: 600; }
 
     /* Selector de ordenamiento */
     .catalog-header {
@@ -2497,10 +2498,17 @@ function renderRatingDisplay(courseId, sizeClass) {
     if (!s || s.count === 0) {
         return '<div class="rating-none">Sin calificaciones aún</div>';
     }
+    const pct = (s.count >= 5 && s.avg >= 4.0)
+        ? Math.round(((s.avg - 1) / 4) * 100)
+        : null;
+    const recommendHtml = pct !== null
+        ? '<span class="rating-recommend"> · ' + pct + '% lo recomienda</span>'
+        : '';
     return '<div class="rating-display ' + (sizeClass || '') + '">' +
         '<span class="rating-stars-chars">' + renderStarChars(s.avg) + '</span>' +
         '<span class="rating-avg">' + s.avg.toFixed(1) + '</span>' +
         '<span class="rating-count">(' + s.count + ')</span>' +
+        recommendHtml +
         '</div>';
 }
 
