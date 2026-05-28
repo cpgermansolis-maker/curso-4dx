@@ -36,9 +36,10 @@ const COURSE_X = {
 window.COURSE_X = COURSE_X;
 ```
 
-- Tags de módulos VIP: `tag-m0` … `tag-m4`, `tag-exam`
+- Tags de módulos VIP: `tag-m0` … `tag-m4`, `tag-exam`, `tag-bonus` (chip dorado)
 - Tags regulares: `tag-d1` … `tag-d4`, `tag-intro`, `tag-final`
 - Lección especial `id: 'certificate'` dispara el flujo de certificado
+- **`lessonRequirements` está indexado por POSICIÓN en el array `lessons`** (0,1,2…). Si insertas una lección en medio, hay que reindexar todas las claves siguientes. Verificar con `node --check cursos/<id>.js`.
 
 ---
 
@@ -102,6 +103,16 @@ Para usuarios **no inscritos** incluye, en orden de abajo a arriba:
 
 ---
 
+## Componentes de venta reutilizables (creados 2026-05-28 para el bonus Opus 4.8)
+
+Data-driven, aplicables a cualquier curso:
+
+- **Spotlight band** (landing): banda destacada entre hero y stats. Se activa con `meta.spotlight = { eyebrow, title, text, bullets[] }`. Render en `showCourseLanding` (`spotlightHtml`), CSS `.cl-spotlight*` (gradiente morado→dorado). Si no hay `meta.spotlight`, no se renderiza.
+- **Update badge** (catálogo): chip ⚡ animado sobre la portada. Config `UPDATE_BADGES = { '<id>': '⚡ texto' }` en `index.html`, render en `renderDynamicBadges`, CSS `.dbadge.updated`. Conviven con los badges Nuevo/Top rated.
+- **Módulo bonus**: lección con `tag:'tag-bonus'` insertada antes del examen, NO contabilizada en el examen (es contenido extra). Recordar reindexar `lessonRequirements`.
+
+---
+
 ## Progress en Firestore
 
 ```js
@@ -137,12 +148,17 @@ npx firebase-tools deploy --only hosting
 
 ---
 
-## Pendientes al cierre de esta sesión (2026-05-28)
+## Último avance (2026-05-28, sesión tarde)
+
+**Módulo bonus Opus 4.8 en CLAUDE SISTEMA + 3 piezas de venta.** Lección `id:'lbonus'` (índice 28, entre M4 y examen): compara Opus 4.8 vs 4.7 con benchmarks reales y vs competencia (GPT/Gemini); no entra al examen. Reindexado `lessonRequirements` (examen→29, proyecto→30). Para venderlo: chip ⚡ Opus 4.8 en catálogo (`UPDATE_BADGES`), spotlight en landing (`meta.spotlight`), y FAQ anti-obsolescencia como primera pregunta. Ver "Componentes de venta reutilizables" arriba. Commits eeaedf7 / c1b7705 / ac0f962, todo deployado.
+
+## Pendientes al cierre
 
 - **Chatbot Claude API** — chat real en el landing con Cloud Function + API key Anthropic. Germán confirmó interés. Tres piezas: UI en landing, Cloud Function `chatPreventa`, rate limiting.
 - **#6 Rutas de aprendizaje** — agrupar cursos en 2-3 rutas. Requiere decisión de Germán sobre qué cursos van en qué ruta.
 - **#7 Métricas de resultado** — requiere encuesta real primero.
 - Curar videos de Mente Millonaria (depende de Germán).
+- (idea) Analítica de conversión: medir clics al CTA desde tarjetas con badge ⚡.
 
 ---
 
