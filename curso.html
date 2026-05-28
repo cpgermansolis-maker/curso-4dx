@@ -2470,6 +2470,83 @@
         }
 
         /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           PROYECTO DE REFLEXIÓN
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .reflection-form {
+            background: white; border-radius: 16px;
+            padding: 32px 28px; margin-bottom: 28px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.15);
+        }
+        .reflection-eyebrow {
+            font-size: 0.7em; font-weight: 800; letter-spacing: 3px;
+            text-transform: uppercase; color: #d4af37; margin-bottom: 8px;
+        }
+        .reflection-title {
+            font-size: 1.5em; font-weight: 800; color: #0a2540;
+            margin-bottom: 8px; line-height: 1.2;
+        }
+        .reflection-subtitle {
+            font-size: 0.9em; color: #666; line-height: 1.55; margin-bottom: 28px;
+        }
+        .reflection-q { margin-bottom: 22px; }
+        .reflection-label {
+            display: inline-block; font-size: 0.7em; font-weight: 800;
+            letter-spacing: 2px; text-transform: uppercase;
+            color: #fff; background: #0a2540;
+            padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+        }
+        .reflection-q-text {
+            font-size: 1em; font-weight: 700; color: #1a1a1a;
+            margin-bottom: 10px; line-height: 1.4;
+        }
+        .reflection-textarea {
+            width: 100%; border: 2px solid #e0e0e0; border-radius: 10px;
+            padding: 12px 14px; font-size: 0.95em; font-family: inherit;
+            line-height: 1.55; resize: vertical; min-height: 90px;
+            transition: border-color 0.2s; box-sizing: border-box;
+        }
+        .reflection-textarea:focus {
+            outline: none; border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+        }
+        .reflection-charcount {
+            font-size: 0.75em; color: #aaa; text-align: right; margin-top: 4px;
+        }
+        .reflection-charcount.ready { color: #2e7d32; font-weight: 600; }
+        .reflection-submit {
+            display: block; width: 100%;
+            background: linear-gradient(135deg, #0a2540, #1a3a5c);
+            color: white; border: none; border-radius: 10px;
+            padding: 16px 24px; font-size: 1em; font-weight: 700;
+            cursor: pointer; margin-top: 10px;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .reflection-submit:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+        .reflection-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+        .reflection-note {
+            text-align: center; font-size: 0.78em; color: #aaa;
+            margin-top: 12px; font-style: italic;
+        }
+        /* VIP variant */
+        body.vip-mode .reflection-form {
+            border-color: #7b00d4;
+            box-shadow: 0 4px 20px rgba(123,0,212,0.15);
+        }
+        body.vip-mode .reflection-eyebrow { color: #a855f7; }
+        body.vip-mode .reflection-title { color: #3b0764; }
+        body.vip-mode .reflection-label {
+            background: linear-gradient(135deg, #4a0080, #7b00d4);
+        }
+        body.vip-mode .reflection-textarea:focus {
+            border-color: #7b00d4;
+            box-shadow: 0 0 0 3px rgba(123,0,212,0.15);
+        }
+        body.vip-mode .reflection-submit {
+            background: linear-gradient(135deg, #5b21b6, #7b00d4);
+        }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
            VIP MODE — skin oscuro premium (claude-sistema)
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
@@ -2873,6 +2950,7 @@ let currentLesson = 0;
 let completedLessons = new Set();
 let finalScore = 0;
 let finalAnswered = 0;
+let reflectionAnswers = null;
 let currentUser = null;
 
 // ========== AUTH FUNCTIONS (Firebase-backed) ==========
@@ -3113,6 +3191,7 @@ function loadProgress() {
     completedLessons = new Set(p.completed || []);
     correctQuizzes = new Set(p.correctQuizzes || []);
     finalScore = p.finalScore || 0;
+    reflectionAnswers = p.reflection || null;
     lastLessonIdx = (typeof p.lastLesson === 'number') ? p.lastLesson : null;
 
     // Fix retroactivo: si el alumno aprobó el examen pero el índice del certificado
@@ -3138,6 +3217,7 @@ function saveProgress() {
         xp, completed: Array.from(completedLessons),
         correctQuizzes: Array.from(correctQuizzes),
         finalScore,
+        reflection: reflectionAnswers || null,
         lastLesson: currentLesson,                  // ← última lección vista
         lastActiveAt: new Date().toISOString(),     // ← cuándo entró por última vez (para recordatorios)
         completedDate: (completedLessons.size >= lessons.length ? (prevCompletedDate || new Date().toISOString()) : null)
@@ -3614,31 +3694,135 @@ function showLesson(idx) {
                 return;
             }
 
-            // FIX DEFENSIVO: si el curso no trae un #certificateEl (cursos nuevos
-            // como coaching, la-paradoja, gerencia-efectiva, food-beverage),
-            // inyectamos uno estándar al inicio del contenido de la lección.
-            ensureCertificateElement();
-
-            const nameEl = document.getElementById('certName');
-            const dateEl = document.getElementById('certDate');
-            const yearEl = document.getElementById('certYear');
-            if (nameEl) nameEl.textContent = currentUser.name;
-            if (dateEl) {
-                const d = new Date();
-                const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-                dateEl.textContent = d.getDate() + ' de ' + months[d.getMonth()] + ', ' + d.getFullYear();
+            // Si la reflexión aún no fue enviada, mostrar el formulario
+            if (!reflectionAnswers) {
+                showReflectionForm();
+                return;
             }
-            if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-            // Inyectar botón "Compartir en LinkedIn" en las acciones del certificado
-            injectLinkedInShareButton();
-
-            // Bloque de calificación del curso (solo si aprobó el examen)
-            injectRatingBlock();
+            // Reflexión completada → mostrar certificado
+            populateCertificate();
         }, 50);
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ────────────────────────────────────────────────────────
+// CERTIFICADO — helpers compartidos entre reflection y show
+// ────────────────────────────────────────────────────────
+function populateCertificate() {
+    ensureCertificateElement();
+    const cert = document.getElementById('certificateEl');
+    if (cert) cert.style.display = '';
+    document.querySelectorAll('.cert-actions').forEach(a => a.style.display = '');
+
+    const nameEl = document.getElementById('certName');
+    const dateEl = document.getElementById('certDate');
+    const yearEl = document.getElementById('certYear');
+    if (nameEl) nameEl.textContent = currentUser.name;
+    if (dateEl) {
+        const d = new Date();
+        const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        dateEl.textContent = d.getDate() + ' de ' + months[d.getMonth()] + ', ' + d.getFullYear();
+    }
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+    injectLinkedInShareButton();
+    injectRatingBlock();
+}
+
+// ────────────────────────────────────────────────────────
+// PROYECTO DE REFLEXIÓN — flujo previo al certificado
+// ────────────────────────────────────────────────────────
+function showReflectionForm() {
+    // Ocultar el certificado mientras se llena la reflexión
+    ensureCertificateElement();
+    const cert = document.getElementById('certificateEl');
+    if (cert) cert.style.display = 'none';
+    document.querySelectorAll('.cert-actions').forEach(a => a.style.display = 'none');
+
+    const questions = (COURSE.meta && COURSE.meta.reflectionQuestions) || [
+        '¿Cuál fue el aprendizaje más importante para ti en este curso?',
+        '¿Qué vas a implementar en los próximos 30 días?',
+        '¿Cómo puedes aplicar lo aprendido en tu trabajo o negocio hoy mismo?'
+    ];
+
+    const qHtml = questions.map((q, i) =>
+        '<div class="reflection-q">' +
+            '<span class="reflection-label">Pregunta ' + (i + 1) + ' de ' + questions.length + '</span>' +
+            '<p class="reflection-q-text">' + q + '</p>' +
+            '<textarea class="reflection-textarea" id="refQ' + i + '" placeholder="Escribe tu respuesta aquí…" rows="4"></textarea>' +
+            '<div class="reflection-charcount" id="refCount' + i + '">0 / mín. 20 caracteres</div>' +
+        '</div>'
+    ).join('');
+
+    const formEl = document.createElement('div');
+    formEl.id = 'reflectionForm';
+    formEl.className = 'reflection-form';
+    formEl.innerHTML =
+        '<div class="reflection-eyebrow">✦ Último paso · Proyecto de reflexión</div>' +
+        '<h2 class="reflection-title">Antes de recibir tu certificado</h2>' +
+        '<p class="reflection-subtitle">No hay respuestas correctas o incorrectas — es tu aprendizaje personal. Tómate el tiempo que necesites.</p>' +
+        qHtml +
+        '<button class="reflection-submit" id="reflectionSubmitBtn" disabled>Enviar y recibir mi certificado →</button>' +
+        '<p class="reflection-note">Tus respuestas se guardan de forma privada en tu cuenta.</p>';
+
+    // Insertar antes del certificado
+    if (cert && cert.parentNode) {
+        cert.parentNode.insertBefore(formEl, cert);
+    } else {
+        const mc = document.getElementById('mainContent');
+        if (mc) mc.insertAdjacentElement('afterbegin', formEl);
+    }
+
+    // Wiring de contadores y validación
+    questions.forEach((q, i) => {
+        const ta = document.getElementById('refQ' + i);
+        if (!ta) return;
+        ta.addEventListener('input', () => {
+            const cnt = document.getElementById('refCount' + i);
+            const len = ta.value.length;
+            if (cnt) {
+                cnt.textContent = len + ' / mín. 20 caracteres';
+                cnt.className = 'reflection-charcount' + (len >= 20 ? ' ready' : '');
+            }
+            checkReflectionValid(questions.length);
+        });
+    });
+}
+
+function checkReflectionValid(total) {
+    const count = total || ((COURSE.meta && COURSE.meta.reflectionQuestions) || ['','','']).length;
+    let allOk = true;
+    for (let i = 0; i < count; i++) {
+        const ta = document.getElementById('refQ' + i);
+        if (!ta || ta.value.trim().length < 20) { allOk = false; break; }
+    }
+    const btn = document.getElementById('reflectionSubmitBtn');
+    if (btn) btn.disabled = !allOk;
+}
+
+function submitReflection() {
+    const questions = (COURSE.meta && COURSE.meta.reflectionQuestions) || ['','',''];
+    const answers = {};
+    for (let i = 0; i < questions.length; i++) {
+        const ta = document.getElementById('refQ' + i);
+        if (!ta || ta.value.trim().length < 20) return;
+        answers['q' + (i + 1)] = ta.value.trim();
+    }
+
+    reflectionAnswers = { ...answers, submittedAt: new Date().toISOString() };
+    saveProgress();
+
+    // Quitar el formulario y mostrar el certificado
+    const form = document.getElementById('reflectionForm');
+    if (form) form.remove();
+    populateCertificate();
+
+    setTimeout(() => {
+        const cert = document.getElementById('certificateEl');
+        if (cert) cert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
 }
 
 function completeAndNext() {
