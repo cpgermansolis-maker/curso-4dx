@@ -969,6 +969,175 @@
         background: linear-gradient(135deg, #4a0080, #7b00d4);
     }
     .price-card.vip { border-color: #7b00d4; }
+
+    /* ── VIP CATALOG SECTION ── */
+    .vip-catalog-section {
+        background: linear-gradient(135deg, #0d0033 0%, #1a0050 60%, #0a1628 100%);
+        border-radius: 20px;
+        padding: 32px 28px;
+        margin-bottom: 36px;
+        border: 1px solid rgba(123,0,212,0.35);
+        box-shadow: 0 0 40px rgba(123,0,212,0.12), 0 4px 24px rgba(0,0,0,0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    .vip-catalog-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    }
+    .vip-section-header {
+        display: flex; align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        gap: 16px;
+    }
+    .vip-eyebrow {
+        font-size: 0.7em; font-weight: 800; letter-spacing: 3px;
+        text-transform: uppercase; color: #a855f7;
+        margin-bottom: 6px;
+    }
+    .vip-section-title {
+        font-size: 1.35em; font-weight: 900; color: #fff;
+        line-height: 1.2; margin-bottom: 6px;
+    }
+    .vip-section-subtitle {
+        font-size: 0.82em; color: #c4b5fd; line-height: 1.5;
+    }
+    .vip-chip {
+        flex-shrink: 0;
+        background: linear-gradient(135deg, #4a0080, #7b00d4);
+        color: #e9d5ff; font-size: 0.68em; font-weight: 800;
+        letter-spacing: 1.5px; text-transform: uppercase;
+        padding: 5px 14px; border-radius: 20px;
+        border: 1px solid rgba(168,85,247,0.4);
+        white-space: nowrap; margin-top: 4px;
+    }
+    .vip-cards-list {
+        display: flex; flex-direction: column; gap: 18px;
+    }
+    .vip-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(168,85,247,0.25);
+        border-radius: 14px;
+        display: flex;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        position: relative;
+    }
+    .vip-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(123,0,212,0.3);
+        border-color: rgba(168,85,247,0.6);
+    }
+    .vip-card-cover {
+        flex-shrink: 0;
+        width: 130px;
+        background: linear-gradient(135deg, #1a0050, #2d0080);
+        position: relative;
+        overflow: hidden;
+    }
+    .vip-card-cover img, .vip-card-cover svg {
+        width: 100%; height: 100%; object-fit: cover;
+    }
+    .vip-card-cover-img {
+        width: 100%; height: 100%;
+        background-size: cover; background-position: center;
+    }
+    .vip-card-cover-placeholder {
+        width: 100%; height: 100%; min-height: 160px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 3em;
+    }
+    .vip-card-body {
+        flex: 1; padding: 20px 22px;
+        display: flex; flex-direction: column; justify-content: space-between;
+        gap: 10px;
+    }
+    .vip-card-top {}
+    .vip-card-eyebrow {
+        font-size: 0.65em; font-weight: 800; letter-spacing: 2px;
+        text-transform: uppercase; color: #a855f7; margin-bottom: 6px;
+    }
+    .vip-card-title {
+        font-size: 1.2em; font-weight: 900; color: #fff;
+        line-height: 1.2; margin-bottom: 4px;
+    }
+    .vip-card-subtitle {
+        font-size: 0.8em; color: #c4b5fd; line-height: 1.45;
+    }
+    .vip-card-meta {
+        display: flex; align-items: center; gap: 12px;
+        flex-wrap: wrap; margin-top: 6px;
+    }
+    .vip-card-meta-item {
+        font-size: 0.72em; color: #9333ea;
+        display: flex; align-items: center; gap: 4px;
+    }
+    .vip-card-bottom {
+        display: flex; align-items: center;
+        justify-content: space-between; gap: 12px;
+        flex-wrap: wrap;
+    }
+    .vip-card-price {
+        display: flex; align-items: baseline; gap: 8px;
+    }
+    .vip-card-price-amount {
+        font-size: 1.4em; font-weight: 900; color: #fff;
+    }
+    .vip-card-price-list {
+        font-size: 0.78em; color: #6b21a8;
+        text-decoration: line-through;
+    }
+    .vip-card-status {
+        font-size: 0.7em; font-weight: 700; letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px; border-radius: 20px;
+    }
+    .vip-card-status.enrolled {
+        background: rgba(168,85,247,0.2);
+        color: #c4b5fd; border: 1px solid rgba(168,85,247,0.35);
+    }
+    .vip-card-status.available {
+        background: rgba(168,85,247,0.1);
+        color: #9333ea; border: 1px solid rgba(168,85,247,0.2);
+    }
+    .vip-card-btn {
+        background: linear-gradient(135deg, #6d28d9, #7b00d4);
+        color: white; border: none; border-radius: 8px;
+        padding: 9px 20px; font-size: 0.82em; font-weight: 700;
+        cursor: pointer; transition: opacity 0.2s ease;
+        white-space: nowrap;
+    }
+    .vip-card-btn:hover { opacity: 0.85; }
+    .vip-card-btn.continue {
+        background: linear-gradient(135deg, #a855f7, #7b00d4);
+    }
+    .vip-card-progress {
+        height: 3px; background: rgba(168,85,247,0.15); border-radius: 2px;
+        overflow: hidden; margin-top: 8px;
+    }
+    .vip-card-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #7b00d4, #a855f7);
+        border-radius: 2px;
+        transition: width 0.4s ease;
+    }
+    .vip-corner-glyph {
+        position: absolute; bottom: -20px; right: -10px;
+        font-size: 9em; color: rgba(168,85,247,0.04);
+        pointer-events: none; user-select: none; line-height: 1;
+    }
+    @media (max-width: 600px) {
+        .vip-catalog-section { padding: 22px 16px; }
+        .vip-card-cover { width: 90px; }
+        .vip-card-body { padding: 14px 14px; }
+        .vip-card-title { font-size: 1.05em; }
+        .vip-section-header { flex-direction: column; }
+    }
+    /* ── END VIP CATALOG SECTION ── */
     .price-icon {
         font-size: 2.2em; margin-bottom: 8px;
     }
@@ -1733,7 +1902,7 @@
         </div>
 
         <div class="hero-cta-row" id="heroCtaRow">
-            <button class="hero-cta-scroll" onclick="document.getElementById('catalogGrid').scrollIntoView({behavior:'smooth',block:'start'});">Explorar catálogo</button>
+            <button class="hero-cta-scroll" onclick="document.getElementById('catalogContainer').scrollIntoView({behavior:'smooth',block:'start'});">Explorar catálogo</button>
             <button class="hero-cta-pricing" onclick="scrollToPricing()">Ver precios</button>
         </div>
     </div>
@@ -1791,7 +1960,7 @@
                 <div>
                     <div class="tk-eyebrow">02 · Catálogo</div>
                     <div class="section-title">Cursos disponibles</div>
-                    <div class="section-subtitle">Libros de gestión empresarial adaptados a cursos interactivos.</div>
+                    <div class="section-subtitle">Formación práctica para emprendedores, directivos y visionarios.</div>
                 </div>
                 <div>
                     <label for="catalogSort" style="font-size:0.82em;color:#666;margin-right:6px;">Ordenar por:</label>
@@ -1804,7 +1973,7 @@
                     </select>
                 </div>
             </div>
-            <div class="course-grid" id="catalogGrid"></div>
+            <div id="catalogContainer"></div>
         </div>
         <div class="section" id="pricingSection">
             <div class="tk-eyebrow">03 · Inversión</div>
@@ -2356,8 +2525,113 @@ function onSortChange(val) {
 
 function renderCatalog() {
     const active = CATALOG.filter(c => c.active);
-    document.getElementById('catalogGrid').innerHTML =
-        sortedCatalog(active).map(c => renderCourseCard(c, (currentUser?.enrollments || {})[c.id] || null)).join('');
+    const vip = active.filter(c => PRICING[c.id]?.badge === 'VIP');
+    const regular = sortedCatalog(active.filter(c => PRICING[c.id]?.badge !== 'VIP'));
+    const enrollments = currentUser?.enrollments || {};
+
+    let html = '';
+
+    if (vip.length > 0) {
+        const cards = vip.map(c => renderVipCourseCard(c, enrollments[c.id] || null)).join('');
+        html += `
+        <div class="vip-catalog-section">
+            <div class="vip-corner-glyph">✦</div>
+            <div class="vip-section-header">
+                <div>
+                    <div class="vip-eyebrow">✦ Visionarios VIP</div>
+                    <div class="vip-section-title">Acceso exclusivo a lo más avanzado</div>
+                    <div class="vip-section-subtitle">Cursos originales TRIKLES para quienes van en serio.<br>Contenido que no encontrarás en ningún otro lugar.</div>
+                </div>
+                <div class="vip-chip">Nivel VIP</div>
+            </div>
+            <div class="vip-cards-list">${cards}</div>
+        </div>`;
+    }
+
+    if (regular.length > 0) {
+        html += `
+        <div>
+            <div style="margin-bottom:14px;">
+                <div class="vip-eyebrow" style="color:var(--blue-light);margin-bottom:4px;">Biblioteca de gestión empresarial</div>
+                <div style="font-size:0.82em;color:var(--text-light);">Libros de los mejores autores del mundo, transformados en cursos interactivos.</div>
+            </div>
+            <div class="course-grid">${regular.map(c => renderCourseCard(c, enrollments[c.id] || null)).join('')}</div>
+        </div>`;
+    }
+
+    document.getElementById('catalogContainer').innerHTML = html;
+}
+
+function renderVipCourseCard(course, enrollment) {
+    const enrolled = !!enrollment;
+    const progress = enrollment?.progress || {};
+    const p = PRICING[course.id] || {};
+    const lessonsTotal = course.lessonsCount || 27;
+    const completedCount = progress.completed?.length || 0;
+    const pct = Math.round((completedCount / lessonsTotal) * 100);
+    const certified = progress.finalScore >= (p.passScore || 11) && completedCount >= lessonsTotal;
+
+    let btnText = 'Ver curso';
+    let btnClass = '';
+    let statusLabel = '';
+    let statusClass = 'available';
+
+    if (certified) {
+        btnText = 'Ver certificado'; btnClass = 'certified';
+        statusLabel = '✓ Certificado'; statusClass = 'enrolled';
+    } else if (enrolled) {
+        btnText = 'Continuar'; btnClass = 'continue';
+        statusLabel = pct > 0 ? pct + '% completado' : 'Inscrito';
+        statusClass = 'enrolled';
+    } else if (!currentUser) {
+        btnText = 'Ver detalles';
+        statusLabel = 'Acceso VIP';
+    } else {
+        statusLabel = 'Disponible para ti';
+    }
+
+    const dynBadges = renderDynamicBadges(course.id);
+    const coverHtml = course.cover
+        ? `<div class="vip-card-cover-img" style="background-image:url(${course.cover});height:100%;min-height:160px;position:relative;">
+               ${dynBadges}
+           </div>`
+        : `<div class="vip-card-cover-placeholder" style="position:relative;">
+               ${course.icon || '🤖'}${dynBadges}
+           </div>`;
+
+    const progressBar = enrolled && !certified
+        ? `<div class="vip-card-progress"><div class="vip-card-progress-fill" style="width:${pct}%"></div></div>`
+        : '';
+
+    const priceHtml = p.price
+        ? `<div class="vip-card-price">
+            <span class="vip-card-price-amount">$${p.price.toLocaleString()} MXN</span>
+            ${p.listPrice ? `<span class="vip-card-price-list">$${p.listPrice.toLocaleString()}</span>` : ''}
+           </div>`
+        : '';
+
+    return `<div class="vip-card" onclick="goToCourse('${course.id}')">
+        <div class="vip-card-cover" style="position:relative;">${coverHtml}</div>
+        <div class="vip-card-body">
+            <div class="vip-card-top">
+                <div class="vip-card-eyebrow">${course.category || 'Productividad con IA'}</div>
+                <div class="vip-card-title">${course.title}</div>
+                <div class="vip-card-subtitle">${course.subtitle || course.description || ''}</div>
+                ${progressBar}
+                <div class="vip-card-meta">
+                    <span class="vip-card-meta-item">📚 ${lessonsTotal} lecciones</span>
+                    <span class="vip-card-meta-item">⏱ ${course.duration || ''}</span>
+                </div>
+            </div>
+            <div class="vip-card-bottom">
+                ${priceHtml}
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    ${statusLabel ? `<span class="vip-card-status ${statusClass}">${statusLabel}</span>` : ''}
+                    <button class="vip-card-btn ${btnClass}">${btnText}</button>
+                </div>
+            </div>
+        </div>
+    </div>`;
 }
 
 function renderCourseCard(course, enrollment) {
