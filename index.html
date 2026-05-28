@@ -965,6 +965,10 @@
     .price-badge.profesional {
         background: linear-gradient(135deg, #3e2723, #5d4037);
     }
+    .price-badge.vip {
+        background: linear-gradient(135deg, #4a0080, #7b00d4);
+    }
+    .price-card.vip { border-color: #7b00d4; }
     .price-icon {
         font-size: 2.2em; margin-bottom: 8px;
     }
@@ -2029,6 +2033,19 @@ const CATALOG = [
         lessonsCount: 24,
         icon: '💰',
         active: true
+    },
+    {
+        id: 'claude-sistema',
+        title: 'CLAUDE SISTEMA',
+        subtitle: 'Domina los tres pilares de la IA más poderosa',
+        author: 'Curso original TRIKLES VIP · Nivel intermedio-avanzado',
+        cover: 'assets/covers/claude-sistema.svg',
+        description: 'El primer curso de nivel avanzado de TRIKLES sobre Claude: los tres pilares (Chat, Co-work y Code) convertidos en un sistema de trabajo personal que produce resultados predecibles. 27 lecciones con demos en vivo, ejercicios con criterio de éxito medible y un proyecto final que certifica que tienes un sistema funcionando — no solo el concepto.',
+        category: 'Productividad con inteligencia artificial',
+        duration: '9-12 horas',
+        lessonsCount: 27,
+        icon: '🤖',
+        active: true
     }
 ];
 
@@ -2036,6 +2053,7 @@ const CATALOG = [
 // PRICING — precios de lanzamiento (MXN)
 // ==========================================================
 const PRICING = {
+    'claude-sistema':    { listPrice: 2499, price:  649, badge: 'VIP' },
     'food-beverage':     { listPrice: 2499, price:  799, badge: 'Profesional' },
     'coaching':          { listPrice: 1499, price:  399, badge: 'Premium' },
     'gerencia-efectiva': { listPrice: 1499, price:  399, badge: 'Premium' },
@@ -2058,7 +2076,8 @@ const LAUNCH_DATES = {
     'coaching':          '2026-04-10',
     'food-beverage':     '2026-04-17',
     'codigo-honor':      '2026-04-22',
-    'mente-millonaria':  '2026-05-12'  // el más nuevo
+    'mente-millonaria':  '2026-05-12',
+    'claude-sistema':    '2026-05-28'  // el más nuevo
 };
 
 // Configuración de badges dinámicos
@@ -2740,15 +2759,15 @@ function renderPricing() {
     const grid = document.getElementById('pricingGrid');
     if (!grid) return;
     // Orden: premium arriba, técnico, luego los demás
-    const order = ['food-beverage', 'coaching', 'gerencia-efectiva', 'feum-inventarios', 'la-paradoja', 'habitos', '4dx'];
+    const order = ['claude-sistema', 'food-beverage', 'coaching', 'gerencia-efectiva', 'feum-inventarios', 'la-paradoja', 'habitos', '4dx'];
     const byId = Object.fromEntries(CATALOG.map(c => [c.id, c]));
     grid.innerHTML = order.filter(id => byId[id] && PRICING[id]).map(id => {
         const c = byId[id];
         const p = PRICING[id];
         const save = p.listPrice - p.price;
-        const badgeClass = p.badge === 'Técnico' ? 'tecnico' : (p.badge === 'Profesional' ? 'profesional' : '');
+        const badgeClass = p.badge === 'VIP' ? 'vip' : (p.badge === 'Técnico' ? 'tecnico' : (p.badge === 'Profesional' ? 'profesional' : ''));
         const badge = p.badge ? `<div class="price-badge ${badgeClass}">${p.badge}</div>` : '';
-        const cardExtra = p.badge === 'Premium' ? ' premium' : (p.badge === 'Profesional' ? ' profesional' : '');
+        const cardExtra = p.badge === 'VIP' ? ' vip' : (p.badge === 'Premium' ? ' premium' : (p.badge === 'Profesional' ? ' profesional' : ''));
         const cardClass = 'price-card' + cardExtra;
         return `
         <div class="${cardClass}">
