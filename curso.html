@@ -2387,6 +2387,198 @@
             .cl-modal-title { font-size: 22px; }
             .cl-modal-benefits li { padding: 12px 0; gap: 10px; }
         }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           VIP MODE — skin oscuro premium (claude-sistema)
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+        /* Tags de módulos VIP (siempre disponibles) */
+        .tag-m0 { background: #546e7a; }
+        .tag-m1 { background: #6d28d9; }
+        .tag-m2 { background: #7b00d4; }
+        .tag-m3 { background: #4c1d95; }
+        .tag-m4 { background: #5b21b6; }
+        .tag-exam { background: linear-gradient(135deg, #4a0080, #a855f7); }
+
+        /* Variables CSS sobreescritas en modo VIP */
+        body.vip-mode {
+            --blue: #5b21b6;
+            --blue-light: #7b00d4;
+            --vip-dark: #0d0033;
+            --vip-mid: #1a0050;
+            --vip-purple: #7b00d4;
+            --vip-lilac: #a855f7;
+            --vip-text: #c4b5fd;
+            --vip-sidebar-bg: #0f0028;
+            background: #f0eef8;
+        }
+
+        /* TOPBAR — morado oscuro en vez de azul marino */
+        body.vip-mode .topbar {
+            background: linear-gradient(135deg, #0d0033 0%, #1a0050 70%, #0a0a28 100%);
+            border-bottom: 1px solid rgba(168,85,247,0.3);
+            box-shadow: 0 2px 20px rgba(123,0,212,0.35);
+            position: relative;
+        }
+        body.vip-mode .topbar::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, #a855f7, transparent);
+        }
+        body.vip-mode .xp-fill {
+            background: linear-gradient(90deg, #7b00d4, #a855f7);
+        }
+        body.vip-mode .xp-text { color: #c4b5fd; }
+        body.vip-mode .streak {
+            background: rgba(168,85,247,0.2);
+            border: 1px solid rgba(168,85,247,0.35);
+        }
+
+        /* Chip VIP junto al nombre de la academia */
+        body.vip-mode #academiaBrand::after {
+            content: '✦ VIP';
+            display: inline-block;
+            margin-left: 10px;
+            background: linear-gradient(135deg, #4a0080, #7b00d4);
+            color: #e9d5ff;
+            font-size: 0.6em;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+            vertical-align: middle;
+            border: 1px solid rgba(168,85,247,0.5);
+        }
+
+        /* SIDEBAR — panel oscuro */
+        body.vip-mode .sidebar {
+            background: var(--vip-sidebar-bg, #0f0028);
+            border-right: 1px solid rgba(168,85,247,0.2);
+        }
+        body.vip-mode .sidebar h3 {
+            color: rgba(168,85,247,0.7);
+            border-bottom: 1px solid rgba(168,85,247,0.12);
+            padding-bottom: 8px; margin-bottom: 4px;
+        }
+        body.vip-mode .nav-item {
+            color: #c4b5fd;
+            border-left-color: transparent;
+        }
+        body.vip-mode .nav-item:hover {
+            background: rgba(168,85,247,0.1);
+            color: #e9d5ff;
+        }
+        body.vip-mode .nav-item.active {
+            background: rgba(168,85,247,0.15);
+            border-left-color: #a855f7;
+            color: #fff;
+        }
+        body.vip-mode .nav-item.active .nav-icon {
+            border-color: #a855f7;
+            color: #a855f7;
+            background: rgba(168,85,247,0.12);
+        }
+        body.vip-mode .nav-icon {
+            border-color: rgba(168,85,247,0.25);
+            color: rgba(168,85,247,0.5);
+        }
+        body.vip-mode .nav-item.completed .nav-icon {
+            background: #5b21b6;
+            color: white;
+            border-color: #7b00d4;
+        }
+        body.vip-mode .nav-item.locked { opacity: 0.4; }
+        body.vip-mode .nav-item.locked .nav-icon {
+            background: rgba(168,85,247,0.08);
+            border-color: rgba(168,85,247,0.15);
+        }
+
+        /* LESSON HEADER */
+        body.vip-mode .lesson-header h1 { color: #3b0764; }
+        body.vip-mode .lesson-header p { color: #6b21a8; }
+
+        /* BOTONES — primario en morado */
+        body.vip-mode .btn-primary {
+            background: linear-gradient(135deg, #5b21b6, #7b00d4);
+            box-shadow: 0 3px 12px rgba(123,0,212,0.35);
+        }
+        body.vip-mode .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(123,0,212,0.5);
+        }
+
+        /* CONTENT CARDS — story / tip con toque púrpura */
+        body.vip-mode .content-card.story {
+            border-left-color: #7b00d4;
+            background: linear-gradient(135deg, #f5f0ff, #ede9fe);
+        }
+        body.vip-mode .content-card.tip {
+            border-left-color: #a855f7;
+        }
+
+        /* FOOTER LINE — morado */
+        body.vip-mode .footer-line {
+            background: linear-gradient(90deg, transparent, #7b00d4, transparent);
+        }
+
+        /* QUIZ OPTIONS — hover purple */
+        body.vip-mode .quiz-option:hover:not(.disabled) {
+            border-color: #7b00d4;
+            background: #f5f0ff;
+        }
+
+        /* SPLASH — morado en vez de azul (si llega a mostrarse) */
+        body.vip-mode #splash {
+            background: linear-gradient(135deg, #0d0033, #1a0050, #0a0a28);
+        }
+        body.vip-mode #splash .start-btn {
+            background: linear-gradient(135deg, #7b00d4, #a855f7);
+            color: white;
+            animation: vipPulse 2s infinite;
+        }
+        @keyframes vipPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.5); }
+            50% { box-shadow: 0 0 0 15px rgba(168,85,247,0); }
+        }
+
+        /* LANDING PAGE (Coursera-style) en VIP mode */
+        body.vip-mode .cl-hero {
+            background: linear-gradient(135deg, #0d0033 0%, #1a0050 60%, #0a1628 100%);
+            position: relative;
+        }
+        body.vip-mode .cl-hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, #a855f7, transparent);
+            z-index: 2;
+        }
+        body.vip-mode .cl-hero::after {
+            background: radial-gradient(circle, rgba(168,85,247,0.18), transparent 70%);
+        }
+        body.vip-mode .cl-hero-partner { color: #c4b5fd; }
+        body.vip-mode .cl-hero-partner::before {
+            content: '✦ ';
+            color: #a855f7;
+        }
+        body.vip-mode .cl-topbar {
+            background: #0d0033;
+            border-bottom: 1px solid rgba(168,85,247,0.2);
+        }
+        body.vip-mode .cl-topbar-enroll.primary {
+            background: linear-gradient(135deg, #6d28d9, #7b00d4);
+        }
+        body.vip-mode .cl-topbar-enroll.primary:hover {
+            background: linear-gradient(135deg, #7b00d4, #a855f7);
+        }
+        body.vip-mode .cl-hero-card-save { color: #a855f7; }
+        body.vip-mode .cl-stats { background: #0f0028; border-color: rgba(168,85,247,0.15); }
+        body.vip-mode .cl-stat-val { color: #c4b5fd; }
+        body.vip-mode .cl-stat-label { color: rgba(168,85,247,0.6); }
+        body.vip-mode .cl-stat + .cl-stat { border-left-color: rgba(168,85,247,0.15); }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           FIN VIP MODE
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
     </style>
 </head>
 <body>
@@ -3427,6 +3619,11 @@ function waitForCourse(callback, attempts = 0) {
         setTxt('topbarCourseTitle', m.title);
         const instrName = (m.instructor && m.instructor.name) ? m.instructor.name : 'LADE Germán Solís Muñoz';
         setTxt('topbarInstructorName', instrName);
+        // VIP skin: activar modo oscuro premium en cursos VIP
+        const VIP_COURSE_IDS = ['claude-sistema'];
+        if (VIP_COURSE_IDS.includes(COURSE.id)) {
+            document.body.classList.add('vip-mode');
+        }
         callback();
     } else if (attempts < 50) {
         setTimeout(() => waitForCourse(callback, attempts + 1), 100);
