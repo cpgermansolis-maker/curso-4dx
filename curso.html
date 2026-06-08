@@ -536,6 +536,19 @@
         .certificate > .cert-flourish-tr { top: 14px; right: 14px; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
         .certificate > .cert-flourish-bl { bottom: 14px; left: 14px; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
 
+        .cert-legal {
+            margin-top: 22px; padding-top: 14px; border-top: 1px solid #e3e3e3;
+            text-align: center; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+        .cert-folio {
+            font-size: 0.72em; letter-spacing: 1px; color: #5a6577; margin-bottom: 6px;
+        }
+        .cert-folio strong { color: #0a2540; letter-spacing: 1.5px; }
+        .cert-disclaimer {
+            font-size: 0.66em; line-height: 1.5; color: #7a8294; max-width: 620px; margin: 0 auto;
+        }
+        .cert-disclaimer a { color: #8a6d1f; text-decoration: underline; }
+
         .cert-header {
             text-align: center; margin-bottom: 20px; padding-bottom: 20px;
             border-bottom: 2px solid #d4af37;
@@ -3513,6 +3526,26 @@ function goToCatalog() {
 // no tienen el bloque <div class="certificate" id="certificateEl"> ni .cert-actions.
 // Cuando se detecta que la lección actual es el certificado y faltan esos elementos,
 // los inyectamos al inicio del contenido con el nombre y fecha del alumno.
+// Folio determinístico TKS-XXXX-XXXX a partir de uid + courseId (hash FNV-1a, base36).
+// Mismo alumno + mismo curso => siempre el mismo folio. Sirve para verificación pública.
+function buildCertFolio(uid, courseId) {
+    const seed = String(uid || '') + '|' + String(courseId || '');
+    let h = 0x811c9dc5;
+    for (let i = 0; i < seed.length; i++) {
+        h ^= seed.charCodeAt(i);
+        h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+    }
+    const a = (h >>> 0).toString(36).toUpperCase().padStart(7, '0').slice(-4);
+    // Segunda pasada para más entropía en el segundo bloque
+    let h2 = h ^ 0x9e3779b1;
+    for (let i = seed.length - 1; i >= 0; i--) {
+        h2 ^= seed.charCodeAt(i);
+        h2 = (h2 + ((h2 << 1) + (h2 << 4) + (h2 << 7) + (h2 << 8) + (h2 << 24))) >>> 0;
+    }
+    const b = (h2 >>> 0).toString(36).toUpperCase().padStart(7, '0').slice(-4);
+    return 'TKS-' + a + '-' + b;
+}
+
 function ensureCertificateElement() {
     if (document.getElementById('certificateEl')) return;  // ya existe, no hacer nada
     if (!COURSE || !currentUser) return;
@@ -3527,6 +3560,9 @@ function ensureCertificateElement() {
     const courseAuthor = meta.author || '';
     const certDesc = (COURSE.certificate && COURSE.certificate.description)
         || ('Habiendo demostrado dominio de los conceptos y competencias del curso "' + courseTitle + '".');
+
+    // Folio único determinístico: mismo alumno + mismo curso => mismo folio (reproducible y verificable)
+    const certFolio = buildCertFolio(currentUser.uid, COURSE.id);
 
     // Construir el certificado con la estructura rediseñada
     const certHTML =
@@ -3579,6 +3615,13 @@ function ensureCertificateElement() {
                         '<div class="cert-sig-name" id="certDate"></div>' +
                         '<div class="cert-sig-title">Fecha de expedición</div>' +
                     '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="cert-legal">' +
+                '<div class="cert-folio">Folio: <strong>' + certFolio + '</strong></div>' +
+                '<div class="cert-disclaimer">Constancia de finalización de carácter privado. ' +
+                    'No constituye un título ni cédula profesional y no tiene validez oficial ' +
+                    'ante la SEP. <a href="legal.html#certificados" target="_blank" rel="noopener">Naturaleza del certificado</a>.' +
                 '</div>' +
             '</div>' +
         '</div>' +
@@ -4410,7 +4453,7 @@ function showCourseLanding() {
                     '<ul class="cl-hero-card-list-benefits">' +
                         '<li>' + lessonsCount + ' lecciones con video y ejercicios</li>' +
                         '<li>Quizzes por lección + examen final</li>' +
-                        (meta.includesCertificate !== false ? '<li>Certificado TRIKLES verificable</li>' : '') +
+                        (meta.includesCertificate !== false ? '<li>Certificado TRIKLES con folio único</li>' : '') +
                         '<li>Acceso de por vida, a tu ritmo</li>' +
                         '<li>Material en español + ejemplos mexicanos</li>' +
                     '</ul>' +
@@ -4537,7 +4580,7 @@ function showCourseLanding() {
                                 '<p>La mayoría de alumnos termina en 2 a 3 semanas dedicando 30–45 minutos por sesión. Tienes acceso de por vida, así que puedes avanzar completamente a tu ritmo.</p>' +
                             '</details>' +
                             '<details><summary>¿El certificado está incluido en el precio?</summary>' +
-                                '<p>Sí. Al aprobar el examen final recibes tu Certificado TRIKLES con folio único y verificable, listo para compartir en LinkedIn o agregar a tu CV. Sin costo extra.</p>' +
+                                '<p>Sí. Al aprobar el examen final recibes tu Certificado TRIKLES con folio único, listo para compartir en LinkedIn o agregar a tu CV. Sin costo extra. Es una constancia de finalización privada (sin validez oficial ante la SEP).</p>' +
                             '</details>' +
                             '<details><summary>¿Qué pasa si no apruebo el examen?</summary>' +
                                 '<p>Puedes repetirlo todas las veces que necesites, sin penalización. El acceso es de por vida: revisa el material, practica y vuelve a intentarlo cuando estés listo.</p>' +
@@ -4599,7 +4642,7 @@ function showCourseLanding() {
                             '<p>Sí, 30 días de garantía total. Si no estás satisfecho por cualquier razón, te devolvemos el 100% de tu inversión sin preguntas.</p>' +
                         '</details>' +
                         '<details><summary>¿El certificado tiene validez? ¿Cómo lo obtengo?</summary>' +
-                            '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio único y verificable. Puedes compartirlo en LinkedIn o descargarlo en PDF.</p>' +
+                            '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio único. Puedes compartirlo en LinkedIn o descargarlo en PDF.</p>' +
                         '</details>' +
                         '<details><summary>¿Puedo ver el contenido completo antes de comprar?</summary>' +
                             '<p>Sí. En la pestaña "Lecciones" de esta misma página encuentras el temario completo con todos los temas del curso.</p>' +
@@ -4670,7 +4713,7 @@ function clOpenEnrollModal() {
         },
         {
             head: 'Acceso completo de por vida + certificado',
-            sub: 'Las ' + lessonsCount + ' lecciones, quizzes, examen final y certificado TRIKLES verificable — todo incluido, a tu ritmo.'
+            sub: 'Las ' + lessonsCount + ' lecciones, quizzes, examen final y certificado TRIKLES con folio único — todo incluido, a tu ritmo.'
         },
         {
             head: 'Soporte directo del instructor',
@@ -4682,7 +4725,7 @@ function clOpenEnrollModal() {
             sub: 'Las ' + lessonsCount + ' lecciones, plantillas, video en español y exámenes — disponibles a tu ritmo, las veces que quieras.'
         },
         {
-            head: 'Certificado TRIKLES verificable',
+            head: 'Certificado TRIKLES con folio único',
             sub: 'Al aprobar el examen final recibes tu certificado con folio único. Compártelo en LinkedIn y CV.'
         },
         {
