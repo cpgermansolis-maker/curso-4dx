@@ -146,19 +146,24 @@ npx firebase-tools deploy --only hosting
 
 `firebase` directo no funciona en Windows de Germán — siempre usar `npx firebase-tools`.
 
+**Gotchas de deploy:**
+- En PowerShell, los here-strings `@'...'@` para `git commit -m` se rompen si el mensaje trae comillas/espacios → usar mensaje de **una sola línea** con comillas dobles.
+- **Firebase deploya desde la carpeta local, NO desde git.** Lo que esté en `.gitignore` igual se sube si no está también en `hosting.ignore` de `firebase.json`. (Así se filtraron los PDFs de `libros/`.)
+
 ---
 
-## Último avance (2026-05-28, sesión tarde)
+## Último avance (2026-06-08, sesión legal)
 
-**Módulo bonus Opus 4.8 en CLAUDE SISTEMA + 3 piezas de venta.** Lección `id:'lbonus'` (índice 28, entre M4 y examen): compara Opus 4.8 vs 4.7 con benchmarks reales y vs competencia (GPT/Gemini); no entra al examen. Reindexado `lessonRequirements` (examen→29, proyecto→30). Para venderlo: chip ⚡ Opus 4.8 en catálogo (`UPDATE_BADGES`), spotlight en landing (`meta.spotlight`), y FAQ anti-obsolescencia como primera pregunta. Ver "Componentes de venta reutilizables" arriba. Commits eeaedf7 / c1b7705 / ac0f962, todo deployado.
+**Blindaje legal + copyright.** (1) `legal.html` nueva (Aviso Legal + T&C + Aviso de Privacidad LFPDPPP + Naturaleza de certificados); descargo "sin validez oficial ante la SEP" + folio único `TKS-XXXX-XXXX` en cada certificado; footer legal; claims "verificable"→"con folio único". (2) Se descubrió que los PDFs de `libros/` estaban descargables públicos en el hosting → excluidos de `hosting.ignore`, ahora 404. (3) **Decisión de Germán: cobro APAGADO**; solo CLAUDE SISTEMA es monetizable limpio (resto = derivados de libros con copyright). Commits 0a7001f / 216aacb / eda5787. Detalle y vías de monetización legal en memoria (`project_monetizacion-legal-vias.md`).
 
 ## Pendientes al cierre
 
-- **Chatbot Claude API** — chat real en el landing con Cloud Function + API key Anthropic. Germán confirmó interés. Tres piezas: UI en landing, Cloud Function `chatPreventa`, rate limiting.
-- **#6 Rutas de aprendizaje** — agrupar cursos en 2-3 rutas. Requiere decisión de Germán sobre qué cursos van en qué ruta.
-- **#7 Métricas de resultado** — requiere encuesta real primero.
-- Curar videos de Mente Millonaria (depende de Germán).
-- (idea) Analítica de conversión: medir clics al CTA desde tarjetas con badge ⚡.
+- **Curso piloto** — elegir 1 curso para reconstruir como obra original de Germán (título nuevo + estructura propia + reescritura). Germán no eligió cuál aún; Claude hace la reescritura.
+- **Cobrar CLAUDE SISTEMA** (limpio) cuando Germán quiera; consulta con abogado de PI para validar piloto + evaluar certificación 4DX.
+- **Verificador de folios (Fase 2)** — `verificar.html` + Firestore para restaurar el claim "verificable".
+- **Chatbot Claude API** (preventa) — UI + Cloud Function `chatPreventa` + rate limiting. Germán confirmó interés.
+- **#6 Rutas de aprendizaje** / **#7 Métricas de resultado** — requieren decisión/encuesta de Germán.
+- Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
 
 ---
 
