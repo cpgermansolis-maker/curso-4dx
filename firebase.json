@@ -25,7 +25,8 @@
       "**/node_modules/**",
       "functions/**",
       "memory/**",
-      "*.md"
+      "*.md",
+      "libros/**"
     ],
     "cleanUrls": true,
     "headers": [
