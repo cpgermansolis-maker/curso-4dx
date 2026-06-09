@@ -152,7 +152,11 @@ npx firebase-tools deploy --only hosting
 
 ---
 
-## Último avance (2026-06-08, sesión legal)
+## Último avance (2026-06-09, bonus Fable 5)
+
+**Módulo bonus 2 — Claude Fable 5 en CLAUDE SISTEMA.** Anthropic lanzó Fable 5 ese día (primer modelo "clase Mythos" al público, escalón sobre Opus 4.8, consume 2× el uso de Opus, salvaguarda que redirige a Opus 4.8 en temas sensibles). Se agregó lección `lbonus2` (después de `lbonus`/Opus 4.8, antes del examen), quizzes `quiz_fable_a/b` (no entran al examen), reindexado `lessonRequirements` (Fable=29, examen=30, cert=31). Actualizado `meta.spotlight`, FAQ "¿quedará obsoleto?" y `UPDATE_BADGES['claude-sistema']='⚡ Fable 5'` en index.html. Datos verificados con WebSearch/WebFetch del anuncio oficial (claims honestos). Commit `3fc7436`, deployado. **Patrón "bonus por modelo nuevo"** documentado en memoria `project_bonus-fable5-claude-sistema.md`.
+
+### Antes (2026-06-08, sesión legal)
 
 **Blindaje legal + copyright.** (1) `legal.html` nueva (Aviso Legal + T&C + Aviso de Privacidad LFPDPPP + Naturaleza de certificados); descargo "sin validez oficial ante la SEP" + folio único `TKS-XXXX-XXXX` en cada certificado; footer legal; claims "verificable"→"con folio único". (2) Se descubrió que los PDFs de `libros/` estaban descargables públicos en el hosting → excluidos de `hosting.ignore`, ahora 404. (3) **Decisión de Germán: cobro APAGADO**; solo CLAUDE SISTEMA es monetizable limpio (resto = derivados de libros con copyright). Commits 0a7001f / 216aacb / eda5787. Detalle y vías de monetización legal en memoria (`project_monetizacion-legal-vias.md`).
 
@@ -164,6 +168,7 @@ npx firebase-tools deploy --only hosting
 - **Chatbot Claude API** (preventa) — UI + Cloud Function `chatPreventa` + rate limiting. Germán confirmó interés.
 - **#6 Rutas de aprendizaje** / **#7 Métricas de resultado** — requieren decisión/encuesta de Germán.
 - Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
+- **Bonus Fable 5:** suavizar la frase "gratis hasta el 22 de junio de 2026" en `lbonus2` cuando pase esa fecha (envejece). Opcional: imagen de hero propia en vez de Unsplash.
 
 ---
 
