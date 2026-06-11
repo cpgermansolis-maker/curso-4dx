@@ -3107,6 +3107,7 @@ let currentLesson = 0;
 let completedLessons = new Set();
 let finalScore = 0;
 let finalAnswered = 0;
+let examAlreadyPassed = false; // true si el alumno ya aprobó y solo está repasando el examen
 let reflectionAnswers = null;
 let currentUser = null;
 
@@ -3348,6 +3349,7 @@ function loadProgress() {
     completedLessons = new Set(p.completed || []);
     correctQuizzes = new Set(p.correctQuizzes || []);
     finalScore = p.finalScore || 0;
+    streak = p.streak || 0;
     reflectionAnswers = p.reflection || null;
     lastLessonIdx = (typeof p.lastLesson === 'number') ? p.lastLesson : null;
 
@@ -3374,6 +3376,7 @@ function saveProgress() {
         xp, completed: Array.from(completedLessons),
         correctQuizzes: Array.from(correctQuizzes),
         finalScore,
+        streak,
         reflection: reflectionAnswers || null,
         lastLesson: currentLesson,                  // ← última lección vista
         lastActiveAt: new Date().toISOString(),     // ← cuándo entró por última vez (para recordatorios)
@@ -3471,6 +3474,8 @@ function updateXPBar() {
     const pct = Math.min(100, Math.round((xp / maxXP) * 100));
     document.getElementById('xpFill').style.width = pct + '%';
     document.getElementById('xpText').textContent = xp + ' XP';
+    const sb = document.getElementById('streakBadge');
+    if (sb) sb.innerHTML = '&#11088; Racha: ' + streak;
 }
 
 function buildSidebar() {
@@ -3835,6 +3840,12 @@ function showLesson(idx) {
     // Cancelar cualquier lectura en voz alta al cambiar de lección
     if (window.TTS) TTS.stop();
     const l = lessons[idx];
+    // Examen final: cada apertura es un intento limpio (evita que el puntaje
+    // de intentos anteriores se acumule). Si ya aprobó, solo está repasando.
+    if (l.id === 'final_exam') {
+        examAlreadyPassed = finalScore >= getExamPassScore();
+        if (!examAlreadyPassed) { finalScore = 0; finalAnswered = 0; }
+    }
     const mc = document.getElementById('mainContent');
     mc.innerHTML = '<div class="lesson active">' +
         '<div class="lesson-header">' +
@@ -4983,8 +4994,33 @@ function updateNextButtonState() {
 }
 
 function checkFinal(qid, btn, correct) {
-    checkQuiz(qid, btn, correct);
-    if (correct) finalScore++;
+    // Examen: una sola oportunidad por pregunta (se bloquea al responder,
+    // correcta o no). Antes los reintentos inflaban el conteo de respondidas
+    // y el examen se "cerraba" antes de tiempo con puntaje incompleto.
+    const container = document.getElementById(qid);
+    const fb = document.getElementById(qid + '_fb');
+    container.querySelectorAll('.quiz-option').forEach(o => { o.classList.add('disabled'); o.disabled = true; });
+    if (correct) {
+        btn.classList.add('correct');
+        fb.className = 'quiz-feedback show ok';
+        fb.innerHTML = '&#9989; Correcto!';
+        streak++;
+        spawnConfetti(btn);
+    } else {
+        btn.classList.add('wrong');
+        fb.className = 'quiz-feedback show bad';
+        fb.innerHTML = '&#10060; Incorrecta. En el examen cada pregunta tiene una sola oportunidad.';
+        streak = 0;
+    }
+    document.getElementById('streakBadge').innerHTML = '&#11088; Racha: ' + streak;
+
+    // Si ya aprobó y solo repasa, no alterar su puntaje guardado
+    if (examAlreadyPassed) return;
+
+    if (correct) {
+        finalScore++;
+        if (!correctQuizzes.has(qid)) { correctQuizzes.add(qid); addXP(10); }
+    }
     finalAnswered++;
 
     const totalQuestions = getExamTotalQuestions();
@@ -5016,6 +5052,14 @@ function checkFinal(qid, btn, correct) {
                 emoji.textContent = '📚';
                 title.textContent = 'Necesitas repasar: ' + finalScore + '/' + totalQuestions;
                 desc.textContent = 'Te recomiendo repasar las lecciones antes de volver a intentarlo. Necesitas ' + passScore + '/' + totalQuestions + ' para aprobar.';
+                if (!document.getElementById('finalRetryBtn')) {
+                    const rb = document.createElement('button');
+                    rb.id = 'finalRetryBtn';
+                    rb.textContent = '🔄 Reintentar examen';
+                    rb.style.cssText = 'margin-top:14px;padding:12px 24px;border:none;border-radius:8px;background:#1a237e;color:#fff;font-size:1em;font-weight:600;cursor:pointer;';
+                    rb.onclick = () => showLesson(getExamLessonIndex());
+                    result.appendChild(rb);
+                }
             }
 
             completedLessons.add(currentLesson);
@@ -5023,6 +5067,7 @@ function checkFinal(qid, btn, correct) {
             saveProgress();
             if (finalScore >= passScore) sendToWebhook('completed', currentUser);
             buildSidebar();
+            updateNextButtonState();
             result.scrollIntoView({ behavior: 'smooth' });
         }, 500);
     }
