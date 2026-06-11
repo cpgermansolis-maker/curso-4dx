@@ -15,7 +15,8 @@ const COURSE_DESTAPA_TU_NEGOCIO = {
     meta: {
         title: 'Destapa tu Negocio',
         subtitle: 'Encuentra y rompe el freno que limita tus utilidades',
-        author: 'LADE Germán Solís Muñoz · TRIKLES',
+        author: 'LADE Germán Solís Muñoz · OAC',
+        originalWork: true,  // obra original: el sitio no debe decir "basado en el libro de..."
         cover: 'assets/covers/destapa-tu-negocio.svg',
         description: 'En todo negocio hay UN punto que decide cuánto ganas. Los demás solo hacen ruido. Este curso te enseña el Método FLUIR — un sistema de 5 fases para encontrar el freno que limita las utilidades de tu negocio, exprimirlo sin invertir un peso, poner toda la operación a su ritmo y romperlo una y otra vez. Para dueños de PYMES mexicanas: talleres, restaurantes, clínicas, comercios, despachos y fábricas. 22 lecciones con 7 casos de negocio que te acompañan de principio a fin, 43 quizzes, examen final y certificado. Inspirado en los principios de la Teoría de Restricciones popularizados por Eliyahu Goldratt, con método, casos y estructura originales de TRIKLES.',
         descripcionCorta: 'El Método FLUIR: encuentra el freno de tu negocio y conviértelo en tu palanca de crecimiento',

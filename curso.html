@@ -3593,7 +3593,7 @@ function ensureCertificateElement() {
                 '<div class="cert-award-text">Se otorga el presente a:</div>' +
                 '<div class="cert-name" id="certName">' + (currentUser.name || 'Alumno TRIKLES') + '</div>' +
                 '<div class="cert-award-text">Por haber completado exitosamente el curso:</div>' +
-                '<div class="cert-course">' + courseTitle + (courseAuthor ? '<br><span>Basado en la obra de ' + courseAuthor + '</span>' : '') + '</div>' +
+                '<div class="cert-course">' + courseTitle + (courseAuthor ? '<br><span>' + (meta.originalWork ? 'Obra original de ' : 'Basado en la obra de ') + courseAuthor + '</span>' : '') + '</div>' +
                 '<div class="cert-desc">' + certDesc + '</div>' +
             '</div>' +
 
@@ -3736,7 +3736,7 @@ function shareCertificateOnLinkedIn() {
     // Texto profesional sugerido con los aprendizajes YA llenados
     const suggestedText =
 '🎓 ¡Acabo de certificarme en "' + courseTitle + '"' +
-(courseAuthor ? '\n📚 Basado en la obra de ' + courseAuthor : '') + ' — con TRIKLES!\n\n' +
+(courseAuthor ? '\n📚 ' + (COURSE.meta.originalWork ? 'Obra original de ' : 'Basado en la obra de ') + courseAuthor : '') + ' — con TRIKLES!\n\n' +
 'Un curso profundo y profesional, adaptado al contexto latinoamericano. Incluyó lecciones detalladas, videos complementarios, ejercicios prácticos y un examen final riguroso que me obligó a aplicar cada concepto.\n\n' +
 'Estas son las ideas que más me llevo:\n\n' +
 learningsText + '\n\n' +
@@ -3869,7 +3869,7 @@ function showLesson(idx) {
             '<div class="footer-text">' +
                 '<strong>Curso adaptado e impartido por LADE Germán Solís Muñoz</strong><br>' +
                 '<span>Director de Gestión Empresarial - TRIKLES</span><br>' +
-                '<em>Basado en "' + COURSE.meta.title + '" - ' + (COURSE.meta.author || '') + '</em>' +
+                '<em>' + (COURSE.meta.originalWork ? 'Obra original — ' + (COURSE.meta.author || 'TRIKLES') : 'Basado en "' + COURSE.meta.title + '" - ' + (COURSE.meta.author || '')) + '</em>' +
             '</div>' +
         '</div>' +
     '</div>';
@@ -4076,7 +4076,9 @@ function waitForCourse(callback, attempts = 0) {
         const setHtml = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         setTxt('splashTitle', m.title);
         setTxt('splashSubtitle', m.subtitle || 'Curso interactivo TRIKLES');
-        setHtml('splashBookRef', 'Basado en el libro de ' + (m.author || '') + '<br>Adaptación pedagógica TRIKLES');
+        setHtml('splashBookRef', m.originalWork
+            ? ('Obra original de ' + (m.author || 'TRIKLES') + '<br>Método y contenido 100% propios')
+            : ('Basado en el libro de ' + (m.author || '') + '<br>Adaptación pedagógica TRIKLES'));
         setTxt('authTitle', m.title);
         // Topbar del curso: nombre del curso (derecha) + nombre del instructor
         setTxt('topbarCourseTitle', m.title);
@@ -4143,7 +4145,8 @@ const ENROLL_PRICING = {
     'la-paradoja':       { listPrice: 1199, price:  299 },
     'feum-inventarios':  { listPrice: 1999, price:  649 },
     'habitos':           { listPrice:  999, price:  249 },
-    '4dx':               { listPrice:  999, price:  249 }
+    '4dx':               { listPrice:  999, price:  249 },
+    'destapa-tu-negocio':{ listPrice: 1799, price:  449 }
 };
 
 function _fmtPriceEnroll(n) {
@@ -4158,7 +4161,7 @@ function showEnrollmentScreen() {
     const meta = COURSE.meta || {};
     const title = meta.title || 'Curso TRIKLES';
     const subtitle = meta.subtitle || '';
-    const author = meta.author ? 'Basado en la obra de ' + meta.author : '';
+    const author = meta.author ? ((meta.originalWork ? 'Obra original de ' : 'Basado en la obra de ') + meta.author) : '';
     const duration = meta.duration || '—';
     const lessons = meta.lessonsCount ? meta.lessonsCount + ' lecciones' : '—';
     const level = meta.level || 'Todos los niveles';
@@ -4447,7 +4450,7 @@ function showCourseLanding() {
                         '<div class="cl-hero-instructor-text">' +
                             '<div class="lbl">Instructor</div>' +
                             '<div class="nm">' + _clEsc(instructor.name) + '</div>' +
-                            (author ? '<div class="lbl" style="margin-top:3px;">Basado en: ' + _clEsc(author) + '</div>' : '') +
+                            (author && !meta.originalWork ? '<div class="lbl" style="margin-top:3px;">Basado en: ' + _clEsc(author) + '</div>' : '') +
                         '</div>' +
                     '</div>' +
                     '<div class="cl-hero-cta-row">' +
