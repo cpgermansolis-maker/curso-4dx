@@ -874,11 +874,502 @@ const COURSE_DESTAPA_TU_NEGOCIO = {
             <div class="okr-next">→ Empieza el <strong>Módulo L · Localiza el freno</strong>. Primera parada: el misterio de por qué TODO sale tarde aunque NADIE falle — y la respuesta no es la que crees.</div>
         </div>
         `
+    },
+
+    // ==========================================================
+    // MÓDULO L — LOCALIZA EL FRENO (lecciones 6-9)
+    // ==========================================================
+    {
+        id: 'l6', module: 'Módulo L · Localiza el freno', tag: 'tag-d2', tagLabel: 'MÓDULO L',
+        title: 'Por qué todo sale tarde (aunque nadie falle)',
+        subtitle: 'Cadenas, variación y la matemática silenciosa que hace que los retrasos se hereden y los adelantos se desperdicien',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1400&q=80')">
+            <div class="hero-caption">Nadie llegó tarde. Y aun así, el pedido salió tarde. Esta lección explica el misterio.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Qué son los pasos encadenados y por qué tu negocio está lleno de ellos aunque no lo veas</li>
+                <li>Por qué planear con promedios es planear contra la realidad</li>
+                <li>La regla de oro de las cadenas: los retrasos se heredan, los adelantos se desperdician</li>
+                <li>Por qué "regañar al que se atrasó" no arregla nada (el problema es matemático, no de actitud)</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Tu negocio es una cadena (aunque no parezca fábrica)</h3>
+            <p>Todo negocio opera en <strong>pasos encadenados</strong>: el paso B no puede empezar hasta que A termina.</p>
+            <ul>
+                <li><strong>Taller:</strong> recibir → diagnosticar → conseguir refacción → reparar → cobrar → entregar.</li>
+                <li><strong>Fonda:</strong> comprar → preparar → tomar orden → cocinar → servir → cobrar.</li>
+                <li><strong>Despacho:</strong> recibir papeles del cliente → capturar → conciliar → declarar → facturar honorarios.</li>
+            </ul>
+            <p>Y cada paso tiene <strong>variación</strong>: a veces tarda 10 minutos, a veces 40. No porque alguien sea flojo — porque la realidad varía: el cliente que no manda sus papeles, el tornillo barrido, la comanda triple, el sistema del SAT caído. Nadie puede prometer que cada tarea durará "su promedio". Y de la mezcla de esas dos cosas — <strong>cadena + variación</strong> — nace el fenómeno que te tiene apagando fuegos.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"En una cadena, los retrasos se heredan completos — y los adelantos se desperdician completos."</div>
+            <div class="aha-author">— La regla de oro de las cadenas · Método FLUIR</div>
+            <div class="aha-body">Piensa en una carrera de relevos. Si tu corredor de la segunda vuelta es rapidísimo pero el primero llega 20 segundos tarde, ¿de qué sirvió la velocidad del segundo? <strong>No puede arrancar antes de recibir la estafeta.</strong> El retraso del primero se hereda íntegro. Y si el primero llega 20 segundos ANTES… el segundo corre su vuelta normal: el adelanto no se acumula igual que el retraso. La cadena tiene un techo (lo que te entregan) pero no tiene piso. Por eso el resultado del conjunto siempre queda DEBAJO del promedio de sus partes. No es mala suerte: es aritmética.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · El despacho contable en marzo (CDMX)</div>
+            <div class="case-body">
+                <p>El despacho de la contadora Leticia tiene 4 pasos por cliente: recibir papeles → capturar → conciliar → presentar declaración. Cada auxiliar cumple su norma <em>en promedio</em>. Leticia hizo la cuenta: "cada paso toma un día, son 4 días por cliente, marzo alcanza de sobra".</p>
+                <p>Marzo real: el cliente A mandó sus facturas 3 días tarde (la captura no podía empezar — retraso heredado). La auxiliar de conciliación terminó al cliente B en medio día (¡adelanto!)… que se desperdició, porque el cliente C aún no salía de captura y ella se quedó esperando. El SAT se cayó un martes (variación pura). Resultado: <strong>declaraciones presentadas el último día, multas evitadas de panzazo, equipo desvelado — y nadie, NADIE, incumplió su norma individual.</strong></p>
+                <p>Leticia regañó al equipo. El equipo se ofendió, con razón: cada quien hizo su parte. El problema no era de personas. Era que Leticia planeó con promedios una cadena que hereda retrasos y desperdicia adelantos. <strong>El promedio era real; el plan, fantasía.</strong></p>
+            </div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Concepto clave · El promedio no se hereda; el peor caso sí</h3>
+            <p>Cuando un paso de tu cadena termina tarde, el siguiente paso ARRANCA tarde — y ya no hay forma de recuperar ese tiempo más adelante "compensando", porque los pasos siguientes también tienen su propia variación encima.</p>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;text-align:center;color:#0b3d3a;">
+                En una cadena de pasos que dependen entre sí,<br><strong>la desviación acumulada de un paso se vuelve el punto de partida del siguiente.</strong>
+            </div>
+            <p>Consecuencias prácticas inmediatas:</p>
+            <ol class="concept-list">
+                <li><strong>Sumar los promedios de cada paso te da una fecha que casi nunca se va a cumplir.</strong> Por eso tus plazos "calculados" fallan sistemáticamente.</li>
+                <li><strong>Regañar al eslabón que "se atrasó" es injusto e inútil:</strong> casi siempre heredó el atraso de más atrás.</li>
+                <li><strong>Acelerar un paso cualquiera no acelera la cadena</strong> (su adelanto se desperdicia esperando al de atrás). Esta consecuencia es ENORME y es la puerta de la siguiente lección.</li>
+            </ol>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128666;</span><div>
+                <h3>Lo ves todos los días en el tráfico</h3>
+                <p>¿Has notado que en una avenida saturada basta que UN coche frene tantito para que, diez coches atrás, alguien tenga que frenar por completo? El pequeño retraso del primero se amplifica hacia atrás — cada conductor reacciona un poco tarde y un poco más fuerte.</p>
+                <p>Y cuando el primero acelera de nuevo, ¿la fila completa acelera al instante? Jamás: cada quien arranca cuando ve arrancar al de adelante. <strong>El frenazo se transmite completo; el arrancón se transmite a cuentagotas.</strong> Tu operación es exactamente esa avenida. La pregunta del millón — la que contestamos en la Lección 8 — es: ¿cuál de todos los coches es el que está marcando el paso real de la fila?</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l6a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">En el despacho de Leticia, cada auxiliar cumplió su norma individual y aun así las declaraciones salieron al límite. ¿Cuál fue la causa de fondo?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">El equipo trabajó con flojera en los días clave de marzo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, true)">En una cadena con variación, los retrasos se heredan y los adelantos se desperdician — planear sumando promedios es fantasía</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">Faltó contratar un auxiliar más para el paso de captura</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6a', this, false)">El SAT tiene la culpa por la caída de su sistema</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l6a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l6b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Por qué acelerar un paso cualquiera de la cadena normalmente NO acelera el resultado final?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, false)">Porque los empleados se desmotivan si un área va más rápido que otra</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, false)">Porque acelerar siempre sacrifica la calidad del trabajo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, true)">Porque su adelanto se desperdicia: no puede avanzar más rápido de lo que el paso anterior le entrega, y el de adelante no necesariamente lo aprovecha</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l6b', this, false)">Porque ningún paso de una cadena puede medirse de forma individual</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l6b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Dibuja tu cadena (15 minutos):</strong> toma el producto o servicio principal de tu negocio y dibuja sus pasos encadenados, desde que el cliente pide hasta que pagas y entregas. Sin software: cajitas y flechas en una hoja.</p>
+                <ol>
+                    <li>Anota debajo de cada paso cuánto tarda <strong>en un día bueno</strong> y cuánto <strong>en un día malo</strong> (la variación real, no el promedio).</li>
+                    <li>Marca con una estrella el paso donde más seguido "se atora" la cosa, según tu instinto.</li>
+                </ol>
+                <p>Guarda el dibujo: es el mapa sobre el que vamos a cazar el freno en las Lecciones 8 y 9.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Ver tu negocio como una cadena de pasos dependientes con variación</li>
+                <li>Que los retrasos se heredan completos y los adelantos se desperdician</li>
+                <li>Que sumar promedios produce fechas de fantasía</li>
+                <li>Que el problema es de diseño del flujo, no de actitud de la gente</li>
+            </ul>
+            <div class="okr-next">→ En la <strong>Lección 7</strong> derribamos el ídolo más respetado de la administración: el negocio "equilibrado" donde nada sobra. Spoiler: ese negocio, en la vida real, incumple y se ahoga.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 7 — MÓDULO L · EL MITO DEL NEGOCIO EQUILIBRADO
+    // ==========================================================
+    {
+        id: 'l7', module: 'Módulo L · Localiza el freno', tag: 'tag-d2', tagLabel: 'MÓDULO L',
+        title: 'El mito del negocio equilibrado',
+        subtitle: 'Por qué recortar "toda la grasa" rompe el flujo — y la dinámica de los frijoles para demostrarlo en 20 minutos',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">La holgura que estás recortando por "desperdicio" es el colchón que mantiene tus promesas de entrega.</div>
+            <div class="pq-author">— Método FLUIR · Lección 7</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Qué es el "negocio equilibrado" y por qué es un ideal que quiebra negocios reales</li>
+                <li>La dinámica de los frijoles: cómo demostrarle a tu equipo, en 20 minutos, que un sistema "parejo" entrega menos de lo esperado</li>
+                <li>Qué es la capacidad protectora y por qué NO es desperdicio</li>
+                <li>El trade-off real: holgura vs. inventario vs. incumplimiento — algo vas a tener, elige cuál</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>El ideal que suena perfecto (y no funciona)</h3>
+            <p>Dice la lógica tradicional: "dimensiona cada área <em>exactamente</em> a la demanda. Ni capacidad de sobra (desperdicio) ni capacidad de menos (cuello). Todo parejo, todo al 100%, cero grasa."</p>
+            <p>Suena a buena administración. Ahora crúzalo con lo que aprendiste en la Lección 6: cada paso <strong>varía</strong>, y en cadena <strong>los retrasos se heredan y los adelantos se desperdician</strong>. ¿Qué le pasa a un sistema parejo, sin nada de sobra, cuando un paso tiene un día malo?</p>
+            <ul>
+                <li>El paso atrasado <strong>no tiene con qué reponerse</strong> — está dimensionado exacto, sin reserva.</li>
+                <li>Los pasos siguientes heredan el atraso… y tampoco tienen con qué absorberlo.</li>
+                <li>Los días buenos no compensan, porque el adelanto se desperdicia esperando a los demás.</li>
+            </ul>
+            <p>Resultado matemático e inevitable: <strong>el sistema "perfectamente equilibrado" entrega MENOS que el promedio de sus partes, acumula trabajo a medias en oleadas, e incumple fechas — sin que nadie falle.</strong> El equilibrio perfecto solo funciona en un mundo sin variación. O sea: en el papel.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #3 · La dinámica de los frijoles</h3>
+            <p>Esta dinámica convence más que cualquier discurso. Necesitas: un puño de frijoles, una moneda y 5 personas en fila (cada una es un "área" del negocio: compras, producción, empaque, reparto, cobranza).</p>
+            <ol class="concept-list">
+                <li>Cada persona tiene un plato. El objetivo del equipo: pasar frijoles del costal (inicio) al frasco final (ventas), de plato en plato, por rondas.</li>
+                <li>En cada ronda, cada persona lanza la moneda: <strong>águila = mueve 2 frijoles, sol = mueve 4</strong> al plato siguiente. (Promedio: 3 por ronda — todas las áreas "iguales".) Importante: solo puedes mover frijoles que YA estén en tu plato.</li>
+                <li>Pregunta al equipo antes de empezar: "¿cuántos frijoles llegarán al frasco en 10 rondas?" Todos dirán: 3 × 10 = 30. Es el promedio, ¿no?</li>
+                <li>Jueguen las 10 rondas y cuenten.</li>
+            </ol>
+            <p>El frasco tendrá <strong>22-26 frijoles, no 30</strong> — y habrá montoncitos atorados a media fila (¡eso es tu inventario en proceso!). ¿Por qué? Cuando te toca "4" pero tu plato solo tiene 2 (porque al de atrás le tocó "2"), mueves 2: <strong>tu capacidad sobrante se desperdició.</strong> Cuando te toca "2", frenas a todos los de adelante: <strong>tu mal turno se heredó.</strong> Diez minutos de frijoles explican lo que años de regaños no.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"La capacidad de sobra no es grasa: es el sistema inmunológico de tus fechas de entrega."</div>
+            <div class="aha-author">— Método FLUIR · Capacidad protectora</div>
+            <div class="aha-body">Como la variación es inevitable (proveedores, clima, enfermedades, el SAT), un negocio sano necesita que casi todas sus áreas tengan capacidad DE SOBRA — para absorber el día malo y reponerse rápido. A esa holgura la llamamos <strong>capacidad protectora</strong>. El día que la recortas "porque ahí sobra gente/máquina", tus entregas empiezan a fallar y nadie entiende por qué: acabas de despedir al amortiguador. Lo que sí debe ir al 100% es UNA sola cosa — y la conocerás en la próxima lección.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · La fonda de Doña Mary recorta "la grasa"</div>
+            <div class="case-body">
+                <p>Un sobrino que estudió administración auditó la fonda: "Tía, tienes desperdicio: la segunda cocinera se queda sin qué hacer como hora y media al día, y el chico de los mandados pasa ratos sentado. Recórtalos y queda un equipo eficiente, todo parejito."</p>
+                <p>Doña Mary recortó. Las primeras dos semanas, pura ganancia: misma venta, menos nómina. Hasta que llegó un jueves normalito: la cocinera principal se cortó un dedo (variación), justo cuando cayó un pedido de 30 comidas para una oficina (variación). Antes, la segunda cocinera absorbía el golpe y el de los mandados volaba por las vendas y el cilantro extra. Ahora no había colchón: <strong>la cocina se atascó, 40 minutos de espera, seis mesas se levantaron y la oficina de los 30 pedidos no volvió a llamar.</strong></p>
+                <p>La nómina "eficiente" le ahorró $6,000 al mes. El jueves sin colchón le costó un cliente de $4,500 mensuales y la fama de lenta en el rumbo. <strong>La hora y media "ociosa" de la segunda cocinera no era desperdicio: era el seguro de la fonda.</strong> Solo que el seguro no aparece en ningún reporte… hasta que lo cancelas.</p>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#9878;&#65039;</span><div>
+                <h3>El trade-off que nadie te dijo: algo vas a tener</h3>
+                <p>Contra la variación solo existen tres amortiguadores. Todo negocio tiene alguno — elegido o por accidente:</p>
+                <p><strong>1. Capacidad de sobra</strong> (gente/equipo con holgura): absorbe los golpes en el momento. Cuesta nómina "ociosa" a ratos.</p>
+                <p><strong>2. Inventario de colchón</strong> (material y producto "por si acaso"): absorbe los golpes con cosas. Cuesta caja atrapada, merma y bodega.</p>
+                <p><strong>3. Tiempo del cliente</strong> (plazos largos, "se lo tengo en tres semanas"): absorbe los golpes haciéndolos esperar. Cuesta ventas y reputación.</p>
+                <p>El negocio "equilibrado" que recorta el 1 y presume bajar el 2… termina pagando con el 3 sin darse cuenta. <strong>Elegir conscientemente tu amortiguador es una decisión de dueño.</strong> El Método FLUIR elige el 1 en casi todas las áreas — porque es el único que protege la venta sin congelar la caja. ¿Y dónde NO se necesita holgura? En un solo lugar. Siguiente lección.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l7a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">En la dinámica de los frijoles, todas las estaciones promedian 3 frijoles por ronda. ¿Por qué llegan al frasco menos de 30 en 10 rondas?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, false)">Porque la moneda está cargada hacia el águila</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, true)">Porque los turnos malos frenan a toda la fila y los turnos buenos se desperdician cuando el plato anterior no entregó suficiente</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, false)">Porque las personas pierden frijoles al pasarlos de plato en plato</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7a', this, false)">Porque 10 rondas son muy pocas para que el promedio se estabilice</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l7a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l7b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Qué es la "capacidad protectora"?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, false)">Un seguro contra accidentes que contratan los negocios grandes</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, false)">La capacidad máxima que una máquina puede alcanzar en emergencias</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, true)">La holgura deliberada en las áreas del negocio que absorbe la variación inevitable y protege las fechas de entrega</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l7b', this, false)">El inventario mínimo de seguridad que exige cada proveedor</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l7b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Identifica tu amortiguador accidental (10 minutos):</strong> de los tres amortiguadores — capacidad de sobra, inventario de colchón, tiempo del cliente — ¿cuál está usando tu negocio HOY para absorber la variación?</p>
+                <ol>
+                    <li>Si tus entregas casi siempre se cumplen pero la bodega está gorda: pagas con el 2.</li>
+                    <li>Si la bodega está flaca pero el cliente espera semanas: pagas con el 3.</li>
+                    <li>Si entregas rápido con bodega flaca: o tienes el 1 (felicidades), o vives del heroísmo del dueño — y eso no es amortiguador, es cuenta regresiva.</li>
+                </ol>
+                <p>Anótalo. Y si te animas: juega la dinámica de los frijoles con tu equipo esta semana. El momento en que cuentan el frasco vale oro.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Por qué el negocio "perfectamente equilibrado" entrega menos e incumple más</li>
+                <li>Demostrarlo con la dinámica de los frijoles en 20 minutos</li>
+                <li>Que la capacidad protectora es un seguro, no un desperdicio</li>
+                <li>Los 3 amortiguadores posibles y cuál usa tu negocio hoy</li>
+            </ul>
+            <div class="okr-next">→ <strong>Lección 8:</strong> si casi todo necesita holgura… ¿qué es lo ÚNICO que debe trabajar al 100%? Llegó la hora de conocer al freno cara a cara. Rubén nos espera en el taller.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 8 — MÓDULO L · EL FRENO: UN SOLO PUNTO DECIDE
+    // ==========================================================
+    {
+        id: 'l8', module: 'Módulo L · Localiza el freno', tag: 'tag-d2', tagLabel: 'MÓDULO L',
+        title: 'El freno: un solo punto decide',
+        subtitle: 'La definición que convierte mil problemas en uno solo — y por qué una hora del freno vale más que mil horas de lo demás',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1400&q=80')">
+            <div class="hero-caption">Deja de administrar mil cosas. Tu negocio se gobierna desde UN punto.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La definición exacta de freno (y por qué tener uno NO es un defecto)</li>
+                <li>Por qué el dinero que entra a tu negocio lo decide el freno — y nada más que el freno</li>
+                <li>La asimetría fundamental: una hora ganada en el freno lo gana todo; una hora ganada en otro lado no gana nada</li>
+                <li>Cómo cambia tu trabajo como dueño cuando piensas en un solo punto en vez de mil pendientes</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>La definición (apréndetela: es el corazón del curso)</h3>
+            <div style="margin:14px 0;padding:18px;background:#0b3d3a;border-radius:8px;text-align:center;color:#fff;font-size:1.05em;">
+                <strong>El freno es el punto de tu negocio cuya capacidad es igual o menor<br>que la demanda que el mercado le pone enfrente.</strong>
+            </div>
+            <p>Tres aclaraciones que valen dinero:</p>
+            <ol class="concept-list">
+                <li><strong>Todo negocio tiene uno.</strong> Siempre hay un paso más limitado que los demás — como en toda cadena hay un eslabón más débil. No es señal de mala administración: es la naturaleza de los sistemas.</li>
+                <li><strong>El freno no es "malo".</strong> No hay que avergonzarse de él ni eliminarlo a toda costa. Hay que CONOCERLO — porque quien controla el freno controla todo el sistema. Es tu palanca, no tu enemigo.</li>
+                <li><strong>El freno no siempre es una máquina.</strong> Puede ser una persona (el único que sabe hacer X), un espacio (las 8 mesas de la fonda), un horario (las horas de sillón dental), un trámite, o incluso algo fuera de tus paredes — el mercado mismo. Eso lo afinamos en la Lección 9.</li>
+            </ol>
+            <p>Y la consecuencia que lo cambia todo, heredada directo de la regla de las cadenas: <strong>el ritmo al que tu negocio genera dinero es exactamente el ritmo del freno.</strong> Ni un peso más rápido. Los demás pasos pueden ir al doble — lo único que producirán es fila.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · El taller de Rubén: la revelación</div>
+            <div class="case-body">
+                <p>Volvamos al taller de la Lección 0, ahora con ojos nuevos. Rubén dibujó su cadena: recibir → <strong>diagnosticar</strong> → cotizar/autorizar → conseguir refacción → reparar (6 técnicos, 7 elevadores) → probar → entregar.</p>
+                <p>Casi todos los autos pasan por el diagnóstico del maestro Genaro — el único que "oye" una falla eléctrica y atina. Genaro dedica unas 5 horas al día a diagnosticar (el resto se le va en interrupciones, buscar herramienta y explicar presupuestos), a unos 45 minutos por auto: <strong>6-7 autos diagnosticados al día. Esa es la capacidad del taller completo.</strong></p>
+                <p>No importa que haya 6 técnicos y ahora 7 elevadores: si Genaro diagnostica 6-7 autos, el taller repara 6-7 autos. Los técnicos "ocupados" trabajaban en re-trabajos y pendientes menores mientras los autos sin diagnóstico hacían fila en el patio. El patio lleno que Rubén leía como "nos va bien" era, en realidad, <strong>la fila de espera de Genaro</strong> — dinero atrapado estacionado.</p>
+                <p>Cuando Rubén lo vio, dijo la frase que dicen todos los dueños en este punto: <em>"Llevo años administrando el taller equivocado."</em> Administraba elevadores, técnicos y herramienta. Su negocio entero cabía en una agenda: <strong>las 5 horas diarias de Genaro.</strong></p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Una hora perdida en el freno es una hora perdida para TODO el negocio. Una hora ganada donde no está el freno es un espejismo."</div>
+            <div class="aha-author">— La asimetría fundamental · Método FLUIR</div>
+            <div class="aha-body">Si Genaro pierde una hora (junta, interrupción, buscar un escáner), el taller completo produce una hora menos — esa hora no se recupera jamás, porque atrás de Genaro todo espera. Si un técnico de reparación gana una hora siendo más veloz… no pasa nada: terminará antes y esperará, porque el flujo de autos lo dicta Genaro. <strong>Misma hora, valor radicalmente distinto según DÓNDE ocurre.</strong> Por eso invertir, capacitar o presionar "parejo" en todas las áreas es tirar el dinero parejo: solo lo que toca al freno mueve la aguja. Cuánto vale exactamente una hora del freno — en pesos — lo calcularemos en la Lección 10, y el número te va a quitar el sueño.</div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Concepto clave · De mil pendientes a un solo punto</h3>
+            <p>Aquí cambia tu trabajo como dueño. Antes del freno, diriges así: 40 pendientes, todos "importantes", el día se lo lleva el más gritón. Después del freno, diriges así:</p>
+            <ol class="concept-list">
+                <li><strong>¿El freno está trabajando ahora mismo?</strong> Si no, eso es lo más caro que está pasando hoy en tu negocio — atiéndelo primero.</li>
+                <li><strong>¿Lo que el freno trabaja está vendido?</strong> Sus horas son las del negocio entero: no se gastan en "por si acaso".</li>
+                <li><strong>¿Todo lo demás está al servicio del freno?</strong> Las demás áreas no compiten por brillar: alimentan, descargan y protegen al freno.</li>
+            </ol>
+            <p>Tres preguntas en vez de cuarenta pendientes. No es que el resto del negocio no importe — es que <strong>el resto del negocio se ordena solo cuando el freno gobierna.</strong> El Módulo I te enseñará exactamente cómo.</p>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#127921;</span><div>
+                <h3>"¿Y si mejor elimino el freno?"</h3>
+                <p>Reacción natural: "pues contrato otro Genaro y se acabó el problema". Calma. Tres cosas:</p>
+                <p><strong>Primera:</strong> aunque lo hagas, el freno no desaparece — se MUEVE. Con dos Genaros, el taller diagnosticará 13 autos… y el nuevo freno serán los técnicos, o las refacciones, o el patio. Siempre hay un eslabón más débil; la pregunta es cuál te conviene que sea y dónde lo quieres tener.</p>
+                <p><strong>Segunda:</strong> contratar/comprar es la solución CARA, y casi siempre prematura. En el Módulo U descubrirás que el freno típico desperdicia entre un cuarto y la mitad de su capacidad en tonterías evitables — capacidad que ya pagaste. Primero se exprime, luego se invierte.</p>
+                <p><strong>Tercera:</strong> un freno bien elegido y bien administrado es una bendición: te dice exactamente dónde poner tu atención, tu dinero y tu siguiente contratación. Los negocios sin freno identificado invierten por corazonada — como Rubén y su elevador.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l8a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">El taller de Rubén tiene 6 técnicos y 7 elevadores, pero Genaro solo diagnostica 6-7 autos al día. ¿Cuántos autos puede reparar y cobrar el taller al día?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">Depende de qué tan rápido trabajen los 6 técnicos</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, true)">6-7: el ritmo del negocio completo es exactamente el ritmo de su freno</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">Hasta 14, usando los 7 elevadores en dos turnos</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8a', this, false)">No se puede saber sin un estudio de tiempos y movimientos</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l8a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l8b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Cuál enunciado expresa correctamente la asimetría fundamental?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, false)">Toda hora ganada en cualquier área del negocio aumenta las utilidades por igual</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, false)">Las horas del freno valen lo mismo que las demás, pero son más difíciles de programar</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, false)">Una hora perdida en cualquier área se recupera trabajando horas extra el fin de semana</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l8b', this, true)">Una hora perdida en el freno la pierde el negocio entero y no se recupera; una hora ganada fuera del freno no aumenta lo que el negocio produce</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l8b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>La hipótesis del freno (10 minutos):</strong> toma el dibujo de tu cadena (Lección 6) y la estrella que marcaste por instinto. Ahora ponla a prueba con la definición:</p>
+                <ol>
+                    <li>¿Ese paso tiene MENOS capacidad que lo que el mercado le pide? ¿Cuánta gente/horas/espacio tiene y cuánto le llega?</li>
+                    <li>Si ese paso produjera el doble mañana, ¿el negocio vendería más — o solo se movería la fila a otro lado?</li>
+                    <li>Escribe tu hipótesis: <em>"Creo que mi freno es ________ porque ________."</em></li>
+                </ol>
+                <p>Es solo hipótesis: en la próxima lección la vas a confirmar con las 3 señales — el método de diagnóstico que no necesita ni software ni consultores.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>La definición de freno: capacidad ≤ demanda del mercado</li>
+                <li>Que el dinero que entra lo decide el freno — los demás solo hacen fila</li>
+                <li>La asimetría: una hora del freno es una hora del negocio entero</li>
+                <li>Que el freno se administra y se elige, no se persigue ni se esconde</li>
+            </ul>
+            <div class="okr-next">→ <strong>Lección 9</strong>, cierre del Módulo L: las 3 señales para ENCONTRAR tu freno en una semana — y qué hacer cuando el freno no está adentro de tu negocio, sino afuera.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 9 — MÓDULO L · CÓMO ENCONTRARLO EN UNA SEMANA
+    // ==========================================================
+    {
+        id: 'l9', module: 'Módulo L · Localiza el freno', tag: 'tag-d2', tagLabel: 'MÓDULO L',
+        title: 'Cómo encontrar tu freno en una semana',
+        subtitle: 'Las 3 señales que lo delatan sin software ni consultores — y el caso especial del freno que vive fuera de tu negocio',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">No necesitas datos perfectos para encontrar tu freno. El freno deja huellas — solo hay que saber leerlas.</div>
+            <div class="pq-author">— Método FLUIR · Lección 9</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Las 3 señales que delatan al freno: la montaña, los faltantes y la voz del piso</li>
+                <li>El protocolo de la semana de cacería, día por día</li>
+                <li>Cómo saber si tu freno NO es interno: el freno de mercado y el freno de política</li>
+                <li>Los 2 errores clásicos del diagnóstico (perseguir al gritón y confundir el atorón del día con el freno)</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Las 3 señales (el freno no se esconde: se delata)</h3>
+            <p>Olvídate de medir capacidades con cronómetro — las PYMES nunca tienen esos datos al día, y no los necesitas. El freno produce tres huellas visibles a simple vista:</p>
+            <ol class="concept-list">
+                <li><strong>Señal 1 · La montaña.</strong> ¿Frente a qué paso se acumula la fila más grande de trabajo en espera? Autos en el patio, expedientes en una bandeja, comandas clavadas en la cocina, telas cortadas esperando costura. El trabajo se apila exactamente donde la capacidad no alcanza — <em>la montaña señala al freno con el dedo.</em></li>
+                <li><strong>Señal 2 · Los faltantes.</strong> Cuando un pedido urge y se arma la corredera, ¿qué es lo que SIEMPRE falta? ¿La firma de quién, el visto bueno de qué área, la pieza de qué proceso? Lo que persigues en cada urgencia es lo que pasa por el freno.</li>
+                <li><strong>Señal 3 · La voz del piso.</strong> Pregunta a tus encargados, sin teatro: <em>"¿dónde empiezan los problemas aquí?"</em> La gente que opera la cadena todos los días sabe dónde se atora — casi siempre coinciden en el mismo punto, y casi nunca se los habíamos preguntado.</li>
+            </ol>
+            <p>La regla de confirmación: <strong>las 3 señales deben apuntar al mismo lugar.</strong> Si la montaña, los faltantes y la voz del piso coinciden — felicidades, encontraste tu freno. Si apuntan a lados distintos, suele ser que el freno es de los especiales (abajo) o que estás viendo un atorón pasajero, no el freno.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #4 · La semana de cacería</h3>
+            <p>Protocolo concreto, de lunes a viernes, sin gastar un peso:</p>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;"><strong>Lunes:</strong> camina la operación con tu dibujo de la cadena. Fotografía (literal: con el celular) cada lugar donde haya trabajo esperando. La pila más grande es tu primera pista.</p>
+                <p style="margin:6px 0;"><strong>Martes:</strong> rastrea las últimas 5 urgencias. ¿Qué faltaba en cada una? Anota el patrón.</p>
+                <p style="margin:6px 0;"><strong>Miércoles:</strong> pregunta a 3-5 personas del piso, por separado: "¿dónde empiezan los problemas?". No defiendas, no expliques: anota.</p>
+                <p style="margin:6px 0;"><strong>Jueves:</strong> cruza las 3 señales. ¿Coinciden? Verifica con números gruesos SOLO ese punto: ¿cuánto le llega al día y cuánto puede procesar?</p>
+                <p style="margin:6px 0;"><strong>Viernes:</strong> escribe el veredicto en una frase: <em>"El freno de mi negocio es ________, le llegan ________ al día y puede con ________."</em> Compárala con tu hipótesis de la Lección 8 — y con tu corazonada de la Lección 0.</p>
+            </div>
+            <p>La mayoría de los dueños descubre que su corazonada original estaba equivocada — como Rubén con sus elevadores. Por eso el método manda sobre el instinto.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Si en tu negocio sobra capacidad por todos lados, tu freno no está en el piso: está en la calle o está en una regla."</div>
+            <div class="aha-author">— Método FLUIR · Frenos externos</div>
+            <div class="aha-body">¿Hiciste la cacería y no hay montaña, no hay faltantes, y el piso dice "aquí lo que falta es chamba"? Entonces tu freno no es interno. Es uno de estos dos: <strong>freno de mercado</strong> — tu operación puede con más de lo que estás vendiendo; el eslabón débil es conseguir pedidos, y ahí (no en otra máquina) debe ir toda tu atención. O <strong>freno de política</strong> — una regla tuya está estrangulando el flujo: "no producimos sin el 100% de anticipo", "solo el dueño autoriza descuentos", "no abrimos los sábados", "ese cliente solo lo atiende Genaro". Las reglas no aparecen en ninguna foto del lunes — y suelen ser los frenos más baratos de romper y los más difíciles de ver, porque las escribiste tú.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · Mueblería San José: el freno que no estaba en el taller</div>
+            <div class="case-body">
+                <p>Tras el susto de liquidez (Lección 2), el hijo de Don José tomó este método y salió de cacería al taller: ¿la montaña? No había — los carpinteros terminaban y quedaban esperando. ¿Faltantes? Tampoco: material de sobra. ¿La voz del piso? Unánime: <em>"aquí falta chamba, joven".</em></p>
+                <p>Las 3 señales gritaban: <strong>el freno no está en el taller.</strong> ¿Estaba en el mercado? A medias. Revisando cómo entraban (y se perdían) los pedidos, apareció la regla de la casa: <em>"no se arranca ningún mueble sin el 70% de anticipo"</em> — una política que Don José puso en 2009 después de que un cliente lo dejó colgado. Las constructoras —sus clientes más grandes— no trabajan con anticipos de 70%, así que cotizaban… y se iban con el competidor.</p>
+                <p>El freno de San José era <strong>un renglón escrito hace 15 años.</strong> Lo ajustaron (40% de anticipo con contrato firmado, solo para constructoras con historial), y el taller "sin chamba" se llenó en seis semanas. Costo de romper ese freno: cero pesos. Solo dolió el orgullo.</p>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128270;</span><div>
+                <h3>Los 2 errores clásicos del diagnóstico</h3>
+                <p><strong>Error 1: perseguir al gritón.</strong> El área que más se queja, el empleado más estresado o el cliente más enojado señalan donde DUELE — no necesariamente donde APRIETA. El dolor aparece río abajo del freno (los que esperan), pero el freno es donde nace la espera. Por eso seguimos huellas, no gritos.</p>
+                <p><strong>Error 2: confundir el atorón del día con el freno.</strong> Que hoy se haya atascado el empaque porque faltó un empleado no convierte al empaque en tu freno: es variación normal. El freno es el punto donde el trabajo se apila <em>una semana tras otra</em>. Por eso la cacería dura una semana y busca patrones — no fotos de un mal día.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l9a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿Cuáles son las 3 señales que delatan al freno?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">Las quejas de clientes, la rotación de personal y el costo unitario</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, true)">La montaña de trabajo en espera, lo que siempre falta en las urgencias y la voz del piso sobre dónde empiezan los problemas</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">El reporte del contador, el inventario anual y la opinión del vendedor estrella</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9a', this, false)">El área más ruidosa, el empleado más estresado y el cliente más enojado</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l9a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l9b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">En la mueblería San José los carpinteros esperaban trabajo y había material de sobra. Su freno resultó ser…</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, false)">El carpintero más lento del taller, aunque nadie quisiera señalarlo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, false)">La falta de maquinaria moderna frente a la competencia</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, true)">Una política propia — el anticipo del 70% — que espantaba a sus clientes más grandes: un freno de regla, no de piso</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l9b', this, false)">La temporada baja del sector construcción</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l9b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Agenda tu semana de cacería — hoy.</strong> No la hagas hoy: agéndala hoy.</p>
+                <ol>
+                    <li>Abre tu calendario y bloquea 30-45 minutos diarios de lunes a viernes con el protocolo de esta lección (lunes montaña, martes faltantes, miércoles voz del piso, jueves cruce, viernes veredicto).</li>
+                    <li>Prepara la pregunta del miércoles para 3-5 personas: <em>"¿dónde empiezan los problemas aquí?"</em> — y prométete solo escuchar.</li>
+                    <li>Si tu negocio anda sobrado de capacidad, agrega al viernes la revisión de reglas: lista las políticas de la casa ("aquí no se hace X sin Y") y pregúntate cuál estrangula pedidos.</li>
+                </ol>
+                <p>Con el veredicto del viernes en la mano, el Módulo U te va a enseñar a exprimir ese freno sin gastar — Rubén y las 5 horas de Genaro nos esperan.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Leer las 3 señales: la montaña, los faltantes y la voz del piso</li>
+                <li>Ejecutar la semana de cacería, día por día, sin gastar un peso</li>
+                <li>Reconocer frenos externos: de mercado y de política</li>
+                <li>Esquivar los 2 errores clásicos: perseguir al gritón y confundir el atorón del día con el freno</li>
+            </ul>
+            <div class="okr-next">→ Empieza el <strong>Módulo U · Úsalo al máximo</strong>. Primera pregunta: ¿cuánto vale — en pesos — una hora de tu freno? Vas a hacer una división de primaria y el resultado te va a cambiar las prioridades para siempre.</div>
+        </div>
+        `
     }
 
     // ==========================================================
-    // PENDIENTE (ver blueprint): Módulo L (6-9), Módulo U (10-13),
-    // Módulo I (14-17), Módulo R (18-21), Examen (22), Certificado (23)
+    // PENDIENTE (ver blueprint): Módulo U (10-13), Módulo I (14-17),
+    // Módulo R (18-21), Examen (22), Certificado (23)
     // ==========================================================
 
     ]
