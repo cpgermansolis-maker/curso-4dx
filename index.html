@@ -332,8 +332,8 @@
 
     /* Badges dinámicos de cursos (TOP RATED, NUEVO) */
     .dynamic-badges {
-        position: absolute; top: 10px; left: 10px;
-        display: flex; flex-direction: column; gap: 6px;
+        position: absolute; top: 38px; right: 10px; left: auto;
+        display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
         z-index: 2; pointer-events: none;
     }
     .dbadge {
@@ -470,6 +470,7 @@
         .course-cover-overlay .course-title { font-size: 0.82em; line-height: 1.2; }
         .course-cover-overlay .course-category { font-size: 0.58em; letter-spacing: 1px; }
         .course-badge { font-size: 0.58em; padding: 3px 7px; top: 8px; right: 8px; }
+        .dynamic-badges { top: 30px; right: 8px; }
         .course-info { padding: 10px; }
         .course-author { font-size: 0.68em; margin-bottom: 6px; }
         .course-desc { display: none; }
