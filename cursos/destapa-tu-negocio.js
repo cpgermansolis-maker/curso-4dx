@@ -1831,11 +1831,486 @@ const COURSE_DESTAPA_TU_NEGOCIO = {
             <div class="okr-next">→ Empieza el <strong>Módulo I · Integra el ritmo</strong>. Tu freno ya rinde al máximo — ahora el resto del negocio debe marchar a SU paso. Primera parada: la verdad incómoda sobre la gente "sin nada que hacer".</div>
         </div>
         `
+    },
+
+    // ==========================================================
+    // MÓDULO I — INTEGRA EL RITMO (lecciones 14-17)
+    // ==========================================================
+    {
+        id: 'l14', module: 'Módulo I · Integra el ritmo', tag: 'tag-d4', tagLabel: 'MÓDULO I',
+        title: 'El ocio que conviene',
+        subtitle: 'Activar no es utilizar: por qué un empleado parado a ratos es más barato que una bodega llena',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1400&q=80')">
+            <div class="hero-caption">La pregunta correcta nunca fue "¿está trabajando?". Es "¿el sistema necesita que trabaje AHORA?"</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La diferencia entre ACTIVAR un recurso (que se mueva) y UTILIZARLO (que mueva al negocio)</li>
+                <li>Por qué el nivel de trabajo de cada área lo fija el freno — no la capacidad de esa área</li>
+                <li>La cuenta que libera de culpas: el empleado parado no cuesta más; lo que produce de más, sí</li>
+                <li>Cómo manejar la incomodidad cultural de ver gente sin actividad a ratos</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>La distinción que faltaba: activar ≠ utilizar</h3>
+            <p>En el Módulo U exprimiste tu freno. Ahora viene la mitad olvidada del método: ¿qué hacen las DEMÁS áreas — las que tienen capacidad de sobra?</p>
+            <p>El reflejo tradicional: "que produzcan al máximo, para eso les pago". Y aquí se rompe todo lo construido, porque ya sabes (Lección 8) que el negocio vende exactamente lo que el freno procesa. Entonces, si un área no-freno produce a su máximo — más rápido que el freno — ¿a dónde va ese excedente? <strong>A ningún lado: se apila.</strong> Trabajo a medias, pasillos llenos, dinero atrapado. De ahí la distinción central del módulo:</p>
+            <div style="margin:14px 0;padding:18px;background:#0b3d3a;border-radius:8px;text-align:center;color:#fff;font-size:1.05em;">
+                <strong>ACTIVAR un recurso es ponerlo a producir algo.<br>UTILIZARLO es ponerlo a producir lo que el sistema necesita ahora.</strong>
+            </div>
+            <p>Activar sin utilizar no es productividad: es fabricar inventario con esfuerzo genuino. Y la consecuencia práctica es la regla del módulo: <strong>el nivel de trabajo de cada área NO lo fija su propia capacidad — lo fija el freno.</strong> La pregunta por área deja de ser "¿cuánto puede producir?" y se vuelve "¿cuánto necesita el freno que produzca?".</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · Los roperos fantasma de San José</div>
+            <div class="case-body">
+                <p>¿Recuerdas la mueblería con el taller "sin chamba" (Lección 9)? Hay un detalle que no te contamos. Durante esos meses flojos, Don José no soportaba ver a sus carpinteros parados — "les pago por trabajar, no por estar viendo el techo" — así que los ponía a fabricar roperos y comedores genéricos "para tener piso de venta".</p>
+                <p>Cuando el hijo hizo las cuentas, el piso de exhibición y la bodega guardaban <strong>$380,000 en muebles sin cliente</strong> — madera, herrajes y barniz pagados de la caja, esperando un comprador casual que a veces llegaba… pidiendo otro color. Mientras tanto, la nómina que tanto le dolía a Don José "desperdiciar" era de $68,000 al mes.</p>
+                <p>Esa es la cuenta completa de la lección: <strong>los carpinteros parados costaban $0 extra</strong> (su sueldo es el mismo trabajen o esperen). <strong>Los carpinteros "aprovechados" costaban $380,000 de caja congelada</strong> más bodega, polvo y descuentos de liquidación. La actividad que calmaba la ansiedad del dueño era la que se estaba comiendo su liquidez.</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"El sueldo del que espera ya lo pagaste. El material del que produce de más, no."</div>
+            <div class="aha-author">— Método FLUIR · La cuenta del ocio</div>
+            <div class="aha-body">Haz la cuenta fría: un empleado de área no-freno que espera 1 hora cuesta exactamente lo mismo que si trabaja esa hora — su sueldo es fijo. Pero si esa hora la usa en producir algo que el freno no pidió, ahora pagaste: el sueldo (igual) + el material (nuevo) + el espacio para guardarlo (nuevo) + el riesgo de que envejezca (nuevo). <strong>Producir de más es la única forma de gastar dinero pareciendo que lo ahorras.</strong> Por eso el ocio a ratos en las áreas no-freno no es un problema a corregir: es la señal de que tu capacidad protectora (Lección 7) existe y está lista para absorber el siguiente golpe.</div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Concepto clave · ¿Y entonces qué hacen cuando no hay flujo?</h3>
+            <p>"Ok, no producen de más. ¿Los dejo viendo el celular?" No. El tiempo de holgura de las áreas no-freno tiene usos que SÍ mueven los 3 medidores:</p>
+            <ol class="concept-list">
+                <li><strong>Proteger el flujo:</strong> mantenimiento de su equipo, orden de su estación, preparar el siguiente trabajo para arrancar sin fricción.</li>
+                <li><strong>Fortalecer el sistema:</strong> capacitarse como relevo del freno (¡el relevo de la Lección 11 sale de aquí!), documentar cómo hacen lo que hacen.</li>
+                <li><strong>Mejorar:</strong> las ideas de mejora del piso (la mina de la Lección 11) se trabajan justamente en estas horas.</li>
+                <li><strong>Y a veces, simplemente esperar.</strong> Como el bombero: nadie le reclama "estar sin hacer nada" entre incendios. Su disponibilidad ES el servicio.</li>
+            </ol>
+            <p>Lo único prohibido: producir lo que el freno no pidió, para que la actividad "se vea".</p>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#129337;</span><div>
+                <h3>La parte difícil no es la lógica: es la cultura</h3>
+                <p>Prepárate: cuando dejes de exigir actividad permanente, alguien va a decir que el negocio "se está relajando". Tu suegro de visita verá a un empleado esperando y te lo comentará. El propio empleado se sentirá raro — años de "si el patrón te ve parado, te pone a barrer" pesan.</p>
+                <p>La respuesta es explicar la cuenta, en junta, con los números de tu negocio: "una hora tuya esperando ya está pagada; una hora produciendo lo que no se vende nos cuesta material, espacio y caja. Prefiero pagarte por estar listo que pagar el triple por estar ocupado". La gente entiende — especialmente cuando ve que las fechas de entrega, por primera vez, se cumplen. Eso llega en la siguiente lección.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l14a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿Cuál es la diferencia entre ACTIVAR y UTILIZAR un recurso?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, false)">Activar es encenderlo; utilizar es que un operador certificado lo maneje</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, true)">Activar es ponerlo a producir algo; utilizar es ponerlo a producir lo que el sistema necesita ahora — activar sin utilizar solo fabrica inventario</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, false)">Son sinónimos: ambos significan que el recurso no esté ocioso</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14a', this, false)">Activar aplica a máquinas y utilizar aplica a personas</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l14a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l14b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">Los carpinteros de San José fabricaban roperos "para no estar parados". ¿Cuál fue el costo real de esa decisión?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, false)">Ninguno: los muebles eventualmente se venden y la nómina se aprovechó</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, false)">El desgaste de las herramientas del taller</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, true)">$380,000 de caja convertida en inventario sin cliente — pagaron material, espacio y riesgo por calmar la ansiedad de verlos ocupados</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l14b', this, false)">Horas extra que hubo que pagar para fabricar los roperos</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l14b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Encuentra tu "ropero fantasma" (15 minutos):</strong></p>
+                <ol>
+                    <li>Identifica UNA cosa que tu negocio produce o hace principalmente "para que la gente no esté parada" o "para aprovechar la máquina".</li>
+                    <li>Ponle número: ¿cuánto material, espacio y caja consume al mes?</li>
+                    <li>Compárala contra el costo real de la alternativa: esa gente esperando (= $0 extra) o usando esas horas en mantenimiento, relevos o mejoras.</li>
+                </ol>
+                <p>Decide qué vas a dejar de producir. Y prepara tu explicación para la junta — la cultura se cambia con cuentas, no con regaños.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Distinguir activar (moverse) de utilizar (mover al negocio)</li>
+                <li>Que el nivel de trabajo de cada área lo fija el freno, no su capacidad</li>
+                <li>Hacer la cuenta del ocio: el que espera ya está pagado; el que produce de más, no</li>
+                <li>Darle uso inteligente a la holgura: mantenimiento, relevos, mejora — o simple disponibilidad</li>
+            </ul>
+            <div class="okr-next">→ En la <strong>Lección 15</strong> armamos el mecanismo completo: soltar el trabajo al ritmo del freno, con un colchón calculado — y de regalo, el superpoder comercial de las fechas que SÍ se cumplen.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 15 — MÓDULO I · SUELTA EL TRABAJO AL RITMO DEL FRENO
+    // ==========================================================
+    {
+        id: 'l15', module: 'Módulo I · Integra el ritmo', tag: 'tag-d4', tagLabel: 'MÓDULO I',
+        title: 'Suelta el trabajo al ritmo del freno',
+        subtitle: 'El mecanismo del marcapasos: cuánto trabajo entra, cuándo, y el colchón que protege todo el sistema',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">No controles lo que cada área produce. Controla lo que entra al sistema — el resto se ordena solo.</div>
+            <div class="pq-author">— Método FLUIR · El marcapasos</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>El mecanismo del marcapasos: soltar trabajo al sistema SOLO al ritmo en que el freno lo procesa</li>
+                <li>Cómo dimensionar el colchón del freno (suficiente para que nunca se quede sin trabajo; no más)</li>
+                <li>Programar hacia atrás: el freno como reloj de todo el negocio</li>
+                <li>El subproducto millonario: fechas de entrega que se cumplen — y lo que eso vale comercialmente</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>El mecanismo del marcapasos</h3>
+            <p>Hasta hoy, tu negocio probablemente funciona así: todo pedido que entra se suelta DE INMEDIATO a la operación — "que vaya avanzando". Suena proactivo. Es la receta del caos: las áreas rápidas procesan todo al momento y lo apilan frente al freno; el patio/pasillo/bandeja se llena; todo parece urgente porque todo está empezado; nada tiene fecha confiable porque la fila del freno es una maraña.</p>
+            <p>El Método FLUIR invierte el mecanismo. Como el freno marca el ritmo del sistema (es el marcapasos), <strong>el trabajo se suelta a la operación al ritmo del freno — ni antes, ni más:</strong></p>
+            <ol class="concept-list">
+                <li><strong>El freno tiene una agenda</strong> (su capacidad real, la de la Lección 11: horas productivas × su velocidad).</li>
+                <li><strong>Cada pedido nuevo toma turno en esa agenda</strong> — no en el aire: en las horas reales disponibles del freno.</li>
+                <li><strong>El trabajo se libera hacia atrás:</strong> los pasos previos arrancan justo a tiempo para que el pedido llegue al freno un poco antes de su turno. No semanas antes: un poco antes.</li>
+            </ol>
+            <p>Resultado físico inmediato: el trabajo a medias se desinfla (dinero des-atrapándose), las áreas dejan de ahogarse, y la fila del freno se vuelve corta y ordenada. <strong>No controlaste a nadie: controlaste la puerta de entrada.</strong></p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Concepto clave · El colchón (la única fila buena del negocio)</h3>
+            <p>Espera — si el trabajo llega "justo a tiempo" al freno y un paso previo falla (Lección 6: la variación existe), ¿el freno se queda parado? Ahí entra la pieza que completa el mecanismo:</p>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;text-align:center;color:#0b3d3a;">
+                <strong>Frente al freno — y SOLO frente al freno — se mantiene un colchón:<br>una fila pequeña y deliberada de trabajo listo para procesar.</strong>
+            </div>
+            <p>¿De qué tamaño? El suficiente para cubrir el tropiezo típico de tus pasos previos. Regla práctica: si tus áreas previas tardan medio día en reponerse de una falla normal, el colchón es de medio a un día de trabajo del freno. Se ajusta con la realidad: ¿el freno nunca ha estado cerca de quedarse sin trabajo? El colchón está gordo — adelgázalo. ¿Se ha quedado sin trabajo dos veces este mes? Engórdalo tantito o sella las fugas del paso que falla.</p>
+            <p>Fíjate en la elegancia del diseño: <strong>holgura de capacidad en todas las áreas (Lección 7) + colchón de trabajo SOLO frente al freno.</strong> Inventario mínimo Y freno siempre alimentado. Las dos cosas que parecían imposibles de tener juntas.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · El patio vacío que vende más</div>
+            <div class="case-body">
+                <p>La última pieza del taller de Rubén. Antes: se recibía todo auto que llegara — el patio como estacionamiento de 30 autos "en proceso", clientes llamando diario, técnicos brincando de auto en auto según quién llamara más enojado.</p>
+                <p>El cambio: la recepción ahora agenda contra <strong>la agenda de Genaro</strong> — 8 horas productivas, ~10 autos diarios. El cliente que llama no escucha "tráigalo cuando quiera": escucha <em>"tráigalo el jueves a las 9, se lo entrego el viernes a las 6"</em>. Frente a la bahía de Genaro, siempre 3-4 autos preparados (el colchón). El resto de los autos del mundo… siguen con sus dueños, no estorbando en el patio.</p>
+                <p>Lo que pasó con los clientes fue contraintuitivo: Rubén temía que "vuelva el jueves" los espantara. <strong>Al revés: "me lo entregó el viernes a las 6, como dijo" se volvió la frase que llenó el taller.</strong> En su rubro — donde el estándar es "ahí le hablamos cuando esté" — la fecha cumplida resultó mejor publicidad que cualquier descuento. El patio vacío vendía más que el patio lleno.</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Cuando el freno es el reloj, prometer fechas deja de ser adivinar: es leer la agenda."</div>
+            <div class="aha-author">— Método FLUIR · Programar hacia atrás</div>
+            <div class="aha-body">Esta es la recompensa grande del módulo. Con el marcapasos funcionando, la fecha de entrega de cualquier pedido se calcula, no se inventa: turno del pedido en la agenda del freno + lo que falta después del freno + un margen honesto. Antes, tus fechas eran deseos educados ("yo creo que para el viernes…") calculados sumando promedios — fantasía pura, como aprendiste en la Lección 6. Ahora son aritmética sobre el único recurso que de verdad manda. Y en casi cualquier mercado de PYMES — talleres, imprentas, muebles, despachos — <strong>el proveedor que cumple fechas es tan raro que cumplirlas es un superpoder comercial.</strong> En el Módulo R aprenderás a cobrarlo.</div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128336;</span><div>
+                <h3>El mismo mecanismo en un despacho (sin máquinas)</h3>
+                <p>¿Y si tu negocio es de servicios? Idéntico. El freno de Leticia son sus horas de revisión. Antes, marzo entraba "todo a la vez": 40 clientes soltaban sus papeles cuando querían, todo se capturaba de inmediato, y la bandeja de revisión de Leticia era una torre sin orden.</p>
+                <p>Ahora marzo tiene marcapasos: a cada cliente se le asigna <strong>su semana de entrega de papeles</strong> (la puerta de entrada, controlada), la captura procesa al ritmo de la agenda de revisión de Leticia, y frente a ella siempre hay 2-3 expedientes completos listos (el colchón) — nunca cuarenta a medias. Mismo método: agenda del freno, puerta controlada, colchón chico. El "sistema" es una hoja de cálculo y una regla que se respeta.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l15a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿En qué consiste el mecanismo del marcapasos?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">En que cada área trabaje a su máxima velocidad para que nada se atrase</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">En soltar todos los pedidos de inmediato para que "vayan avanzando"</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, true)">En soltar el trabajo al sistema al ritmo de la agenda del freno, de modo que llegue a él justo antes de su turno</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15a', this, false)">En poner un supervisor que vigile los tiempos de cada estación</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l15a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l15b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Dónde debe existir una fila de trabajo deliberada — y por qué?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, false)">En todas las áreas, para que nadie se quede sin qué hacer</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, true)">Solo frente al freno: un colchón pequeño que lo protege de la variación de los pasos previos sin inflar el inventario</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, false)">En la entrada del negocio, para presumir cartera de pedidos</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l15b', this, false)">En ninguna: el ideal es cero filas en todo el sistema</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l15b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Construye la agenda del freno (30 minutos):</strong></p>
+                <ol>
+                    <li>Calcula la capacidad diaria real de tu freno (horas productivas de la Lección 11 × trabajos por hora).</li>
+                    <li>Dibuja su agenda de la próxima semana y asigna turno a cada pedido pendiente, el más atrasado primero (Lección 12).</li>
+                    <li>Define tu colchón: ¿cuántas horas de trabajo listo deben esperar SIEMPRE frente al freno? Anótalo como regla.</li>
+                    <li>Y la decisión valiente: el próximo pedido que entre, NO lo sueltes de inmediato — dale turno y suéltalo cuando le toque. Observa qué pasa con el resto del flujo.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Operar el marcapasos: la puerta de entrada al ritmo de la agenda del freno</li>
+                <li>Dimensionar y ajustar el colchón — la única fila buena del negocio</li>
+                <li>Programar hacia atrás y prometer fechas leyendo la agenda, no adivinando</li>
+                <li>Que el mecanismo funciona igual en taller, despacho, cocina o clínica</li>
+            </ul>
+            <div class="okr-next">→ <strong>Lección 16:</strong> el truco que reduce tus plazos casi a la mitad sin comprar nada — lotes chicos. Y la anatomía del tiempo: de las 3 semanas que tarda tu pedido, ¿cuántas horas son trabajo real? Te vas a sorprender.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 16 — MÓDULO I · LOTES CHICOS, PLAZOS CORTOS
+    // ==========================================================
+    {
+        id: 'l16', module: 'Módulo I · Integra el ritmo', tag: 'tag-d4', tagLabel: 'MÓDULO I',
+        title: 'Lotes chicos, plazos cortos',
+        subtitle: 'La anatomía del tiempo: por qué tu pedido tarda 3 semanas si solo tiene 11 horas de trabajo — y cómo partir lotes lo arregla',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1400&q=80')">
+            <div class="hero-caption">Tu pedido no pasa semanas siendo trabajado. Pasa semanas ESPERANDO. Y la espera sí se puede recortar.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Los 4 tiempos de cualquier trabajo: preparación, proceso, cola y espera de compañía</li>
+                <li>Por qué la cola y la espera dominan tu plazo total (y quién las gobierna)</li>
+                <li>El efecto mágico de partir los lotes a la mitad — y por qué no cuesta lo que crees</li>
+                <li>Cómo aplicar lotes chicos también con proveedores (la revancha de Don Chuy)</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>La anatomía del tiempo: ¿en qué se va el plazo?</h3>
+            <p>Toma un pedido cualquiera y desármalo: desde que entró hasta que se entregó, cada hora de su vida fue de uno de estos 4 tipos:</p>
+            <ol class="concept-list">
+                <li><strong>Preparación:</strong> alistar la máquina/estación para ESE trabajo (cambiar placas, limpiar el área, abrir el expediente).</li>
+                <li><strong>Proceso:</strong> el trabajo real — lo único por lo que el cliente paga.</li>
+                <li><strong>Cola:</strong> esperar a que el recurso se desocupe de OTROS trabajos. (La fila.)</li>
+                <li><strong>Espera de compañía:</strong> el trabajo está listo… esperando a que lleguen sus otras partes para juntarse (las puertas esperan al barniz; la declaración espera un papel del cliente; la torta espera las papas).</li>
+            </ol>
+            <p>Ahora la proporción que nadie quiere ver. En la mueblería San José desarmaron el plazo de una cocina integral: 21 días de calendario. ¿Trabajo real (preparación + proceso)? <strong>11 horas.</strong> Todo lo demás — más del 95% del plazo — fue cola y espera de compañía. <strong>Tu plazo no está hecho de trabajo: está hecho de espera.</strong> Y la espera la gobiernan dos cosas que ya controlas: la fila del freno (Lección 15)… y el tamaño de tus lotes.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Concepto clave · Parte el lote a la mitad (y mira lo que pasa)</h3>
+            <p>El lote es cuánto trabajo viaja JUNTO por tu proceso: las 6 cocinas que se cortan todas → se arman todas → se barnizan todas; los 5,000 folletos que viajan en bloque; los 40 expedientes que se capturan antes de pasar nada a revisión.</p>
+            <p>¿Qué pasa si partes el lote a la mitad (3 cocinas, 2,500 folletos, 20 expedientes — o mejor: de una en una)?</p>
+            <ul>
+                <li><strong>La cola de cada estación se encoge a la mitad</strong> — cada trabajo espera a que terminen 3 cocinas antes que él, no 6.</li>
+                <li><strong>La espera de compañía se desploma</strong> — las puertas de la cocina 1 ya no esperan a que se barnicen las de la cocina 6.</li>
+                <li><strong>El primer pedido sale MUCHO antes</strong> — y empieza a cobrarse mientras el resto avanza (¡dinero que ENTRA más pronto!).</li>
+                <li><strong>El dinero atrapado en proceso baja a la mitad</strong> — el medidor 2 sonríe.</li>
+            </ul>
+            <p>San José pasó de "6 cocinas en bloque" a fluir de una en una: <strong>el plazo por cocina cayó de 21 a 9 días. Sin contratar, sin comprar, sin correr.</strong> Solo dejaron de hacer viajar el trabajo en caravana.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"¿Más preparaciones? Sí. ¿Y qué? Esas horas extra viven en recursos a los que les sobra el tiempo."</div>
+            <div class="aha-author">— Método FLUIR · La objeción desarmada</div>
+            <div class="aha-body">La resistencia clásica a los lotes chicos: "¡vamos a preparar las máquinas el doble de veces — eso es ineficiencia!". Detente y pregunta lo único que importa: ¿DÓNDE ocurren esas preparaciones extra? Si es en áreas no-freno: les sobra capacidad (Lección 14) — convertir su tiempo ocioso en preparaciones no cuesta un peso real, solo ensucia un indicador que ya degradaste en la Lección 5. ¿Y en el freno? Ahí sí cuidado: sus preparaciones se minimizan con ingenio (agrupar trabajos compatibles — la idea de Genaro) o se acepta el lote un poco más grande SOLO ahí. <strong>Una hora "ahorrada" en un no-freno siempre fue un espejismo; una hora de espera recortada al cliente es una venta más pronta.</strong> El cambio es regalado — lo único que cobra es dejar de adorar la eficiencia local.</div>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · La revancha de Don Chuy (lotes chicos con proveedores)</div>
+            <div class="case-body">
+                <p>El principio funciona igual hacia atrás — con lo que COMPRAS. Don Chuy (el del maíz por tonelada y media, Lección 3) entendió por fin la cuenta completa y renegoció: entrega <strong>semanal</strong> de maíz, pagando un precio por bulto ligeramente mayor al del "ofertón" por volumen.</p>
+                <p>Su nueva realidad: caja líquida (ya no presta su dinero al proveedor por 10 semanas), bodega chica (renta de menos espacio), merma casi cero (el grano no envejece), y — sorpresa — <strong>mejor relación con el proveedor</strong>, que ahora tiene un cliente fijo semanal y predecible en su propia agenda, en vez de un pedido gigante cada tres meses.</p>
+                <p>La fórmula de la negociación, por si la necesitas: <em>"te compro lo mismo al año, en entregas chicas y fijas — tú ganas un cliente estable, yo gano caja".</em> Muchos proveedores aceptan sin mover el precio: la predictibilidad también vale para ellos. El descuento por volumen casi siempre es un préstamo disfrazado — que TÚ le haces a tu bodega.</p>
+            </div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#9986;&#65039;</span><div>
+                <h3>¿Hasta dónde partir? La regla del freno</h3>
+                <p>"¿Entonces hago TODO de uno en uno?" Casi — con un solo límite. Parte los lotes hasta donde el freno lo permita: si los lotes ultra-chicos obligan al FRENO a preparar tantas veces que pierde capacidad de proceso, te pasaste — en el freno (y solo en él), busca el punto medio o agrupa trabajos compatibles para preparar una vez y procesar varios.</p>
+                <p>En todas las demás estaciones: parte sin miedo. Su "ineficiencia" extra es tiempo que ya estaba pagado y ocioso. La prueba de que vas bien la dan los 3 medidores: plazo bajando (entra antes), pasillo despejándose (atrapado bajando), gasto igual. El test de los 3 "no", una vez más, es el juez.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l16a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">La cocina integral de San José tardaba 21 días con solo 11 horas de trabajo real. ¿De qué estaba hecho el resto del plazo?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, false)">De los tiempos de secado del barniz, que son inevitables</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, true)">De cola (esperar a que las estaciones se desocuparan) y espera de compañía (esperar a las demás piezas del lote)</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, false)">De retrabajos por errores de los carpinteros</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16a', this, false)">De los días festivos y fines de semana del calendario</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l16a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l16b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">"Partir lotes duplica las preparaciones — es ineficiente." ¿Cuál es la respuesta del Método FLUIR?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Es cierto: por eso los lotes chicos solo funcionan en empresas grandes con muchas máquinas</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Las preparaciones deben eliminarse por completo antes de partir cualquier lote</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, true)">Las preparaciones extra caen en recursos no-freno con tiempo de sobra ya pagado: no cuestan dinero real, solo ensucian un indicador local — en el freno sí se cuida el punto medio</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l16b', this, false)">Se compensa cobrando un cargo extra por urgencia a los clientes</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l16b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Desarma un pedido y parte un lote (25 minutos):</strong></p>
+                <ol>
+                    <li>Toma tu último pedido entregado. Reconstruye su vida: ¿cuántos días de calendario? ¿Cuántas horas de trabajo REAL? Reparte el resto entre cola y espera de compañía. (El porcentaje te va a doler — úsalo.)</li>
+                    <li>Identifica tu lote más grande: ¿qué viaja en caravana por tu proceso? ¿Qué pasaría si viajara en mitades?</li>
+                    <li>Elige UN producto o servicio y pártele el lote a la mitad esta semana. Mide el plazo antes y después.</li>
+                    <li>Bonus proveedor: ¿qué compra grande "por descuento" podrías volver entregas chicas y fijas? Llama y propón la fórmula de Don Chuy.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Desarmar cualquier plazo en sus 4 tiempos: preparación, proceso, cola y espera de compañía</li>
+                <li>Que el plazo está hecho de espera — y la espera se gobierna con la fila del freno y el tamaño del lote</li>
+                <li>Partir lotes a la mitad: plazos casi a la mitad, sin invertir, con el freno como único límite</li>
+                <li>Negociar entregas chicas y frecuentes con proveedores sin pagar de más</li>
+            </ul>
+            <div class="okr-next">→ Cierre del Módulo I, <strong>Lección 17:</strong> el funeral de la palabra "urgente" — un sistema de prioridades tan simple que funciona sin ti, y cómo sobrevivir al valle de los primeros quince días.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 17 — MÓDULO I · ADIÓS A LAS URGENCIAS
+    // ==========================================================
+    {
+        id: 'l17', module: 'Módulo I · Integra el ritmo', tag: 'tag-d4', tagLabel: 'MÓDULO I',
+        title: 'Adiós a las urgencias',
+        subtitle: 'Un sistema de prioridades que funciona sin ti — y cómo atravesar el valle de los primeros quince días sin recaer',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Cuando todo es urgente, nada lo es — y el negocio lo dirige el que grita más fuerte.</div>
+            <div class="pq-author">— Método FLUIR · Lección 17</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Por qué la cultura de urgencias es un síntoma de diseño — y cómo el marcapasos la disuelve</li>
+                <li>Las 3 reglas públicas que sustituyen al dueño-bombero</li>
+                <li>El valle de los 15 días: por qué los indicadores se ven PEOR antes de mejorar, y cómo sostener el cambio</li>
+                <li>Cuándo un sistema de prioridades caduca (y por qué a veces la mejor regla es la más simple de todas)</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Las urgencias no son un problema de actitud: son un diseño</h3>
+            <p>Repasa el mecanismo completo que ya construiste y nota algo: <strong>las urgencias eran el síntoma inevitable del diseño viejo.</strong> Todo se soltaba de inmediato (Lección 15) → todo estaba empezado a la vez → la fila del freno era una maraña → ningún pedido tenía fecha creíble → el cliente llamaba a presionar → el dueño "expeditaba" ese pedido brincándose la fila → lo cual atrasaba otros tres → que generaban tres llamadas más. El círculo perfecto.</p>
+            <p>Con el marcapasos, el círculo se rompe de raíz: hay UNA fila (la agenda del freno), ordenada por UNA regla (lo vendido más atrasado primero), con fechas que se calculan. Pero queda rematar el sistema con reglas que cualquiera pueda aplicar <strong>sin preguntarte</strong> — porque mientras las prioridades vivan en tu cabeza, tú sigues siendo el cuello de botella de las decisiones.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #7 · Las 3 reglas públicas</h3>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;"><strong>Regla 1 · El orden lo dicta la agenda del freno.</strong> Visible para todos (pizarra, hoja impresa, grupo de WhatsApp del equipo): qué sigue, qué va después. Nadie reordena la fila — ni el dueño, salvo decisión EXPLÍCITA y anunciada.</p>
+                <p style="margin:6px 0;"><strong>Regla 2 · "Urgente" tiene precio y dueño.</strong> Meter un pedido fuera de turno se puede — sabiendo qué pedidos se atrasan a cambio (la pizarra lo muestra) y quién lo autoriza (una sola persona). El 80% de las "urgencias" se desinfla cuando el solicitante ve el costo.</p>
+                <p style="margin:6px 0;"><strong>Regla 3 · Las áreas no-freno: primero en llegar, primero en procesar.</strong> Sin sistemas de colores, sin niveles, sin comités. Tienen capacidad de sobra: su mejor regla es la más simple. La sofisticación solo se gana el derecho a existir en el freno.</p>
+            </div>
+            <p>Y una advertencia del oficio: <strong>los sistemas de prioridades caducan.</strong> Si un día notas que "lo normal" ya necesita tres niveles de urgente, no agregues un cuarto nivel — revisa el marcapasos, porque algo se rompió río arriba. Más semáforos nunca arreglan una avenida mal diseñada.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · La fonda sin gritos</div>
+            <div class="case-body">
+                <p>La cocina de Doña Mary a las 2:30 pm era un concierto de gritos: meseros "apurando" sus mesas, la cocinera haciendo tres platillos a la vez (todos a medias), comandas que se brincaban según quién gritara — y platos saliendo fríos, tarde o equivocados.</p>
+                <p>Las 3 reglas, versión fonda: <strong>(1)</strong> un riel de comandas en ORDEN DE LLEGADA, a la vista de todos — la cocinera trabaja el riel, una comanda a la vez, sin negociar. <strong>(2)</strong> ¿Mesa especial que urge (el cliente que debe irse en 15 minutos)? Solo Doña Mary la adelanta, anunciándolo: "esta entra antes, estas dos se recorren". <strong>(3)</strong> Meseros y ayudante: primero en llegar, primero en servirse — cero criterio creativo.</p>
+                <p>Dos semanas después, la cocinera lo resumió mejor que cualquier consultor: <em>"Ahora cocino. Antes me la pasaba decidiendo qué cocinar mientras se me quemaba lo que estaba cocinando."</em> <strong>El silencio en la cocina a las 2:30 se volvió el indicador favorito de Doña Mary</strong> — uno que, por cierto, sí mueve los 3 medidores: mesas más rápidas, menos merma, más clientela.</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Los primeros quince días, el negocio se va a VER peor mientras se vuelve mejor. El que no lo sabe, recae."</div>
+            <div class="aha-author">— Método FLUIR · El valle</div>
+            <div class="aha-body">Te aviso lo que viene cuando implementes el módulo, porque a todos les pasa: al controlar la puerta de entrada, las áreas no-freno tendrán ratos visiblemente ociosos (es el diseño, Lección 14) — pero tus ojos, entrenados por años de "todos ocupados", van a gritar que el negocio se está cayendo. El inventario en proceso tarda en drenarse; las eficiencias locales (que ya no son tu medida, pero siguen ahí) caerán en picada; y alguien — un socio, tu contador, tu suegro — te dirá "esto no está funcionando". <strong>Ese es el valle. Dura una o dos quincenas: lo que tarda el trabajo viejo en salir del sistema y las primeras fechas cumplidas en llegar.</strong> Se atraviesa con dos cosas: los 3 medidores a la vista (que SÍ van a mejorar: plazo, atrapado, entregas) y haber avisado a todos ANTES de empezar que el valle vendría. Avisar es la diferencia entre "va según el plan" y "abortemos la misión".</div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128200;</span><div>
+                <h3>El tablero del valle (qué mirar mientras cruzas)</h3>
+                <p>Durante la transición, mide SOLO esto, semanal, en una hoja a la vista del equipo:</p>
+                <p><strong>1. Pedidos entregados a tiempo</strong> (de los prometidos esta semana, ¿cuántos se cumplieron?) — subirá semana a semana.</p>
+                <p><strong>2. Dinero atrapado en proceso</strong> (cuenta gruesa: ¿cuánto trabajo a medias hay en el piso?) — bajará a ojos vista.</p>
+                <p><strong>3. Horas productivas del freno</strong> (la auditoría de la libreta, Lección 11) — tu nueva eficiencia, la única que importa.</p>
+                <p>Lo que NO mirarás: % de ocupación de las demás áreas. Ya sabes por qué — y tu equipo también, si hiciste la junta de la Lección 14. El valle se cruza mirando el tablero correcto.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l17a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">Según la lección, ¿por qué la cultura de "todo es urgente" NO se arregla pidiendo más compromiso al equipo?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, true)">Porque las urgencias son el síntoma del diseño viejo (todo se suelta a la vez, sin fila única ni fechas creíbles) — se disuelven cambiando el diseño, no la actitud</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, false)">Porque los empleados de las PYMES no responden a los llamados de compromiso</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, false)">Porque los clientes mexicanos son especialmente impacientes</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17a', this, false)">Porque falta un software de gestión de pedidos en tiempo real</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l17a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l17b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Qué es "el valle" y cómo se atraviesa?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, false)">La temporada baja de ventas: se atraviesa con promociones y descuentos</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, false)">El periodo en que el freno se cambia de lugar: se atraviesa contratando temporales</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, true)">Las primeras semanas del cambio, cuando los indicadores viejos se ven peor antes de que el sistema mejore: se atraviesa avisando antes, mirando los 3 medidores y sosteniendo la decisión</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l17b', this, false)">La caída de ánimo del equipo al recibir nuevas reglas: se atraviesa con incentivos económicos</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l17b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Publica las reglas y anuncia el valle (1 hora, esta semana):</strong></p>
+                <ol>
+                    <li>Escribe tus 3 reglas públicas adaptadas a tu negocio (la agenda visible, el "urgente" con precio y dueño, el primero-en-llegar para no-frenos). Una hoja, lenguaje llano.</li>
+                    <li>Convoca la junta de 20 minutos: presenta las reglas, el tablero del valle y — crucial — <strong>anuncia el valle</strong>: "las próximas dos quincenas esto se va a ver raro; aquí está lo que vamos a mirar para saber que vamos bien".</li>
+                    <li>Pega el tablero del valle donde todos lo vean y llénalo cada viernes.</li>
+                </ol>
+                <p>Con esto, el Módulo I está operando. Tu negocio ya tiene marcapasos, colchón, lotes chicos y reglas que funcionan sin ti. Lo que sigue es crecer: romper el freno — y elegir el siguiente.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Que las urgencias eran síntoma del diseño viejo, no de la gente</li>
+                <li>Instalar las 3 reglas públicas que sustituyen al dueño-bombero</li>
+                <li>Anticipar y cruzar el valle de los 15 días con el tablero correcto</li>
+                <li>Detectar cuándo un sistema de prioridades caducó (más semáforos nunca son la respuesta)</li>
+            </ul>
+            <div class="okr-next">→ Empieza el módulo final: <strong>R · Rompe y repite</strong>. Tu freno está exprimido y el negocio marcha a su ritmo — llegó la hora de ROMPERLO… y de aprender por qué las reglas de hoy serán tu próximo freno si no las vigilas.</div>
+        </div>
+        `
     }
 
     // ==========================================================
-    // PENDIENTE (ver blueprint): Módulo I (14-17), Módulo R (18-21),
-    // Examen (22), Certificado (23)
+    // PENDIENTE (ver blueprint): Módulo R (18-21), Examen (22), Certificado (23)
     // ==========================================================
 
     ]
