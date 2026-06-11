@@ -2307,11 +2307,610 @@ const COURSE_DESTAPA_TU_NEGOCIO = {
             <div class="okr-next">→ Empieza el módulo final: <strong>R · Rompe y repite</strong>. Tu freno está exprimido y el negocio marcha a su ritmo — llegó la hora de ROMPERLO… y de aprender por qué las reglas de hoy serán tu próximo freno si no las vigilas.</div>
         </div>
         `
-    }
+    },
 
     // ==========================================================
-    // PENDIENTE (ver blueprint): Módulo R (18-21), Examen (22), Certificado (23)
+    // MÓDULO R — ROMPE Y REPITE (lecciones 18-21)
     // ==========================================================
+    {
+        id: 'l18', module: 'Módulo R · Rompe y repite', tag: 'tag-final', tagLabel: 'MÓDULO R',
+        title: 'Rompe el límite (y cuidado con la inercia)',
+        subtitle: 'Cuándo sí invertir, a dónde se muda el freno — y por qué las reglas de hoy serán tu próximo freno si no las vigilas',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1400&q=80')">
+            <div class="hero-caption">El freno no muere. Se muda. Tu trabajo es saber a dónde — antes de que te avise.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Cuándo llegó la hora de INVERTIR en el freno (y cómo decidirlo con datos, no corazonadas)</li>
+                <li>La ley de la mudanza: al romper un freno, otro toma su lugar — cómo anticipar cuál</li>
+                <li>La trampa de la inercia: las reglas que te salvaron ayer pueden estrangularte mañana</li>
+                <li>Tus dos radares permanentes: los casi-frenos y los huecos del colchón</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Ahora sí: a romperlo (elevar el freno)</h3>
+            <p>Los Módulos U e I tenían una regla implícita: <em>primero exprime, luego inviertes.</em> Si llegaste hasta aquí, tu freno ya trabaja al máximo de lo posible sin dinero. Cuando la demanda sigue superándolo, llegó la hora de <strong>romper el límite</strong>: invertir capacidad nueva. Y ahora la decisión es completamente distinta a la del Rubén de la Lección 0:</p>
+            <ol class="concept-list">
+                <li><strong>Sabes DÓNDE invertir:</strong> en el freno — no donde la corazonada o el vendedor de maquinaria digan.</li>
+                <li><strong>Sabes CUÁNTO vale:</strong> cada hora nueva de freno vale tu cifra de la Lección 10. Con eso, el retorno de la inversión se calcula en una servilleta: ¿cuántas horas de freno agrega al mes? × $/hora = lo que paga.</li>
+                <li><strong>Sabes QUÉ formas tiene:</strong> no solo "comprar máquina": formar a un segundo especialista (el relevo de la Lección 11 ya lleva medio camino), un turno extra solo para el freno, delegar permanentemente lo descargable (Lección 13)… La inversión más barata casi nunca es fierro.</li>
+            </ol>
+            <p>Pásala por el test de los 3 "no" y por los 3 lentes (¿la caja aguanta la inversión sin ahogarse?). Si pasa: rompe.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · El taller de Rubén rompe su freno (y conoce al siguiente)</div>
+            <div class="case-body">
+                <p>Con el método completo operando, la demanda del taller creció — fechas cumplidas atraen clientes — y las 8 horas de Genaro volvieron a quedar cortas. Esta vez Rubén no compró un elevador: <strong>formó un segundo diagnosta.</strong> El técnico que relevaba a Genaro en las comidas llevaba meses aprendiendo; tres meses de formación intensiva (pagada con horas de holgura, no con horas extra) y el taller pasó a 14-15 diagnósticos diarios.</p>
+                <p>¿Y qué pasó? Exactamente lo que esta lección predice: <strong>el freno se mudó.</strong> A las dos semanas, la montaña ya no estaba frente a la bahía de diagnóstico — estaba en "esperando refacción": el mostrador de refacciones del rumbo no surtía al nuevo ritmo del taller. Señal 1, señal 2 y señal 3 apuntando al mismo lugar nuevo (Lección 9, otra vez — el ciclo es el mismo, el freno es otro).</p>
+                <p>Rubén ya no se asustó: negoció entregas diarias con dos refaccionarias (lotes chicos con proveedores — Lección 16) y stock mínimo de las 30 piezas más usadas, dimensionado como colchón, no como bodega. <strong>Tres meses, dos frenos rotos, cero pánico.</strong> Eso es operar con método.</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"La regla que te salvó con el freno viejo es la primera sospechosa de estrangular al nuevo."</div>
+            <div class="aha-author">— Método FLUIR · La inercia</div>
+            <div class="aha-body">Aquí está el error final — el que cometen incluso los que dominan todo lo anterior. Cada regla que instalaste (el filtro de Genaro, el colchón de 4 autos, la agenda, los lotes) fue diseñada PARA UN FRENO ESPECÍFICO. Cuando el freno se muda, esas reglas no se actualizan solas: se quedan, por inercia, gobernando un sistema que ya cambió. El preparador sigue clasificando para un Genaro que ya no es el límite; el colchón sigue dimensionado para una capacidad que ya creció. <strong>Las reglas viejas no avisan que caducaron — solo estorban en silencio.</strong> Por eso cada vez que rompas un freno, el método manda re-auditar TODAS las reglas con una pregunta: "¿esto para qué freno lo diseñamos?". Si la respuesta es "para el anterior", la regla entra a revisión. Las restricciones más caras de un negocio maduro no son máquinas ni personas: son políticas fosilizadas — lo viste en San José con el 70% de anticipo, y ahora sabes que TUS propias reglas FLUIR pueden fosilizarse igual.</div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #8 · Tus dos radares permanentes</h3>
+            <p>¿Cómo saber a dónde se mudará el freno ANTES de que la montaña aparezca? Dos radares baratos:</p>
+            <ol class="concept-list">
+                <li><strong>El mapa de casi-frenos.</strong> Pregunta: si mis ventas crecieran 30%, ¿qué punto revienta primero? Esos 2-3 puestos/recursos "siempre apretados aunque no son el freno" son tus próximos frenos. Trátalos preventivo: ten identificado su relevo, su descarga y su inversión — antes de necesitarlos.</li>
+                <li><strong>Los huecos del colchón.</strong> Revisa a diario qué DEBERÍA estar en el colchón del freno y no llegó. Cada hueco tiene un culpable río arriba; el culpable RECURRENTE es tu señal de dónde sellar fugas o agregar capacidad protectora. El colchón no es solo protección: es tu sistema de alerta temprana — gratis.</li>
+            </ol>
+            <p>Con estos dos radares, dejas de descubrir tus frenos por las quejas de los clientes y empiezas a descubrirlos en una libreta, semanas antes.</p>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128260;</span><div>
+                <h3>¿Y si el freno se muda a la calle?</h3>
+                <p>Tarde o temprano — si repites el ciclo — tu operación podrá con MÁS de lo que vendes. Las señales: huecos frecuentes en la agenda del freno, colchón siempre lleno, equipo con holgura creciente. No es crisis: es graduación. <strong>Tu freno ahora es el mercado</strong>, y toda la energía que invertías en el piso debe mudarse a conseguir pedidos.</p>
+                <p>La mayoría de los dueños tarda meses en aceptar esta mudanza — siguen optimizando un taller que ya no es el límite, porque el taller es su zona cómoda. El método te lo dice sin piedad: el freno está donde está, no donde te gusta trabajar. La buena noticia: la siguiente lección te enseña a vender usando lo que construiste — tu operación misma como argumento de venta.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l18a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">Rubén formó un segundo diagnosta y dos semanas después la montaña de trabajo apareció en "esperando refacción". ¿Qué ilustra esto?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, false)">Que formar al segundo diagnosta fue un error: el freno debía seguir siendo Genaro</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, true)">La ley de la mudanza: al romper un freno, otro punto del sistema toma su lugar — y se localiza con las mismas 3 señales</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, false)">Que las refaccionarias de México son poco confiables</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18a', this, false)">Que el taller creció demasiado rápido y debió frenar sus ventas</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l18a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l18b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿En qué consiste la trampa de la inercia?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, false)">En que los empleados se resisten naturalmente a cualquier cambio</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, false)">En invertir demasiado pronto en capacidad nueva sin exprimirla antes</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, true)">En que las reglas diseñadas para el freno anterior se quedan gobernando por costumbre cuando el freno ya se mudó — y estorban en silencio</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l18b', this, false)">En dejar de monitorear los 3 medidores cuando el negocio mejora</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l18b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Tu mapa de mudanza (20 minutos):</strong></p>
+                <ol>
+                    <li>Contesta por escrito: si rompiera mi freno actual mañana, ¿a dónde se mudaría? (usa el ejercicio del 30%: ¿qué revienta primero si vendo 30% más?)</li>
+                    <li>Para ese casi-freno: ¿quién sería su relevo, qué se le podría descargar, cuánto costaría elevarlo? Tres renglones — es tu plan de contingencia.</li>
+                    <li>Y agenda en tu calendario, cada 3 meses, la re-auditoría de reglas: "¿esto para qué freno lo diseñamos?"</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Decidir inversiones en el freno con servilleta y datos: horas nuevas × valor de la hora</li>
+                <li>Que el freno no muere — se muda, y las 3 señales lo encuentran de nuevo</li>
+                <li>Re-auditar tus reglas cada vez que el freno cambia (la inercia no avisa)</li>
+                <li>Operar tus dos radares: casi-frenos y huecos del colchón</li>
+            </ul>
+            <div class="okr-next">→ En la <strong>Lección 19</strong>, la cosecha comercial: cómo convertir tu operación — fechas cumplidas, plazos cortos, capacidad conocida — en tu mejor argumento de venta. Incluye la cuenta que te permitirá aceptar pedidos que hoy rechazarías por "incosteables".</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 19 — MÓDULO R · TU OPERACIÓN ES TU MEJOR VENDEDOR
+    // ==========================================================
+    {
+        id: 'l19', module: 'Módulo R · Rompe y repite', tag: 'tag-final', tagLabel: 'MÓDULO R',
+        title: 'Tu operación es tu mejor vendedor',
+        subtitle: 'Cobrar la velocidad, aceptar pedidos "imposibles" y llenar las horas muertas — sin bajarle el precio a nadie',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Mientras tu competencia regatea centavos de precio, tú puedes vender lo que ellos no tienen: una fecha que se cumple.</div>
+            <div class="pq-author">— Método FLUIR · Lección 19</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Cómo convertir el plazo corto y la fecha confiable en tu argumento de venta central (y cobrarlo)</li>
+                <li>La cuenta del pedido "imposible": cuándo un precio que tu costo unitario rechaza es utilidad pura</li>
+                <li>Cómo llenar horas muertas con otro segmento sin reventar tus precios principales</li>
+                <li>La métrica reina para elegir entre pedidos: contribución por hora del freno</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Vende lo que construiste (los demás no lo tienen)</h3>
+            <p>Haz memoria de tu mercado: ¿cuántos proveedores cumplen la fecha que prometen? En talleres, imprentas, muebles, despachos, el estándar nacional es "ahí le aviso" — y el cliente lo odia con toda su alma. Tú ahora tienes lo contrario: una agenda real (la del freno), plazos cortos (lotes chicos) y fechas que son aritmética, no deseo.</p>
+            <p>Eso se vende — y se cobra. Tres movimientos concretos:</p>
+            <ol class="concept-list">
+                <li><strong>Promesa pública con respaldo:</strong> "entrega en X días, o te descuento Y". Aterrador… para quien no controla su flujo. Tú lees tu agenda antes de prometer. La garantía espanta a tu competencia más que a tus riesgos.</li>
+                <li><strong>Tarifa de velocidad:</strong> el cliente que necesita su pedido ANTES puede pagarlo: un turno comprado en la agenda del freno tiene precio (y la pizarra muestra a quién recorre — Lección 17, regla 2, ahora monetizada).</li>
+                <li><strong>El plazo como cuña de entrada:</strong> para robarle un cliente grande a un competidor, no ofrezcas centavos de descuento: ofrece la entrega que el otro no puede firmar.</li>
+            </ol>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Concepto clave · La cuenta del pedido "imposible"</h3>
+            <p>Llega un pedido grande a precio incómodo — abajo de tu "costo unitario". El reflejo dice: "ni de chiste, pierdo dinero". Detente y haz la cuenta FLUIR. Si tu negocio tiene <strong>capacidad ociosa</strong> (el freno con huecos en agenda):</p>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;">Tus gastos fijos (renta, nómina, luz) <strong>ya están pagados</strong> — con o sin este pedido.</p>
+                <p style="margin:6px 0;">El único dinero NUEVO que sale por este pedido: <strong>materiales + gastos directos</strong> (flete, comisión, empaque).</p>
+                <p style="margin:6px 0;"><strong>Si el precio supera ese dinero nuevo, todo el excedente es utilidad pura</strong> — aunque el "costo unitario" contable diga lo contrario (ese prorratea gastos que ya pagaste de todos modos).</p>
+            </div>
+            <p>Dos candados obligatorios antes de aceptar: <strong>(1) que NO consuma horas de freno que pedidos de precio completo necesitan</strong> (si el freno está lleno, esta cuenta no aplica — ahí el pedido sí compite contra ventas reales), y <strong>(2) que no contamine tu mercado principal</strong> — viene el cómo.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · Grafix y el pedido que "perdía dinero"</div>
+            <div class="case-body">
+                <p>A Grafix le llegó una licitación: 80,000 ejemplares de un cuadernillo para una dependencia, a un precio 35% abajo de su lista. El contador lo rechazó de oficio: "el costo unitario nos da arriba de eso, perdemos en cada pieza". Pero la prensa — ya con el método — tenía las tardes de jueves y viernes con huecos.</p>
+                <p>La cuenta FLUIR: precio del contrato $190,000. Dinero nuevo que sale: papel, tinta y placas $110,000, flete $8,000. <strong>Excedente: $72,000 — directo a utilidad</strong>, producido en horas de prensa que de otro modo valdrían cero. ¿Canibalizaba clientes de lista? No: la dependencia jamás había sido ni sería cliente de mostrador.</p>
+                <p>Aceptaron. El contador tardó dos meses en perdonarlos — hasta que vio el estado de cuenta. <strong>El costo unitario es una gran herramienta para REPORTAR el pasado y una pésima para DECIDIR el futuro</strong> (Lección 10, ¿recuerdas? contabilidad para reportar, freno para decidir).</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Las horas muertas de tu negocio son un producto en bodega. Véndelas — pero en otra tienda."</div>
+            <div class="aha-author">— Método FLUIR · Segmentar sin contaminar</div>
+            <div class="aha-body">El riesgo de los precios especiales es obvio: que tu cliente de siempre se entere y exija lo mismo. La solución es vender la capacidad ociosa en un <strong>segmento que no se cruza con el principal</strong>: otro canal (licitaciones vs. mostrador), otro tipo de cliente (maquila para otras marcas vs. producto propio), otra zona, otra presentación. La Espiga lo hizo de libro: sus horas valle de máquina ahora producen totopos y tostadas <strong>a granel para fondas y taquerías</strong> — otro producto, otro empaque, otro comprador. El cliente de mostrador ni se entera, y las horas que valían cero pagan el gas del mes. Tu lista de precios es para tu mercado; tus horas muertas pueden tener la suya — mientras los dos mundos no se toquen.</div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#129309;</span><div>
+                <h3>San José aprende a "diseñar la venta" (y la métrica reina)</h3>
+                <p>El cierre del arco de la mueblería. Una constructora pidió 20 cocinas "para dentro de dos meses, todas juntas". El viejo San José habría dicho que sí, sufrido tres meses y entregado tarde. El nuevo San José contestó con su agenda en la mano: <em>"Te entrego 3 cocinas semanales a partir de la semana 2 — tu obra avanza por etapas de todos modos, ¿de verdad las necesitas todas juntas?".</em> La constructora no solo aceptó: prefirió no recibir 20 cocinas de golpe en una obra a medio terminar. <strong>Entregas escaladas: mejor para ambos — ganar-ganar de manual.</strong></p>
+                <p>¿Y cuando dos pedidos compiten por las mismas horas de freno? La métrica reina: <strong>(precio − materiales y gastos directos) ÷ horas de freno que consume.</strong> El pedido que más deja POR HORA DE FRENO va primero — no el más grande, no el de mayor precio total. Es una división que cabe en el teléfono y vale más que un ERP.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l19a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">Grafix aceptó un contrato 35% abajo de su lista y ganó $72,000. ¿Por qué funcionó la cuenta?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, false)">Porque al subir el volumen bajó el costo unitario de toda la imprenta</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, true)">Porque con capacidad ociosa los fijos ya estaban pagados: el precio superaba el dinero nuevo (materiales y directos), no canibalizaba al mercado principal y usaba horas que valían cero</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, false)">Porque las dependencias de gobierno siempre pagan mejor a la larga</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19a', this, false)">Porque el contador calculó mal el costo unitario original</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l19a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l19b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">Cuando dos pedidos compiten por las mismas horas del freno, ¿cuál va primero?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, false)">El de mayor precio total, porque trae más dinero al negocio</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, false)">El del cliente más antiguo, por lealtad comercial</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, true)">El de mayor contribución (precio menos materiales y directos) por hora de freno consumida</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l19b', this, false)">El más fácil de producir, para liberar la agenda cuanto antes</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l19b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Monetiza lo construido (30 minutos):</strong></p>
+                <ol>
+                    <li>Escribe tu promesa comercial nueva en una frase: <em>"Te entrego en ___ días — y si no, ___"</em>. Verifica contra tu agenda del freno que puedas firmarla.</li>
+                    <li>Identifica tus horas muertas (agenda del freno de las últimas 4 semanas: ¿dónde hubo huecos?) y UN segmento que no se cruce con tu mercado para venderlas.</li>
+                    <li>Rescata el último pedido que rechazaste "por incosteable" y hazle la cuenta FLUIR: dinero nuevo vs. precio, con los dos candados. ¿Lo rechazarías hoy?</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Vender (y cobrar) el plazo corto y la fecha garantizada</li>
+                <li>Hacer la cuenta del pedido "imposible" con sus dos candados</li>
+                <li>Llenar horas muertas en segmentos que no contaminan tu lista de precios</li>
+                <li>Priorizar pedidos por contribución por hora de freno — la métrica reina</li>
+            </ul>
+            <div class="okr-next">→ <strong>Lección 20:</strong> subimos el método del piso a tu cabeza — las 3 preguntas del dueño y el razonamiento que te permitirá diagnosticar CUALQUIER problema futuro, no solo los que vimos aquí.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 20 — MÓDULO R · LAS 3 PREGUNTAS DEL DUEÑO
+    // ==========================================================
+    {
+        id: 'l20', module: 'Módulo R · Rompe y repite', tag: 'tag-final', tagLabel: 'MÓDULO R',
+        title: 'Las 3 preguntas del dueño',
+        subtitle: 'Qué cambiar, hacia qué cambiar y cómo provocar el cambio — el razonamiento detrás de todo lo que aprendiste',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1400&q=80')">
+            <div class="hero-caption">El que no puede responder qué cambiar, hacia qué y cómo… no dirige: reacciona.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La nueva jerarquía de mejora: por qué "¿qué me impide vender más?" le gana a "¿dónde recorto?"</li>
+                <li>El razonamiento SI-ENTONCES: encontrar la causa raíz detrás de muchos síntomas</li>
+                <li>El chequeo de efectos secundarios: pensar la consecuencia ANTES de implementar</li>
+                <li>Las 3 preguntas que estructuran cualquier decisión grande de aquí en adelante</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>La nueva jerarquía: el orden de los 3 medidores SÍ importa</h3>
+            <p>En la Lección 3 te adelantamos que el orden — ENTRA ↑, ATRAPADO ↓, SALE ↓ — tenía su porqué. Aquí está:</p>
+            <ol class="concept-list">
+                <li><strong>El gasto tiene piso.</strong> Recortar tiene un límite duro: abajo de cierto punto, te comes la capacidad protectora (Doña Mary y su jueves negro). La mejora por recorte se agota — y deja al negocio frágil.</li>
+                <li><strong>El dinero que entra no tiene techo.</strong> Vender y entregar más no se agota en ningún punto. Es el único medidor con espacio infinito.</li>
+                <li><strong>Lo atrapado está en medio:</strong> liberarlo da oxígeno (caja inmediata) sin riesgo — pero también llega a su piso natural (el colchón del freno, los inventarios mínimos).</li>
+            </ol>
+            <p>La gestión tradicional vive en el medidor 3 ("¿dónde corto?") porque es el que más fácil se controla desde un escritorio. El Método FLUIR vive en el 1: <strong>"¿qué me impide vender y entregar más?"</strong> — y la respuesta, ya lo sabes, siempre pasa por el freno. No es optimismo: es matemáticas — el techo de una pregunta es infinito y el de la otra no.</p>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #9 · El razonamiento SI-ENTONCES</h3>
+            <p>Tu negocio te presentará problemas que este curso no cubrió. Para esos, te llevas el motor de diagnóstico que usamos en cada caso sin decírtelo:</p>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;"><strong>1.</strong> Junta los síntomas (no uno: varios). "Bajaron las ventas Y hay más quejas Y el equipo está apático."</p>
+                <p style="margin:6px 0;"><strong>2.</strong> Propón UNA causa que los explicaría a todos. No la primera que te guste: la que conecte más síntomas.</p>
+                <p style="margin:6px 0;"><strong>3.</strong> Deduce y verifica: <em>"SI esa causa es real, ENTONCES también debería estar pasando X y Y"</em> — y ve a comprobarlo ANTES de actuar.</p>
+            </div>
+            <p>Ejemplo en vivo: a la fonda de Doña Mary le bajó la venta. ¿Causa? "La economía", dijo el sobrino. Doña Mary aplicó el método: SI fuera la economía, ENTONCES bajarían igual el desayuno y la comida, y las fondas vecinas estarían igual. Verificó: el desayuno estaba intacto, la vecina llena. La causa real conectaba otros síntomas: su mesera estrella se fue hace un mes, las mesas de mediodía se atienden lento, y los clientes de oficina — que tienen una hora exacta — migraron. <strong>"La economía" no tiene remedio; "reponer y entrenar al relevo de la mesera" sí.</strong> Las causas vagas producen parálisis; las causas verificadas producen lunes con plan.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · Sonríe y la campaña que casi revienta la clínica</div>
+            <div class="case-body">
+                <p>La clínica Sonríe, ya entrenada en el método, tuvo capacidad ociosa en marzo. La administradora propuso: "lancemos una campaña 2x1 de valoraciones en redes — llenamos la agenda". Sonaba perfecto. Aplicaron el chequeo de efectos secundarios antes de lanzar: <em>SI la campaña funciona, ENTONCES…</em> ¿qué pasa después?</p>
+                <p>La deducción en pizarra: las valoraciones llenarían las horas del doctor (el freno) por dos semanas → los tratamientos mayores de clientes ACTUALES se recorrerían → justo el error de la Lección 5, versión nueva: llenar el freno de trabajo barato. Y peor: si el 30% de valoraciones se convertía en tratamientos, la agenda del freno quedaría desbordada un mes — fechas incumplidas con clientes nuevos, la peor primera impresión posible.</p>
+                <p>¿Cancelaron? No: <strong>rediseñaron.</strong> Las valoraciones las hace la odontóloga asociada (no-freno, con holgura), en horarios valle, con cupo semanal limitado al ritmo en que el freno puede absorber conversiones. La campaña salió, llenó capacidad ociosa real y NO tocó al freno. <strong>Diez minutos de SI-ENTONCES convirtieron una crisis previsible en una buena campaña.</strong> Planear no es adivinar el futuro: es deducir las consecuencias de lo que vas a hacer.</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"¿Qué cambiar? ¿Hacia qué cambiar? ¿Cómo provocar el cambio? — Si puedes responder las tres, diriges. Si no, reaccionas."</div>
+            <div class="aha-author">— Las 3 preguntas del dueño · Método FLUIR</div>
+            <div class="aha-body">Todo lo que hiciste en este curso fue, sin nombrarlo, responder estas tres preguntas: <strong>¿Qué cambiar?</strong> — no los mil síntomas: la causa raíz, el freno (Módulos F y L te dieron el diagnóstico). <strong>¿Hacia qué cambiar?</strong> — no "mejorar todo": un diseño concreto donde el freno gobierna el flujo (Módulos U e I te dieron la solución). <strong>¿Cómo provocar el cambio?</strong> — no por decreto: con cuentas explicadas, reglas públicas, el valle anunciado y el equipo descubriendo las ideas (las juntas de las Lecciones 14 y 17 fueron eso). De hoy en adelante, cualquier decisión grande — abrir sucursal, lanzar producto, contratar gerente — pásala por las tres preguntas en ese orden. La mayoría de los desastres empresariales son una respuesta brillante… a la pregunta equivocada.</div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128173;</span><div>
+                <h3>Por qué la tercera pregunta es la difícil</h3>
+                <p>Diagnosticar (pregunta 1) y diseñar (pregunta 2) se aprenden. La tercera — provocar el cambio sin imponerlo — es donde naufragan los dueños más inteligentes, porque la respuesta correcta hiere el ego: <strong>la gente no ejecuta lo que le ordenan; ejecuta lo que descubre.</strong></p>
+                <p>Por eso el método está lleno de dinámicas (los 3 cajones, los frijoles, la libreta del freno) en vez de sermones: cuando tu equipo CUENTA los frijoles del frasco, la lección es suya, no tuya. Guía con preguntas, muestra las cuentas, deja que el equipo llegue — y prepárate para la parte más dura: aceptar que descubran algo distinto (y a veces mejor) que lo que tenías en mente. El dueño que "ya sabe la respuesta" y la impone, compra obediencia. El que la hace descubrir, compra ejecución. La diferencia se nota en el valle — la obediencia recae; la convicción cruza.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l20a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿Por qué el Método FLUIR prioriza "¿qué me impide vender más?" sobre "¿dónde recorto?"?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">Porque recortar gastos está mal visto por los equipos de trabajo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, true)">Porque el recorte tiene piso (te comes la capacidad protectora y se agota) y el dinero que entra no tiene techo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">Porque las ventas dependen del dueño y los gastos del contador</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20a', this, false)">Porque en México los costos fijos no se pueden negociar</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l20a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l20b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">La clínica Sonríe rediseñó su campaña 2x1 antes de lanzarla. ¿Qué herramienta aplicó?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, false)">El test de los 3 "no" sobre los resultados de la campaña anterior</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, false)">Una encuesta de satisfacción a sus pacientes actuales</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, true)">El chequeo de efectos secundarios: deducir con SI-ENTONCES las consecuencias sobre el freno antes de implementar</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l20b', this, false)">Un análisis de la competencia en redes sociales</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l20b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Estrena el motor de diagnóstico (20 minutos):</strong> toma el problema de tu negocio que más te preocupa hoy — uno que este curso NO haya resuelto ya.</p>
+                <ol>
+                    <li>Lista sus síntomas visibles (mínimo 3).</li>
+                    <li>Propón la causa única que los conectaría y dedúcele dos predicciones: "si es cierta, también debería verse ___ y ___".</li>
+                    <li>Verifícalas esta semana antes de mover un dedo.</li>
+                    <li>Y para tu próxima decisión grande: escríbele sus 3 preguntas (¿qué cambiar? ¿hacia qué? ¿cómo provocarlo?) antes de la primera junta.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>La jerarquía con su porqué: entra (sin techo) > atrapado > sale (con piso)</li>
+                <li>Diagnosticar causas raíz con SI-ENTONCES y verificar antes de actuar</li>
+                <li>Chequear efectos secundarios antes de implementar — planear es deducir</li>
+                <li>Estructurar toda decisión grande con las 3 preguntas del dueño</li>
+            </ul>
+            <div class="okr-next">→ Última lección: <strong>FLUIR para siempre</strong> — el ciclo completo como rutina, el destino de los 7 negocios, y por qué a partir de aquí tu mejor consultor eres tú.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 21 — MÓDULO R · FLUIR PARA SIEMPRE
+    // ==========================================================
+    {
+        id: 'l21', module: 'Módulo R · Rompe y repite', tag: 'tag-final', tagLabel: 'MÓDULO R',
+        title: 'FLUIR para siempre',
+        subtitle: 'El ciclo que no termina, el destino de los 7 negocios y tu plan de los próximos 90 días',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.92),rgba(20,82,77,0.65)),url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80')">
+            <div class="hero-caption">Ya no necesitas que nadie te diga dónde está el problema. Sabes leer las huellas.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>El ciclo FLUIR completo como rutina permanente — no como proyecto con fecha de fin</li>
+                <li>Por qué el método funciona igual en un taller, una fonda, una clínica o un despacho</li>
+                <li>La diferencia entre sentido común y práctica común (y cómo sostener el primero)</li>
+                <li>Tu plan de 90 días para implementar todo lo aprendido</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>El ciclo completo (ahora sí, con todas sus piezas)</h3>
+            <div style="margin:14px 0;padding:18px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;"><strong style="color:#0b3d3a;">F · Fija la meta.</strong> Generar dinero hoy y mañana; 3 lentes; 3 medidores; el test de los 3 "no" como portero.</p>
+                <p style="margin:6px 0;"><strong style="color:#0b3d3a;">L · Localiza el freno.</strong> Las 3 señales; la semana de cacería; y si sobra capacidad: mercado o política.</p>
+                <p style="margin:6px 0;"><strong style="color:#0b3d3a;">U · Úsalo al máximo.</strong> La cifra de la hora; sellar las 4 fugas; calidad antes; solo lo vendido; descargar por 3 vías.</p>
+                <p style="margin:6px 0;"><strong style="color:#0b3d3a;">I · Integra el ritmo.</strong> Activar ≠ utilizar; marcapasos y colchón; lotes chicos; 3 reglas públicas; cruzar el valle.</p>
+                <p style="margin:6px 0;"><strong style="color:#0b3d3a;">R · Rompe y repite.</strong> Elevar con datos; el freno se muda — síguelo; re-audita las reglas (inercia); vende tu operación; y vuelve a la L.</p>
+            </div>
+            <p>Fíjate en el final: <strong>"y vuelve a la L".</strong> FLUIR no es un proyecto que se termina y se archiva: es la rutina de dirección de tu negocio. Cada freno roto te deja un negocio más grande con un freno nuevo — más pequeño en proporción, más interesante de resolver. La pregunta permanente del dueño FLUIR no es "¿ya acabamos?": es <strong>"¿dónde está HOY el freno?"</strong>.</p>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#127775;</span><div>
+                <h3>El destino de los 7 negocios</h3>
+                <p><strong>El taller de Rubén:</strong> de 2 semanas de entrega a 4 días; dos frenos rotos (Genaro, refacciones); el elevador por fin con autos que subir. <strong>La tortillería La Espiga:</strong> caja líquida, maíz semanal, tortillas calientes — y un negocio nuevo de totopos en las horas valle. <strong>La fonda de Doña Mary:</strong> cocina sin gritos, colchón humano restaurado, y el indicador favorito de la dueña: el silencio de las 2:30. <strong>La imprenta Grafix:</strong> el bono ahora premia trabajos entregados a tiempo; nada toca la prensa sin firma; el contrato "incosteable" pagó la renta del año. <strong>La clínica Sonríe:</strong> horas de sillón mayor al máximo, campañas que no tocan al freno, +30% de facturación. <strong>La mueblería San José:</strong> cocinas de 21 a 9 días, constructoras con entregas escaladas, y cero roperos fantasma. <strong>El despacho de Leticia:</strong> el primer marzo con sueño de su historia — y 4 clientes nuevos aceptados EN temporada.</p>
+                <p>Siete giros distintos. Cero pesos de inversión inicial. <strong>El mismo método — porque el freno vive en todos.</strong></p>
+            </div></div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Todo lo que aprendiste es sentido común. Entonces, ¿por qué nadie lo hace? Porque el sentido común no es la práctica común — y la práctica común no se cuestiona sola."</div>
+            <div class="aha-author">— Método FLUIR · Lección final</div>
+            <div class="aha-body">Repasa lo aprendido y notarás algo incómodo: nada era ciencia espacial. ¿Que el más lento marca el paso? ¿Que producir sin vender congela dinero? ¿Que sumar promedios da fechas falsas? Obvio — EN RETROSPECTIVA. Y sin embargo, casi ningún negocio lo practica, porque encima del sentido común hay capas de práctica común: "aquí siempre se ha hecho así", "que nadie esté parado", "compra por volumen que sale más barato". Esas frases no se defienden con argumentos — se defienden con costumbre, y la costumbre no pelea: simplemente regresa. Por eso tu trabajo de aquí en adelante no es saber el método (ya lo sabes): es <strong>defenderlo de la erosión diaria</strong> — del nuevo empleado que "optimiza" su área, del contador que extraña las eficiencias, de tu propio reflejo de llenar los huecos. El conocimiento se adquirió en 22 lecciones. La práctica se defiende todos los días.</div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #10 · Tu plan FLUIR de 90 días</h3>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;"><strong>Días 1-15 · F:</strong> junta de la meta con tu equipo; dinámica de los 3 cajones; instala el test de los 3 "no"; degrada tus cifras mentirosas.</p>
+                <p style="margin:6px 0;"><strong>Días 16-30 · L:</strong> dibuja tu cadena; semana de cacería; veredicto del freno por escrito (¿interno, mercado o política?).</p>
+                <p style="margin:6px 0;"><strong>Días 31-60 · U:</strong> calcula tu cifra de la hora; audita con libreta; sella las 4 fugas (una jugada por semana); audita la fila del freno y descarga.</p>
+                <p style="margin:6px 0;"><strong>Días 61-85 · I:</strong> agenda del freno y marcapasos; colchón dimensionado; parte tu lote más grande; publica las 3 reglas; ANUNCIA EL VALLE y cruza con el tablero a la vista.</p>
+                <p style="margin:6px 0;"><strong>Días 86-90 · R:</strong> primera revisión de ciclo: ¿el freno sigue ahí o ya se mudó? Mapa de casi-frenos; decide si toca elevar; agenda la re-auditoría trimestral de reglas.</p>
+            </div>
+            <p>Un consejo de despedida: no lo hagas en silencio. El método funciona el doble cuando tu equipo lo descubre contigo — dinámicas, cuentas en la pizarra, preguntas. Tú pon el mapa; deja que ellos pongan los hallazgos.</p>
+        </div>
+
+        <div class="content-card">
+            <h3>Sé tu propio asesor (y una invitación de lectura)</h3>
+            <p>Empezamos este curso con un dueño que apagaba fuegos y dependía de corazonadas. Lo cerramos con uno que sabe leer huellas, hacer las cuentas que importan y deducir consecuencias antes de actuar. Esa es la graduación real: <strong>no necesitas que un consultor te diga dónde está el problema — sabes encontrarlo, exprimirlo, integrarlo y romperlo.</strong> El mejor asesor de tu negocio, de hoy en adelante, eres tú con una libreta.</p>
+            <p>Y si este mundo te atrapó: los principios de gestión de restricciones que inspiraron este método nacieron con el físico <strong>Eliyahu Goldratt</strong>, y su obra — empezando por su famosa novela empresarial — es una lectura extraordinaria que te recomendamos de corazón. Lo que acabas de aprender te hará disfrutarla y aprovecharla el doble: ya hablas el idioma. Nuestro Método FLUIR es la adaptación TRIKLES de esos principios a la realidad de la PYME mexicana — el viaje de Goldratt por la ciencia de los sistemas es aún más profundo, y vale cada página.</p>
+        </div>
+
+        <div class="quiz-container" id="quiz_l21a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿Por qué FLUIR es un ciclo y no un proyecto con fecha de fin?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Porque los cursos de gestión deben renovarse cada año</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, true)">Porque cada freno roto deja un negocio más grande con un freno nuevo — la pregunta permanente es "¿dónde está HOY el freno?"</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Porque los empleados olvidan las reglas si no se repiten constantemente</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21a', this, false)">Porque el mercado mexicano es demasiado inestable para planes definitivos</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l21a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l21b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">"El conocimiento se adquirió en 22 lecciones; la práctica se defiende todos los días." ¿De qué hay que defenderla?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, false)">De la competencia, que copiará el método en cuanto lo vea funcionar</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, true)">De la erosión de la práctica común: los reflejos de "nadie parado", las eficiencias locales y el "siempre se ha hecho así" que regresan por costumbre</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, false)">De los proveedores que se resisten a las entregas frecuentes</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l21b', this, false)">De las crisis económicas que invalidan cualquier método de gestión</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l21b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO (ANTES DEL EXAMEN)</div>
+            <div class="next-step-body">
+                <p><strong>Firma tu plan (15 minutos):</strong> imprime o copia el plan de 90 días y ponle fechas reales a cada bloque, empezando el próximo lunes. Pégalo junto a tu tarjeta de "una hora de mi freno cuesta $___".</p>
+                <p>Luego ve por tu examen: 10 preguntas que cruzan todo el método. Necesitas 7 para aprobar y desbloquear tu certificado. Vas más que listo — has destapado siete negocios junto con nosotros. Ahora ve a destapar el octavo: <strong>el tuyo.</strong></p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Operar el ciclo FLUIR completo como rutina permanente de dirección</li>
+                <li>Que el método aplica a cualquier giro — el freno vive en todos</li>
+                <li>Defender el sentido común de la erosión de la práctica común</li>
+                <li>Tu plan de 90 días, con fechas y a la vista</li>
+            </ul>
+            <div class="okr-next">→ <strong>Examen final:</strong> 10 preguntas, necesitas 7. Una sola oportunidad por pregunta — como en tu negocio. ¡Éxito!</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 22 — EXAMEN FINAL
+    // ==========================================================
+    {
+        id: 'final_exam', module: 'Examen Final', tag: 'tag-final', tagLabel: 'EXAMEN FINAL',
+        title: 'Examen Final Integrador',
+        subtitle: 'Demuestra que dominas el Método FLUIR',
+        content: `
+        <div class="lesson-hero" style="background:linear-gradient(135deg,#0b3d3a,#14524d,#f59e0b);min-height:180px;display:flex;align-items:center;justify-content:center;color:white;border-radius:12px;padding:30px;">
+            <div style="text-align:center;">
+                <div style="font-size:2.5em;font-weight:900;">&#127942;</div>
+                <div style="font-size:1.6em;font-weight:700;letter-spacing:2px;">EXAMEN FINAL</div>
+                <div style="opacity:0.9;font-style:italic;margin-top:6px;">Destapa tu Negocio · Método FLUIR</div>
+            </div>
+        </div>
+
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Mensaje final del instructor</div>
+                <div class="instructor-note-text">Llegaste al final del recorrido. Este examen no busca atraparte: busca confirmar que el método ya es tuyo. Diez preguntas, necesitas <strong>7 de 10</strong>, y cada pregunta tiene una sola oportunidad — léelas con calma, como leerías las señales de tu propio negocio. ¡Éxito!</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>&#127919; Instrucciones</h3>
+            <p>10 preguntas que cruzan los 5 módulos del Método FLUIR. Necesitas <strong>al menos 7 correctas</strong> para aprobar y desbloquear tu certificado. Cada pregunta se responde UNA sola vez.</p>
+        </div>
+
+        <div class="quiz-container" id="final_q1">
+            <div class="quiz-q">1. La meta de un negocio con fines de lucro, según el Método FLUIR, es:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q1', this, false)">Ofrecer la mejor calidad y servicio de su mercado</button>
+            <button class="quiz-option" onclick="checkFinal('final_q1', this, true)">Generar dinero hoy y en el futuro — todo lo demás son medios</button>
+            <button class="quiz-option" onclick="checkFinal('final_q1', this, false)">Mantener a todo el personal y las máquinas siempre ocupados</button>
+            <div class="quiz-feedback" id="final_q1_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q2">
+            <div class="quiz-q">2. Los 3 medidores del dinero son:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q2', this, false)">Ventas brutas, ventas netas y utilidad</button>
+            <button class="quiz-option" onclick="checkFinal('final_q2', this, true)">El que ENTRA (ventas cobradas), el ATRAPADO (inventario, proceso, cuentas por cobrar) y el que SALE (gasto de operar)</button>
+            <button class="quiz-option" onclick="checkFinal('final_q2', this, false)">Activo, pasivo y capital contable</button>
+            <div class="quiz-feedback" id="final_q2_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q3">
+            <div class="quiz-q">3. En una cadena de pasos dependientes con variación, el resultado del conjunto:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q3', this, false)">Es igual al promedio de sus partes, por la ley de los grandes números</button>
+            <button class="quiz-option" onclick="checkFinal('final_q3', this, false)">Depende solo del paso más rápido de la cadena</button>
+            <button class="quiz-option" onclick="checkFinal('final_q3', this, true)">Queda por debajo del promedio de sus partes: los retrasos se heredan y los adelantos se desperdician</button>
+            <div class="quiz-feedback" id="final_q3_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q4">
+            <div class="quiz-q">4. El freno de un negocio es:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q4', this, true)">El punto cuya capacidad es igual o menor que la demanda que el mercado le pone enfrente — y puede ser una persona, un espacio, el mercado o una política</button>
+            <button class="quiz-option" onclick="checkFinal('final_q4', this, false)">La máquina más vieja o el empleado menos productivo, que debe eliminarse</button>
+            <button class="quiz-option" onclick="checkFinal('final_q4', this, false)">El área que más se queja y más urgencias genera</button>
+            <div class="quiz-feedback" id="final_q4_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q5">
+            <div class="quiz-q">5. El costo real de una hora perdida del freno se calcula:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q5', this, false)">Con la tarifa por hora de esa persona o máquina</button>
+            <button class="quiz-option" onclick="checkFinal('final_q5', this, true)">Dividiendo el gasto total de operar el negocio entre las horas productivas del freno — porque cuando el freno para, todo el sistema paga sin producir</button>
+            <button class="quiz-option" onclick="checkFinal('final_q5', this, false)">Sumando su sueldo más la proporción de renta de su área de trabajo</button>
+            <div class="quiz-feedback" id="final_q5_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q6">
+            <div class="quiz-q">6. Un recurso que NO es el freno debe trabajar:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q6', this, false)">Al máximo de su capacidad, para que su inversión se aproveche</button>
+            <button class="quiz-option" onclick="checkFinal('final_q6', this, true)">Al ritmo que el freno necesita — activarlo de más solo fabrica inventario y atrapa caja</button>
+            <button class="quiz-option" onclick="checkFinal('final_q6', this, false)">Exactamente a la mitad de su capacidad, como margen de seguridad</button>
+            <div class="quiz-feedback" id="final_q6_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q7">
+            <div class="quiz-q">7. El mecanismo del marcapasos consiste en:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q7', this, false)">Soltar todos los pedidos de inmediato para que "vayan avanzando" por el proceso</button>
+            <button class="quiz-option" onclick="checkFinal('final_q7', this, false)">Medir la velocidad de cada área con cronómetro todas las semanas</button>
+            <button class="quiz-option" onclick="checkFinal('final_q7', this, true)">Soltar el trabajo al sistema al ritmo de la agenda del freno, con un colchón pequeño solo frente a él</button>
+            <div class="quiz-feedback" id="final_q7_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q8">
+            <div class="quiz-q">8. Partir los lotes a la mitad reduce el plazo de entrega porque:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q8', this, true)">El plazo está hecho principalmente de cola y espera de compañía — y ambas se encogen con lotes chicos, sin invertir</button>
+            <button class="quiz-option" onclick="checkFinal('final_q8', this, false)">Obliga a los empleados a trabajar más rápido en cada pieza</button>
+            <button class="quiz-option" onclick="checkFinal('final_q8', this, false)">Reduce el número de preparaciones de máquina en todo el sistema</button>
+            <div class="quiz-feedback" id="final_q8_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q9">
+            <div class="quiz-q">9. Al romper (elevar) un freno, lo correcto es:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q9', this, false)">Celebrar y conservar todas las reglas que tan bien funcionaron</button>
+            <button class="quiz-option" onclick="checkFinal('final_q9', this, true)">Buscar a dónde se mudó el freno con las 3 señales y re-auditar las reglas diseñadas para el freno anterior (la inercia no avisa)</button>
+            <button class="quiz-option" onclick="checkFinal('final_q9', this, false)">Recortar la capacidad sobrante que quedó en las demás áreas</button>
+            <div class="quiz-feedback" id="final_q9_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="final_q10">
+            <div class="quiz-q">10. Con capacidad ociosa, un pedido a precio menor que tu "costo unitario" conviene aceptarlo cuando:</div>
+            <button class="quiz-option" onclick="checkFinal('final_q10', this, false)">Nunca: vender abajo del costo unitario siempre es pérdida</button>
+            <button class="quiz-option" onclick="checkFinal('final_q10', this, true)">El precio supera el dinero nuevo que sale (materiales y gastos directos), no consume horas de freno que pedidos completos necesitan y no contamina tu mercado principal</button>
+            <button class="quiz-option" onclick="checkFinal('final_q10', this, false)">El cliente promete volumen futuro a precio de lista</button>
+            <div class="quiz-feedback" id="final_q10_fb"></div>
+        </div>
+
+        <div id="finalResult" style="display:none;margin-top:20px;padding:24px;border-radius:12px;text-align:center;animation:pop 0.4s;">
+            <div style="font-size:3em;" id="finalEmoji"></div>
+            <h2 id="finalTitle" style="margin:10px 0;"></h2>
+            <p id="finalDesc"></p>
+            <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                <button class="btn btn-gold" onclick="showLesson(getCertLessonIndex())">&#127942; Ver mi Certificado</button>
+            </div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 23 — CERTIFICADO
+    // ==========================================================
+    {
+        id: 'certificate', module: 'Certificado', tag: 'tag-final', tagLabel: 'CERTIFICADO',
+        title: 'Certificado de Finalización',
+        subtitle: '¡Felicidades! Has completado Destapa tu Negocio',
+        content: `
+        <div class="instructor-note">
+            <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
+            <div class="instructor-note-body">
+                <div class="instructor-note-label">Palabras finales del instructor</div>
+                <div class="instructor-note-text">Recorriste el Método FLUIR completo: fijaste la meta, aprendiste a localizar el freno, a exprimirlo sin invertir, a poner el negocio entero a su ritmo y a romperlo una y otra vez. Ahora viene lo que ningún certificado puede acreditar: hacerlo. Empieza el lunes con tu semana de cacería, anuncia el valle antes de cruzarlo, y recuerda la pregunta permanente del dueño FLUIR: <em>¿dónde está HOY el freno?</em> Ve y destapa tu negocio. ¡Éxito!</div>
+            </div>
+        </div>
+        `
+    }
 
     ]
 };
