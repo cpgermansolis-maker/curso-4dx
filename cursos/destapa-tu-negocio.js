@@ -1365,11 +1365,477 @@ const COURSE_DESTAPA_TU_NEGOCIO = {
             <div class="okr-next">→ Empieza el <strong>Módulo U · Úsalo al máximo</strong>. Primera pregunta: ¿cuánto vale — en pesos — una hora de tu freno? Vas a hacer una división de primaria y el resultado te va a cambiar las prioridades para siempre.</div>
         </div>
         `
+    },
+
+    // ==========================================================
+    // MÓDULO U — ÚSALO AL MÁXIMO (lecciones 10-13)
+    // ==========================================================
+    {
+        id: 'l10', module: 'Módulo U · Úsalo al máximo', tag: 'tag-d3', tagLabel: 'MÓDULO U',
+        title: 'Lo que de verdad cuesta una hora de tu freno',
+        subtitle: 'Una división de primaria que te va a cambiar las prioridades para siempre',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1400&q=80')">
+            <div class="hero-caption">No es lo que le pagas a esa persona o máquina. Es lo que cuesta tener parado al negocio entero.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La fórmula del costo real de una hora del freno (y por qué la contabilidad la subestima 20, 50 o 100 veces)</li>
+                <li>Cómo calcularla para TU negocio en 10 minutos</li>
+                <li>Por qué de pronto se vuelve rentabilísimo "gastar de más" en proteger el freno</li>
+                <li>El cambio de chip: del "¿cuánto cuesta?" al "¿cuánto cuesta NO hacerlo?"</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>La fórmula (división de primaria, consecuencias de doctorado)</h3>
+            <p>¿Cuánto cuesta una hora perdida de tu freno? La intuición contable contesta: "lo que gana esa persona en una hora" o "la tarifa-hora de esa máquina". Y es la respuesta equivocada — por mucho.</p>
+            <p>Recuerda la asimetría de la Lección 8: cuando el freno se detiene, <strong>el negocio entero se detiene</strong> — todo lo demás solo hace fila. Entonces el costo de esa hora no es el sueldo de una persona: es el costo de tener TODA tu estructura (rentas, nómina completa, luz, créditos) girando sin producir una venta. La fórmula:</p>
+            <div style="margin:14px 0;padding:18px;background:#0b3d3a;border-radius:8px;text-align:center;color:#fff;font-size:1.05em;">
+                <strong>Costo real de una hora del freno =<br>Gasto total de operar el negocio al mes ÷ horas productivas del freno al mes</strong>
+            </div>
+            <p>Todo el gasto va arriba. ¿Por qué? Porque toda tu estructura existe para UNA cosa: convertir las horas del freno en ventas. Si el freno no produce, la estructura completa está pagándose sola sin generar nada.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · La cuenta que despertó a Rubén</div>
+            <div class="case-body">
+                <p>El taller de Rubén gasta al mes, contando todo — nómina de los 6 técnicos y oficina, renta, luz, herramienta, el crédito del famoso elevador — unos <strong>$264,000</strong>.</p>
+                <p>Su freno, ya lo sabemos, son las horas de diagnóstico de Genaro: unas 5 horas al día, 22 días al mes = <strong>110 horas al mes</strong>.</p>
+                <p style="text-align:center;font-size:1.1em;"><strong>$264,000 ÷ 110 horas = $2,400 por hora.</strong></p>
+                <p>Rubén le paga a Genaro unos $120 por hora. Su contabilidad le decía que una hora de Genaro "cuesta" $120. La realidad: cada hora que Genaro no diagnostica, el taller completo quema $2,400 — <strong>veinte veces más.</strong></p>
+                <p>Y entonces Rubén repasó la semana de Genaro con otros ojos: la junta de los lunes (1 hora = $2,400), ir él mismo por refacciones al centro (2 horas = $4,800), explicar presupuestos a clientes (1 hora diaria = $52,800 al mes)… <strong>Rubén estaba gastando horas de $2,400 en tareas de $120.</strong> Nadie lo veía, porque Genaro nunca estaba "de flojo". Estaba ocupadísimo — en lo que no era el freno.</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"En el freno no preguntes '¿cuánto cuesta esta ayuda?'. Pregunta '¿cuánto cuesta cada hora que NO la tiene?'"</div>
+            <div class="aha-author">— Método FLUIR · El cambio de chip</div>
+            <div class="aha-body">Con la cifra real en la mano, decisiones que parecían "lujos" se vuelven obvias. ¿Un ayudante de $9,000 al mes para que Genaro no pierda 2 horas diarias en talacha? Recupera $105,600 de horas de freno — el ayudante se paga solo 11 veces. ¿Pagar flete urgente de $800 por una refacción que destrababa una hora del freno? Carísimo según la contabilidad, regalado según la realidad. Esta es la lección completa del Módulo U en una frase: <strong>en el freno — y SOLO en el freno — lo "caro" suele ser baratísimo, y lo "ahorrado" suele ser carísimo.</strong></div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #5 · Calcula la tuya en 10 minutos</h3>
+            <ol class="concept-list">
+                <li><strong>Gasto total mensual:</strong> suma gruesa de TODO lo que cuesta operar tu negocio un mes (nómina completa, renta, servicios, fletes, intereses). No busques el centavo: redondea.</li>
+                <li><strong>Horas productivas del freno al mes:</strong> horas que tu freno realmente trabaja en lo suyo (no las que está presente: las que produce). Sé honesto — la diferencia entre presente y productivo es justo el tesoro de la siguiente lección.</li>
+                <li><strong>Divide.</strong> Escribe el resultado en grande y pégalo donde lo veas: <em>"Una hora de mi freno cuesta $______".</em></li>
+            </ol>
+            <p>Referencias típicas en PYME: la fonda de Doña Mary (gasto $95,000, freno = 130 horas-cocina pico) → $730/hora. La clínica Sonríe (gasto $180,000, freno = 120 horas de sillón mayor) → $1,500/hora. Tu cifra estará lejos de cualquier sueldo — siempre lo está.</p>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#129518;</span><div>
+                <h3>Por qué tu contador no te lo había dicho</h3>
+                <p>No es mala fe. La contabilidad de costos reparte los gastos entre productos y departamentos <em>como si todas las horas valieran lo mismo</em> — es su supuesto de fábrica. Para impuestos y estados financieros, funciona. Para DECIDIR — dónde invertir, qué pedido aceptar, si vale el ayudante — necesitas saber que las horas NO valen lo mismo: las del freno valen el negocio entero y las demás casi nada.</p>
+                <p>Regla práctica: <strong>contabilidad para reportar, freno para decidir.</strong> Cuando las dos opinen distinto sobre una decisión operativa, ya sabes a cuál escuchar.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l10a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">El taller gasta $264,000 al mes y su freno (Genaro) produce 110 horas mensuales. ¿Cuánto cuesta realmente una hora perdida de Genaro?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, false)">$120 — lo que gana Genaro por hora</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, true)">$2,400 — el gasto total del negocio dividido entre las horas del freno, porque cuando el freno para, todo el sistema paga sin producir</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, false)">$440 — el sueldo de Genaro más su parte proporcional de la renta</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10a', this, false)">Nada, si los demás técnicos siguen trabajando mientras tanto</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l10a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l10b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Por qué un ayudante de $9,000/mes para el freno puede ser una de las mejores inversiones del negocio?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">Porque la mano de obra barata siempre conviene en una PYME</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">Porque así el freno puede descansar más y rendir mejor por las tardes</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, true)">Porque cada hora que le libera al freno vale lo que el negocio entero produce en una hora — el ayudante se paga solo muchas veces</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l10b', this, false)">Porque reduce el costo unitario por pieza producida</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l10b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Haz TU división (10 minutos):</strong> gasto total del mes ÷ horas productivas de tu freno. Escribe el resultado en una tarjeta y pégala en tu escritorio.</p>
+                <p>Luego, la pregunta incómoda: lista 3 cosas en las que tu freno gastó horas esta semana <strong>que alguien de la mitad de sueldo podría hacer</strong>. Ponles precio con tu nueva cifra. Ese número es lo que vas a rescatar en la siguiente lección.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Calcular el costo real de una hora de tu freno: gasto total ÷ horas del freno</li>
+                <li>Por qué esa cifra es 20-100 veces lo que dice la nómina o la tarifa-hora</li>
+                <li>Que en el freno, "gastar de más" en protegerlo suele ser la mejor inversión disponible</li>
+                <li>Usar la contabilidad para reportar y el freno para decidir</li>
+            </ul>
+            <div class="okr-next">→ En la <strong>Lección 11</strong> vamos por el tesoro escondido: la capacidad que tu freno ya tiene y estás tirando todos los días. Capacidad gratis — cero inversión, pura reorganización.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 11 — MÓDULO U · CAPACIDAD GRATIS
+    // ==========================================================
+    {
+        id: 'l11', module: 'Módulo U · Úsalo al máximo', tag: 'tag-d3', tagLabel: 'MÓDULO U',
+        title: 'Capacidad gratis: el freno nunca para',
+        subtitle: 'Cómo recuperar entre un cuarto y la mitad de tu freno sin invertir un peso — solo reorganizando',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">Antes de comprar capacidad nueva, rescata la que ya pagaste y estás tirando.</div>
+            <div class="pq-author">— Método FLUIR · Lección 11</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Dónde se esconden las horas muertas del freno (las 4 fugas clásicas)</li>
+                <li>Las 4 jugadas para sellar esas fugas: relevos, preparador, blindaje y filtro</li>
+                <li>Por qué las mejores ideas para exprimir el freno las tiene quien lo opera</li>
+                <li>Cómo auditar las horas de tu freno con una hoja y un lápiz</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Las 4 fugas clásicas (por donde se va el dinero del freno)</h3>
+            <p>Cuando auditas qué hace tu freno minuto a minuto, aparece siempre el mismo patrón: una fracción enorme de su tiempo NO está en lo que solo él puede hacer. Las fugas típicas:</p>
+            <ol class="concept-list">
+                <li><strong>Pausas sincronizadas.</strong> El freno come cuando todos comen, descansa cuando todos descansan. Resultado: tu recurso de $2,400/hora parado una hora diaria… porque es la 1:30.</li>
+                <li><strong>Talacha ajena.</strong> El freno prepara, carga, acomoda, busca herramienta, va por material — tareas de $120/hora ejecutadas por horas de $2,400.</li>
+                <li><strong>Interrupciones.</strong> "Oye, una pregunta rápida": cada una roba el minuto que dura más el tiempo de volver a concentrarse. El freno es la persona/máquina que MENOS interrupciones debería recibir y casi siempre es la que más recibe (porque es la que más sabe).</li>
+                <li><strong>Trabajo que no debía llegar.</strong> Cosas que pasan por el freno por costumbre, no por necesidad — esta fuga es tan grande que tiene su propia lección (la 13).</li>
+            </ol>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Herramienta #6 · Las 4 jugadas para sellar fugas</h3>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;border-left:4px solid #0b3d3a;">
+                <p style="margin:6px 0;"><strong>1 · Relevos.</strong> El freno nunca come ni descansa al mismo tiempo que su cobertura. Alguien capacitado lo releva en lo básico — o al menos, sus pausas se escalonan para que la estación nunca quede vacía en horas de demanda.</p>
+                <p style="margin:6px 0;"><strong>2 · Preparador.</strong> Alguien deja TODO listo para que el freno solo haga lo que solo él puede hacer: el paciente sentado y con radiografías tomadas, el auto con síntomas anotados y escáner conectado, los papeles completos y ordenados antes de capturar.</p>
+                <p style="margin:6px 0;"><strong>3 · Blindaje.</strong> Horarios sagrados sin interrupciones para el freno. Las preguntas se juntan y se resuelven en un bloque (15 minutos, dos veces al día), no por gotero.</p>
+                <p style="margin:6px 0;"><strong>4 · Filtro.</strong> Nada entra al freno sin revisión previa de que viene completo y correcto. (Esta jugada es tan importante que es la mitad de la Lección 12.)</p>
+            </div>
+            <p>Ninguna de las cuatro cuesta inversión. Todas cuestan algo más difícil: <strong>romper costumbres.</strong> "Siempre hemos comido a la 1:30 todos juntos" es una frase que cuesta $2,400 por hora.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · Las 5 horas de Genaro se vuelven 8</div>
+            <div class="case-body">
+                <p>Rubén auditó la jornada de Genaro con una libreta, una semana completa. De 9 horas presentes, solo 5 eran diagnóstico. Las fugas: 1 hora de comida sincronizada con todo el taller, ~1.5 horas de talacha (conectar escáner, mover autos, buscar herramienta), ~1 hora de interrupciones y explicar presupuestos a clientes, ~0.5 de "juntitas".</p>
+                <p>Las jugadas: <strong>(1) Relevos:</strong> Genaro come a las 12:30, antes que nadie; el técnico más experimentado cubre dudas básicas mientras tanto. <strong>(2) Preparador:</strong> el chavo nuevo del taller ahora recibe cada auto: lo estaciona en la bahía de diagnóstico, conecta el escáner, anota los síntomas con el cliente. Genaro llega y diagnostica, punto. <strong>(3) Blindaje:</strong> los presupuestos los explica Rubén o el encargado; a Genaro solo se le consulta en dos bloques de 15 minutos (11:00 y 16:00). <strong>(4)</strong> Las "juntitas" de lunes se mueven a las 8:15, antes de que llegue el primer auto.</p>
+                <p>Resultado en tres semanas: <strong>de 5 horas productivas a casi 8. Un 55% más de capacidad del negocio completo</strong> — el equivalente a lo que Rubén soñaba comprar con el elevador — por el costo de un ayudante que ya tenía y un cambio de horario de comida. A ese descubrimiento le pusimos nombre en el taller: "el segundo Genaro estaba escondido adentro del primero".</p>
+            </div>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Las mejores ideas para exprimir el freno no están en un libro ni en un consultor: están en la cabeza de quien lo opera todos los días."</div>
+            <div class="aha-author">— Método FLUIR · La mina del piso</div>
+            <div class="aha-body">Cuando le contaron el plan, Genaro agregó tres ideas que nadie había pensado: agrupar los autos por tipo de falla (el escáner ya configurado encadena diagnósticos similares en la mitad del tiempo), una pizarra con los códigos de falla más comunes para que los técnicos resuelvan solos lo repetido, y dejar listo desde la tarde el primer auto del día siguiente. ¿Por qué nunca lo había dicho? <em>"Nadie me había preguntado, patrón."</em> Pregunta, premia y presume las ideas de quien opera tu freno — esa persona lleva años viendo lo que tú acabas de descubrir.</div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#129466;</span><div>
+                <h3>El sillón que nunca espera (clínica Sonríe)</h3>
+                <p>Mismo principio, otro giro. El freno de Sonríe: las horas del odontólogo en tratamientos mayores. La auditoría mostró al doctor esperando: a que el paciente llegara del recibidor, a que se tomara la radiografía, a que se preparara el instrumental entre cita y cita — 15-20 minutos perdidos por paciente.</p>
+                <p>La jugada del preparador: la asistente ahora recibe al paciente, toma radiografías y deja el cubículo armado ANTES de que el doctor entre. El doctor sale de un paciente y entra al siguiente sin pausa. <strong>Dos tratamientos mayores más al día, mismos sueldos, mismo local.</strong> A $4,000 el tratamiento promedio… haz la cuenta del mes.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l11a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿Cuáles son las 4 fugas clásicas de capacidad en el freno?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, true)">Pausas sincronizadas, talacha ajena, interrupciones y trabajo que no debía llegarle</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, false)">Impuntualidad, flojera, falta de capacitación y mala actitud</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, false)">Maquinaria vieja, falta de software, local chico y pocos empleados</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11a', this, false)">Clientes morosos, proveedores lentos, competencia desleal e inflación</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l11a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l11b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">El taller pasó de 5 a casi 8 horas productivas de Genaro sin comprar nada. ¿Cuál fue la clave?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, false)">Presionar a Genaro para que trabajara más rápido en cada diagnóstico</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, false)">Pagarle horas extra a Genaro para quedarse después del cierre</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, true)">Sellar las fugas: relevos en la comida, un preparador, blindaje contra interrupciones — más las ideas del propio Genaro</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l11b', this, false)">Contratar a un segundo especialista en diagnóstico</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l11b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>La auditoría de la libreta (esta semana, 20 min/día):</strong></p>
+                <ol>
+                    <li>Durante 3 días, anota qué hace tu freno en bloques de media hora (sin software: libreta).</li>
+                    <li>Clasifica cada bloque: <strong>LO SUYO</strong> (lo que solo él puede hacer) o <strong>FUGA</strong> (pausa sincronizada, talacha, interrupción, trabajo ajeno).</li>
+                    <li>Suma las fugas y multiplícalas por tu cifra de la Lección 10. Ese es el dinero tirado por semana.</li>
+                    <li>Pregúntale a quien opera el freno: <em>"¿qué te estorba para hacer solo lo tuyo?"</em> — y apunta TODO.</li>
+                </ol>
+                <p>Elige UNA jugada (relevos, preparador, blindaje o filtro) e impleméntala el lunes. Una. La que más fuga selle.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Detectar las 4 fugas: pausas sincronizadas, talacha, interrupciones y trabajo ajeno</li>
+                <li>Aplicar las 4 jugadas: relevos, preparador, blindaje y filtro</li>
+                <li>Que quien opera el freno guarda las mejores ideas — si le preguntas</li>
+                <li>Auditar tu freno con libreta y ponerle precio a cada fuga</li>
+            </ul>
+            <div class="okr-next">→ <strong>Lección 12:</strong> dos reglas de oro para que ni una sola hora rescatada se desperdicie — la calidad se revisa ANTES del freno, y el freno solo trabaja en lo que está VENDIDO.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 12 — MÓDULO U · CALIDAD ANTES, VENTAS DESPUÉS
+    // ==========================================================
+    {
+        id: 'l12', module: 'Módulo U · Úsalo al máximo', tag: 'tag-d3', tagLabel: 'MÓDULO U',
+        title: 'Calidad antes del freno, solo lo vendido adentro',
+        subtitle: 'Las dos reglas que evitan que tu recurso más caro trabaje para el bote de basura o para la bodega',
+        content: `
+        <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(11,61,58,0.88),rgba(11,61,58,0.5)),url('https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=1400&q=80')">
+            <div class="hero-caption">Hay dos formas de tirar una hora del freno: dársela a un defecto, o dársela a algo que nadie compró.</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>Por qué la revisión de calidad debe vivir ANTES del freno, no al final del proceso</li>
+                <li>Por qué lo que ya pasó por el freno debe tratarse como oro (aunque la pieza valga centavos)</li>
+                <li>La regla de "solo lo vendido": por qué el freno jamás trabaja para el "por si acaso"</li>
+                <li>Cómo ordenar la fila del freno cuando todo parece urgente</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Regla de oro #1 · La calidad se revisa ANTES del freno</h3>
+            <p>La mayoría de los negocios revisa la calidad al final: el producto terminado, la declaración antes de enviarse, el platillo antes de salir. Suena lógico — y es carísimo. Mira por qué:</p>
+            <p>Si una pieza defectuosa se detecta al final, perdiste material y algo de tiempo. Pero si esa pieza defectuosa <strong>pasó por el freno antes de detectarse</strong>, perdiste algo irremplazable: <strong>una hora del freno que pudo producir una venta y produjo basura.</strong> A $2,400 la hora, el defecto más caro de tu negocio no es el material: es el turno del freno que se gastó en él.</p>
+            <p>De ahí las dos mitades de la regla:</p>
+            <ol class="concept-list">
+                <li><strong>Filtro de entrada:</strong> nada entra al freno sin verificar que viene completo y correcto (la jugada 4 de la lección pasada). El auto con la falla mal anotada, el expediente sin papeles, la tela con defecto de origen — se detectan y resuelven ANTES de tocar al freno.</li>
+                <li><strong>Trato de oro a la salida:</strong> lo que ya pasó por el freno lleva adentro las horas más caras del negocio. Una pieza dañada DESPUÉS del freno obliga a repetir su turno. Por eso lo procesado por el freno se maneja, almacena y transporta con cuidado especial — aunque "sea una pieza cualquiera", ya no lo es.</li>
+            </ol>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · Imprenta Grafix: el error de $12,000 que costaba $300</div>
+            <div class="case-body">
+                <p>El freno de Grafix es la prensa grande. Un miércoles corrieron 4 horas de prensa para un catálogo de 5,000 ejemplares… y al empacar, alguien notó el teléfono equivocado en la contraportada. El cliente había enviado el archivo con el error, nadie lo revisó, y la prensa lo multiplicó por 5,000.</p>
+                <p>Cuenta del desastre: papel y tinta ($12,000), más lo invisible y más grave — <strong>4 horas del freno</strong> (a su costo real: otros ~$10,000) que además retrasaron a los DEMÁS clientes de la semana. Total real: más de $22,000 y dos clientes enojados.</p>
+                <p>La solución costaba $300 al mes: una checklist de pre-prensa — el cliente firma una prueba digital ANTES de que el trabajo toque la prensa: teléfonos marcados, textos leídos, colores aprobados. El error del cliente se atrapa cuando corregirlo cuesta 10 minutos de computadora, no cuando ya se multiplicó por 5,000. <strong>Desde entonces, en Grafix nada toca la prensa sin firma. Nada.</strong></p>
+            </div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Regla de oro #2 · El freno solo trabaja en lo VENDIDO</h3>
+            <p>Las horas del freno son las horas del negocio entero. Entonces, ¿en qué se gastan? Solo hay dos opciones:</p>
+            <div style="margin:14px 0;padding:16px;background:#f0faf8;border-radius:8px;text-align:center;color:#0b3d3a;">
+                <strong>En pedidos reales</strong> (dinero que ENTRA)<br>o<br><strong>en "por si acaso"</strong> (dinero que se ATRAPA — y a veces se pudre)
+            </div>
+            <p>Cuando el freno trabaja para el almacén "aprovechando que hay un hueco", está cambiando ingresos seguros de hoy por una apuesta de bodega — y pagando con las horas más caras de la empresa. Recuerda la pregunta de la Lección 4: <em>¿está vendido o estoy apostando?</em> En el freno, esa pregunta es ley. ¿Y cómo se ordena la fila de lo vendido? Simple y poderoso: <strong>primero lo más atrasado contra fecha prometida.</strong> No el cliente que más grita, no el trabajo más cómodo: el más atrasado primero. Una regla pública que cualquiera puede aplicar sin preguntarle al dueño.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"El comal lleno no es señal de venta. Es señal de apuesta — y las tortillas frías son apuestas perdidas."</div>
+            <div class="aha-author">— Método FLUIR · La Espiga</div>
+            <div class="aha-body">En La Espiga, el freno de las horas pico es la máquina tortilladora. Don Chuy la arrancaba desde temprano "para ir adelantando" — kilos y kilos antes de que llegara la clientela. ¿El resultado? A mediodía, tortillas frías que nadie quiere (el cliente de tortillería paga por calientitas) y la máquina ya cansada de producir… lo que se vende con descuento al final del día para las tortas de la esquina. Cuando entendió la regla, cambió el arranque: la máquina produce contra la fila y contra los pedidos fijos de las fondas del rumbo (eso SÍ está vendido). Mismas horas de máquina, menos merma, más tortillas calientes. <strong>El freno produce dinero cuando produce lo que alguien está esperando — no lo que alguien está suponiendo.</strong></div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128737;&#65039;</span><div>
+                <h3>"¿Y si el freno se queda sin qué hacer?"</h3>
+                <p>Pregunta justa: si solo trabaja lo vendido, ¿qué pasa cuando no hay pedidos suficientes? Respuesta en dos tiempos:</p>
+                <p><strong>Tiempo uno:</strong> si tu freno se queda sin trabajo vendido con frecuencia, tu freno ya no es ese — es el mercado, y tu energía debe irse a vender, no a fabricar inventario para sentirte productivo (Lección 9, freno externo).</p>
+                <p><strong>Tiempo dos:</strong> un hueco ocasional en el freno NO se rellena con "por si acaso" por reflejo. Se evalúa como decisión consciente: ¿hay un producto de venta segurísima y rotación rápida? Quizá. ¿Es para "aprovechar la máquina"? Jamás. El hueco también puede usarse en mantenimiento, en capacitar al relevo o en las ideas de mejora del operador — cosas que devuelven horas del freno mañana.</p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l12a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">¿Por qué el error del catálogo le costó a Grafix mucho más que los $12,000 de papel y tinta?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, false)">Porque el cliente exigió un descuento adicional por la pena</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, true)">Porque consumió 4 horas del freno — las horas más caras del negocio — en producir basura, y además retrasó a los demás clientes</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, false)">Porque la tinta especial del catálogo no se podía reutilizar</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12a', this, false)">Porque tuvieron que pagar horas extra para reponer el trabajo</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l12a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l12b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">Según la regla de "solo lo vendido", ¿cómo se ordena la fila de trabajo del freno?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, false)">Primero el cliente que más presiona, para quitárselo de encima</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, false)">Primero los trabajos más rápidos, para sacar volumen</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, false)">Primero los trabajos de mayor precio, para maximizar el ingreso del día</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l12b', this, true)">Primero el pedido real más atrasado contra su fecha prometida — una regla pública que no necesita al dueño</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l12b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Instala el filtro de entrada (30 minutos):</strong></p>
+                <ol>
+                    <li>Lista los 5 errores/faltantes que más veces han llegado HASTA tu freno (archivo equivocado, papeles incompletos, pieza defectuosa, información a medias del cliente).</li>
+                    <li>Convierte la lista en una checklist de UNA hoja: "esto se verifica antes de que el trabajo toque el freno". Asigna quién la aplica.</li>
+                    <li>Y declara la regla de la fila: en el freno, primero lo vendido más atrasado. Comunícala a todos — es pública precisamente para que funcione sin ti.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Por qué la calidad se filtra antes del freno y lo procesado se trata como oro</li>
+                <li>Que el defecto más caro no es el material: es el turno del freno que se lo tragó</li>
+                <li>Que el freno solo trabaja en lo vendido — y la fila se ordena por atraso real</li>
+                <li>Qué hacer (y qué no) con los huecos ocasionales del freno</li>
+            </ul>
+            <div class="okr-next">→ Cerramos el Módulo U con la <strong>Lección 13</strong>: la fuga más grande de todas — el trabajo que pasa por tu freno y NO debería pasar por ahí. Descargarlo puede duplicar tu capacidad sin contratar a nadie.</div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 13 — MÓDULO U · DESCÁRGALO SIN COMPRAR NADA
+    // ==========================================================
+    {
+        id: 'l13', module: 'Módulo U · Úsalo al máximo', tag: 'tag-d3', tagLabel: 'MÓDULO U',
+        title: 'Descarga tu freno sin comprar nada',
+        subtitle: 'Las 3 vías para quitarle trabajo al freno: cuestionar, revivir y subcontratar — donde lo "ineficiente" se vuelve rentabilísimo',
+        content: `
+        <div class="pull-quote-xl">
+            <div class="pq-icon">"</div>
+            <div class="pq-text">La pregunta no es cómo hacer más rápido al freno. Es cuánto de lo que hace… no debería estar haciéndolo él.</div>
+            <div class="pq-author">— Método FLUIR · Lección 13</div>
+        </div>
+
+        <div class="lesson-okr-pre">
+            <div class="okr-label">🎯 AL FINAL DE ESTA LECCIÓN SABRÁS:</div>
+            <ul>
+                <li>La Vía 1 — Cuestionar: detectar el trabajo que pasa por el freno por costumbre, no por necesidad</li>
+                <li>La Vía 2 — Revivir: por qué la máquina vieja "lenta" y el método "obsoleto" pueden valer oro</li>
+                <li>La Vía 3 — Subcontratar: cuándo pagar caro afuera es baratísimo para el sistema</li>
+                <li>El criterio que une las tres: eficiencia local no importa; horas del freno sí</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h3>Vía 1 · Cuestionar: ¿de verdad esto necesita al freno?</h3>
+            <p>En todo negocio hay trabajo que pasa por el freno <strong>por una regla que alguien puso hace años y nadie ha vuelto a leer.</strong> Se detecta con una auditoría brutal de su fila: toma 20 trabajos que pasaron por tu freno esta semana y pregunta, uno por uno: <em>¿esto lo tenía que hacer ÉL?</em></p>
+            <ul>
+                <li>¿"Todo auto pasa por diagnóstico de Genaro"? ¿También el cambio de balatas que el cliente ya sabe que necesita?</li>
+                <li>¿"Toda declaración la revisa la contadora titular"? ¿También la del cliente con 12 facturas al mes que lleva 5 años igual?</li>
+                <li>¿"Todo platillo lo emplata la cocinera principal"? ¿También las quesadillas?</li>
+            </ul>
+            <p>La regla nació por una buena razón (un error viejo, un susto, un cliente perdido) — pero la razón prescribió y la regla se quedó. Típicamente, <strong>entre el 20 y el 40% de la fila del freno no necesita al freno.</strong> Quitarla es capacidad instantánea y gratuita.</p>
+        </div>
+
+        <div class="case-mexico">
+            <div class="case-label">🇲🇽 CASO MÉXICO · El taller de Rubén, tercera jugada</div>
+            <div class="case-body">
+                <p>Rubén auditó la fila de Genaro: de 20 autos de una semana, <strong>7 no necesitaban diagnóstico especializado.</strong> Frenos gastados que rechinan, afinaciones programadas, un foco de aceite que cualquier técnico interpreta. Pasaban por Genaro por la regla de 2018: "todo auto pasa por diagnóstico" — escrita cuando un técnico nuevo metió la pata con un sensor.</p>
+                <p>La nueva regla: el preparador clasifica en la recepción. <strong>Falla evidente y mantenimiento programado → directo a técnicos. Falla eléctrica, intermitente o rara → Genaro.</strong> Con la duda, 5 minutos de Genaro deciden el camino (5 minutos de filtro ahorran 45 de diagnóstico completo innecesario).</p>
+                <p>Resultado: un tercio de la fila desapareció del freno. Sumado a las fugas selladas de la Lección 11, el taller que entregaba en dos semanas <strong>ya entregaba en 4-5 días — sin contratar a nadie y sin compr… bueno, ya habían comprado el elevador.</strong> Ahora por fin tenía autos que subir.</p>
+            </div>
+        </div>
+
+        <div class="content-card tip">
+            <h3>Vía 2 · Revivir: la máquina vieja vale oro</h3>
+            <p>Casi todo negocio tiene un plan B arrumbado: la tortilladora chica que se usaba antes, el horno viejo, la impresora anterior "que ya está lenta", el Excel de antes del sistema. Se arrumbaron por <strong>ineficientes</strong> — y la palabra es una trampa, porque la eficiencia se midió pieza por pieza, no en horas del freno.</p>
+            <p>La cuenta correcta: si la tortilladora vieja de La Espiga produce a la MITAD de velocidad pero le quita a la grande los kilos de los pedidos de fondas en hora pica, la grande atiende la fila de mostrador sin reventarse. ¿La vieja es "ineficiente"? Por pieza, sí. <strong>¿El sistema completo vende más tortillas calientes por hora? Sí — y eso es lo único que cuenta.</strong> Lo mismo el técnico "lento" que sí puede hacer las afinaciones, o el método manual que descarga al sistema saturado. Eficiencia local: irrelevante. Horas devueltas al freno: oro puro.</p>
+        </div>
+
+        <div class="aha-moment">
+            <div class="aha-label">💡 LA IDEA QUE LO EXPLICA TODO</div>
+            <div class="aha-quote">"Pagar $400 afuera por lo que 'te cuesta $150 adentro' puede ser el mejor negocio de tu mes — si esos $150 eran horas del freno."</div>
+            <div class="aha-author">— Método FLUIR · Vía 3, subcontratar</div>
+            <div class="aha-body">El reflejo PYME dice: "¿pagarle a un tercero? ¡Si aquí lo hacemos más barato!". El error está en QUÉ comparas. El costo "interno" de $150 es contable; si la tarea pasa por tu freno, su costo real es la hora de freno que consume — $2,400 en el taller de Rubén. La maquila, el laboratorio externo que reprograma módulos, el contador freelance que captura en marzo, la costurera del rumbo que hace los dobladillos: todos parecen caros por unidad y son regalados por sistema, PORQUE le devuelven horas al freno para que produzca lo que solo él puede. Eso sí: subcontratar lo que NO pasa por tu freno es gasto puro sin beneficio — el criterio es siempre el mismo: <strong>¿esto libera horas del freno, sí o no?</strong></div>
+        </div>
+
+        <div class="content-card story">
+            <div class="icon-text"><span class="icon">&#128221;</span><div>
+                <h3>El despacho de Leticia y el marzo que por fin durmió</h3>
+                <p>El freno del despacho en temporada: las horas de revisión de Leticia (solo ella firma). Las tres vías aplicadas: <strong>Cuestionó</strong> — los 9 clientes "simples y repetidos" ya no pasan por revisión completa: el auxiliar senior revisa con una checklist que Leticia diseñó, y ella solo audita 1 de cada 4 al azar. <strong>Revivió</strong> — la plantilla de Excel "obsoleta" para conciliar clientes chicos resultó más rápida que el sistema para esos casos. <strong>Subcontrató</strong> — la pura captura de marzo se la dio a una capturista freelance ($6,000 el mes) — "carísimo" decía su socia, hasta que vieron que liberaba 25 horas de Leticia (a costo real de freno: el mejor dinero gastado del año).</p>
+                <p>El marzo siguiente: cero multas, cero desvelos y — por primera vez — capacidad para aceptar 4 clientes nuevos en plena temporada. <strong>Mismo equipo. Mismo despacho. Otro freno: uno descargado.</strong></p>
+            </div></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l13a">
+            <div class="quiz-label">Quiz 1 de 2</div>
+            <div class="quiz-question">En el taller, 7 de 20 autos pasaban por Genaro sin necesitarlo, por una regla de 2018. ¿Qué vía de descarga es esta y cuál es su lección?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, true)">Cuestionar: parte del trabajo pasa por el freno por costumbre heredada, no por necesidad — auditar su fila libera capacidad gratis</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, false)">Subcontratar: esos autos debían mandarse a otro taller</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, false)">Revivir: faltaba usar el escáner viejo para esos casos</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13a', this, false)">Ninguna: la regla de que todo pase por diagnóstico es una buena práctica de calidad</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l13a_fb"></div>
+        </div>
+
+        <div class="quiz-container" id="quiz_l13b">
+            <div class="quiz-label">Quiz 2 de 2</div>
+            <div class="quiz-question">¿Cuándo conviene subcontratar una tarea aunque "salga más cara" que hacerla adentro?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, false)">Siempre: subcontratar es más profesional y reduce la nómina</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, false)">Nunca: en una PYME todo debe hacerse en casa para cuidar el margen</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, true)">Cuando la tarea consume horas del freno: el sobreprecio externo es mínimo comparado con el valor de las horas que le devuelve al sistema</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_l13b', this, false)">Cuando el proveedor externo ofrece factura deducible</div>
+            </div>
+            <div class="quiz-feedback" id="quiz_l13b_fb"></div>
+        </div>
+
+        <div class="next-step-24h">
+            <div class="next-step-label">✅ TU SIGUIENTE PASO EN LAS PRÓXIMAS 24 HORAS</div>
+            <div class="next-step-body">
+                <p><strong>Auditoría de la fila del freno (30 minutos):</strong></p>
+                <ol>
+                    <li>Toma los últimos 20 trabajos que pasaron por tu freno. Marca: ¿cuáles NO necesitaban al freno?</li>
+                    <li>Encuentra la regla que los mandó ahí ("aquí todo lo revisa/hace X") y escribe su versión nueva: qué va directo, qué sí pasa por el freno, quién clasifica.</li>
+                    <li>Lista tus recursos "jubilados" (máquina vieja, método anterior, ayudante posible) y pregúntate cuál puede tomar parte de la carga.</li>
+                    <li>Identifica UNA tarea subcontratable que hoy consume horas del freno y pide una cotización esta semana. Compárala contra tu cifra de la Lección 10 — no contra el costo contable.</li>
+                </ol>
+                <p>Con esto cierras el Módulo U: tu freno ya trabaja más horas, solo en lo suyo, solo en lo vendido y solo en lo que de verdad lo necesita. Lo que sigue es sincronizar al RESTO del negocio con él.</p>
+            </div>
+        </div>
+
+        <div class="lesson-okr-post">
+            <div class="okr-label">✓ YA SABES:</div>
+            <ul>
+                <li>Cuestionar la fila del freno: 20-40% suele estar ahí por costumbre, no por necesidad</li>
+                <li>Revivir recursos "ineficientes" que devuelven horas al freno</li>
+                <li>Subcontratar con el criterio correcto: horas del freno liberadas, no costo unitario</li>
+                <li>Que la eficiencia local es irrelevante: lo que cuenta es lo que el sistema vende</li>
+            </ul>
+            <div class="okr-next">→ Empieza el <strong>Módulo I · Integra el ritmo</strong>. Tu freno ya rinde al máximo — ahora el resto del negocio debe marchar a SU paso. Primera parada: la verdad incómoda sobre la gente "sin nada que hacer".</div>
+        </div>
+        `
     }
 
     // ==========================================================
-    // PENDIENTE (ver blueprint): Módulo U (10-13), Módulo I (14-17),
-    // Módulo R (18-21), Examen (22), Certificado (23)
+    // PENDIENTE (ver blueprint): Módulo I (14-17), Módulo R (18-21),
+    // Examen (22), Certificado (23)
     // ==========================================================
 
     ]
