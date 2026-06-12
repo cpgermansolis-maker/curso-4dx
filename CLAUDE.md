@@ -118,11 +118,14 @@ Data-driven, aplicables a cualquier curso:
 ```js
 progress: {
   xp, completed[], correctQuizzes[],
-  finalScore,
+  finalScore, streak,
   reflection: { q1, q2, q3, submittedAt } | null,
   lastLesson, lastActiveAt, completedDate
 }
 ```
+
+- **`streak`** se persiste desde 2026-06-11 (antes vivía solo en memoria del navegador y se reiniciaba a 0 cada recarga → el alumno veía "Racha: 3" siempre). Se restaura en `loadProgress`, se pinta en `updateXPBar`.
+- **Examen final:** cada pregunta tiene **una sola oportunidad** (se bloquea al responder, correcta o no); al abrir el examen sin haberlo aprobado, el intento arranca limpio (`finalScore`/`finalAnswered` a 0); botón "🔄 Reintentar examen" si reprueba. NO revertir a "reintentos por pregunta" — eso inflaba el conteo y bloqueaba el certificado injustamente (bug arreglado 2026-06-11).
 
 ---
 
@@ -153,30 +156,32 @@ npx firebase-tools deploy --only hosting
 
 ---
 
-## Último avance (2026-06-09, bonus Fable 5)
+## Último avance (2026-06-11, piloto Destapa tu Negocio + fixes)
 
-**Módulo bonus 2 — Claude Fable 5 en CLAUDE SISTEMA.** Anthropic lanzó Fable 5 ese día (primer modelo "clase Mythos" al público, escalón sobre Opus 4.8, consume 2× el uso de Opus, salvaguarda que redirige a Opus 4.8 en temas sensibles). Se agregó lección `lbonus2` (después de `lbonus`/Opus 4.8, antes del examen), quizzes `quiz_fable_a/b` (no entran al examen), reindexado `lessonRequirements` (Fable=29, examen=30, cert=31). Actualizado `meta.spotlight`, FAQ "¿quedará obsoleto?" y `UPDATE_BADGES['claude-sistema']='⚡ Fable 5'` en index.html. Datos verificados con WebSearch/WebFetch del anuncio oficial (claims honestos). Commit `3fc7436`, deployado. **Patrón "bonus por modelo nuevo"** documentado en memoria `project_bonus-fable5-claude-sistema.md`.
+**Curso piloto PUBLICADO + marca OAC.** Se reconstruyó "La Meta" (Goldratt) como **obra original** "Destapa tu Negocio" (Método FLUIR, 5 fases, 22 lecciones + examen + cert, 7 casos PYME MX). Publicado: `cursos/destapa-tu-negocio.js`, alta en CATALOG/PRICING ($449 Premium)/LAUNCH_DATES/ENROLL_PRICING/getCatalog. Flag **`meta.originalWork:true`** → curso.html dice "Obra original de…" en vez de "Basado en el libro de…" (6 sitios). Portada SVG premium con **logo OAC vectorizado protagonista + TRIKLES discreto**; mismo branding agregado a la portada de CLAUDE SISTEMA. Inventario de ideas + blueprint + regla anti-derivado en `libros/LaMeta/`. Detalle en memoria `project_piloto-destapa-tu-negocio.md`.
 
-### Antes (2026-06-08, sesión legal)
+**Acceso total del dueño:** `FULL_ACCESS_EMAILS` en curso.html (`cpgermansolis@gmail.com`, `gerloxsolis@gmail.com`) entran a cualquier curso sin beca. Memoria `reference_acceso-total-cuentas.md`.
 
-**Blindaje legal + copyright.** (1) `legal.html` nueva (Aviso Legal + T&C + Aviso de Privacidad LFPDPPP + Naturaleza de certificados); descargo "sin validez oficial ante la SEP" + folio único `TKS-XXXX-XXXX` en cada certificado; footer legal; claims "verificable"→"con folio único". (2) Se descubrió que los PDFs de `libros/` estaban descargables públicos en el hosting → excluidos de `hosting.ignore`, ahora 404. (3) **Decisión de Germán: cobro APAGADO**; solo CLAUDE SISTEMA es monetizable limpio (resto = derivados de libros con copyright). Commits 0a7001f / 216aacb / eda5787. Detalle y vías de monetización legal en memoria (`project_monetizacion-legal-vias.md`).
+**Fixes:** (1) racha persistida en Firestore; (2) examen con una oportunidad por pregunta (ver sección Progress). (3) **Caché**: `cleanUrls` servía páginas sin extensión (`/curso`) que no casaban con la regla de headers `**/*.@(html|js)` → caché de 1h. Cambiado `source` a `**`. Ver Gotchas de deploy. Commits `9de3af9`→`8f97dba`, deployado.
+
+### Antes (2026-06-09, bonus Fable 5)
+
+**Módulo bonus 2 — Fable 5 en CLAUDE SISTEMA.** Lección `lbonus2` + quizzes `quiz_fable_a/b` (no entran al examen), reindexado `lessonRequirements` (Fable=29, examen=30, cert=31), `UPDATE_BADGES['claude-sistema']='⚡ Fable 5'`. **Patrón "bonus por modelo nuevo"** en memoria `project_bonus-fable5-claude-sistema.md`. Commit `3fc7436`.
 
 ## Pendientes al cierre
 
-- **Curso piloto** — elegir 1 curso para reconstruir como obra original de Germán (título nuevo + estructura propia + reescritura). Germán no eligió cuál aún; Claude hace la reescritura.
-- **Cobrar CLAUDE SISTEMA** (limpio) cuando Germán quiera; consulta con abogado de PI para validar piloto + evaluar certificación 4DX.
-- **Verificador de folios (Fase 2)** — `verificar.html` + Firestore para restaurar el claim "verificable".
+- **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); validación con **abogado de PI** antes de reactivar cobro (es el piloto de la estrategia legal); decidir si OAC va también en `legal.html`/certificados de otros cursos. Suavizar "gratis hasta el 22 de junio de 2026" en `lbonus2` cuando pase la fecha.
+- **Cobrar CLAUDE SISTEMA + Destapa** (limpios) cuando Germán quiera, tras visto bueno del abogado de PI.
+- **Verificador de folios (Fase 2)** — `verificar.html` + Firestore.
 - **Chatbot Claude API** (preventa) — UI + Cloud Function `chatPreventa` + rate limiting. Germán confirmó interés.
-- **#6 Rutas de aprendizaje** / **#7 Métricas de resultado** — requieren decisión/encuesta de Germán.
 - Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
-- **Bonus Fable 5:** suavizar la frase "gratis hasta el 22 de junio de 2026" en `lbonus2` cuando pase esa fecha (envejece). Opcional: imagen de hero propia en vez de Unsplash.
 
 ---
 
 ## ⚠️ Legal — leer antes de tocar cobro o `libros/`
 
 - **Cobro APAGADO a propósito (decisión de Germán, 2026-06-08).** NO reactivar Stripe/checkout sin que él lo pida explícitamente.
-- **Solo `claude-sistema` es monetizable limpio** (obra original de Germán). TODO el resto del catálogo son obras derivadas de libros con copyright vigente (confirmado: Mente Millonaria, La Paradoja, Hábitos, 4DX, Código de Honor, Coaching, Gerencia Efectiva, Food & Beverage). Cobrar por ellos (online o efectivo) expone al Art. 424 CPF (delito por fin de lucro) + daños civiles LFDA.
+- **Monetizables limpios = `claude-sistema` y `destapa-tu-negocio`** (obras originales de Germán; Destapa es reconstrucción original de las ideas de "La Meta", `meta.originalWork:true`, pendiente visto bueno de abogado de PI). TODO el resto del catálogo son obras derivadas de libros con copyright vigente (Mente Millonaria, La Paradoja, Hábitos, 4DX, Código de Honor, Coaching, Gerencia Efectiva, Food & Beverage). Cobrar por ellos (online o efectivo) expone al Art. 424 CPF (delito por fin de lucro) + daños civiles LFDA.
 - **`libros/**` está excluido del hosting** en `firebase.json` → `hosting.ignore` (commit 216aacb). NO quitarlo: Firebase deploya desde la carpeta local, no desde git, así que el `.gitignore` no basta. Los PDFs fuente NO deben servirse públicamente.
 - **Certificados:** ya llevan descargo "sin validez oficial ante la SEP" + folio único + página `legal.html`. No quitar el descargo.
 - Detalle completo en memoria: `project_postura-legal-cobro.md` y `project_blindaje-legal-certificados.md`.
