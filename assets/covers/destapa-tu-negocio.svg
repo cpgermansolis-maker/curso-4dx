@@ -178,7 +178,7 @@
     <text x="74" y="9"  font-family="'Segoe UI', Tahoma, sans-serif" font-weight="700" font-size="6.4" fill="#f2f7fc" letter-spacing="0.7">ORGANIZACIÓN DE APOYO</text>
     <text x="74" y="18" font-family="'Segoe UI', Tahoma, sans-serif" font-weight="700" font-size="6.4" fill="#f2f7fc" letter-spacing="0.7">PARA EL CRECIMIENTO</text>
     <text x="74" y="27" font-family="'Segoe UI', Tahoma, sans-serif" font-weight="700" font-size="6.4" fill="#f2f7fc" letter-spacing="0.7">DE LAS MIPYMES</text>
-    <text x="74" y="38.5" font-family="'Segoe UI', Tahoma, sans-serif" font-weight="700" font-size="6.8" fill="#aabdd8" letter-spacing="2.2" opacity="0.9">&#215; TRIKLES</text>
+    <text x="74" y="38.5" font-family="'Segoe UI', Tahoma, sans-serif" font-weight="800" font-size="6.8" fill="#eef5fe" letter-spacing="2.2" opacity="1">&#215; TRIKLES</text>
   </g>
 
   <!-- ===== TITULAR ===== -->

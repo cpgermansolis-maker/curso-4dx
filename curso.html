@@ -4122,8 +4122,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
+// Cuentas con acceso total: entran a CUALQUIER curso (incluidos los que se
+// publiquen en el futuro) sin necesidad de beca ni inscripción manual.
+const FULL_ACCESS_EMAILS = ['cpgermansolis@gmail.com', 'gerloxsolis@gmail.com'];
+function hasFullAccess() {
+    const email = ((currentUser && currentUser.email) || '').trim().toLowerCase();
+    return FULL_ACCESS_EMAILS.includes(email);
+}
+
 function isEnrolledInCurrentCourse() {
     if (!currentUser || !COURSE) return false;
+    if (hasFullAccess()) return true;
     return currentUser.enrollments && currentUser.enrollments[COURSE.id];
 }
 
