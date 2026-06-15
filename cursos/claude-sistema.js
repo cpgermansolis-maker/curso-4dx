@@ -17,12 +17,12 @@ const COURSE_CLAUDE_SISTEMA = {
         // Banda destacada en el landing (vende el módulo bonus)
         spotlight: {
             eyebrow: '🎁 Dos módulos bonus incluidos · sin costo extra',
-            title: 'Actualizado con Claude Fable 5 — el primer modelo "clase Mythos" abierto al público',
-            text: 'El 9 de junio de 2026 Anthropic abrió un escalón por encima de Opus con Claude Fable 5. El curso incluye dos módulos bonus: uno sobre Opus 4.8 y otro sobre Fable 5 — qué es, en qué supera a Opus, por qué a veces "cambia de modelo solo", y cuándo conviene usarlo dentro de tu sistema sin malgastar tu cuota. Te certificas sobre lo más avanzado que existe hoy.',
+            title: 'Incluye cómo elegir tu modelo y mantener tu sistema vigente cuando Claude cambia',
+            text: 'Anthropic mueve su catálogo constantemente: salen modelos nuevos y se retiran otros. El curso incluye dos módulos bonus que te preparan para eso: uno sobre Claude Opus 4.8 y otro sobre cómo decidir qué modelo usar y adaptarte cuando el catálogo cambia — con el caso real de Fable 5, un modelo que salió y se retiró en semanas. Aprendes un sistema de trabajo que no caduca con la próxima versión.',
             bullets: [
-                'Qué es Fable 5 y la familia Mythos, sin marketing',
-                'En qué supera a Opus 4.8 — datos del lanzamiento',
-                'La decisión clave: cuándo usar Fable 5 y cuándo no (cuesta 2×)',
+                'Cómo decidir qué modelo usar para cada tarea (capacidad vs costo)',
+                'La regla de escalar: empieza con el estándar, sube de modelo solo cuando hace falta',
+                'El caso Fable 5: por qué no atas tu trabajo a un modelo concreto',
                 'Tu sistema, a prueba de versiones y de familias enteras'
             ]
         },
@@ -107,7 +107,7 @@ const COURSE_CLAUDE_SISTEMA = {
         faq: [
             {
                 q: '¿Esto no quedará obsoleto cuando salga un modelo nuevo de Claude?',
-                a: 'Al contrario: el curso ya incluye dos módulos bonus que prueban justo lo opuesto. Uno sobre Claude Opus 4.8 (mayo 2026) y otro sobre Claude Fable 5, el primer modelo "clase Mythos" abierto al público (junio 2026). Cada vez que sale algo nuevo lo sumamos. Pero lo más importante es que aprendes un sistema de trabajo, no trucos de una versión: el método sigue funcionando con cada modelo nuevo — de hecho, cada motor mejor lo vuelve más poderoso. Y recibes las actualizaciones del curso sin costo.'
+                a: 'Al contrario: el curso te prepara justo para eso. Aprendes un sistema de trabajo, no trucos de una versión — el método sigue funcionando con cada modelo nuevo, y cada motor mejor lo vuelve más poderoso. Incluye dos módulos bonus sobre el tema: uno sobre Claude Opus 4.8 y otro sobre cómo elegir tu modelo y adaptarte cuando Anthropic cambia su catálogo, con el caso real de Fable 5 (un modelo que salió y se retiró en semanas). Y recibes las actualizaciones del curso sin costo.'
             },
             {
                 q: '¿Necesito saber programar para este curso?',
@@ -2761,31 +2761,32 @@ Siempre respóndeme en español latinoamericano.</pre>
                 <li>Dónde Claude lidera frente a la competencia: obediencia, trabajo agéntico, alineación y contexto largo</li>
                 <li>Que tu sistema es a prueba de versiones — cada motor nuevo lo vuelve más poderoso</li>
             </ul>
-            <div class="okr-next">→ <strong>Sigue un segundo bonus:</strong> Claude Fable 5, el modelo que acaba de superar a Opus 4.8. (Tampoco entra en el examen — es contenido extra.)</div>
+            <div class="okr-next">→ <strong>Sigue un segundo bonus:</strong> cómo elegir tu modelo y mantener tu sistema vigente cuando Anthropic cambia el catálogo — con el caso Fable 5. (Tampoco entra en el examen — es contenido extra.)</div>
         </div>
         `
     },
 
     // ==========================================================
-    // MÓDULO BONUS 2 — Claude Fable 5, primer modelo clase Mythos (lbonus2)
+    // MÓDULO BONUS 2 — Cómo elegir tu modelo y adaptarte cuando el
+    // catálogo cambia (caso Fable 5) (lbonus2)
     // ==========================================================
     {
         id: 'lbonus2', module: 'Módulo Bonus', tag: 'tag-bonus', tagLabel: 'BONUS',
-        title: 'Claude Fable 5 — el primer modelo "clase Mythos" en manos del público (y por qué tu sistema lo aprovecha más que nadie)',
-        subtitle: 'El 9 de junio de 2026 Anthropic abrió un escalón por encima de Opus. Qué es Fable 5, en qué supera a Opus 4.8, por qué a veces "cambia de modelo solo", y cuándo conviene usarlo dentro de tu sistema',
+        title: 'Cuándo subir de modelo (y cómo no quedar atado a uno) — el caso Fable 5',
+        subtitle: 'El catálogo de Claude cambia todo el tiempo: salen modelos y se retiran. Lo que no cambia es cómo decides qué motor usar para cada tarea. El episodio Fable 5 lo demuestra.',
         content: `
         <div class="lesson-hero" style="background-image:linear-gradient(135deg,rgba(26,0,80,0.85),rgba(43,26,0,0.6)),url('https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=1400&q=80')">
-            <div class="hero-caption">Bonus 2 · Un nuevo escalón de capacidad — y cómo decidir cuándo usarlo</div>
+            <div class="hero-caption">Bonus 2 · Elegir el motor correcto — y adaptarte cuando el catálogo cambia</div>
         </div>
 
         <div class="lesson-okr-pre">
             <div class="okr-label">🎁 EN ESTE MÓDULO BONUS:</div>
             <ul>
-                <li>Qué es Claude Fable 5 y qué significa "clase Mythos" — un escalón por encima de Opus</li>
-                <li>En qué supera de forma medible a Opus 4.8 (los números reales del lanzamiento)</li>
-                <li>Por qué a veces Fable 5 "cambia de modelo solo" — la salvaguarda que viste en el aviso de Claude</li>
-                <li>El costo real: consume 2× el uso de Opus, y qué implica para tu plan</li>
-                <li>La decisión que importa: <em>cuándo</em> sacar Fable 5 dentro de tu sistema y cuándo no hace falta</li>
+                <li>Por qué "¿cuál es el modelo más nuevo?" nunca es la pregunta correcta — y cuál sí lo es</li>
+                <li>El caso Fable 5: un modelo que Anthropic lanzó y retiró en cuestión de semanas</li>
+                <li>Cómo decidir entre un modelo de tope de gama y uno más rápido/barato para CADA tarea</li>
+                <li>La regla de escalar: empieza con el estándar, sube de modelo solo cuando la tarea lo amerita</li>
+                <li>Por qué tu sistema (mapa de decisión, prompts, Revisor, CLAUDE.md) sobrevive a cualquier cambio de catálogo</li>
             </ul>
         </div>
 
@@ -2793,89 +2794,78 @@ Siempre respóndeme en español latinoamericano.</pre>
             <div class="instructor-mini-avatar"><img src="assets/instructor-german.jpg" alt="GS" onerror="this.parentNode.innerHTML='GS';"></div>
             <div class="instructor-note-body">
                 <div class="instructor-note-label">Nota del instructor · LADE Germán Solís Muñoz</div>
-                <div class="instructor-note-text">Agregué este segundo bonus el mismo día del lanzamiento (9 de junio de 2026) porque Anthropic no sacó "otro Opus": abrió una <strong>familia nueva</strong>, más potente, que antes solo tenían usuarios verificados. Es importante — pero el mensaje del curso no cambia ni un milímetro. Un motor más bestia hace al conductor con método aún más imparable, y al conductor sin método igual de inconsistente. Te muestro qué es, los datos verificables, y sobre todo <strong>cuándo usarlo</strong>, porque cuesta el doble y no toda tarea lo necesita.</div>
+                <div class="instructor-note-text">Este bonus nació el día que Anthropic lanzó <strong>Claude Fable 5</strong> (junio de 2026). Semanas después, Anthropic lo retiró del acceso general. En vez de borrar la lección, la convertí en algo mucho más útil: el caso Fable 5 es la <strong>mejor prueba</strong> de la idea central de todo el curso. No construyes tu trabajo sobre un modelo concreto — lo construyes sobre un <strong>método de decisión</strong> que sigue en pie con cada cambio de catálogo. Aquí aprendes ese criterio, que no caduca con la próxima versión.</div>
             </div>
         </div>
 
         <div class="content-card">
-            <h3>Qué es Claude Fable 5 (y qué es "clase Mythos")</h3>
-            <p>Hasta ahora la línea más capaz de Anthropic era <strong>Opus</strong>. Por encima existía una familia interna, los modelos <strong>Mythos</strong>, tan potentes encontrando y explotando vulnerabilidades que Anthropic los mantenía con acceso restringido. <strong>Claude Fable 5</strong> (lanzado el 9 de junio de 2026, junto con Claude Mythos 5) es el <strong>primer modelo clase Mythos disponible al público</strong>: la misma tecnología de tope de gama, pero con salvaguardas que la hacen segura para uso general.</p>
-            <p>En una frase: Fable 5 es <strong>un escalón por encima de Opus 4.8</strong>. No es "Opus 4.9" — es una categoría superior, recortada con guardarraíles para que cualquiera pueda usarla.</p>
+            <h3>La pregunta correcta no es "¿cuál es el modelo más nuevo?"</h3>
+            <p>Anthropic mueve su catálogo constantemente. En seis semanas pasó de Opus 4.7 a Opus 4.8. En junio de 2026 abrió al público un modelo de su familia más potente —Fable 5, "clase Mythos"— y <strong>poco después lo retiró</strong>. Si atas tu forma de trabajar a "usar siempre el último modelo", vives corriendo detrás de los anuncios.</p>
+            <p>La pregunta que de verdad importa no cambia nunca: <strong>¿qué motor resuelve ESTA tarea con el mejor balance entre capacidad y costo?</strong> Esa decisión es una habilidad — y es lo que vas a practicar aquí.</p>
         </div>
 
         <div class="content-card">
-            <h3>En qué supera a Opus 4.8 — datos del lanzamiento</h3>
-            <p>Como siempre en este curso: no memorices cifras, entiende la <em>dirección</em>. Fable 5 es estado del arte en casi todos los benchmarks probados, con un salto especialmente claro en razonamiento y trabajo de conocimiento.</p>
+            <h3>El caso Fable 5 — un modelo que vino y se fue</h3>
+            <p>Vale la pena entender qué pasó, porque es el ejemplo perfecto:</p>
             <ul>
-                <li><strong>Primero en superar el 90%</strong> en un benchmark de analítica — un salto de <strong>10 puntos</strong> sobre Opus.</li>
-                <li><strong>Más alto registrado</strong> en el Finance Benchmark de Hebbia (razonamiento de nivel senior).</li>
-                <li><strong>~25–30% más rápido</strong> que Opus 4.8 en una evaluación financiera completa.</li>
-                <li>Un cliente lo describió como "un paso claro por encima de Opus 4.8" en razonamiento.</li>
-                <li><strong>Ingeniería de software:</strong> Stripe reportó que "comprimió meses de ingeniería en días" — una migración de 50 millones de líneas de Ruby en un día.</li>
+                <li><strong>Qué fue:</strong> en junio de 2026 Anthropic abrió al público, por primera vez, un modelo de su familia más capaz (apodada "clase Mythos") — un escalón por encima de Opus, con saltos notables en razonamiento y analítica.</li>
+                <li><strong>Qué prometía:</strong> resultados de tope de gama en las tareas más difíciles… a cambio de consumir alrededor del doble de cuota que Opus.</li>
+                <li><strong>Qué pasó:</strong> al poco tiempo Anthropic lo retiró del acceso general. Pasó de "lo más avanzado disponible" a ya no estar.</li>
             </ul>
-            <p>Para tu trabajo: en las tareas más duras —análisis complejo, razonamiento de varios pasos, código difícil— Fable 5 te dará un resultado mejor y más rápido que Opus.</p>
+            <p>La moraleja no es sobre Fable 5. Es esta: <strong>ningún modelo concreto es para siempre.</strong> El que hoy es "el tope" puede no estar mañana, y el tope de mañana se llamará distinto. Lo único que permanece es <em>tu criterio para elegir</em>.</p>
         </div>
 
         <div class="aha-moment">
-            <div class="aha-label">💡 POR QUÉ A VECES "CAMBIA DE MODELO SOLO"</div>
-            <div class="aha-quote">"Cuando las medidas de seguridad marcan un mensaje, Claude cambia automáticamente a un modelo diferente para continuar."</div>
-            <div class="aha-body">Es exactamente el interruptor que aparece al activar Fable 5. Como es clase Mythos —capaz de cosas peligrosas en las manos equivocadas— lleva clasificadores que detectan temas de <strong>ciberseguridad ofensiva, bio/química de doble uso o "destilación"</strong> (copiar sus capacidades). Cuando uno se activa, Fable 5 <strong>redirige la respuesta a Opus 4.8</strong> automáticamente — el modelo más seguro que ya conoces del bonus anterior. Ocurre en <strong>menos del 5% de las sesiones</strong>. Si desactivas ese interruptor, el chat se <em>pausa</em> en vez de cambiar. Para tu trabajo profesional normal nunca lo notarás; conviene dejarlo activado.</div>
+            <div class="aha-label">⚙️ EL PRINCIPIO QUE SOBREVIVE A TODO</div>
+            <div class="aha-quote">"Salen motores y se retiran motores. Tu volante sigue siendo el mismo — y cada vez vale más."</div>
+            <div class="aha-body">Nada de lo que aprendiste depende de qué modelo esté de moda: ni el mapa de decisión, ni los prompts de 5 elementos, ni el Revisor Crítico, ni tu memoria en archivos (CLAUDE.md, Projects). Un modelo más capaz <strong>amplifica</strong> al usuario con método y deja igual de perdido al que no lo tiene. De hecho, los modelos de tope de gama rinden mucho mejor cuando los alimentas con memoria persistente basada en archivos — exactamente las prácticas que este curso te enseñó. Tu sistema es a prueba de versiones <em>y</em> de familias enteras.</div>
         </div>
 
         <div class="content-card tip">
-            <h3>El costo: lo que tienes que saber antes de usarlo todo el día</h3>
-            <ul>
-                <li><strong>Consume 2× el uso de Opus.</strong> Cada mensaje con Fable 5 "gasta" el doble de tu cuota que uno con Opus. No es para todo — es para lo que de verdad lo amerita.</li>
-                <li><strong>Incluido sin costo extra en planes de pago hasta el 22 de junio de 2026.</strong> Después de esa fecha, requiere créditos de uso hasta que haya capacidad. Aprovecha la ventana para probarlo.</li>
-                <li><strong>Precio API:</strong> $10 USD por millón de tokens de entrada y $50 por millón de salida — menos de la mitad de lo que costaba la versión preview de Mythos.</li>
-            </ul>
-        </div>
-
-        <div class="content-card">
-            <h3>La decisión que importa: ¿Fable 5 u Opus para esta tarea?</h3>
-            <p>Esto es puro Módulo 0 — elegir la herramienta correcta. Ahora la elección no es solo Chat/Co-work/Code, también <em>qué motor</em>:</p>
+            <h3>Cómo elegir el motor para cada tarea (la regla de escalar)</h3>
             <ol class="concept-list">
-                <li><strong>Usa Fable 5</strong> cuando la tarea es genuinamente difícil: análisis de varios documentos, razonamiento financiero o legal serio, código que Opus no logró bien, o cuando el costo de un error es alto.</li>
-                <li><strong>Quédate en Opus 4.8</strong> (o fast mode) para el 80% del día: redactar, resumir, iterar prompts, tareas que ya te salen bien. Gastar 2× ahí es desperdicio.</li>
-                <li><strong>Regla práctica:</strong> empieza la tarea en Opus; si el resultado se queda corto, <em>sube</em> a Fable 5 para ese caso concreto. Igual que subes de Chat a Code solo cuando hace falta.</li>
+                <li><strong>Tu modelo por defecto</strong> (el del 80% del día): el modelo de gama alta estándar disponible —hoy, la familia <strong>Opus 4.x</strong> o su <em>fast mode</em>— para redactar, resumir, iterar prompts y todo lo que ya te sale bien.</li>
+                <li><strong>Escala al modelo más capaz disponible</strong> solo cuando la tarea es genuinamente difícil (análisis de varios documentos, razonamiento financiero o legal serio, código que el estándar no logró) o cuando el costo de un error es alto.</li>
+                <li><strong>Cuida el costo:</strong> los modelos de tope de gama suelen consumir más cuota o costar más por token (Fable 5, por ejemplo, gastaba ~2× lo de Opus). Subir de modelo "por inercia" desperdicia tu plan.</li>
+                <li><strong>Regla práctica:</strong> empieza la tarea en tu modelo por defecto; si el resultado se queda corto, <em>sube</em> al más potente para ESE caso concreto. Igual que subes de Chat a Code solo cuando hace falta.</li>
             </ol>
-            <p>El sistema no cambió: sigues eligiendo la herramienta mínima que resuelve bien el trabajo. Fable 5 solo agrega una marcha más arriba para cuando la necesitas.</p>
+            <p>El sistema no cambió: sigues eligiendo la herramienta mínima que resuelve bien el trabajo. La única diferencia es que ahora también eliges <em>qué motor</em>.</p>
         </div>
 
         <div class="aha-moment">
-            <div class="aha-label">⚙️ EL PRINCIPIO, OTRA VEZ — Y MÁS FUERTE</div>
-            <div class="aha-quote">"Salió un motor de otra categoría. Tu volante sigue siendo el mismo — y ahora vale más que nunca."</div>
-            <div class="aha-body">Fable 5 no vuelve obsoleto nada de lo que aprendiste: ni el mapa de decisión, ni los prompts de 5 elementos, ni el Revisor Crítico, ni tus flujos. Al revés. Un modelo más capaz amplifica al usuario con método y deja igual de perdido al usuario sin él. La prueba está en el detalle que casi nadie nota del lanzamiento: con <strong>memoria persistente basada en archivos</strong> (tu CLAUDE.md, tus Projects), Fable 5 rindió <strong>tres veces más</strong> que Opus 4.8 en una tarea de largo plazo. Es decir: el modelo premia exactamente las prácticas que este curso te enseñó. Tu sistema es a prueba de versiones <em>y</em> a prueba de familias enteras.</div>
+            <div class="aha-label">🔁 LLÉVALO A TU AUDITORÍA MENSUAL</div>
+            <div class="aha-quote">"El catálogo cambia. Tu revisión de 30 minutos es donde lo absorbes sin estrés."</div>
+            <div class="aha-body">En la auditoría mensual del Módulo 4 agrega una pregunta fija: <strong>"¿Anthropic cambió el catálogo de modelos este mes? ¿Eso cambia mi modelo por defecto o alguno de mis flujos?"</strong> Si salió uno nuevo, lo evalúas con calma; si retiraron el que usabas, eliges el reemplazo. Así nunca te toma por sorpresa — ni te obliga a perseguir cada anuncio.</div>
         </div>
 
         <div class="next-step-24h">
             <div class="next-step-label">⚡ TU TURNO — BONUS</div>
             <div class="next-step-body">
-                <p>1) Si tienes un plan de pago, activa <strong>Claude Fable 5</strong> en el selector de modelo (deja el interruptor de seguridad activado). 2) Toma <em>una</em> tarea difícil real que Opus te resolvió a medias y vuélvela a correr con Fable 5; compara los dos resultados. 3) Anota en tu Project "Mi sistema Claude" una regla nueva: <em>"Subo a Fable 5 cuando ___"</em> — completa la frase con tu criterio personal.</p>
-                <p><strong>Criterio de éxito:</strong> tienes una regla escrita de cuándo usar Fable 5 vs Opus, y la probaste al menos una vez con una tarea real — no usas el modelo caro por inercia.</p>
+                <p>1) Abre el selector de modelo en Claude.ai y anota qué modelos tienes disponibles <strong>hoy</strong> (el catálogo de hoy, no el de hace un mes). 2) Define dos cosas: tu <strong>modelo por defecto</strong> (el del 80% del día) y tu <strong>modelo de escalada</strong> (el más capaz disponible, para lo difícil). 3) Anota en tu Project "Mi sistema Claude" dos reglas: <em>"Subo al modelo más potente cuando ___"</em> y <em>"Reviso el catálogo de modelos en mi auditoría mensual"</em>.</p>
+                <p><strong>Criterio de éxito:</strong> tienes escrito tu modelo por defecto y tu criterio de escalada — expresados por su función, no por el nombre del modelo de moda, para que sigan valiendo cuando el catálogo cambie.</p>
             </div>
         </div>
 
         <div class="quiz-container" id="quiz_fable_a">
             <div class="quiz-label">Quiz · Bonus</div>
-            <div class="quiz-question">¿Qué hace diferente a Claude Fable 5 frente a Opus 4.8?</div>
+            <div class="quiz-question">El caso Fable 5 (un modelo que Anthropic lanzó y poco después retiró) ilustra sobre todo que…</div>
             <div class="quiz-options">
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, false)">Es la misma capacidad que Opus 4.8 pero más barato</div>
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, true)">Es el primer modelo "clase Mythos" abierto al público — un escalón de capacidad por encima de Opus, con salvaguardas para uso general</div>
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, false)">Es un modelo más pequeño y rápido pensado para tareas simples</div>
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, false)">Es exclusivo para programadores y no sirve para trabajo de conocimiento</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, false)">Siempre debes usar el modelo más nuevo apenas sale, porque los anteriores dejan de funcionar</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, true)">Ningún modelo concreto es permanente: el catálogo cambia, así que conviene construir tu trabajo sobre un método de elección y no sobre un modelo específico</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, false)">Los modelos de tope de gama no sirven para el trabajo profesional</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_a', this, false)">Una vez que eliges un modelo no deberías cambiarlo nunca</div>
             </div>
             <div class="quiz-feedback" id="quiz_fable_a_fb"></div>
         </div>
 
         <div class="quiz-container" id="quiz_fable_b">
             <div class="quiz-label">Quiz · Bonus</div>
-            <div class="quiz-question">Según el módulo, ¿cuál es el criterio correcto para decidir cuándo usar Fable 5?</div>
+            <div class="quiz-question">¿Cuál es la regla correcta para elegir entre un modelo de tope de gama y el modelo estándar para una tarea?</div>
             <div class="quiz-options">
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, false)">Usarlo siempre para todo, porque es el modelo más potente</div>
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, false)">No usarlo nunca, porque la salvaguarda lo hace inseguro</div>
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, true)">Reservarlo para las tareas genuinamente difíciles o de alto costo de error, y quedarse en Opus para el 80% del día — porque Fable 5 consume 2× el uso</div>
-                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, false)">Usarlo solo si dejas desactivado el interruptor de seguridad</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, false)">Usar siempre el más potente, porque da el mejor resultado en todo</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, false)">Usar siempre el más barato, porque la calidad no importa para el trabajo real</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, true)">Usar el estándar (más rápido/barato) para el ~80% del día y escalar al más capaz solo cuando la tarea es genuinamente difícil o el costo de error es alto</div>
+                <div class="quiz-option" onclick="checkQuiz('quiz_fable_b', this, false)">Elegir al azar, porque todos los modelos son equivalentes</div>
             </div>
             <div class="quiz-feedback" id="quiz_fable_b_fb"></div>
         </div>
@@ -2883,11 +2873,11 @@ Siempre respóndeme en español latinoamericano.</pre>
         <div class="lesson-okr-post">
             <div class="okr-label">✓ MÓDULO BONUS 2 COMPLETADO. AHORA SABES:</div>
             <ul>
-                <li>Qué es Fable 5 y qué significa "clase Mythos" — un escalón por encima de Opus 4.8</li>
-                <li>En qué supera de forma medible a Opus, y a qué costo (2× de uso)</li>
-                <li>Por qué a veces redirige a Opus 4.8 solo — la salvaguarda de temas sensibles</li>
-                <li>Cuándo conviene subir a Fable 5 dentro de tu sistema y cuándo no hace falta</li>
-                <li>Que un modelo más potente premia el método — tu sistema es a prueba de versiones y de familias enteras</li>
+                <li>Que "el modelo más nuevo" nunca es la pregunta — la pregunta es qué motor resuelve esta tarea con mejor balance capacidad/costo</li>
+                <li>El caso Fable 5: los modelos van y vienen; tu criterio para elegir es lo que permanece</li>
+                <li>La regla de escalar: estándar para el ~80% del día, sube al más potente solo cuando lo amerita</li>
+                <li>Que tu sistema (mapa, prompts, Revisor, CLAUDE.md) es a prueba de versiones Y de familias enteras</li>
+                <li>Revisar el catálogo de modelos en tu auditoría mensual del Módulo 4</li>
             </ul>
             <div class="okr-next">→ <strong>Ahora sí: el examen de certificación.</strong> 15 preguntas sobre los 4 módulos del núcleo. (Los dos bonus no entran en el examen — son tuyos, de regalo.)</div>
         </div>
