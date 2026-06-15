@@ -178,12 +178,14 @@ Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin cond
 
 ## Pendientes al cierre
 
-- **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); validación con **abogado de PI** antes de reactivar cobro (es el piloto de la estrategia legal); decidir si OAC va también en `legal.html`/certificados de otros cursos.
-- **Cobrar CLAUDE SISTEMA + Destapa** (limpios) cuando Germán quiera, tras visto bueno del abogado de PI.
+- 🆕 **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
+- 🆕 **Enviar la nota al abogado de PI** sobre el embudo (texto listo en `project_postura-legal-cobro.md`): ¿usar derivados como gancho/premio reintroduce "fin de lucro" aunque no se cobren? Germán eligió proceder.
+- **Stripe LIVE:** falta la **prueba de compra real + reembolso** para validar webhook→inscripción end-to-end (cobro ya es real).
+- **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); decidir si OAC va también en `legal.html`/certificados de otros cursos.
+- ✅ ~~Cobrar CLAUDE SISTEMA + Destapa~~ — ACTIVO desde 2026-06-15 (Stripe LIVE real). Falta solo la prueba de compra+reembolso (arriba).
 - ✅ ~~**Verificador de folios (Fase 2)**~~ — HECHO 2026-06-15: Cloud Function `issueCertificate` + colección pública `certificates/{folio}` + `verificar.html`. Claim "verificable" restaurado. (Follow-up: backfill de certificados viejos, opcional.)
 - ✅ ~~Fable 5 bonus~~ — HECHO 2026-06-15: Anthropic retiró Fable 5; `lbonus2` reescrito como lección durable de selección de modelo (caso Fable 5), badge a `⚡ Actualizado`.
 - ✅🤖 **Bot de preventa — ACTIVO Y VERIFICADO (2026-06-15).** `ANTHROPIC_API_KEY` puesta por Germán + `chatPreventa` desplegada; probado end-to-end (responde con precio correcto y certificado honesto). Cloud Function `chatPreventa` (onCall, modelo **`claude-haiku-4-5`** vía `@anthropic-ai/sdk`): system prompt con catálogo + política pago/gratis + certificado honesto + handoff a Germán; rate limit por IP (colección `chatLimits`, ~40 msgs/IP/día); `buildPreventaSystemPrompt(courseId)` + `PREVENTA_CATALOG` en functions/index.js. Helper `TK.chatPreventa(courseId, messages)`. Chat UI en el widget flotante del landing de curso.html (reemplazó las FAQ estáticas; degrada con gracia si la función no está activa). **ACTIVAR con:** (1) `npx firebase-tools functions:secrets:set ANTHROPIC_API_KEY` (pega la API key de Anthropic), (2) `npx firebase-tools deploy --only functions:chatPreventa --project trikles-cursos`. Para cambiar el contacto/WhatsApp del handoff: `TRIKLES_CONTACT_EMAIL`/`TRIKLES_CONTACT_WHATSAPP` en functions/index.js.
-- **Chatbot Claude API** (preventa) — UI + Cloud Function `chatPreventa` + rate limiting. Germán confirmó interés.
 - Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
 
 ---
