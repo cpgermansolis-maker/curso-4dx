@@ -340,6 +340,19 @@
             return result.data;  // { url, sessionId }
         },
 
+        /* ===== Certificados ===== */
+
+        // Registra el folio del certificado del alumno para que sea verificable
+        // en verificar.html. El servidor revalida que el curso esté aprobado.
+        // Devuelve { ok, folio, courseTitle, issuedAt }. Lanza si no procede.
+        async issueCertificate(courseId) {
+            if (!currentEmail) throw new Error('Debes iniciar sesión.');
+            if (!functions) throw new Error('Firebase Functions no está cargado.');
+            const call = functions.httpsCallable('issueCertificate');
+            const result = await call({ courseId: courseId });
+            return result.data;  // { ok, folio, courseTitle, issuedAt }
+        },
+
         /* ===== Utilidades ===== */
         _db: db,
         _auth: auth,

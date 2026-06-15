@@ -45,7 +45,10 @@ const COURSE_TITLES = {
     'gerencia-efectiva': 'La Gerencia Efectiva (Drucker)',
     'la-paradoja': 'La Paradoja (James C. Hunter)',
     'coaching': 'Coaching (Sir John Whitmore)',
-    'food-beverage': 'Control de Costos en Alimentos y Bebidas (Dopson & Hayes)'
+    'codigo-honor': 'El ABC para crear un equipo de negocios exitoso',
+    'food-beverage': 'Control de Costos en Alimentos y Bebidas (Dopson & Hayes)',
+    'claude-sistema': 'CLAUDE SISTEMA',
+    'destapa-tu-negocio': 'Destapa tu Negocio'
 };
 
 // Precios en centavos MXN (Stripe trabaja en la unidad más pequeña)
@@ -80,7 +83,8 @@ const COURSE_LESSON_COUNTS = {
 };
 const COURSE_PASS_SCORES = {
     '4dx': 7, 'habitos': 7, 'feum-inventarios': 7, 'gerencia-efectiva': 7,
-    'la-paradoja': 7, 'coaching': 7, 'codigo-honor': 11, 'food-beverage': 12
+    'la-paradoja': 7, 'coaching': 7, 'codigo-honor': 11, 'food-beverage': 12,
+    'claude-sistema': 11, 'destapa-tu-negocio': 7
 };
 
 // Umbrales de recordatorio (en días)
@@ -766,5 +770,109 @@ exports.revokeAdmin = onCall(
         await admin.auth().setCustomUserClaims(userRecord.uid, { admin: false });
         logger.info('revokeAdmin', { by: request.auth.token.email, target: targetEmail });
         return { ok: true };
+    }
+);
+
+// =========================================================
+// CERTIFICADOS — registro de folio verificable
+// =========================================================
+// El folio TKS-XXXX-XXXX se calcula determinísticamente a partir de
+// (uid + courseId) — EXACTAMENTE el mismo algoritmo que buildCertFolio()
+// en curso.html, para que el folio del certificado coincida con el
+// registrado aquí. Esta función es la ÚNICA escritora de la colección
+// pública `certificates` (vía Admin SDK), por lo que un alumno no puede
+// fabricar un folio falso: solo puede registrar el suyo, para un curso
+// en el que está inscrito y que su progreso muestra como aprobado.
+// La página verificar.html lee `certificates/{folio}` (lectura pública).
+
+// Port exacto de buildCertFolio (FNV-1a, base36) — mantener en sync con curso.html.
+function certFolio(uid, courseId) {
+    const seed = String(uid || '') + '|' + String(courseId || '');
+    let h = 0x811c9dc5;
+    for (let i = 0; i < seed.length; i++) {
+        h ^= seed.charCodeAt(i);
+        h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+    }
+    const a = (h >>> 0).toString(36).toUpperCase().padStart(7, '0').slice(-4);
+    let h2 = h ^ 0x9e3779b1;
+    for (let i = seed.length - 1; i >= 0; i--) {
+        h2 ^= seed.charCodeAt(i);
+        h2 = (h2 + ((h2 << 1) + (h2 << 4) + (h2 << 7) + (h2 << 8) + (h2 << 24))) >>> 0;
+    }
+    const b = (h2 >>> 0).toString(36).toUpperCase().padStart(7, '0').slice(-4);
+    return 'TKS-' + a + '-' + b;
+}
+
+/**
+ * issueCertificate (HTTPS callable)
+ * Se invoca desde el cliente cuando el alumno llega a su certificado.
+ * Verifica en el servidor que el alumno realmente terminó y aprobó, calcula
+ * el folio y lo registra en `certificates/{folio}` para que sea verificable.
+ *
+ * Entrada: { courseId: string }
+ * Salida:  { ok: true, folio, courseTitle, issuedAt }
+ * Idempotente: re-invocarla NO cambia la fecha de expedición original.
+ */
+exports.issueCertificate = onCall(
+    { cors: true },
+    async (request) => {
+        if (!request.auth || !request.auth.token.email) {
+            throw new HttpsError('unauthenticated', 'Debes iniciar sesión.');
+        }
+        const uid = request.auth.uid;
+        const email = String(request.auth.token.email).trim().toLowerCase();
+        const courseId = String((request.data && request.data.courseId) || '').trim();
+        if (!courseId) {
+            throw new HttpsError('invalid-argument', 'Falta courseId.');
+        }
+
+        const db = admin.firestore();
+        const userSnap = await db.collection('users').doc(email).get();
+        if (!userSnap.exists) {
+            throw new HttpsError('not-found', 'No existe el perfil del alumno.');
+        }
+        const user = userSnap.data() || {};
+        const enr = (user.enrollments || {})[courseId];
+        if (!enr) {
+            throw new HttpsError('permission-denied', 'No estás inscrito en este curso.');
+        }
+
+        // Verificación de finalización: examen aprobado + curso completado.
+        const progress = enr.progress || {};
+        const passScore = COURSE_PASS_SCORES[courseId] || 7;
+        const finalScore = Number(progress.finalScore || 0);
+        const completedDate = progress.completedDate || null;
+        if (finalScore < passScore || !completedDate) {
+            throw new HttpsError(
+                'failed-precondition',
+                'Aún no has completado el curso y aprobado el examen.'
+            );
+        }
+
+        const folio = certFolio(uid, courseId);
+        const courseTitle = COURSE_TITLES[courseId] || courseId;
+        const name = (user.name && String(user.name).trim())
+            || request.auth.token.name
+            || email;
+
+        const certRef = db.collection('certificates').doc(folio);
+        const existing = await certRef.get();
+        const issuedAt = (existing.exists && existing.data().issuedAt)
+            ? existing.data().issuedAt
+            : new Date().toISOString();
+
+        await certRef.set({
+            folio: folio,
+            uid: uid,
+            name: name,
+            courseId: courseId,
+            courseTitle: courseTitle,
+            finalScore: finalScore,
+            issuedAt: issuedAt,           // fecha de expedición (estable)
+            updatedAt: new Date().toISOString()
+        }, { merge: true });
+
+        logger.info('Certificado registrado', { folio, email, courseId });
+        return { ok: true, folio: folio, courseTitle: courseTitle, issuedAt: issuedAt };
     }
 );

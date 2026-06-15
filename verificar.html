@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar certificado · TRIKLES</title>
+<meta name="description" content="Verifica la autenticidad de un certificado TRIKLES con su folio único TKS-XXXX-XXXX.">
+<meta name="robots" content="index,follow">
+<style>
+  :root {
+    --bg: #0b1020; --panel: #141a2e; --text: #e7ecf5; --muted: #9aa6c0;
+    --accent: #d4af37; --line: #26304d; --link: #8ab4ff;
+    --ok: #34d399; --ok-bg: rgba(52,211,153,0.10); --ok-line: rgba(52,211,153,0.40);
+    --bad: #f87171; --bad-bg: rgba(248,113,113,0.10); --bad-line: rgba(248,113,113,0.40);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; font-size: 16px; min-height: 100vh;
+  }
+  header.top {
+    background: linear-gradient(135deg, #0d0033, #1a0050);
+    padding: 28px 20px; text-align: center; border-bottom: 1px solid var(--line);
+  }
+  header.top .brand { font-weight: 800; letter-spacing: 2px; font-size: 1.4em; }
+  header.top .tag { color: var(--muted); font-size: 0.85em; margin-top: 6px; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 36px 22px 80px; }
+  h1 { font-size: 1.5em; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 26px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 24px 22px;
+  }
+  label { display: block; font-size: 0.85em; color: var(--accent); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px; }
+  .field { display: flex; gap: 10px; flex-wrap: wrap; }
+  input[type=text] {
+    flex: 1 1 240px; min-width: 0; background: #0e1426; color: var(--text);
+    border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+    font-size: 1.1em; letter-spacing: 2px; text-transform: uppercase;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  input[type=text]:focus { outline: none; border-color: var(--accent); }
+  button {
+    background: linear-gradient(135deg, #d4af37, #b8860b); color: #1a1300;
+    border: 0; border-radius: 10px; padding: 14px 26px; font-size: 1em;
+    font-weight: 800; cursor: pointer; white-space: nowrap; flex: 0 0 auto;
+  }
+  button:disabled { opacity: 0.6; cursor: progress; }
+  .hint { color: var(--muted); font-size: 0.82em; margin-top: 10px; }
+
+  .result { margin-top: 24px; }
+  .result-box { border-radius: 14px; padding: 22px; border: 1px solid var(--line); }
+  .result-box.ok  { background: var(--ok-bg);  border-color: var(--ok-line); }
+  .result-box.bad { background: var(--bad-bg); border-color: var(--bad-line); }
+  .result-icon { font-size: 2.2em; line-height: 1; }
+  .result-title { font-size: 1.2em; font-weight: 800; margin: 6px 0 4px; }
+  .result-title.ok  { color: var(--ok); }
+  .result-title.bad { color: var(--bad); }
+  .rows { margin-top: 16px; }
+  .row { display: flex; justify-content: space-between; gap: 16px;
+    padding: 10px 0; border-top: 1px solid var(--line); font-size: 0.96em; }
+  .row .k { color: var(--muted); }
+  .row .v { font-weight: 700; text-align: right; }
+  .folio-mono { font-family: "SFMono-Regular", Consolas, monospace; letter-spacing: 1px; }
+  .disclaimer {
+    margin-top: 16px; font-size: 0.84em; color: var(--muted);
+    background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .disclaimer a { color: var(--link); }
+  .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid var(--line);
+    border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite;
+    vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  footer { text-align: center; color: var(--muted); font-size: 0.82em;
+    padding: 30px 20px; border-top: 1px solid var(--line); }
+  footer a { color: var(--link); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">TRIKLES</div>
+  <div class="tag">Verificación de certificados</div>
+</header>
+
+<div class="wrap">
+  <h1>Verificar un certificado</h1>
+  <p class="lead">Escribe el folio único que aparece al pie del certificado (formato <strong>TKS-XXXX-XXXX</strong>) para confirmar su autenticidad.</p>
+
+  <div class="card">
+    <label for="folioInput">Folio del certificado</label>
+    <div class="field">
+      <input type="text" id="folioInput" placeholder="TKS-XXXX-XXXX" maxlength="20"
+             autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="latin">
+      <button id="verifyBtn">Verificar</button>
+    </div>
+    <div class="hint">El folio distingue mayúsculas; los guiones son opcionales.</div>
+  </div>
+
+  <div class="result" id="result" aria-live="polite"></div>
+</div>
+
+<footer>
+  TRIKLES · Plataforma privada de formación en gestión empresarial<br>
+  <a href="index.html">Inicio</a> · <a href="legal.html#certificados">Naturaleza de los certificados</a> · <a href="legal.html">Aviso legal</a>
+</footer>
+
+<!-- Firebase (solo app + firestore: la verificación es lectura pública, sin login) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  var firebaseConfig = {
+    apiKey: "AIzaSyCSlCrUSn-FU9n6C6oh0bpYRtNIfo1uNLs",
+    authDomain: "trikles-cursos.firebaseapp.com",
+    projectId: "trikles-cursos",
+    storageBucket: "trikles-cursos.firebasestorage.app",
+    messagingSenderId: "81445205637",
+    appId: "1:81445205637:web:8ed614a34dfa887956dbec"
+  };
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+
+  var input = document.getElementById('folioInput');
+  var btn = document.getElementById('verifyBtn');
+  var result = document.getElementById('result');
+
+  var MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio',
+                'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Normaliza cualquier entrada a "TKS-XXXX-XXXX" o null si no encaja.
+  function normalizeFolio(raw) {
+    var s = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (s.indexOf('TKS') === 0) s = s.slice(3);
+    if (s.length !== 8) return null;
+    return 'TKS-' + s.slice(0, 4) + '-' + s.slice(4, 8);
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '—';
+    return d.getDate() + ' de ' + MONTHS[d.getMonth()] + ' de ' + d.getFullYear();
+  }
+
+  function renderLoading() {
+    result.innerHTML = '<div class="result-box"><span class="spinner"></span> ' +
+      '<span style="margin-left:8px;color:var(--muted);">Verificando folio…</span></div>';
+  }
+
+  function renderInvalid() {
+    result.innerHTML =
+      '<div class="result-box bad">' +
+        '<div class="result-icon">⚠️</div>' +
+        '<div class="result-title bad">Formato de folio no válido</div>' +
+        '<div style="color:var(--muted);">Un folio TRIKLES tiene el formato <strong>TKS-XXXX-XXXX</strong> ' +
+        '(8 caracteres tras el prefijo). Revísalo e inténtalo de nuevo.</div>' +
+      '</div>';
+  }
+
+  function renderNotFound(folio) {
+    result.innerHTML =
+      '<div class="result-box bad">' +
+        '<div class="result-icon">✗</div>' +
+        '<div class="result-title bad">Folio no encontrado</div>' +
+        '<div style="color:var(--muted);">No existe ningún certificado registrado con el folio ' +
+          '<span class="folio-mono">' + esc(folio) + '</span>. ' +
+          'Verifica que esté bien escrito. Si el certificado es reciente, el registro puede tardar unos minutos.</div>' +
+      '</div>';
+  }
+
+  function renderError() {
+    result.innerHTML =
+      '<div class="result-box bad">' +
+        '<div class="result-icon">⚠️</div>' +
+        '<div class="result-title bad">No se pudo verificar</div>' +
+        '<div style="color:var(--muted);">Ocurrió un problema de conexión. Inténtalo de nuevo en un momento.</div>' +
+      '</div>';
+  }
+
+  function renderFound(data) {
+    result.innerHTML =
+      '<div class="result-box ok">' +
+        '<div class="result-icon">✓</div>' +
+        '<div class="result-title ok">Certificado auténtico</div>' +
+        '<div style="color:var(--muted);">Este folio corresponde a un certificado emitido por TRIKLES.</div>' +
+        '<div class="rows">' +
+          '<div class="row"><span class="k">Otorgado a</span><span class="v">' + esc(data.name) + '</span></div>' +
+          '<div class="row"><span class="k">Curso</span><span class="v">' + esc(data.courseTitle || data.courseId) + '</span></div>' +
+          '<div class="row"><span class="k">Fecha de expedición</span><span class="v">' + esc(formatDate(data.issuedAt)) + '</span></div>' +
+          '<div class="row"><span class="k">Folio</span><span class="v folio-mono">' + esc(data.folio) + '</span></div>' +
+        '</div>' +
+        '<div class="disclaimer">Constancia de finalización de carácter privado. No constituye un título ' +
+          'ni cédula profesional y no tiene validez oficial ante la SEP. ' +
+          '<a href="legal.html#certificados" target="_blank" rel="noopener">Naturaleza del certificado</a>.</div>' +
+      '</div>';
+  }
+
+  function verify() {
+    var folio = normalizeFolio(input.value);
+    if (!folio) { renderInvalid(); return; }
+    input.value = folio;
+    btn.disabled = true;
+    renderLoading();
+    db.collection('certificates').doc(folio).get()
+      .then(function (snap) {
+        if (snap.exists) { renderFound(snap.data()); }
+        else { renderNotFound(folio); }
+      })
+      .catch(function (e) {
+        console.error('Error verificando folio:', e);
+        renderError();
+      })
+      .then(function () { btn.disabled = false; });
+  }
+
+  btn.addEventListener('click', verify);
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') verify(); });
+
+  // Verificación automática si llega ?folio=... en la URL (sirve para QR / links directos).
+  var params = new URLSearchParams(window.location.search);
+  var pre = params.get('folio');
+  if (pre) { input.value = pre; verify(); }
+})();
+</script>
+</body>
+</html>

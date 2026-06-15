@@ -60,6 +60,18 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // === Certificados (folio verificable) ===
+    // El ID del doc es el folio "TKS-XXXX-XXXX".
+    //   - Lectura: pública (verificar.html valida un folio sin login).
+    //   - Escritura: NUNCA desde el cliente. Solo la Cloud Function
+    //     `issueCertificate` escribe vía Admin SDK (que ignora estas reglas),
+    //     tras verificar en el servidor que el alumno aprobó el curso. Así un
+    //     folio público no se puede fabricar desde el navegador.
+    match /certificates/{folio} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // === Cualquier otra ruta: denegado ===
     match /{document=**} {
       allow read, write: if false;

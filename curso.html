@@ -3566,8 +3566,12 @@ function ensureCertificateElement() {
     const certDesc = (COURSE.certificate && COURSE.certificate.description)
         || ('Habiendo demostrado dominio de los conceptos y competencias del curso "' + courseTitle + '".');
 
-    // Folio único determinístico: mismo alumno + mismo curso => mismo folio (reproducible y verificable)
-    const certFolio = buildCertFolio(currentUser.uid, COURSE.id);
+    // Folio único determinístico: mismo alumno + mismo curso => mismo folio (reproducible y verificable).
+    // Usamos el UID real de Firebase Auth (no el campo del doc, que en cuentas creadas por
+    // webhook/beca podría faltar) para que coincida EXACTO con el folio que registra la
+    // Cloud Function issueCertificate (que usa request.auth.uid).
+    const authUid = (TK && TK._auth && TK._auth.currentUser && TK._auth.currentUser.uid) || currentUser.uid;
+    const certFolio = buildCertFolio(authUid, COURSE.id);
 
     // Construir el certificado con la estructura rediseñada
     const certHTML =
@@ -3623,7 +3627,9 @@ function ensureCertificateElement() {
                 '</div>' +
             '</div>' +
             '<div class="cert-legal">' +
-                '<div class="cert-folio">Folio: <strong>' + certFolio + '</strong></div>' +
+                '<div class="cert-folio">Folio: <strong>' + certFolio + '</strong> ' +
+                    '<a href="verificar.html?folio=' + certFolio + '" target="_blank" rel="noopener" style="font-size:0.85em;font-weight:600;">Verificar</a>' +
+                '</div>' +
                 '<div class="cert-disclaimer">Constancia de finalización de carácter privado. ' +
                     'No constituye un título ni cédula profesional y no tiene validez oficial ' +
                     'ante la SEP. <a href="legal.html#certificados" target="_blank" rel="noopener">Naturaleza del certificado</a>.' +
@@ -3927,6 +3933,14 @@ function populateCertificate() {
     if (yearEl) yearEl.textContent = new Date().getFullYear();
     injectLinkedInShareButton();
     injectRatingBlock();
+
+    // Registrar el folio en el servidor para que sea verificable en verificar.html.
+    // Fire-and-forget: el certificado ya se muestra; si falla, no afecta al alumno.
+    if (TK && typeof TK.issueCertificate === 'function' && COURSE && COURSE.id) {
+        TK.issueCertificate(COURSE.id).catch(function (e) {
+            console.warn('No se pudo registrar el folio del certificado:', e && e.message);
+        });
+    }
 }
 
 // ────────────────────────────────────────────────────────
@@ -4476,7 +4490,7 @@ function showCourseLanding() {
                     '<ul class="cl-hero-card-list-benefits">' +
                         '<li>' + lessonsCount + ' lecciones con video y ejercicios</li>' +
                         '<li>Quizzes por lección + examen final</li>' +
-                        (meta.includesCertificate !== false ? '<li>Certificado TRIKLES con folio único</li>' : '') +
+                        (meta.includesCertificate !== false ? '<li>Certificado TRIKLES con folio verificable</li>' : '') +
                         '<li>Acceso de por vida, a tu ritmo</li>' +
                         '<li>Material en español + ejemplos mexicanos</li>' +
                     '</ul>' +
@@ -4603,7 +4617,7 @@ function showCourseLanding() {
                                 '<p>La mayoría de alumnos termina en 2 a 3 semanas dedicando 30–45 minutos por sesión. Tienes acceso de por vida, así que puedes avanzar completamente a tu ritmo.</p>' +
                             '</details>' +
                             '<details><summary>¿El certificado está incluido en el precio?</summary>' +
-                                '<p>Sí. Al aprobar el examen final recibes tu Certificado TRIKLES con folio único, listo para compartir en LinkedIn o agregar a tu CV. Sin costo extra. Es una constancia de finalización privada (sin validez oficial ante la SEP).</p>' +
+                                '<p>Sí. Al aprobar el examen final recibes tu Certificado TRIKLES con folio verificable, listo para compartir en LinkedIn o agregar a tu CV. Sin costo extra. Es una constancia de finalización privada (sin validez oficial ante la SEP).</p>' +
                             '</details>' +
                             '<details><summary>¿Qué pasa si no apruebo el examen?</summary>' +
                                 '<p>Puedes repetirlo todas las veces que necesites, sin penalización. El acceso es de por vida: revisa el material, practica y vuelve a intentarlo cuando estés listo.</p>' +
@@ -4665,7 +4679,7 @@ function showCourseLanding() {
                             '<p>Sí, 30 días de garantía total. Si no estás satisfecho por cualquier razón, te devolvemos el 100% de tu inversión sin preguntas.</p>' +
                         '</details>' +
                         '<details><summary>¿El certificado tiene validez? ¿Cómo lo obtengo?</summary>' +
-                            '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio único. Puedes compartirlo en LinkedIn o descargarlo en PDF.</p>' +
+                            '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio verificable. Puedes compartirlo en LinkedIn o descargarlo en PDF.</p>' +
                         '</details>' +
                         '<details><summary>¿Puedo ver el contenido completo antes de comprar?</summary>' +
                             '<p>Sí. En la pestaña "Lecciones" de esta misma página encuentras el temario completo con todos los temas del curso.</p>' +
@@ -4736,7 +4750,7 @@ function clOpenEnrollModal() {
         },
         {
             head: 'Acceso completo de por vida + certificado',
-            sub: 'Las ' + lessonsCount + ' lecciones, quizzes, examen final y certificado TRIKLES con folio único — todo incluido, a tu ritmo.'
+            sub: 'Las ' + lessonsCount + ' lecciones, quizzes, examen final y certificado TRIKLES con folio verificable — todo incluido, a tu ritmo.'
         },
         {
             head: 'Soporte directo del instructor',
@@ -4748,8 +4762,8 @@ function clOpenEnrollModal() {
             sub: 'Las ' + lessonsCount + ' lecciones, plantillas, video en español y exámenes — disponibles a tu ritmo, las veces que quieras.'
         },
         {
-            head: 'Certificado TRIKLES con folio único',
-            sub: 'Al aprobar el examen final recibes tu certificado con folio único. Compártelo en LinkedIn y CV.'
+            head: 'Certificado TRIKLES con folio verificable',
+            sub: 'Al aprobar el examen final recibes tu certificado con folio verificable. Compártelo en LinkedIn y CV.'
         },
         {
             head: '30 días de garantía total',
