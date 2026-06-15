@@ -181,8 +181,11 @@ npx firebase-tools deploy --only hosting
 
 ## ⚠️ Legal — leer antes de tocar cobro o `libros/`
 
-- **Cobro APAGADO a propósito (decisión de Germán, 2026-06-08).** NO reactivar Stripe/checkout sin que él lo pida explícitamente.
-- **Monetizables limpios = `claude-sistema` y `destapa-tu-negocio`** (obras originales de Germán; Destapa es reconstrucción original de las ideas de "La Meta", `meta.originalWork:true`, pendiente visto bueno de abogado de PI). TODO el resto del catálogo son obras derivadas de libros con copyright vigente (Mente Millonaria, La Paradoja, Hábitos, 4DX, Código de Honor, Coaching, Gerencia Efectiva, Food & Beverage). Cobrar por ellos (online o efectivo) expone al Art. 424 CPF (delito por fin de lucro) + daños civiles LFDA.
+- **MODELO DE MONETIZACIÓN (decisión de Germán, 2026-06-15, reemplaza el "cobro apagado" del 2026-06-08):**
+  - **Solo se cobran las obras originales limpias:** `claude-sistema` ($649) y `destapa-tu-negocio` ($449). (Germán decidió cobrar Destapa YA, relevando el candado previo del abogado de PI — decisión suya.)
+  - **Todo el resto del catálogo (cursos DERIVADOS de libros con copyright: Mente Millonaria, La Paradoja, Hábitos, 4DX, Código de Honor, Coaching, Gerencia Efectiva, Food & Beverage, FEUM) se otorga GRATIS a quien lo pida** ("acceso abierto"). Regalarlos elimina el fin de lucro → reduce la exposición al Art. 424 CPF. **NUNCA cobrarlos** (ni online ni efectivo).
+  - Implementación: política única en `PAID_COURSE_IDS = ['claude-sistema','destapa-tu-negocio']` (espejo en `curso.html` e `index.html`). Derivados → botón "Obtener acceso gratis" + captura de lead (nombre/correo/WhatsApp) + inscripción instantánea (`source:'free_request'`). Limpios → flujo Stripe. `functions/index.js` `COURSE_PRICES_CENTS` solo tiene los 2 limpios (el servidor rechaza cobrar derivados). Catálogo muestra el precio de los derivados como **valor tachado + "Gratis"** (anclaje de ahorro), sin venta in-situ ni bundle (bundle retirado). Toda inscripción se centraliza en `curso.html`. Commit `e2d26a2`.
+  - **PENDIENTE de Germán:** confirmar/poner llaves **Stripe LIVE** (`STRIPE_SECRET_KEY = sk_live_...` + webhook live) para que el cobro de los 2 limpios sea real. Hoy probablemente en test (no cobra real).
 - **`libros/**` está excluido del hosting** en `firebase.json` → `hosting.ignore` (commit 216aacb). NO quitarlo: Firebase deploya desde la carpeta local, no desde git, así que el `.gitignore` no basta. Los PDFs fuente NO deben servirse públicamente.
 - **Certificados:** ya llevan descargo "sin validez oficial ante la SEP" + folio único + página `legal.html`. No quitar el descargo.
 - Detalle completo en memoria: `project_postura-legal-cobro.md` y `project_blindaje-legal-certificados.md`.
