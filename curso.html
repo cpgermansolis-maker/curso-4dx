@@ -4156,15 +4156,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         new Promise(resolve => waitForCourse(resolve))
     ]);
 
-    if (!data) {
-        window.location.href = 'index.html';
-        return;
+    // Prospectos SIN sesión: mostramos el landing público (con el asistente de
+    // preventa) en vez de rebotar al catálogo. La inscripción/pago del CTA sigue
+    // pidiendo registro (clModalConfirm maneja al invitado).
+    currentUser = data || null;
+    if (currentUser) {
+        loadProgress();
+        updateUserBadge();
     }
-    currentUser = data;
-    loadProgress();
-    updateUserBadge();
     // Siempre mostrar el landing estilo Coursera primero
-    // (tanto para inscritos como no inscritos; el CTA se adapta al estado)
+    // (logueado o no; el CTA se adapta al estado).
     showCourseLanding();
 
     // Atajo admin (Ctrl+Shift+A) - ahora redirige a admin.html
