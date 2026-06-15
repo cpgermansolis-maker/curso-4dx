@@ -890,7 +890,7 @@ exports.issueCertificate = onCall(
 
 const TRIKLES_CONTACT_EMAIL = 'cpgermansolis@gmail.com';
 // WhatsApp opcional para handoff (déjalo vacío si no quieres compartirlo):
-const TRIKLES_CONTACT_WHATSAPP = '';
+const TRIKLES_CONTACT_WHATSAPP = '+52 246 411 5513';
 
 // Catálogo para el system prompt. Precio o "Gratis" según la política 2026-06-15.
 const PREVENTA_CATALOG = [
