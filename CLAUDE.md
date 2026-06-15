@@ -196,3 +196,4 @@ npx firebase-tools deploy --only hosting
 - `getCatalog()` en `admin.html` — lista hardcoded separada del `CATALOG` de `index.html`. Si se agrega un curso nuevo, agregar en ambos lados.
 - Firestore rules — estrictas desde 2026-05-14 (dueño-solo + admin claim). No relajar sin análisis.
 - `VIP_COURSE_IDS` en `curso.html` — array que activa `body.vip-mode`. Agregar IDs aquí al crear nuevos cursos VIP.
+- **Landing de curso PÚBLICO para no-logueados (2026-06-15):** `curso.html` ya NO redirige a `index.html` a visitantes sin sesión; les muestra el landing con el asistente de preventa (para alcanzar prospectos fríos). NO revertir esa redirección. El widget de ayuda/bot solo aparece para NO inscritos (`!enrolled`), y las cuentas `FULL_ACCESS_EMAILS` cuentan como inscritas → el dueño no ve el widget salvo en incógnito.
