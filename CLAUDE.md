@@ -166,13 +166,14 @@ npx firebase-tools deploy --only hosting
 
 ### Antes (2026-06-09, bonus Fable 5)
 
-**Módulo bonus 2 — Fable 5 en CLAUDE SISTEMA.** Lección `lbonus2` + quizzes `quiz_fable_a/b` (no entran al examen), reindexado `lessonRequirements` (Fable=29, examen=30, cert=31), `UPDATE_BADGES['claude-sistema']='⚡ Fable 5'`. **Patrón "bonus por modelo nuevo"** en memoria `project_bonus-fable5-claude-sistema.md`. Commit `3fc7436`.
+**Módulo bonus 2 en CLAUDE SISTEMA (`lbonus2`, quizzes `quiz_fable_a/b`, no entran al examen; índices: bonus=29, examen=30, cert=31).** Originalmente (2026-06-09, commit `3fc7436`) promocionaba Claude Fable 5. **Anthropic retiró Fable 5; el 2026-06-15 (commit `7f5effa`) se reescribió** como lección DURABLE de selección de modelo ("Cuándo subir de modelo… el caso Fable 5"), badge `UPDATE_BADGES['claude-sistema']='⚡ Actualizado'`. **El patrón "bonus por modelo nuevo" resultó frágil → preferir contenido agnóstico de modelo.** Detalle en memoria `project_bonus-fable5-claude-sistema.md`.
 
 ## Pendientes al cierre
 
-- **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); validación con **abogado de PI** antes de reactivar cobro (es el piloto de la estrategia legal); decidir si OAC va también en `legal.html`/certificados de otros cursos. Suavizar "gratis hasta el 22 de junio de 2026" en `lbonus2` cuando pase la fecha.
+- **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); validación con **abogado de PI** antes de reactivar cobro (es el piloto de la estrategia legal); decidir si OAC va también en `legal.html`/certificados de otros cursos.
 - **Cobrar CLAUDE SISTEMA + Destapa** (limpios) cuando Germán quiera, tras visto bueno del abogado de PI.
-- **Verificador de folios (Fase 2)** — `verificar.html` + Firestore.
+- ✅ ~~**Verificador de folios (Fase 2)**~~ — HECHO 2026-06-15: Cloud Function `issueCertificate` + colección pública `certificates/{folio}` + `verificar.html`. Claim "verificable" restaurado. (Follow-up: backfill de certificados viejos, opcional.)
+- ✅ ~~Fable 5 bonus~~ — HECHO 2026-06-15: Anthropic retiró Fable 5; `lbonus2` reescrito como lección durable de selección de modelo (caso Fable 5), badge a `⚡ Actualizado`.
 - **Chatbot Claude API** (preventa) — UI + Cloud Function `chatPreventa` + rate limiting. Germán confirmó interés.
 - Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
 
