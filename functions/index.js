@@ -53,15 +53,16 @@ const COURSE_TITLES = {
 
 // Precios en centavos MXN (Stripe trabaja en la unidad más pequeña)
 // Mantener en sync con el objeto PRICING de index.html
+// Política 2026-06-15: SOLO las obras originales limpias son cobrables.
+// Los cursos derivados de libros NO deben cobrarse nunca (se otorgan gratis);
+// se dejan aquí comentados para que createStripeCheckout los rechace.
 const COURSE_PRICES_CENTS = {
-    '4dx':               24900,   // $249.00
-    'habitos':           24900,   // $249.00
-    'feum-inventarios':  64900,   // $649.00
-    'gerencia-efectiva': 39900,   // $399.00
-    'la-paradoja':       29900,   // $299.00
-    'coaching':          39900,   // $399.00
-    'codigo-honor':      44900,   // $449.00
-    'food-beverage':     79900    // $799.00
+    'claude-sistema':    64900,   // $649.00  (obra original — cobrable)
+    'destapa-tu-negocio':44900,   // $449.00  (obra original — cobrable)
+    // ---- Derivados: NO cobrables (acceso gratuito). No habilitar precio. ----
+    // '4dx': 24900, 'habitos': 24900, 'feum-inventarios': 64900,
+    // 'gerencia-efectiva': 39900, 'la-paradoja': 29900, 'coaching': 39900,
+    // 'codigo-honor': 44900, 'food-beverage': 79900
 };
 const BUNDLE_PRICE_CENTS = 229900;  // $2,299.00
 const BUNDLE_TITLE = 'Bundle completo TRIKLES — 8 cursos';

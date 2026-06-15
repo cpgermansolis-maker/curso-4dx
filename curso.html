@@ -2987,6 +2987,14 @@
         <h2 class="cl-modal-title" id="clModalTitle">Inscríbete al curso</h2>
         <p class="cl-modal-subtitle" id="clModalSubtitle">Empieza a aprender en menos de 2 minutos</p>
         <ul class="cl-modal-benefits" id="clModalBenefits"></ul>
+        <div class="cl-lead-form" id="clLeadForm" style="display:none;margin:4px 0 16px;">
+            <input type="text" id="clLeadName" placeholder="Tu nombre" autocomplete="name"
+                style="width:100%;box-sizing:border-box;margin-bottom:8px;padding:11px 13px;border:1px solid #d2d8e3;border-radius:9px;font-size:15px;">
+            <input type="email" id="clLeadEmail" placeholder="Tu correo" autocomplete="email"
+                style="width:100%;box-sizing:border-box;margin-bottom:8px;padding:11px 13px;border:1px solid #d2d8e3;border-radius:9px;font-size:15px;">
+            <input type="tel" id="clLeadPhone" placeholder="WhatsApp (opcional)" autocomplete="tel"
+                style="width:100%;box-sizing:border-box;padding:11px 13px;border:1px solid #d2d8e3;border-radius:9px;font-size:15px;">
+        </div>
         <button class="cl-modal-cta" id="clModalCta" onclick="clModalConfirm()">Pagar e inscribirme</button>
         <div class="cl-modal-error" id="clModalError"></div>
         <div class="cl-modal-secure" id="clModalSecure">Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía</div>
@@ -3221,14 +3229,21 @@ async function doRegister(e) {
 
     try {
         await TK.register({ name, email, company, role }, pass);
-        // Inscripción gratuita al curso actual (promoción primer curso gratis).
-        await TK.saveEnrollment(COURSE.id, {
-            enrolledAt: new Date().toISOString(),
-            source: 'free_first_course_promo',
-            progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
-        });
         currentUser = TK.getCurrentUser();
         sendToWebhook('register', currentUser);
+        // Cursos derivados = acceso gratuito inmediato al registrarse.
+        // Cursos limpios (de pago) = NO auto-inscribir; el landing muestra el CTA de pago.
+        if (isFreeRequestCourse(COURSE.id)) {
+            await TK.saveEnrollment(COURSE.id, {
+                enrolledAt: new Date().toISOString(),
+                source: 'free_request',
+                leadName: name,
+                leadEmail: email,
+                leadPhone: '',
+                progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
+            });
+            currentUser = TK.getCurrentUser();
+        }
         updateUserBadge();
         showCourseLanding();
     } catch (err) {
@@ -4159,8 +4174,20 @@ function isEligibleForFreeFirstCourse() {
     return count === 0;
 }
 
+// ── Política de monetización (2026-06-15) ──────────────────────────────
+// Solo las obras ORIGINALES limpias se cobran (claude-sistema, destapa).
+// TODO el resto del catálogo (cursos derivados de libros) se otorga GRATIS
+// a cualquiera que lo pida desde el propio curso. Ver memoria postura-legal.
+const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio'];
+function isPaidCourse(id) {
+    const cid = id || (COURSE && COURSE.id);
+    return PAID_COURSE_IDS.indexOf(cid) !== -1;
+}
+function isFreeRequestCourse(id) { return !isPaidCourse(id); }
+
 // Precios locales (la fuente de verdad para el cargo real es la Cloud Function)
 const ENROLL_PRICING = {
+    'claude-sistema':    { listPrice: 2499, price:  649 },
     'food-beverage':     { listPrice: 2499, price:  799 },
     'coaching':          { listPrice: 1499, price:  399 },
     'gerencia-efectiva': { listPrice: 1499, price:  399 },
@@ -4328,7 +4355,10 @@ function showCourseLanding() {
     const description = meta.description || '';
 
     // --- CTA text based on state ---
-    const eligibleFree = isEligibleForFreeFirstCourse();
+    // "eligibleFree" ahora significa: curso de ACCESO GRATUITO (derivado),
+    // no la vieja promo de "primer curso gratis". Los cursos limpios (de pago)
+    // caen al flujo de Stripe.
+    const eligibleFree = isFreeRequestCourse();
     let ctaText, ctaAction, ctaPriceLine, secondaryHint;
     if (enrolled) {
         if (hasProgress) {
@@ -4340,14 +4370,14 @@ function showCourseLanding() {
         ctaPriceLine = '';
         secondaryHint = 'Ya estás inscrito · acceso completo';
     } else if (eligibleFree) {
-        // Promoción: primer curso gratis
-        ctaText = 'Reclamar mi curso gratis';
+        // Curso de acceso gratuito (derivado): gratis a quien lo pida
+        ctaText = 'Obtener acceso gratis';
         ctaAction = 'clOpenEnrollModal()';
         ctaPriceLine =
-            '<div class="cl-promo-card-badge">Primer curso gratis</div>' +
-            '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Valor ' + _clPrice(pricing.price) + ' MXN</span></div>' +
-            '<div class="cl-promo-free-line">Acceso inmediato al crear tu cuenta. Sin tarjeta, sin compromisos.</div>';
-        secondaryHint = 'Oferta de lanzamiento · primer curso gratis';
+            '<div class="cl-promo-card-badge">Acceso gratuito</div>' +
+            '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Curso de acceso abierto</span></div>' +
+            '<div class="cl-promo-free-line">Acceso inmediato. Solo deja tus datos para activarlo.</div>';
+        secondaryHint = 'Acceso abierto · sin costo';
     } else {
         ctaText = 'Inscribirme · ' + _clPrice(pricing.price) + ' MXN';
         ctaAction = 'clOpenEnrollModal()';
@@ -4367,8 +4397,8 @@ function showCourseLanding() {
         ? '<div class="cl-promo-banner">' +
             '<span class="cl-promo-banner-mark">★</span>' +
             '<div class="cl-promo-banner-body">' +
-                '<div class="cl-promo-banner-title">Oferta de lanzamiento</div>' +
-                '<p class="cl-promo-banner-text">Tu <strong>primer curso es totalmente gratis</strong> con sólo crear tu cuenta. Sin tarjeta, sin compromisos.</p>' +
+                '<div class="cl-promo-banner-title">Acceso gratuito</div>' +
+                '<p class="cl-promo-banner-text">Este curso es de <strong>acceso abierto, sin costo</strong>. Solo deja tus datos y entra al instante.</p>' +
             '</div>' +
           '</div>'
         : '';
@@ -4718,7 +4748,10 @@ function clOpenEnrollModal() {
     const meta = (COURSE && COURSE.meta) || {};
     const pricing = ENROLL_PRICING[COURSE.id] || { price: 999, listPrice: null };
     const title = meta.title || 'este curso';
-    const eligibleFree = isEligibleForFreeFirstCourse();
+    // "eligibleFree" ahora significa: curso de ACCESO GRATUITO (derivado),
+    // no la vieja promo de "primer curso gratis". Los cursos limpios (de pago)
+    // caen al flujo de Stripe.
+    const eligibleFree = isFreeRequestCourse();
 
     const modalTitle = document.getElementById('clModalTitle');
     const modalSub = document.getElementById('clModalSubtitle');
@@ -4729,12 +4762,12 @@ function clOpenEnrollModal() {
 
     if (modalTitle) {
         modalTitle.textContent = eligibleFree
-            ? 'Reclama tu primer curso — gratis'
+            ? 'Obtén acceso gratis a este curso'
             : 'Inscríbete a "' + title + '"';
     }
     if (modalSub) {
         modalSub.textContent = eligibleFree
-            ? '"' + title + '" — sin costo. Acceso inmediato al confirmar.'
+            ? 'Curso de acceso abierto. Déjanos tus datos y entra al instante.'
             : 'Empieza a aprender hoy mismo · Pago único, acceso de por vida';
     }
 
@@ -4742,8 +4775,8 @@ function clOpenEnrollModal() {
     const lessonsCount = meta.lessonsCount || (lessons ? lessons.length : 24);
     const benefits = eligibleFree ? [
         {
-            head: 'Este curso: gratis · valor ' + _clPrice(pricing.price) + ' MXN',
-            sub: 'Oferta de lanzamiento para nuevos miembros: obtienes acceso completo a "' + title + '" sin costo.'
+            head: 'Este curso: acceso gratuito',
+            sub: 'Curso de acceso abierto: obtienes acceso completo a "' + title + '" sin costo.'
         },
         {
             head: 'Sin tarjeta, sin compromisos',
@@ -4793,7 +4826,7 @@ function clOpenEnrollModal() {
 
     if (ctaEl) {
         ctaEl.textContent = eligibleFree
-            ? 'Reclamar mi curso gratis'
+            ? 'Obtener acceso gratis'
             : 'Pagar e inscribirme · ' + _clPrice(pricing.price) + ' MXN';
         ctaEl.disabled = false;
     }
@@ -4802,6 +4835,23 @@ function clOpenEnrollModal() {
         secEl.textContent = eligibleFree
             ? 'Inscripción inmediata · sin tarjeta · acceso de por vida'
             : 'Pago seguro por Stripe · Tarjeta, SPEI u OXXO · 30 días de garantía';
+    }
+
+    // Form de datos (lead): solo para acceso gratuito Y usuario con sesión.
+    // Los invitados capturan sus datos al registrarse (clModalConfirm los manda a registro).
+    const leadForm = document.getElementById('clLeadForm');
+    if (leadForm) {
+        if (eligibleFree && currentUser) {
+            const nm = document.getElementById('clLeadName');
+            const em = document.getElementById('clLeadEmail');
+            const ph = document.getElementById('clLeadPhone');
+            if (nm) nm.value = currentUser.name || '';
+            if (em) em.value = currentUser.email || '';
+            if (ph) ph.value = currentUser.phone || '';
+            leadForm.style.display = '';
+        } else {
+            leadForm.style.display = 'none';
+        }
     }
 
     const backdrop = document.getElementById('enrollBenefitsModal');
@@ -4833,7 +4883,10 @@ function clCloseEnrollModal() {
 async function clModalConfirm() {
     const ctaEl = document.getElementById('clModalCta');
     const errEl = document.getElementById('clModalError');
-    const eligibleFree = isEligibleForFreeFirstCourse();
+    // "eligibleFree" ahora significa: curso de ACCESO GRATUITO (derivado),
+    // no la vieja promo de "primer curso gratis". Los cursos limpios (de pago)
+    // caen al flujo de Stripe.
+    const eligibleFree = isFreeRequestCourse();
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
 
     // Caso 1 — invitado sin cuenta: cerrar el modal y abrir el form de registro.
@@ -4854,16 +4907,34 @@ async function clModalConfirm() {
         return;
     }
 
-    // Caso 2 — miembro logueado elegible: inscripción gratuita directa, sin Stripe.
+    // Caso 2 — miembro logueado, curso de acceso gratuito: captura de datos + inscripción directa, sin Stripe.
     if (eligibleFree) {
+        const nameEl = document.getElementById('clLeadName');
+        const emailEl = document.getElementById('clLeadEmail');
+        const phoneEl = document.getElementById('clLeadPhone');
+        const leadName = nameEl ? nameEl.value.trim() : (currentUser.name || '');
+        const leadEmail = emailEl ? emailEl.value.trim() : (currentUser.email || '');
+        const leadPhone = phoneEl ? phoneEl.value.trim() : '';
+        if (!leadName || !leadEmail) {
+            if (errEl) {
+                errEl.textContent = 'Por favor escribe tu nombre y tu correo para activar el acceso.';
+                errEl.style.display = 'block';
+            }
+            return;
+        }
         if (ctaEl) {
             ctaEl.disabled = true;
             ctaEl.textContent = 'Activando tu acceso…';
         }
         try {
+            // Guardar/actualizar datos de contacto del lead en el perfil
+            try { await TK.saveCurrentUser({ name: leadName, phone: leadPhone }); } catch (_) {}
             await TK.saveEnrollment(COURSE.id, {
                 enrolledAt: new Date().toISOString(),
-                source: 'free_first_course_promo',
+                source: 'free_request',
+                leadName: leadName,
+                leadEmail: leadEmail,
+                leadPhone: leadPhone,
                 progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
             });
             currentUser = TK.getCurrentUser();
@@ -4876,7 +4947,7 @@ async function clModalConfirm() {
         } catch (e) {
             if (ctaEl) {
                 ctaEl.disabled = false;
-                ctaEl.textContent = 'Reclamar mi curso gratis';
+                ctaEl.textContent = 'Obtener acceso gratis';
             }
             if (errEl) {
                 errEl.textContent = (e && e.message) ? e.message : 'No se pudo activar el acceso. Intenta de nuevo.';

@@ -2260,6 +2260,13 @@ const PRICING = {
 };
 const BUNDLE = { listPrice: 7892, price: 2299 };
 
+// ── Política de monetización (2026-06-15) ──────────────────────────────
+// Solo las obras originales limpias se cobran; el resto del catálogo se
+// otorga GRATIS a quien lo pida (acceso abierto). Espejo de curso.html.
+const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio'];
+function isPaidCourse(id) { return PAID_COURSE_IDS.indexOf(id) !== -1; }
+function isFreeRequestCourse(id) { return !isPaidCourse(id); }
+
 // Fechas de lanzamiento (para badge "NUEVO" — últimos 45 días)
 const LAUNCH_DATES = {
     '4dx':               '2026-01-15',
@@ -2690,6 +2697,22 @@ function renderCourseCard(course, enrollment) {
     const coverLayer = course.cover
         ? '<div class="course-cover" style="background-image:url('+course.cover+');"></div>'
         : '<div class="course-cover-placeholder">'+(course.icon || '📖')+'</div>';
+    // Línea de valor: muestra el precio como ahorro. Derivados = gratis (con valor tachado).
+    const _pcard = PRICING[course.id];
+    let valueLine = '';
+    if (!enrolled && _pcard) {
+        if (isFreeRequestCourse(course.id)) {
+            const _val = _pcard.listPrice || _pcard.price;
+            valueLine = '<div class="course-value" style="margin:6px 0 2px;font-size:0.92em;">' +
+                '<span style="text-decoration:line-through;color:#9aa6c0;">Valor '+fmtPrice(_val)+'</span> ' +
+                '<strong style="color:#2e7d32;">· Gratis</strong></div>';
+        } else {
+            valueLine = '<div class="course-value" style="margin:6px 0 2px;font-size:0.92em;">' +
+                '<strong>'+fmtPrice(_pcard.price)+' MXN</strong>' +
+                (_pcard.listPrice && _pcard.listPrice > _pcard.price ? ' <span style="text-decoration:line-through;color:#9aa6c0;">'+fmtPrice(_pcard.listPrice)+'</span>' : '') +
+                '</div>';
+        }
+    }
     return '<div class="course-card" onclick="goToCourse(\''+course.id+'\')">' +
         '<div class="course-cover-wrap">' +
             coverLayer +
@@ -2706,6 +2729,7 @@ function renderCourseCard(course, enrollment) {
             renderRatingDisplay(course.id) +
             '<div class="course-desc">'+course.description+'</div>' +
             '<div class="course-meta"><span>📚 '+course.lessonsCount+' lecciones · '+course.duration+'</span></div>' +
+            valueLine +
             (enrolled && !completed ? '<div class="course-progress"><div class="course-progress-fill" style="width:'+pct+'%"></div></div>' : '') +
             '<button class="course-btn '+btnClass+'">'+btnText+'</button>' +
         '</div>' +
@@ -2767,9 +2791,12 @@ function renderCourseModalCta(id) {
         return;
     }
     const p = PRICING[id];
-    const priceLabel = p ? (' · $' + p.price.toLocaleString('es-MX') + ' MXN') : '';
+    // Política nueva: la inscripción/pago se hace en curso.html (gratis derivados / pago limpios).
+    const label = isFreeRequestCourse(id)
+        ? 'Obtener acceso gratis'
+        : ('Inscribirme' + (p ? ' · $' + p.price.toLocaleString('es-MX') + ' MXN' : ''));
     ctaEl.innerHTML =
-        '<button class="cta-register" onclick="closeCourseModal(); openDepositModal(\'' + id + '\');">Inscribirme' + priceLabel + '</button>';
+        '<button class="cta-register" onclick="closeCourseModal(); window.location.href=\'curso.html?id=' + id + '\';">' + label + '</button>';
 }
 
 async function loadReviewsForModal(courseId) {
@@ -3075,17 +3102,36 @@ function fmtPrice(n) {
 function renderPricing() {
     const grid = document.getElementById('pricingGrid');
     if (!grid) return;
-    // Orden: premium arriba, técnico, luego los demás
-    const order = ['claude-sistema', 'food-beverage', 'coaching', 'gerencia-efectiva', 'feum-inventarios', 'la-paradoja', 'habitos', '4dx'];
+    // Política 2026-06-15: vitrina de VALOR (no venta in-situ). Derivados = acceso
+    // gratuito (con su valor tachado, para que se vea el ahorro); limpios = precio real.
+    // Todos los botones llevan al curso (curso.html), donde se aplica la política.
+    const order = ['claude-sistema', 'destapa-tu-negocio', 'food-beverage', 'feum-inventarios', 'codigo-honor', 'coaching', 'gerencia-efectiva', 'mente-millonaria', 'la-paradoja', 'habitos', '4dx'];
     const byId = Object.fromEntries(CATALOG.map(c => [c.id, c]));
     grid.innerHTML = order.filter(id => byId[id] && PRICING[id]).map(id => {
         const c = byId[id];
         const p = PRICING[id];
-        const save = p.listPrice - p.price;
+        const free = isFreeRequestCourse(id);
         const badgeClass = p.badge === 'VIP' ? 'vip' : (p.badge === 'Técnico' ? 'tecnico' : (p.badge === 'Profesional' ? 'profesional' : ''));
         const badge = p.badge ? `<div class="price-badge ${badgeClass}">${p.badge}</div>` : '';
         const cardExtra = p.badge === 'VIP' ? ' vip' : (p.badge === 'Premium' ? ' premium' : (p.badge === 'Profesional' ? ' profesional' : ''));
         const cardClass = 'price-card' + cardExtra;
+        let priceBlock, btn;
+        if (free) {
+            const val = p.listPrice || p.price;
+            priceBlock = `<div class="price-tag">
+                <span class="price-strike">Valor ${fmtPrice(val)}</span>
+                <span class="price-current" style="color:#2e7d32;">Gratis<small>acceso abierto</small></span>
+            </div>
+            <span class="price-save">Ahorras ${fmtPrice(val)} — sin costo</span>`;
+            btn = `<button class="price-buy" onclick="goToCourse('${id}')">Obtener gratis</button>`;
+        } else {
+            priceBlock = `<div class="price-tag">
+                <span class="price-strike">${fmtPrice(p.listPrice)}</span>
+                <span class="price-current">${fmtPrice(p.price)}<small>MXN</small></span>
+            </div>
+            <span class="price-save">Ahorra ${fmtPrice(p.listPrice - p.price)}</span>`;
+            btn = `<button class="price-buy" onclick="goToCourse('${id}')">🎓 Inscribirme</button>`;
+        }
         return `
         <div class="${cardClass}">
             ${badge}
@@ -3098,44 +3144,14 @@ function renderPricing() {
                 <span>📚 ${c.lessonsCount} lecciones</span>
                 <span>⏱ ${c.duration}</span>
             </div>
-            <div class="price-tag">
-                <span class="price-strike">${fmtPrice(p.listPrice)}</span>
-                <span class="price-current">${fmtPrice(p.price)}<small>MXN</small></span>
-            </div>
-            <span class="price-save">Ahorra ${fmtPrice(save)}</span>
-            <button class="price-buy" onclick="openDepositModal('${id}')">🎓 Inscribirme</button>
+            ${priceBlock}
+            ${btn}
         </div>`;
     }).join('');
 
-    // Bundle banner
+    // Bundle retirado bajo la política nueva (los derivados son gratis): ocultar el banner.
     const banner = document.getElementById('bundleBanner');
-    if (banner) {
-        const save = BUNDLE.listPrice - BUNDLE.price;
-        const pct = Math.round((save / BUNDLE.listPrice) * 100);
-        const bundleCount = Object.keys(PRICING).length;
-        // Calcular total de lecciones de forma dinámica
-        const totalLessons = CATALOG
-            .filter(c => PRICING[c.id])
-            .reduce((sum, c) => sum + (c.lessonsCount || 0), 0);
-        banner.innerHTML = `
-            <div>
-                <div class="bundle-title">🎁 Bundle completo — Los ${bundleCount} cursos</div>
-                <div class="bundle-sub">La forma más económica de acceder a todo el catálogo TRIKLES.</div>
-                <ul class="bundle-features">
-                    <li>✅ ${totalLessons} lecciones de contenido</li>
-                    <li>✅ ${bundleCount} certificados TRIKLES personalizados</li>
-                    <li>✅ Acceso de por vida + actualizaciones</li>
-                    <li>✅ Videos curados, citas textuales e imágenes reales</li>
-                </ul>
-            </div>
-            <div class="bundle-price-box">
-                <div class="bundle-strike">${fmtPrice(BUNDLE.listPrice)} MXN</div>
-                <div class="bundle-main-price">${fmtPrice(BUNDLE.price)}<small> MXN</small></div>
-                <div class="bundle-save-tag">Ahorra ${fmtPrice(save)} (${pct}%)</div>
-                <button class="bundle-btn" onclick="openDepositModal('__bundle')">🎉 Obtener el bundle</button>
-            </div>
-        `;
-    }
+    if (banner) banner.style.display = 'none';
 }
 
 function scrollToPricing() {
