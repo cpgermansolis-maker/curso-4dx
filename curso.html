@@ -3976,7 +3976,7 @@ function showReflectionForm() {
         '<h2 class="reflection-title">Antes de recibir tu certificado</h2>' +
         '<p class="reflection-subtitle">No hay respuestas correctas o incorrectas — es tu aprendizaje personal. Tómate el tiempo que necesites.</p>' +
         qHtml +
-        '<button class="reflection-submit" id="reflectionSubmitBtn" disabled>Enviar y recibir mi certificado →</button>' +
+        '<button class="reflection-submit" id="reflectionSubmitBtn" onclick="submitReflection()" disabled>Enviar y recibir mi certificado →</button>' +
         '<p class="reflection-note">Tus respuestas se guardan de forma privada en tu cuenta.</p>';
 
     // Insertar antes del certificado
@@ -4024,7 +4024,8 @@ function submitReflection() {
     }
 
     reflectionAnswers = { ...answers, submittedAt: new Date().toISOString() };
-    saveProgress();
+    // No bloquear el certificado si la persistencia falla (ruta crítica para el alumno).
+    try { saveProgress(); } catch (e) { console.warn('No se pudo guardar la reflexión:', e); }
 
     // Quitar el formulario y mostrar el certificado
     const form = document.getElementById('reflectionForm');
