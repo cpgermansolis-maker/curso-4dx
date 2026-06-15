@@ -1925,7 +1925,7 @@
                 <div class="promo-hero-eyebrow">Oferta de lanzamiento</div>
                 <h2>Tu primer curso, <em>totalmente gratis</em>.</h2>
                 <p class="promo-hero-lead">
-                    Crea tu cuenta en dos minutos y elige el curso del catálogo que más te convenga — accedes sin costo, con certificado incluido. Sin tarjeta, sin pago, sin compromisos: nuestra forma de invitarte a conocer la plataforma.
+                    Crea tu cuenta en dos minutos y elige <strong>un curso gratis</strong> de nuestra biblioteca de gestión — accedes sin costo, con certificado incluido. Sin tarjeta, sin compromisos. Y cuando compres una de nuestras <strong>obras originales TRIKLES</strong>, <strong>desbloqueas TODO el catálogo gratis</strong>.
                 </p>
                 <button class="promo-hero-cta" onclick="openAuth('register')">Reclamar mi curso gratis</button>
                 <div class="promo-hero-fine">
@@ -1952,6 +1952,13 @@
                     <div>
                         <div class="promo-step-title">Acceso inmediato y de por vida</div>
                         <div class="promo-step-desc">Lecciones con video, quizzes, examen final y certificado TRIKLES verificable — todo incluido, sin costo.</div>
+                    </div>
+                </div>
+                <div class="promo-step">
+                    <div class="promo-step-num">★</div>
+                    <div>
+                        <div class="promo-step-title">¿Quieres más? Desbloquéalo todo</div>
+                        <div class="promo-step-desc">Al comprar una obra original TRIKLES (CLAUDE SISTEMA o Destapa tu Negocio) se te abre <strong>todo el catálogo</strong> de cursos, gratis y para siempre.</div>
                     </div>
                 </div>
             </div>
@@ -2260,12 +2267,48 @@ const PRICING = {
 };
 const BUNDLE = { listPrice: 7892, price: 2299 };
 
-// ── Política de monetización (2026-06-15) ──────────────────────────────
-// Solo las obras originales limpias se cobran; el resto del catálogo se
-// otorga GRATIS a quien lo pida (acceso abierto). Espejo de curso.html.
+// ── Política de monetización (2026-06-16) — embudo 2 gratis ────────────
+// Solo las obras ORIGINALES limpias se cobran (claude-sistema, destapa).
+// Los DERIVADOS no se cobran nunca, pero son un embudo:
+//   1) Gancho: el alumno se lleva UN derivado gratis (su pick) al registrarse.
+//   2) Recompensa: al comprar un curso propio se desbloquean TODOS los derivados.
+//   3) Quien ya tenía derivados gratis los CONSERVA. Espejo de curso.html.
 const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio'];
 function isPaidCourse(id) { return PAID_COURSE_IDS.indexOf(id) !== -1; }
 function isFreeRequestCourse(id) { return !isPaidCourse(id); }
+
+const FULL_ACCESS_EMAILS = ['cpgermansolis@gmail.com', 'gerloxsolis@gmail.com'];
+function hasFullAccess() {
+    const email = ((currentUser && currentUser.email) || '').trim().toLowerCase();
+    return FULL_ACCESS_EMAILS.includes(email);
+}
+function hasPurchasedAnyPaidCourse() {
+    if (!currentUser || !currentUser.enrollments) return false;
+    return PAID_COURSE_IDS.some(function (id) {
+        const e = currentUser.enrollments[id];
+        return !!(e && (e.method === 'stripe' || e.paidAt || e.source === 'stripe'));
+    });
+}
+function freeDerivedCount() {
+    if (!currentUser || !currentUser.enrollments) return 0;
+    return Object.keys(currentUser.enrollments).filter(function (id) {
+        return isFreeRequestCourse(id);
+    }).length;
+}
+function hasUsedFreePick() { return freeDerivedCount() >= 1; }
+// 'unlocked' | 'free_pick' | 'locked' — estado de un derivado NO inscrito
+function derivedAccessState(id) {
+    if (hasFullAccess() || hasPurchasedAnyPaidCourse()) return 'unlocked';
+    if (!currentUser) return 'free_pick';
+    if (!hasUsedFreePick()) return 'free_pick';
+    return 'locked';
+}
+// ¿Al usuario le queda su curso gratis de bienvenida? (para el banner del catálogo)
+function hasFreePickAvailable() {
+    if (!currentUser) return false;             // invitado: el banner lo ve tras registrarse
+    if (hasFullAccess() || hasPurchasedAnyPaidCourse()) return false;
+    return !hasUsedFreePick();
+}
 
 // Fechas de lanzamiento (para badge "NUEVO" — últimos 45 días)
 const LAUNCH_DATES = {
@@ -2455,7 +2498,7 @@ function updateUIState() {
     if (isLogged) {
         hero.textContent = 'Desarrolla habilidades clave de gestión empresarial con los mejores libros adaptados a cursos interactivos. Cada curso incluye lecciones, quizzes, examen final y certificado.';
     } else {
-        hero.innerHTML = 'Libros de referencia adaptados a cursos interactivos para gerentes y directivos latinoamericanos. <strong style="color:var(--tk-gold);">Tu primer curso es totalmente gratis</strong> con sólo crear tu cuenta — sin tarjeta, sin compromisos.';
+        hero.innerHTML = 'Libros de referencia adaptados a cursos interactivos para gerentes y directivos latinoamericanos. <strong style="color:var(--tk-gold);">Tu primer curso es totalmente gratis</strong> con sólo crear tu cuenta. Y al comprar una obra original TRIKLES, <strong style="color:var(--tk-gold);">desbloqueas todo el catálogo</strong>.';
     }
     if (isLogged) {
         document.getElementById('userGreeting').textContent = currentUser.name.split(' ')[0];
@@ -2581,6 +2624,20 @@ function renderCatalog() {
 
     let html = '';
 
+    // Banner: al alumno le queda su curso gratis de bienvenida → invítalo a elegir.
+    if (hasFreePickAvailable()) {
+        html += `
+        <div style="margin:0 0 22px;padding:16px 18px;border-radius:14px;
+             background:linear-gradient(135deg,#0d2818,#103a22);border:1px solid #1f6b3e;
+             display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <div style="font-size:28px;line-height:1;">🎁</div>
+            <div style="flex:1;min-width:200px;">
+                <div style="font-weight:800;color:#d7ffe6;font-size:1.02em;">Tienes 1 curso GRATIS de bienvenida</div>
+                <div style="color:#a7e8c2;font-size:0.9em;margin-top:2px;">Elige cualquier curso de la biblioteca y actívalo sin costo. Y al comprar un curso original TRIKLES, <strong>desbloqueas todo el catálogo</strong>.</div>
+            </div>
+        </div>`;
+    }
+
     if (vip.length > 0) {
         const cards = vip.map(c => renderVipCourseCard(c, enrollments[c.id] || null)).join('');
         html += `
@@ -2653,10 +2710,14 @@ function renderVipCourseCard(course, enrollment) {
         ? `<div class="vip-card-progress"><div class="vip-card-progress-fill" style="width:${pct}%"></div></div>`
         : '';
 
+    const unlockNote = (!enrolled && isPaidCourse(course.id))
+        ? `<div style="color:#a7e8c2;font-weight:600;font-size:0.82em;margin-top:4px;">✨ Desbloquea TODO el catálogo gratis</div>`
+        : '';
     const priceHtml = p.price
         ? `<div class="vip-card-price">
             <span class="vip-card-price-amount">$${p.price.toLocaleString()} MXN</span>
             ${p.listPrice ? `<span class="vip-card-price-list">$${p.listPrice.toLocaleString()}</span>` : ''}
+            ${unlockNote}
            </div>`
         : '';
 
@@ -2689,27 +2750,39 @@ function renderCourseCard(course, enrollment) {
     const progress = enrollment?.progress || {};
     const completed = (progress.completed?.length || 0) >= 7 && progress.finalScore >= 7;
     const pct = Math.round(((progress.completed?.length || 0) / 7) * 100);
+    // Estado del embudo para derivados NO inscritos
+    const dState = (!enrolled && !completed && isFreeRequestCourse(course.id))
+        ? derivedAccessState(course.id) : null;
     let badge = '', badgeClass = 'new', btnText = 'Ver curso', btnClass = '';
     if (completed) { badge = 'Certificado'; badgeClass = 'done'; btnText = 'Ver certificado'; btnClass = 'certified'; }
     else if (enrolled) { badge = (pct > 0 ? pct + '%' : 'Inscrito'); badgeClass = 'progress'; btnText = 'Continuar'; btnClass = 'continue'; }
+    else if (dState === 'unlocked') { badge = 'Incluido'; badgeClass = 'new'; btnText = 'Acceder gratis'; }
+    else if (dState === 'free_pick') { badge = '🎁 Gratis'; badgeClass = 'new'; btnText = currentUser ? '🎁 Tu curso gratis' : '🎁 Gratis al registrarte'; }
+    else if (dState === 'locked') { badge = 'Disponible'; btnText = '🔓 Gratis al comprar'; }
     else if (!currentUser) { badge = 'Disponible'; btnText = 'Ver temario'; }
     else { badge = 'Disponible'; }
     const coverLayer = course.cover
         ? '<div class="course-cover" style="background-image:url('+course.cover+');"></div>'
         : '<div class="course-cover-placeholder">'+(course.icon || '📖')+'</div>';
-    // Línea de valor: muestra el precio como ahorro. Derivados = gratis (con valor tachado).
+    // Línea de valor: muestra el precio como ahorro/anclaje.
     const _pcard = PRICING[course.id];
     let valueLine = '';
     if (!enrolled && _pcard) {
         if (isFreeRequestCourse(course.id)) {
             const _val = _pcard.listPrice || _pcard.price;
+            const _tail = (dState === 'locked')
+                ? '<strong style="color:#7c4dff;">· Gratis al comprar un curso TRIKLES</strong>'
+                : (dState === 'unlocked')
+                    ? '<strong style="color:#2e7d32;">· Incluido</strong>'
+                    : '<strong style="color:#2e7d32;">· Gratis</strong>';
             valueLine = '<div class="course-value" style="margin:6px 0 2px;font-size:0.92em;">' +
                 '<span style="text-decoration:line-through;color:#9aa6c0;">Valor '+fmtPrice(_val)+'</span> ' +
-                '<strong style="color:#2e7d32;">· Gratis</strong></div>';
+                _tail + '</div>';
         } else {
             valueLine = '<div class="course-value" style="margin:6px 0 2px;font-size:0.92em;">' +
                 '<strong>'+fmtPrice(_pcard.price)+' MXN</strong>' +
                 (_pcard.listPrice && _pcard.listPrice > _pcard.price ? ' <span style="text-decoration:line-through;color:#9aa6c0;">'+fmtPrice(_pcard.listPrice)+'</span>' : '') +
+                '<span style="display:block;color:#2e7d32;font-weight:600;font-size:0.9em;margin-top:2px;">✨ Desbloquea TODO el catálogo gratis</span>' +
                 '</div>';
         }
     }
@@ -3116,16 +3189,16 @@ function renderPricing() {
             const val = p.listPrice || p.price;
             priceBlock = `<div class="price-tag">
                 <span class="price-strike">Valor ${fmtPrice(val)}</span>
-                <span class="price-current" style="color:#2e7d32;">Gratis<small>acceso abierto</small></span>
+                <span class="price-current" style="color:#2e7d32;">Gratis<small>tu curso de bienvenida</small></span>
             </div>
-            <span class="price-save">Ahorras ${fmtPrice(val)} — sin costo</span>`;
-            btn = `<button class="price-buy" onclick="goToCourse('${id}')">Obtener gratis</button>`;
+            <span class="price-save">1 gratis al registrarte · todos al comprar un curso TRIKLES</span>`;
+            btn = `<button class="price-buy" onclick="goToCourse('${id}')">Ver curso</button>`;
         } else {
             priceBlock = `<div class="price-tag">
                 <span class="price-strike">${fmtPrice(p.listPrice)}</span>
                 <span class="price-current">${fmtPrice(p.price)}<small>MXN</small></span>
             </div>
-            <span class="price-save">Ahorra ${fmtPrice(p.listPrice - p.price)}</span>`;
+            <span class="price-save">Ahorra ${fmtPrice(p.listPrice - p.price)} · ✨ desbloquea TODO el catálogo</span>`;
             btn = `<button class="price-buy" onclick="goToCourse('${id}')">🎓 Inscribirme</button>`;
         }
         return `

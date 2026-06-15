@@ -4206,16 +4206,52 @@ function isEligibleForFreeFirstCourse() {
     return count === 0;
 }
 
-// ── Política de monetización (2026-06-15) ──────────────────────────────
-// Solo las obras ORIGINALES limpias se cobran (claude-sistema, destapa).
-// TODO el resto del catálogo (cursos derivados de libros) se otorga GRATIS
-// a cualquiera que lo pida desde el propio curso. Ver memoria postura-legal.
+// ── Política de monetización (2026-06-16) ──────────────────────────────
+// Solo las obras ORIGINALES limpias se COBRAN (claude-sistema, destapa).
+// Los cursos DERIVADOS de libros NUNCA se cobran, pero ya no son gratis para
+// todos sin condición: son un EMBUDO.
+//   1) Gancho de registro: el alumno se lleva UN curso derivado gratis (su pick).
+//   2) Recompensa de compra: al comprar CUALQUIER curso propio se desbloquean
+//      TODOS los derivados gratis. (Comprar un propio NO regala el otro propio.)
+//   3) Quien ya tenía cursos derivados gratis (política vieja) los CONSERVA.
+// Ver memoria postura-legal + project_estrategia-embudo-2-gratis.
 const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio'];
 function isPaidCourse(id) {
     const cid = id || (COURSE && COURSE.id);
     return PAID_COURSE_IDS.indexOf(cid) !== -1;
 }
 function isFreeRequestCourse(id) { return !isPaidCourse(id); }
+
+// ¿El usuario compró (Stripe) al menos un curso propio? → desbloquea TODOS los derivados.
+function hasPurchasedAnyPaidCourse() {
+    if (!currentUser || !currentUser.enrollments) return false;
+    return PAID_COURSE_IDS.some(function (id) {
+        const e = currentUser.enrollments[id];
+        return !!(e && (e.method === 'stripe' || e.paidAt || e.source === 'stripe'));
+    });
+}
+
+// ¿Ya usó su único curso derivado gratis? (cuenta cualquier inscripción a un derivado;
+// así, quien venía de la política vieja con varios derivados queda "ya servido" y
+// conserva su acceso, pero no obtiene un gratis adicional.)
+function freeDerivedCount() {
+    if (!currentUser || !currentUser.enrollments) return 0;
+    return Object.keys(currentUser.enrollments).filter(function (id) {
+        return isFreeRequestCourse(id);
+    }).length;
+}
+function hasUsedFreePick() { return freeDerivedCount() >= 1; }
+
+// Estado de un curso DERIVADO que el usuario NO tiene inscrito todavía:
+//   'unlocked'  → todos los derivados gratis (compró un propio, o full-access)
+//   'free_pick' → le queda su 1 curso gratis (o es invitado: lo activará al registrarse)
+//   'locked'    → ya usó su gratis y no ha comprado → upsell
+function derivedAccessState(id) {
+    if (hasFullAccess() || hasPurchasedAnyPaidCourse()) return 'unlocked';
+    if (!currentUser) return 'free_pick';      // invitado: el primero que active será su pick
+    if (!hasUsedFreePick()) return 'free_pick';
+    return 'locked';
+}
 
 // Precios locales (la fuente de verdad para el cargo real es la Cloud Function)
 const ENROLL_PRICING = {
@@ -4386,11 +4422,13 @@ function showCourseLanding() {
     const faq = meta.faq || [];
     const description = meta.description || '';
 
-    // --- CTA text based on state ---
-    // "eligibleFree" ahora significa: curso de ACCESO GRATUITO (derivado),
-    // no la vieja promo de "primer curso gratis". Los cursos limpios (de pago)
-    // caen al flujo de Stripe.
-    const eligibleFree = isFreeRequestCourse();
+    // --- CTA text based on state (embudo 2 gratis, 2026-06-16) ---
+    // Cursos PROPIOS → Stripe. Cursos DERIVADOS → estado del embudo:
+    //   unlocked  (compró un propio / full-access) → gratis ilimitado
+    //   free_pick (le queda su 1 gratis o es invitado)
+    //   locked    (ya usó su gratis y no ha comprado) → upsell a los propios
+    const isPaid = isPaidCourse(COURSE.id);
+    const derivedState = isPaid ? null : derivedAccessState(COURSE.id);
     let ctaText, ctaAction, ctaPriceLine, secondaryHint;
     if (enrolled) {
         if (hasProgress) {
@@ -4401,16 +4439,42 @@ function showCourseLanding() {
         ctaAction = 'clGoToLessons()';
         ctaPriceLine = '';
         secondaryHint = 'Ya estás inscrito · acceso completo';
-    } else if (eligibleFree) {
-        // Curso de acceso gratuito (derivado): gratis a quien lo pida
-        ctaText = 'Obtener acceso gratis';
+    } else if (!isPaid && derivedState === 'unlocked') {
+        // Derivado incluido: ya compró un curso propio (o es dueño) → todos gratis
+        ctaText = 'Acceder gratis';
         ctaAction = 'clOpenEnrollModal()';
         ctaPriceLine =
-            '<div class="cl-promo-card-badge">Acceso gratuito</div>' +
-            '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Curso de acceso abierto</span></div>' +
-            '<div class="cl-promo-free-line">Acceso inmediato. Solo deja tus datos para activarlo.</div>';
-        secondaryHint = 'Acceso abierto · sin costo';
+            '<div class="cl-promo-card-badge">Incluido en tu membresía</div>' +
+            '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Desbloqueado con tu compra TRIKLES</span></div>' +
+            '<div class="cl-promo-free-line">Tienes acceso libre a todos los cursos del catálogo.</div>';
+        secondaryHint = 'Incluido · acceso total';
+    } else if (!isPaid && derivedState === 'free_pick') {
+        // Le queda su 1 curso gratis (o invitado que lo activará al registrarse)
+        ctaText = '🎁 Activar mi curso gratis';
+        ctaAction = 'clOpenEnrollModal()';
+        ctaPriceLine =
+            '<div class="cl-promo-card-badge">Tu curso gratis</div>' +
+            '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Tu curso de cortesía</span></div>' +
+            '<div class="cl-promo-free-line">' +
+                (currentUser
+                    ? 'Tienes <strong>1 curso gratis</strong> disponible. Actívalo aquí.'
+                    : 'Regístrate y este será tu <strong>curso gratis</strong> de bienvenida.') +
+            '</div>';
+        secondaryHint = '1 curso gratis de bienvenida';
+    } else if (!isPaid && derivedState === 'locked') {
+        // Ya usó su gratis y no ha comprado → upsell hacia los cursos propios
+        ctaText = '🔓 Desbloquear todo el catálogo';
+        ctaAction = 'clShowUnlockUpsell()';
+        const listP = (pricing.listPrice) ? _clPrice(pricing.listPrice) : '';
+        ctaPriceLine =
+            '<div class="cl-promo-card-badge">Gratis al comprar un curso TRIKLES</div>' +
+            (listP
+                ? '<div class="cl-hero-card-price"><s style="opacity:.5;font-weight:600;">' + listP + '</s> Gratis<span class="cl-promo-card-price-free">Incluido con tu compra</span></div>'
+                : '<div class="cl-hero-card-price">Gratis<span class="cl-promo-card-price-free">Incluido con tu compra</span></div>') +
+            '<div class="cl-promo-free-line">Ya usaste tu curso gratis. Compra una <strong>obra original TRIKLES</strong> y desbloquea <strong>todos</strong> los cursos.</div>';
+        secondaryHint = 'Incluido al comprar un curso propio';
     } else {
+        // Curso PROPIO (obra original): pago único vía Stripe
         ctaText = 'Inscribirme · ' + _clPrice(pricing.price) + ' MXN';
         ctaAction = 'clOpenEnrollModal()';
         const listHtml = (pricing.listPrice && pricing.listPrice > pricing.price)
@@ -4420,17 +4484,22 @@ function showCourseLanding() {
         const saveHtml = savePct > 0 ? '<div class="cl-hero-card-save">Lanzamiento · ahorra ' + savePct + '%</div>' : '';
         ctaPriceLine =
             '<div class="cl-hero-card-price">' + _clPrice(pricing.price) + '<span class="cur">MXN</span></div>' +
-            listHtml + saveHtml;
-        secondaryHint = 'Pago único · acceso de por vida';
+            listHtml + saveHtml +
+            '<div class="cl-promo-free-line" style="margin-top:8px;">✨ Al comprarlo, <strong>todos los cursos derivados</strong> del catálogo se desbloquean gratis.</div>';
+        secondaryHint = 'Pago único · desbloquea todo el catálogo';
     }
 
-    // Banner promocional arriba del hero card (cuando es elegible)
-    const promoBanner = (!enrolled && eligibleFree)
+    // Banner promocional arriba del hero card (solo cuando le queda su curso gratis)
+    const promoBanner = (!enrolled && !isPaid && derivedState === 'free_pick')
         ? '<div class="cl-promo-banner">' +
-            '<span class="cl-promo-banner-mark">★</span>' +
+            '<span class="cl-promo-banner-mark">🎁</span>' +
             '<div class="cl-promo-banner-body">' +
-                '<div class="cl-promo-banner-title">Acceso gratuito</div>' +
-                '<p class="cl-promo-banner-text">Este curso es de <strong>acceso abierto, sin costo</strong>. Solo deja tus datos y entra al instante.</p>' +
+                '<div class="cl-promo-banner-title">Tu curso gratis de bienvenida</div>' +
+                '<p class="cl-promo-banner-text">' +
+                    (currentUser
+                        ? 'Tienes <strong>1 curso gratis</strong>. Actívalo en este curso o elige otro en el <a href="index.html" style="color:inherit;text-decoration:underline;">catálogo</a>.'
+                        : 'Regístrate y llévate <strong>1 curso gratis</strong>. Y al comprar un curso TRIKLES, desbloqueas <strong>todo el catálogo</strong>.') +
+                '</p>' +
             '</div>' +
           '</div>'
         : '';
@@ -4838,14 +4907,58 @@ function showCourseLanding() {
 }
 
 // ========== ENROLL BENEFITS MODAL (Coursera-style) ==========
+// Upsell de desbloqueo: el usuario (derivado) ya usó su curso gratis y no ha
+// comprado. Le mostramos las obras ORIGINALES: comprar cualquiera desbloquea TODO.
+function clShowUnlockUpsell() {
+    let m = document.getElementById('clUnlockModal');
+    if (m) { m.style.display = 'flex'; document.body.style.overflow = 'hidden'; return; }
+    const TITLES = { 'claude-sistema': 'CLAUDE SISTEMA', 'destapa-tu-negocio': 'Destapa tu Negocio' };
+    const SUBS = {
+        'claude-sistema': 'Sistema VIP de productividad con IA',
+        'destapa-tu-negocio': 'Método FLUIR para destrabar tu PYME'
+    };
+    const cardsHtml = PAID_COURSE_IDS.map(function (id) {
+        const p = ENROLL_PRICING[id] || { price: 0, listPrice: null };
+        const save = (p.listPrice && p.listPrice > p.price)
+            ? '<div style="font-size:12px;color:#9ca3af;margin-top:2px;"><s>' + _clPrice(p.listPrice) + '</s> precio regular</div>' : '';
+        return '<button onclick="window.location.href=\'curso.html?id=' + id + '\'" ' +
+            'style="text-align:left;display:block;width:100%;margin-bottom:10px;background:linear-gradient(135deg,#1c1147,#241858);border:1px solid #4c3a92;border-radius:14px;padding:14px 16px;color:#ece9ff;cursor:pointer;">' +
+            '<div style="font-weight:800;font-size:16px;">' + _clEsc(TITLES[id] || id) + '</div>' +
+            '<div style="font-size:13px;color:#b9b2e0;margin:2px 0 8px;">' + _clEsc(SUBS[id] || '') + '</div>' +
+            '<div style="font-weight:800;font-size:18px;color:#fbbf24;">' + _clPrice(p.price) + ' <span style="font-size:12px;color:#cbd5e1;font-weight:600;">MXN · pago único</span></div>' +
+            save +
+        '</button>';
+    }).join('');
+    m = document.createElement('div');
+    m.id = 'clUnlockModal';
+    m.setAttribute('style', 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,3,24,.82);backdrop-filter:blur(5px);');
+    m.addEventListener('click', function (ev) { if (ev.target === m) clCloseUnlockUpsell(); });
+    m.innerHTML =
+        '<div style="max-width:520px;width:100%;background:#120a2e;border:1px solid #3b2a72;border-radius:18px;padding:28px 24px;color:#ece9ff;box-shadow:0 24px 60px rgba(0,0,0,.5);">' +
+            '<div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c4b5fd;margin-bottom:6px;">Desbloquea todo el catálogo</div>' +
+            '<h3 style="margin:0 0 8px;font-size:22px;line-height:1.25;">Ya usaste tu curso gratis 🎁</h3>' +
+            '<p style="margin:0 0 18px;color:#b9b2e0;font-size:15px;line-height:1.5;">Compra cualquier <strong>obra original TRIKLES</strong> y <strong>todos</strong> los cursos del catálogo se desbloquean gratis, para siempre.</p>' +
+            cardsHtml +
+            '<button onclick="clCloseUnlockUpsell()" style="margin-top:8px;width:100%;background:transparent;border:1px solid #3b2a72;color:#c4b5fd;padding:11px;border-radius:10px;font-size:14px;cursor:pointer;">Ahora no</button>' +
+        '</div>';
+    document.body.appendChild(m);
+    document.body.style.overflow = 'hidden';
+}
+function clCloseUnlockUpsell() {
+    const m = document.getElementById('clUnlockModal');
+    if (m) m.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
 function clOpenEnrollModal() {
     const meta = (COURSE && COURSE.meta) || {};
     const pricing = ENROLL_PRICING[COURSE.id] || { price: 999, listPrice: null };
     const title = meta.title || 'este curso';
-    // "eligibleFree" ahora significa: curso de ACCESO GRATUITO (derivado),
-    // no la vieja promo de "primer curso gratis". Los cursos limpios (de pago)
-    // caen al flujo de Stripe.
-    const eligibleFree = isFreeRequestCourse();
+    // Embudo 2 gratis: derivado gratis solo si le queda su pick o ya compró.
+    const isPaid = isPaidCourse(COURSE.id);
+    const dState = isPaid ? null : derivedAccessState(COURSE.id);
+    const eligibleFree = !isPaid && (dState === 'free_pick' || dState === 'unlocked');
+    const isUnlocked = dState === 'unlocked';
 
     const modalTitle = document.getElementById('clModalTitle');
     const modalSub = document.getElementById('clModalSubtitle');
@@ -4855,22 +4968,26 @@ function clOpenEnrollModal() {
     const secEl = document.getElementById('clModalSecure');
 
     if (modalTitle) {
-        modalTitle.textContent = eligibleFree
-            ? 'Obtén acceso gratis a este curso'
-            : 'Inscríbete a "' + title + '"';
+        modalTitle.textContent = !eligibleFree
+            ? 'Inscríbete a "' + title + '"'
+            : (isUnlocked ? 'Acceso gratis incluido' : 'Activa tu curso gratis 🎁');
     }
     if (modalSub) {
-        modalSub.textContent = eligibleFree
-            ? 'Curso de acceso abierto. Déjanos tus datos y entra al instante.'
-            : 'Empieza a aprender hoy mismo · Pago único, acceso de por vida';
+        modalSub.textContent = !eligibleFree
+            ? 'Empieza a aprender hoy mismo · Pago único, acceso de por vida'
+            : (isUnlocked
+                ? 'Incluido en tu membresía TRIKLES. Déjanos tus datos y entra al instante.'
+                : 'Este es tu curso gratis de bienvenida. Déjanos tus datos y entra al instante.');
     }
 
     // Lista de beneficios estilo Coursera (4 puntos clave: bold + sub)
     const lessonsCount = meta.lessonsCount || (lessons ? lessons.length : 24);
     const benefits = eligibleFree ? [
         {
-            head: 'Este curso: acceso gratuito',
-            sub: 'Curso de acceso abierto: obtienes acceso completo a "' + title + '" sin costo.'
+            head: isUnlocked ? 'Incluido en tu membresía' : 'Tu curso gratis de bienvenida',
+            sub: isUnlocked
+                ? 'Ya compraste un curso TRIKLES: tienes acceso completo a "' + title + '" y a todo el catálogo, sin costo.'
+                : 'Obtienes acceso completo a "' + title + '" sin costo, como tu curso de cortesía.'
         },
         {
             head: 'Sin tarjeta, sin compromisos',
@@ -4977,10 +5094,10 @@ function clCloseEnrollModal() {
 async function clModalConfirm() {
     const ctaEl = document.getElementById('clModalCta');
     const errEl = document.getElementById('clModalError');
-    // "eligibleFree" ahora significa: curso de ACCESO GRATUITO (derivado),
-    // no la vieja promo de "primer curso gratis". Los cursos limpios (de pago)
-    // caen al flujo de Stripe.
-    const eligibleFree = isFreeRequestCourse();
+    // Embudo 2 gratis: un derivado es gratis solo si le queda su pick o ya compró.
+    const isPaid = isPaidCourse(COURSE.id);
+    const dState = isPaid ? null : derivedAccessState(COURSE.id);
+    const eligibleFree = !isPaid && (dState === 'free_pick' || dState === 'unlocked');
     if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
 
     // Caso 1 — invitado sin cuenta: cerrar el modal y abrir el form de registro.
@@ -5003,6 +5120,14 @@ async function clModalConfirm() {
             if (regTab) regTab.classList.add('active');
             if (regForm) regForm.classList.add('active');
         }
+        return;
+    }
+
+    // Caso derivado BLOQUEADO: ya usó su curso gratis y no ha comprado → upsell
+    // hacia las obras originales (no hay checkout para derivados).
+    if (!isPaid && dState === 'locked') {
+        clCloseEnrollModal();
+        clShowUnlockUpsell();
         return;
     }
 

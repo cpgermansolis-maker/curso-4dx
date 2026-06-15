@@ -892,19 +892,21 @@ const TRIKLES_CONTACT_EMAIL = 'cpgermansolis@gmail.com';
 // WhatsApp opcional para handoff (déjalo vacío si no quieres compartirlo):
 const TRIKLES_CONTACT_WHATSAPP = '+52 246 411 5513';
 
-// Catálogo para el system prompt. Precio o "Gratis" según la política 2026-06-15.
+// Catálogo para el system prompt. Política embudo 2026-06-16: solo las 2 obras
+// originales se cobran; los derivados son GRATIS (1 al registrarse, o todos al
+// comprar un curso original). Mostramos su valor como ancla de ahorro.
 const PREVENTA_CATALOG = [
     { id: 'claude-sistema',      t: 'CLAUDE SISTEMA',                              price: 'DE PAGO · $649 MXN (obra original VIP)',  d: 'Domina Claude (la IA) como sistema de trabajo personal: Chat, Co-work y Code. Nivel intermedio-avanzado.' },
     { id: 'destapa-tu-negocio',  t: 'Destapa tu Negocio',                          price: 'DE PAGO · $449 MXN (obra original)',      d: 'Método FLUIR: encuentra y rompe el freno que limita las utilidades de tu PYME. 7 casos de negocio mexicanos.' },
-    { id: 'mente-millonaria',    t: 'Los Secretos de la Mente Millonaria',         price: 'GRATIS · acceso abierto (valor $449)',    d: 'Reprograma tu mentalidad financiera (ideas de T. Harv Eker).' },
-    { id: 'la-paradoja',         t: 'La Paradoja',                                 price: 'GRATIS · acceso abierto (valor $299)',    d: 'Liderazgo de servicio (ideas de James C. Hunter).' },
-    { id: 'habitos',             t: 'Los 7 Hábitos de la Gente Altamente Efectiva',price: 'GRATIS · acceso abierto (valor $249)',    d: 'Efectividad personal y profesional (ideas de Covey).' },
-    { id: '4dx',                 t: 'Las 4 Disciplinas de la Ejecución',           price: 'GRATIS · acceso abierto (valor $249)',    d: 'Ejecutar metas crucialmente importantes en medio del torbellino del día a día.' },
-    { id: 'coaching',            t: 'Coaching',                                    price: 'GRATIS · acceso abierto (valor $399)',    d: 'Desarrollar personas con el método GROW (ideas de Whitmore).' },
-    { id: 'gerencia-efectiva',   t: 'La Gerencia Efectiva',                        price: 'GRATIS · acceso abierto (valor $399)',    d: 'Administración por resultados (ideas de Drucker).' },
-    { id: 'codigo-honor',        t: 'El ABC para crear un equipo de negocios exitoso', price: 'GRATIS · acceso abierto (valor $449)', d: 'Convertir grupos en equipos campeones con un código de honor.' },
-    { id: 'food-beverage',       t: 'Control de Costos en Alimentos y Bebidas',    price: 'GRATIS · acceso abierto (valor $799)',    d: 'Rentabilidad en restaurantes y hotelería (FEUM/A&B).' },
-    { id: 'feum-inventarios',    t: 'Administración de Inventarios Farmacéuticos (FEUM)', price: 'GRATIS · acceso abierto (valor $649)', d: 'Inventarios y normativa para farmacias.' }
+    { id: 'mente-millonaria',    t: 'Los Secretos de la Mente Millonaria',         price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $449',    d: 'Reprograma tu mentalidad financiera (ideas de T. Harv Eker).' },
+    { id: 'la-paradoja',         t: 'La Paradoja',                                 price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $299',    d: 'Liderazgo de servicio (ideas de James C. Hunter).' },
+    { id: 'habitos',             t: 'Los 7 Hábitos de la Gente Altamente Efectiva',price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $249',    d: 'Efectividad personal y profesional (ideas de Covey).' },
+    { id: '4dx',                 t: 'Las 4 Disciplinas de la Ejecución',           price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $249',    d: 'Ejecutar metas crucialmente importantes en medio del torbellino del día a día.' },
+    { id: 'coaching',            t: 'Coaching',                                    price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $399',    d: 'Desarrollar personas con el método GROW (ideas de Whitmore).' },
+    { id: 'gerencia-efectiva',   t: 'La Gerencia Efectiva',                        price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $399',    d: 'Administración por resultados (ideas de Drucker).' },
+    { id: 'codigo-honor',        t: 'El ABC para crear un equipo de negocios exitoso', price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $449', d: 'Convertir grupos en equipos campeones con un código de honor.' },
+    { id: 'food-beverage',       t: 'Control de Costos en Alimentos y Bebidas',    price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $799',    d: 'Rentabilidad en restaurantes y hotelería (FEUM/A&B).' },
+    { id: 'feum-inventarios',    t: 'Administración de Inventarios Farmacéuticos (FEUM)', price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $649', d: 'Inventarios y normativa para farmacias.' }
 ];
 
 function buildPreventaSystemPrompt(courseId) {
@@ -927,9 +929,11 @@ function buildPreventaSystemPrompt(courseId) {
         '',
         currentLine,
         '',
-        'CÓMO SE INSCRIBE la gente:',
-        '- Cursos DE PAGO (CLAUDE SISTEMA y Destapa tu Negocio): se inscriben con el botón "Inscribirme" / "Pagar e inscribirme" del curso; el pago es seguro por Stripe (tarjeta, SPEI u OXXO), pago único y acceso de por vida.',
-        '- Cursos GRATIS (todos los demás): se obtienen con el botón "Obtener acceso gratis" dentro del curso; solo dejan su nombre y correo y entran al instante, sin tarjeta.',
+        'CÓMO FUNCIONA EL ACCESO (esto es clave, explícalo bien):',
+        '- Al CREAR CUENTA, el visitante se lleva UN curso de la biblioteca GRATIS, el que él elija (su "curso de bienvenida"). Sin tarjeta, entra al instante.',
+        '- Las 2 OBRAS ORIGINALES (CLAUDE SISTEMA $649 y Destapa tu Negocio $449) SÍ se pagan, con Stripe (tarjeta, SPEI u OXXO), pago único y acceso de por vida. Comprar una NO incluye la otra.',
+        '- GRAN BENEFICIO: al comprar CUALQUIERA de las 2 obras originales, se DESBLOQUEA TODO EL CATÁLOGO de cursos de la biblioteca GRATIS, para siempre. Es el mejor argumento de venta: pagas un curso original y te llevas toda la biblioteca de regalo.',
+        '- Si alguien ya usó su curso gratis de bienvenida y quiere más cursos de la biblioteca sin comprar, explícale con amabilidad que el camino es adquirir una obra original (y así desbloquea todos).',
         '',
         'CERTIFICADO (sé honesto, no exageres): al aprobar el examen final reciben un Certificado TRIKLES con folio único verificable en línea, ideal para LinkedIn y CV. Es una CONSTANCIA de finalización de carácter privado; NO es un título ni cédula profesional y NO tiene validez oficial ante la SEP.',
         '',
@@ -939,7 +943,7 @@ function buildPreventaSystemPrompt(courseId) {
         '3) Mantente en temas de TRIKLES y sus cursos. Si te preguntan algo ajeno, recondúcelo con amabilidad.',
         '4) Si el visitante quiere hablar con una persona, tiene un caso especial (facturación, becas, dudas legales) o no logras resolver, ofrécele contactar a Germán: ' + contactLine + '.',
         '5) No prometas resultados garantizados. Sé concreto sobre el valor del curso.',
-        '6) Cierra con una invitación clara a la acción (inscribirse, obtener acceso gratis, o escribir a Germán) cuando sea natural.'
+        '6) Cierra con una invitación clara a la acción (crear cuenta y reclamar su curso gratis, comprar una obra original para desbloquear todo, o escribir a Germán) cuando sea natural.'
     ].join('\n');
 }
 
