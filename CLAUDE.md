@@ -156,7 +156,15 @@ npx firebase-tools deploy --only hosting
 
 ---
 
-## Último avance (2026-06-11, piloto Destapa tu Negocio + fixes)
+## Último avance (2026-06-16, embudo "2 gratis" + Stripe LIVE probándose)
+
+**Cambio de estrategia de monetización → EMBUDO.** Los cursos derivados dejaron de ser "gratis para todos" y pasaron a ser gancho+recompensa: (1) **1 curso derivado gratis al registrarse** (pick explícito), (2) **comprar un curso propio desbloquea TODOS los derivados gratis**, (3) **grandfathering** (quien ya tenía derivados los conserva). Implementado con helpers `hasPurchasedAnyPaidCourse`/`hasUsedFreePick`/`derivedAccessState` espejados en `curso.html` e `index.html`, todo derivado de `enrollments` (sin schema nuevo, sin cambios de servidor). Estados `unlocked`/`free_pick`/`locked` en landing + catálogo; modal `clShowUnlockUpsell` para upsell; banner "1 gratis"; bot actualizado. Ver sección **Legal → MODELO DE MONETIZACIÓN** y memoria `project_estrategia-embudo-2-gratis.md`. Commit `371d86c`, deployado (hosting + `chatPreventa`). **Germán decidió "Proceder" sobre el matiz legal; queda nota para su abogado de PI.** Pendiente: él prueba el flujo en vivo (incógnito).
+
+### Antes (2026-06-15, monetización "acceso abierto" + Stripe LIVE + bot + verificador)
+
+Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin condición** (esta política la reemplazó el embudo del 2026-06-16). Stripe LIVE activado, bot de preventa activo/verificado, verificador de folios (`verificar.html` + `issueCertificate`), Fable 5 reescrito como lección durable. Detalle en las memorias respectivas.
+
+## Avance (2026-06-11, piloto Destapa tu Negocio + fixes)
 
 **Curso piloto PUBLICADO + marca OAC.** Se reconstruyó "La Meta" (Goldratt) como **obra original** "Destapa tu Negocio" (Método FLUIR, 5 fases, 22 lecciones + examen + cert, 7 casos PYME MX). Publicado: `cursos/destapa-tu-negocio.js`, alta en CATALOG/PRICING ($449 Premium)/LAUNCH_DATES/ENROLL_PRICING/getCatalog. Flag **`meta.originalWork:true`** → curso.html dice "Obra original de…" en vez de "Basado en el libro de…" (6 sitios). Portada SVG premium con **logo OAC vectorizado protagonista + TRIKLES discreto**; mismo branding agregado a la portada de CLAUDE SISTEMA. Inventario de ideas + blueprint + regla anti-derivado en `libros/LaMeta/`. Detalle en memoria `project_piloto-destapa-tu-negocio.md`.
 
@@ -182,10 +190,14 @@ npx firebase-tools deploy --only hosting
 
 ## ⚠️ Legal — leer antes de tocar cobro o `libros/`
 
-- **MODELO DE MONETIZACIÓN (decisión de Germán, 2026-06-15, reemplaza el "cobro apagado" del 2026-06-08):**
-  - **Solo se cobran las obras originales limpias:** `claude-sistema` ($649) y `destapa-tu-negocio` ($449). (Germán decidió cobrar Destapa YA, relevando el candado previo del abogado de PI — decisión suya.)
-  - **Todo el resto del catálogo (cursos DERIVADOS de libros con copyright: Mente Millonaria, La Paradoja, Hábitos, 4DX, Código de Honor, Coaching, Gerencia Efectiva, Food & Beverage, FEUM) se otorga GRATIS a quien lo pida** ("acceso abierto"). Regalarlos elimina el fin de lucro → reduce la exposición al Art. 424 CPF. **NUNCA cobrarlos** (ni online ni efectivo).
-  - Implementación: política única en `PAID_COURSE_IDS = ['claude-sistema','destapa-tu-negocio']` (espejo en `curso.html` e `index.html`). Derivados → botón "Obtener acceso gratis" + captura de lead (nombre/correo/WhatsApp) + inscripción instantánea (`source:'free_request'`). Limpios → flujo Stripe. `functions/index.js` `COURSE_PRICES_CENTS` solo tiene los 2 limpios (el servidor rechaza cobrar derivados). Catálogo muestra el precio de los derivados como **valor tachado + "Gratis"** (anclaje de ahorro), sin venta in-situ ni bundle (bundle retirado). Toda inscripción se centraliza en `curso.html`. Commit `e2d26a2`.
+- **MODELO DE MONETIZACIÓN — EMBUDO "2 GRATIS" (decisión de Germán, 2026-06-16, reemplaza el "acceso abierto a todos" del 2026-06-15):**
+  - **Solo se cobran las obras originales limpias:** `claude-sistema` ($649) y `destapa-tu-negocio` ($449). Comprar una **NO** incluye la otra (cada propio se paga aparte).
+  - **Los cursos DERIVADOS (Mente Millonaria, La Paradoja, Hábitos, 4DX, Código de Honor, Coaching, Gerencia Efectiva, Food & Beverage, FEUM) NUNCA se cobran**, pero ya **no son gratis para todos sin condición**. Son un EMBUDO:
+    1. **Gancho de registro:** el alumno se lleva **UN** curso derivado gratis (su "pick", lo elige explícitamente al inscribirse en él).
+    2. **Recompensa de compra:** al comprar **cualquier** curso propio, se le **desbloquean TODOS** los derivados gratis (para siempre).
+    3. **Grandfathering:** quien ya tenía derivados gratis bajo la política vieja los **conserva** (no se revoca nada).
+  - ⚠️ **Matiz legal (Germán decidió "Proceder, es mi decisión"):** restringir los derivados los mete al embudo (gancho + premio por compra). Siguen **sin cobrarse directamente**, pero ya no son "gratis sin ataduras" como antes — un abogado podría ver que aportan valor comercial a la venta. Nota lista para el abogado de PI en `project_postura-legal-cobro.md`.
+  - Implementación: `PAID_COURSE_IDS = ['claude-sistema','destapa-tu-negocio']` + helpers `hasPurchasedAnyPaidCourse()`, `hasUsedFreePick()` (cuenta derivados inscritos ≥1), `derivedAccessState(id)` → `unlocked`/`free_pick`/`locked`. **Espejados en `curso.html` e `index.html`** (incluye `FULL_ACCESS_EMAILS` en ambos). Todo se **deriva de `enrollments`** (no hay campo nuevo): derivado con `source:'free_request'` = pick/grandfather; propio con `method:'stripe'`/`paidAt` = compra que desbloquea todo. **Sin cambios de servidor para el desbloqueo** (es client-side). CTAs del landing por estado; modal `clShowUnlockUpsell()` para `locked`; banner "1 curso gratis" en el catálogo (`hasFreePickAvailable()`); bot (`buildPreventaSystemPrompt`) actualizado. `COURSE_PRICES_CENTS` sigue con solo los 2 limpios (el servidor rechaza cobrar derivados). Commit `371d86c`.
   - ✅ **Stripe LIVE activado (2026-06-15):** Germán puso `STRIPE_SECRET_KEY=sk_live_...` + creó webhook live (`https://stripewebhook-y57ht7jzda-uc.a.run.app`, eventos checkout.session.completed/async_payment_succeeded/async_payment_failed) y su `STRIPE_WEBHOOK_SECRET`; redeployadas `createStripeCheckout` + `stripeWebhook`. El cobro de claude-sistema ($649) y destapa ($449) es REAL. Pendiente solo: prueba de compra real + reembolso (validar webhook→inscripción). Nota Stripe: 1ª transferencia a banco suele retenerse ~7 días en cuentas nuevas.
 - **`libros/**` está excluido del hosting** en `firebase.json` → `hosting.ignore` (commit 216aacb). NO quitarlo: Firebase deploya desde la carpeta local, no desde git, así que el `.gitignore` no basta. Los PDFs fuente NO deben servirse públicamente.
 - **Certificados:** ya llevan descargo "sin validez oficial ante la SEP" + folio único + página `legal.html`. No quitar el descargo.
