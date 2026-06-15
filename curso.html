@@ -3253,7 +3253,6 @@ async function doRegister(e) {
         currentUser = TK.getCurrentUser();
         sendToWebhook('register', currentUser);
         // Cursos derivados = acceso gratuito inmediato al registrarse.
-        // Cursos limpios (de pago) = NO auto-inscribir; el landing muestra el CTA de pago.
         if (isFreeRequestCourse(COURSE.id)) {
             await TK.saveEnrollment(COURSE.id, {
                 enrolledAt: new Date().toISOString(),
@@ -3264,6 +3263,17 @@ async function doRegister(e) {
                 progress: { xp: 0, completed: [], correctQuizzes: [], finalScore: null, completedDate: null }
             });
             currentUser = TK.getCurrentUser();
+        } else {
+            // Curso de pago: el usuario venía con intención de pagar, así que
+            // continuamos directo al checkout de Stripe (sin hacerlo dar "Pagar" otra vez).
+            updateUserBadge();
+            try {
+                const result = await TK.createStripeCheckout(COURSE.id);
+                if (result && result.url) { window.location.href = result.url; return; }
+            } catch (e) {
+                console.warn('No se pudo iniciar el pago tras registrar:', e && e.message);
+                // Si falla, caemos al landing (muestra el CTA de pago para reintentar).
+            }
         }
         updateUserBadge();
         showCourseLanding();
@@ -4977,6 +4987,11 @@ async function clModalConfirm() {
     // Al registrarse, doRegister() inscribe automáticamente al curso actual.
     if (!currentUser) {
         clCloseEnrollModal();
+        // Ocultar el landing (es público): sin esto, la pantalla de registro
+        // queda DETRÁS del landing y parece que "no pasa nada".
+        const landing = document.getElementById('courseLanding');
+        if (landing) landing.style.display = 'none';
+        document.body.style.overflow = '';
         const auth = document.getElementById('authScreen');
         if (auth) {
             auth.classList.remove('hide');
