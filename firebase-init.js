@@ -353,6 +353,17 @@
             return result.data;  // { ok, folio, courseTitle, issuedAt }
         },
 
+        /* ===== Bot de preventa ===== */
+
+        // Pregunta al asistente de preventa (Claude). NO requiere sesión (prospectos).
+        // messages: [{role:'user'|'assistant', content:'...'}]. Devuelve { reply }.
+        async chatPreventa(courseId, messages) {
+            if (!functions) throw new Error('Firebase Functions no está cargado.');
+            const call = functions.httpsCallable('chatPreventa');
+            const result = await call({ courseId: courseId, messages: messages });
+            return result.data;  // { reply }
+        },
+
         /* ===== Utilidades ===== */
         _db: db,
         _auth: auth,

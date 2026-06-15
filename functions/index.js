@@ -33,6 +33,7 @@ const GMAIL_APP_PASSWORD = defineSecret('GMAIL_APP_PASSWORD');
 const ADMIN_EMAIL = defineSecret('ADMIN_EMAIL');
 const STRIPE_SECRET_KEY = defineSecret('STRIPE_SECRET_KEY');
 const STRIPE_WEBHOOK_SECRET = defineSecret('STRIPE_WEBHOOK_SECRET');
+const ANTHROPIC_API_KEY = defineSecret('ANTHROPIC_API_KEY');  // para el bot de preventa (chatPreventa)
 
 // Umbral: cualquier reseña con estas estrellas o menos dispara alerta
 const LOW_RATING_THRESHOLD = 2;
@@ -875,5 +876,145 @@ exports.issueCertificate = onCall(
 
         logger.info('Certificado registrado', { folio, email, courseId });
         return { ok: true, folio: folio, courseTitle: courseTitle, issuedAt: issuedAt };
+    }
+);
+
+// =========================================================
+// BOT DE PREVENTA — chatPreventa (Claude API, modelo Haiku)
+// =========================================================
+// Asesor de preventa embebido en el landing de cada curso. Responde dudas y
+// objeciones de prospectos usando el contexto del catálogo, y deriva al flujo
+// correcto según la política: cursos limpios (claude-sistema, destapa) = pago;
+// derivados = acceso gratis. Modelo Haiku 4.5 (rápido y económico). Requiere
+// el secreto ANTHROPIC_API_KEY.
+
+const TRIKLES_CONTACT_EMAIL = 'cpgermansolis@gmail.com';
+// WhatsApp opcional para handoff (déjalo vacío si no quieres compartirlo):
+const TRIKLES_CONTACT_WHATSAPP = '';
+
+// Catálogo para el system prompt. Precio o "Gratis" según la política 2026-06-15.
+const PREVENTA_CATALOG = [
+    { id: 'claude-sistema',      t: 'CLAUDE SISTEMA',                              price: 'DE PAGO · $649 MXN (obra original VIP)',  d: 'Domina Claude (la IA) como sistema de trabajo personal: Chat, Co-work y Code. Nivel intermedio-avanzado.' },
+    { id: 'destapa-tu-negocio',  t: 'Destapa tu Negocio',                          price: 'DE PAGO · $449 MXN (obra original)',      d: 'Método FLUIR: encuentra y rompe el freno que limita las utilidades de tu PYME. 7 casos de negocio mexicanos.' },
+    { id: 'mente-millonaria',    t: 'Los Secretos de la Mente Millonaria',         price: 'GRATIS · acceso abierto (valor $449)',    d: 'Reprograma tu mentalidad financiera (ideas de T. Harv Eker).' },
+    { id: 'la-paradoja',         t: 'La Paradoja',                                 price: 'GRATIS · acceso abierto (valor $299)',    d: 'Liderazgo de servicio (ideas de James C. Hunter).' },
+    { id: 'habitos',             t: 'Los 7 Hábitos de la Gente Altamente Efectiva',price: 'GRATIS · acceso abierto (valor $249)',    d: 'Efectividad personal y profesional (ideas de Covey).' },
+    { id: '4dx',                 t: 'Las 4 Disciplinas de la Ejecución',           price: 'GRATIS · acceso abierto (valor $249)',    d: 'Ejecutar metas crucialmente importantes en medio del torbellino del día a día.' },
+    { id: 'coaching',            t: 'Coaching',                                    price: 'GRATIS · acceso abierto (valor $399)',    d: 'Desarrollar personas con el método GROW (ideas de Whitmore).' },
+    { id: 'gerencia-efectiva',   t: 'La Gerencia Efectiva',                        price: 'GRATIS · acceso abierto (valor $399)',    d: 'Administración por resultados (ideas de Drucker).' },
+    { id: 'codigo-honor',        t: 'El ABC para crear un equipo de negocios exitoso', price: 'GRATIS · acceso abierto (valor $449)', d: 'Convertir grupos en equipos campeones con un código de honor.' },
+    { id: 'food-beverage',       t: 'Control de Costos en Alimentos y Bebidas',    price: 'GRATIS · acceso abierto (valor $799)',    d: 'Rentabilidad en restaurantes y hotelería (FEUM/A&B).' },
+    { id: 'feum-inventarios',    t: 'Administración de Inventarios Farmacéuticos (FEUM)', price: 'GRATIS · acceso abierto (valor $649)', d: 'Inventarios y normativa para farmacias.' }
+];
+
+function buildPreventaSystemPrompt(courseId) {
+    const catalogLines = PREVENTA_CATALOG.map(function (c) {
+        return '- ' + c.t + ' — ' + c.price + '. ' + c.d;
+    }).join('\n');
+    const current = PREVENTA_CATALOG.find(function (c) { return c.id === courseId; });
+    const currentLine = current
+        ? 'El visitante está viendo ahora el curso: "' + current.t + '" (' + current.price + '). Da prioridad a sus dudas sobre este curso.'
+        : 'El visitante está navegando el catálogo en general.';
+    const contactLine = TRIKLES_CONTACT_WHATSAPP
+        ? ('correo ' + TRIKLES_CONTACT_EMAIL + ' o WhatsApp ' + TRIKLES_CONTACT_WHATSAPP)
+        : ('correo ' + TRIKLES_CONTACT_EMAIL);
+
+    return [
+        'Eres "Asistente TRIKLES", el asesor de preventa de la plataforma de cursos TRIKLES, fundada por el LADE Germán Solís Muñoz. Tu trabajo es resolver dudas de visitantes que aún no se inscriben y ayudarlos a decidir, con un tono cálido, profesional y directo. Respondes SIEMPRE en español, breve (2-5 frases o una lista corta).',
+        '',
+        'CATÁLOGO Y PRECIOS (esta es tu única fuente de verdad sobre precios; NO inventes otros):',
+        catalogLines,
+        '',
+        currentLine,
+        '',
+        'CÓMO SE INSCRIBE la gente:',
+        '- Cursos DE PAGO (CLAUDE SISTEMA y Destapa tu Negocio): se inscriben con el botón "Inscribirme" / "Pagar e inscribirme" del curso; el pago es seguro por Stripe (tarjeta, SPEI u OXXO), pago único y acceso de por vida.',
+        '- Cursos GRATIS (todos los demás): se obtienen con el botón "Obtener acceso gratis" dentro del curso; solo dejan su nombre y correo y entran al instante, sin tarjeta.',
+        '',
+        'CERTIFICADO (sé honesto, no exageres): al aprobar el examen final reciben un Certificado TRIKLES con folio único verificable en línea, ideal para LinkedIn y CV. Es una CONSTANCIA de finalización de carácter privado; NO es un título ni cédula profesional y NO tiene validez oficial ante la SEP.',
+        '',
+        'REGLAS:',
+        '1) No inventes precios, fechas, descuentos ni datos que no estén aquí. Si no sabes algo, dilo y ofrece el contacto.',
+        '2) No des el contenido completo del curso ni "clases gratis": tu rol es orientar y motivar la inscripción, no enseñar el temario.',
+        '3) Mantente en temas de TRIKLES y sus cursos. Si te preguntan algo ajeno, recondúcelo con amabilidad.',
+        '4) Si el visitante quiere hablar con una persona, tiene un caso especial (facturación, becas, dudas legales) o no logras resolver, ofrécele contactar a Germán: ' + contactLine + '.',
+        '5) No prometas resultados garantizados. Sé concreto sobre el valor del curso.',
+        '6) Cierra con una invitación clara a la acción (inscribirse, obtener acceso gratis, o escribir a Germán) cuando sea natural.'
+    ].join('\n');
+}
+
+// Rate limit suave por IP (controla costo del bot). ~40 mensajes/IP/día.
+async function checkChatRateLimit(db, ipKey) {
+    if (!ipKey) return true;  // sin IP no podemos rastrear; permitir
+    const today = new Date().toISOString().slice(0, 10);
+    const safe = ipKey.replace(/[^a-zA-Z0-9_.:-]/g, '_').slice(0, 60);
+    const ref = db.collection('chatLimits').doc(safe + '__' + today);
+    try {
+        const snap = await ref.get();
+        const count = snap.exists ? (snap.data().count || 0) : 0;
+        if (count >= 40) return false;
+        await ref.set({ count: count + 1, updatedAt: new Date().toISOString() }, { merge: true });
+        return true;
+    } catch (e) {
+        logger.warn('rate limit check falló (permitiendo):', e && e.message);
+        return true;
+    }
+}
+
+exports.chatPreventa = onCall(
+    { secrets: [ANTHROPIC_API_KEY], cors: true },
+    async (request) => {
+        const data = request.data || {};
+        const courseId = String(data.courseId || '').trim();
+
+        // Sanitizar el historial: solo user/assistant, contenido string acotado, últimas 16.
+        let messages = Array.isArray(data.messages) ? data.messages : [];
+        messages = messages
+            .filter(function (m) {
+                return m && (m.role === 'user' || m.role === 'assistant')
+                    && typeof m.content === 'string' && m.content.trim();
+            })
+            .map(function (m) { return { role: m.role, content: String(m.content).slice(0, 4000) }; })
+            .slice(-16);
+        if (!messages.length || messages[messages.length - 1].role !== 'user') {
+            throw new HttpsError('invalid-argument', 'Falta el mensaje del usuario.');
+        }
+
+        // Rate limit por IP
+        const db = admin.firestore();
+        let ip = '';
+        try {
+            const rr = request.rawRequest;
+            ip = (rr && (rr.ip || (rr.headers && rr.headers['x-forwarded-for']))) || '';
+        } catch (e) { ip = ''; }
+        const ipKey = String(ip).split(',')[0].trim();
+        const allowed = await checkChatRateLimit(db, ipKey);
+        if (!allowed) {
+            return { reply: 'Has alcanzado el límite de mensajes por hoy 🙏. Si quieres seguir, escríbele a Germán a ' + TRIKLES_CONTACT_EMAIL + ' y con gusto te ayuda.' };
+        }
+
+        // Llamar a Claude (Haiku) — cargar el SDK en runtime
+        const AnthropicPkg = require('@anthropic-ai/sdk');
+        const Anthropic = AnthropicPkg.default || AnthropicPkg;
+        const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY.value() });
+
+        try {
+            const resp = await client.messages.create({
+                model: 'claude-haiku-4-5',
+                max_tokens: 700,
+                system: buildPreventaSystemPrompt(courseId),
+                messages: messages
+            });
+            const reply = (resp.content || [])
+                .filter(function (b) { return b.type === 'text'; })
+                .map(function (b) { return b.text; })
+                .join('\n')
+                .trim()
+                || 'Disculpa, no pude generar una respuesta. ¿Puedes reformular tu pregunta?';
+            return { reply: reply };
+        } catch (err) {
+            logger.error('chatPreventa error:', err && err.message);
+            throw new HttpsError('internal', 'El asistente no está disponible en este momento. Intenta de nuevo en un momento, o escríbele a Germán a ' + TRIKLES_CONTACT_EMAIL + '.');
+        }
     }
 );

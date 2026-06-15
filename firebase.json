@@ -25,6 +25,7 @@
       "**/node_modules/**",
       "functions/**",
       "memory/**",
+      "graphify-out/**",
       "*.md",
       "libros/**"
     ],

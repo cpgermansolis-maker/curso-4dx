@@ -2353,6 +2353,27 @@
             background: linear-gradient(135deg, #5b21b6, #7b00d4);
         }
 
+        /* ── CHAT DEL ASISTENTE (bot de preventa) ── */
+        .cl-chat-msgs { padding: 14px 16px; max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .cl-chat-msg { max-width: 88%; padding: 9px 12px; border-radius: 13px; font-size: 0.92em; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; }
+        .cl-chat-msg.bot { background: #f1f3f8; color: #1f2733; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .cl-chat-msg.user { background: #0a2540; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .cl-chat-msg.cl-chat-typing { color: #9aa6c0; letter-spacing: 2px; }
+        .cl-chat-suggests { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+        .cl-chat-suggest { background: #fff; border: 1px solid #d2d8e3; color: #0a2540; border-radius: 14px; padding: 6px 11px; font-size: 0.82em; cursor: pointer; }
+        .cl-chat-suggest:hover { background: #eef2f8; }
+        .cl-chat-input-row { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid #eee; align-items: center; }
+        .cl-chat-input { flex: 1; min-width: 0; border: 1px solid #d2d8e3; border-radius: 20px; padding: 9px 14px; font-size: 0.92em; outline: none; }
+        .cl-chat-input:focus { border-color: #0a2540; }
+        .cl-chat-send { background: #0a2540; color: #fff; border: 0; border-radius: 50%; width: 38px; height: 38px; font-size: 1.05em; cursor: pointer; flex: 0 0 auto; }
+        .cl-chat-send:disabled { opacity: 0.5; cursor: progress; }
+        .cl-chat-faq { padding: 2px 16px 14px; }
+        .cl-chat-faq > summary { cursor: pointer; font-size: 0.85em; color: #5a6b8c; padding: 6px 0; list-style: none; }
+        .cl-chat-faq > summary::-webkit-details-marker { display: none; }
+        body.vip-mode .cl-chat-msg.user { background: #3b0764; }
+        body.vip-mode .cl-chat-send { background: #3b0764; }
+        body.vip-mode .cl-chat-input:focus { border-color: #7b00d4; }
+
         /* ── ANTI-OBJECIONES ── */
         .cl-section-antiobjections {
             background: linear-gradient(135deg, #faf8f3, #f5f0e8);
@@ -4693,31 +4714,40 @@ function showCourseLanding() {
             ? '<div class="help-widget" id="helpWidget">' +
                 '<div class="help-panel" id="helpPanel">' +
                     '<div class="help-panel-header">' +
-                        '<div class="help-panel-title">💬 Preguntas frecuentes</div>' +
+                        '<div class="help-panel-title">💬 Asistente TRIKLES</div>' +
                         '<button class="help-panel-close" onclick="toggleHelpPanel()">✕</button>' +
                     '</div>' +
-                    '<div class="help-panel-body">' +
-                        '<details><summary>¿Este curso es para mí si no tengo experiencia previa?</summary>' +
-                            '<p>Sí. Cada lección explica los conceptos desde cero con ejemplos del contexto mexicano. No necesitas haber leído el libro ni tener conocimientos previos.</p>' +
-                        '</details>' +
-                        '<details><summary>¿Cómo funciona el pago? ¿Aceptan OXXO o SPEI?</summary>' +
-                            '<p>Aceptamos tarjeta de crédito/débito, OXXO y transferencia bancaria (SPEI). El acceso se activa de forma inmediata al confirmar el pago.</p>' +
-                        '</details>' +
-                        '<details><summary>¿Cuánto tiempo tengo para terminar el curso?</summary>' +
-                            '<p>Acceso de por vida. Puedes avanzar a tu ritmo, pausar y regresar cuando quieras. Sin fechas límite ni presión de ningún tipo.</p>' +
-                        '</details>' +
-                        '<details><summary>¿Hay garantía si el curso no es lo que esperaba?</summary>' +
-                            '<p>Sí, 30 días de garantía total. Si no estás satisfecho por cualquier razón, te devolvemos el 100% de tu inversión sin preguntas.</p>' +
-                        '</details>' +
-                        '<details><summary>¿El certificado tiene validez? ¿Cómo lo obtengo?</summary>' +
-                            '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio verificable. Puedes compartirlo en LinkedIn o descargarlo en PDF.</p>' +
-                        '</details>' +
-                        '<details><summary>¿Puedo ver el contenido completo antes de comprar?</summary>' +
-                            '<p>Sí. En la pestaña "Lecciones" de esta misma página encuentras el temario completo con todos los temas del curso.</p>' +
-                        '</details>' +
+                    '<div class="cl-chat-msgs" id="clChatMsgs">' +
+                        '<div class="cl-chat-msg bot">¡Hola! 👋 Soy el asistente de TRIKLES. Pregúntame lo que quieras sobre este curso: precio, si te conviene, el certificado, cómo inscribirte…</div>' +
+                        '<div class="cl-chat-suggests" id="clChatSuggests">' +
+                            '<button type="button" class="cl-chat-suggest" onclick="clChatSuggest(this)">¿Cuánto cuesta?</button>' +
+                            '<button type="button" class="cl-chat-suggest" onclick="clChatSuggest(this)">¿Me sirve si no tengo experiencia?</button>' +
+                            '<button type="button" class="cl-chat-suggest" onclick="clChatSuggest(this)">¿El certificado tiene validez?</button>' +
+                        '</div>' +
                     '</div>' +
+                    '<div class="cl-chat-input-row">' +
+                        '<input type="text" class="cl-chat-input" id="clChatInput" placeholder="Escribe tu pregunta…" autocomplete="off" onkeydown="if(event.key===\'Enter\'){event.preventDefault();clChatSend();}">' +
+                        '<button type="button" class="cl-chat-send" id="clChatSendBtn" onclick="clChatSend()" aria-label="Enviar">➤</button>' +
+                    '</div>' +
+                    '<details class="cl-chat-faq">' +
+                        '<summary>Ver preguntas frecuentes</summary>' +
+                        '<div class="help-panel-body">' +
+                            '<details><summary>¿Este curso es para mí si no tengo experiencia previa?</summary>' +
+                                '<p>Sí. Cada lección explica los conceptos desde cero con ejemplos del contexto mexicano. No necesitas conocimientos previos.</p>' +
+                            '</details>' +
+                            '<details><summary>¿Cómo me inscribo?</summary>' +
+                                '<p>Si el curso es de pago, con el botón "Inscribirme" (tarjeta, SPEI u OXXO). Si es de acceso gratuito, con "Obtener acceso gratis" — solo dejas tu nombre y correo.</p>' +
+                            '</details>' +
+                            '<details><summary>¿Cuánto tiempo tengo para terminar el curso?</summary>' +
+                                '<p>Acceso de por vida. Avanzas a tu ritmo, sin fechas límite.</p>' +
+                            '</details>' +
+                            '<details><summary>¿El certificado tiene validez? ¿Cómo lo obtengo?</summary>' +
+                                '<p>Al aprobar el examen final recibes tu Certificado TRIKLES con folio verificable. Es una constancia privada (sin validez oficial ante la SEP), ideal para LinkedIn y CV.</p>' +
+                            '</details>' +
+                        '</div>' +
+                    '</details>' +
                     '<div class="help-panel-cta">' +
-                        '<button class="help-panel-cta-btn" onclick="clOpenEnrollModal(); toggleHelpPanel();">Inscribirme ahora →</button>' +
+                        '<button class="help-panel-cta-btn" onclick="clOpenEnrollModal(); toggleHelpPanel();">Inscribirme / Obtener acceso →</button>' +
                     '</div>' +
                 '</div>' +
                 '<button class="help-trigger" onclick="toggleHelpPanel()">' +
@@ -4740,6 +4770,59 @@ function showCourseLanding() {
         const panel = document.getElementById('helpPanel');
         if (!panel) return;
         panel.classList.toggle('open');
+        if (panel.classList.contains('open')) {
+            const inp = document.getElementById('clChatInput');
+            if (inp) setTimeout(function(){ inp.focus(); }, 80);
+        }
+    };
+
+    // ── Chat del asistente de preventa ──
+    let clChatHistory = [];
+    function clAppendChatMsg(role, text) {
+        const msgs = document.getElementById('clChatMsgs');
+        if (!msgs) return null;
+        const el = document.createElement('div');
+        el.className = 'cl-chat-msg ' + role;
+        el.textContent = text;
+        msgs.appendChild(el);
+        msgs.scrollTop = msgs.scrollHeight;
+        return el;
+    }
+    window.clChatSuggest = function(btn) {
+        const inp = document.getElementById('clChatInput');
+        if (inp) inp.value = btn.textContent;
+        clChatSend();
+    };
+    window.clChatSend = function() {
+        const inp = document.getElementById('clChatInput');
+        const btn = document.getElementById('clChatSendBtn');
+        if (!inp) return;
+        const text = inp.value.trim();
+        if (!text) return;
+        const sug = document.getElementById('clChatSuggests');
+        if (sug) sug.remove();
+        inp.value = '';
+        clChatHistory.push({ role: 'user', content: text });
+        clAppendChatMsg('user', text);
+        const typing = clAppendChatMsg('bot', '●●●');
+        if (typing) typing.classList.add('cl-chat-typing');
+        if (btn) btn.disabled = true;
+        inp.disabled = true;
+        const courseId = (typeof COURSE !== 'undefined' && COURSE) ? COURSE.id : '';
+        Promise.resolve(TK.chatPreventa(courseId, clChatHistory)).then(function(res) {
+            if (typing) typing.remove();
+            const reply = (res && res.reply) ? res.reply : 'Disculpa, no pude responder. ¿Puedes reformular?';
+            clChatHistory.push({ role: 'assistant', content: reply });
+            clAppendChatMsg('bot', reply);
+        }).catch(function(e) {
+            if (typing) typing.remove();
+            // Mensaje amable para cualquier error (incluye que la función aún no esté activada).
+            clAppendChatMsg('bot', 'Ahora mismo no puedo responder por aquí 🙏. Escríbele a Germán a cpgermansolis@gmail.com y te ayuda enseguida.');
+        }).then(function() {
+            if (btn) btn.disabled = false;
+            inp.disabled = false;
+            inp.focus();
+        });
     };
 }
 
