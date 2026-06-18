@@ -784,10 +784,38 @@
         .rating-edit-hint { font-size: 0.82em; color: #777; margin-top: 10px; font-style: italic; }
 
         @media print {
-            body * { visibility: hidden; }
-            .certificate, .certificate * { visibility: visible; }
-            .certificate { position: absolute; left: 0; top: 0; margin: 0; box-shadow: none; width: 100%; }
-            .topbar, .sidebar, .cert-actions, .course-footer { display: none !important; }
+            /* Margen de página razonable para el certificado */
+            @page { margin: 12mm; }
+
+            /* Aislar SOLO el certificado usando display:none (saca del layout →
+               sin páginas en blanco; antes con visibility:hidden el contenido
+               oculto seguía ocupando alto y en móvil el certificado caía fuera
+               de las primeras hojas → se imprimía en blanco). */
+            body > *:not(.layout) { display: none !important; }
+            .layout { display: block !important; min-height: 0 !important; }
+            .layout > *:not(#mainContent) { display: none !important; }
+            #mainContent {
+                display: block !important; padding: 0 !important;
+                max-width: 100% !important; background: #fff !important;
+            }
+            .lesson { display: none !important; }
+            .lesson.active { display: block !important; animation: none !important; }
+            .lesson.active > *:not(#certificateEl) { display: none !important; }
+
+            #certificateEl {
+                display: block !important;
+                position: static !important;
+                margin: 0 auto !important;
+                max-width: 100% !important;
+                box-shadow: none !important;
+                border: 3px solid #d4af37 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                page-break-inside: avoid;
+            }
+
+            .topbar, .sidebar, .sidebar-overlay, .menu-toggle,
+            .cert-actions, .course-footer { display: none !important; }
         }
 
         .course-footer {
