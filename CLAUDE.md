@@ -68,6 +68,8 @@ Preguntas por defecto (sobreescribibles con `meta.reflectionQuestions`):
 - ¿Qué vas a implementar en los próximos 30 días?
 - ¿Cómo puedes aplicar lo aprendido hoy mismo?
 
+**⚠️ Gotcha de impresión del certificado (arreglado 2026-06-18):** el `@media print` de `curso.html` aísla el certificado con **cascada `display:none`** (oculta todo menos la ruta a `#certificateEl`, que va en `position:static` desde arriba de la hoja) + `print-color-adjust:exact`. **NO volver al truco `visibility:hidden` + `position:absolute`**: `visibility:hidden` no saca del layout → el documento sigue altísimo y en Chrome de Android el certificado caía fuera de las primeras hojas → **PDF en blanco** (era el bug reportado por la alumna de Mente Millonaria).
+
 ---
 
 ## VIP skin (`body.vip-mode`)
@@ -156,7 +158,11 @@ npx firebase-tools deploy --only hosting
 
 ---
 
-## Último avance (2026-06-16, embudo "2 gratis" + Stripe LIVE probándose)
+## Último avance (2026-06-18, fix certificado en blanco + blindaje repo público)
+
+**Fix de impresión del certificado.** Una alumna (Mente Millonaria) reportó por WhatsApp que el certificado salía **en blanco** al "Imprimir / Guardar PDF" en celular. Causa: el `@media print` de `curso.html` aislaba con `visibility:hidden` + `position:absolute` — y `visibility:hidden` no saca del layout, así que el documento seguía altísimo y en Chrome de Android el certificado caía fuera de las primeras hojas. Reescrito a **cascada `display:none`** (solo `#certificateEl`, en `position:static`) + `print-color-adjust:exact` + `@page margin:12mm`. Ver **Flujo de certificado → Gotcha de impresión**. Commit `e922ebf`, deployado a hosting. **No probado en móvil real** (no se puede simular aquí; los alumnos retroalimentan). **Blindaje del repo PÚBLICO:** `.gitignore` ahora ignora `libros/` completa (antes lista parcial) y `graphify-out/` — estaban protegidos del hosting pero no del repo de GitHub, que es público. Commits `400de12`, `1fe3f8d`. Ver **Legal**.
+
+### Antes (2026-06-16, embudo "2 gratis" + Stripe LIVE probándose)
 
 **Cambio de estrategia de monetización → EMBUDO.** Los cursos derivados dejaron de ser "gratis para todos" y pasaron a ser gancho+recompensa: (1) **1 curso derivado gratis al registrarse** (pick explícito), (2) **comprar un curso propio desbloquea TODOS los derivados gratis**, (3) **grandfathering** (quien ya tenía derivados los conserva). Implementado con helpers `hasPurchasedAnyPaidCourse`/`hasUsedFreePick`/`derivedAccessState` espejados en `curso.html` e `index.html`, todo derivado de `enrollments` (sin schema nuevo, sin cambios de servidor). Estados `unlocked`/`free_pick`/`locked` en landing + catálogo; modal `clShowUnlockUpsell` para upsell; banner "1 gratis"; bot actualizado. Ver sección **Legal → MODELO DE MONETIZACIÓN** y memoria `project_estrategia-embudo-2-gratis.md`. Commit `371d86c`, deployado (hosting + `chatPreventa`). **Germán decidió "Proceder" sobre el matiz legal; queda nota para su abogado de PI.** Pendiente: él prueba el flujo en vivo (incógnito).
 
@@ -178,6 +184,8 @@ Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin cond
 
 ## Pendientes al cierre
 
+- 🆕 **Confirmar que el certificado ya imprime/guarda completo en celular** — el fix (cascada `display:none`) no se pudo probar en móvil real; Germán dijo que los alumnos retroalimentarán. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`.
+- 🆕 **(menor) Decidir si ignorar `RESUMEN-CONTEXTO-COPILOT.md`** — sigue untracked; no se publica al sitio (`*.md` en hosting.ignore) pero se subiría al repo público con un `git add .`.
 - 🆕 **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
 - 🆕 **Enviar la nota al abogado de PI** sobre el embudo (texto listo en `project_postura-legal-cobro.md`): ¿usar derivados como gancho/premio reintroduce "fin de lucro" aunque no se cobren? Germán eligió proceder.
 - **Stripe LIVE:** falta la **prueba de compra real + reembolso** para validar webhook→inscripción end-to-end (cobro ya es real).
@@ -202,6 +210,7 @@ Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin cond
   - Implementación: `PAID_COURSE_IDS = ['claude-sistema','destapa-tu-negocio']` + helpers `hasPurchasedAnyPaidCourse()`, `hasUsedFreePick()` (cuenta derivados inscritos ≥1), `derivedAccessState(id)` → `unlocked`/`free_pick`/`locked`. **Espejados en `curso.html` e `index.html`** (incluye `FULL_ACCESS_EMAILS` en ambos). Todo se **deriva de `enrollments`** (no hay campo nuevo): derivado con `source:'free_request'` = pick/grandfather; propio con `method:'stripe'`/`paidAt` = compra que desbloquea todo. **Sin cambios de servidor para el desbloqueo** (es client-side). CTAs del landing por estado; modal `clShowUnlockUpsell()` para `locked`; banner "1 curso gratis" en el catálogo (`hasFreePickAvailable()`); bot (`buildPreventaSystemPrompt`) actualizado. `COURSE_PRICES_CENTS` sigue con solo los 2 limpios (el servidor rechaza cobrar derivados). Commit `371d86c`.
   - ✅ **Stripe LIVE activado (2026-06-15):** Germán puso `STRIPE_SECRET_KEY=sk_live_...` + creó webhook live (`https://stripewebhook-y57ht7jzda-uc.a.run.app`, eventos checkout.session.completed/async_payment_succeeded/async_payment_failed) y su `STRIPE_WEBHOOK_SECRET`; redeployadas `createStripeCheckout` + `stripeWebhook`. El cobro de claude-sistema ($649) y destapa ($449) es REAL. Pendiente solo: prueba de compra real + reembolso (validar webhook→inscripción). Nota Stripe: 1ª transferencia a banco suele retenerse ~7 días en cuentas nuevas.
 - **`libros/**` está excluido del hosting** en `firebase.json` → `hosting.ignore` (commit 216aacb). NO quitarlo: Firebase deploya desde la carpeta local, no desde git, así que el `.gitignore` no basta. Los PDFs fuente NO deben servirse públicamente.
+- **⚠️ El repo de GitHub es PÚBLICO** (`cpgermansolis-maker/curso-4dx`). `hosting.ignore` protege el SITIO; **`.gitignore` protege el REPO** — son listas distintas y AMBAS importan. Desde 2026-06-18 `.gitignore` ignora `libros/` completa (antes era lista parcial → se colaban libros nuevos) y `graphify-out/` (artefacto + `converted/` deriva de los libros). Al agregar material con copyright, confirmar que cae bajo `.gitignore`, no solo bajo `hosting.ignore`.
 - **Certificados:** ya llevan descargo "sin validez oficial ante la SEP" + folio único + página `legal.html`. No quitar el descargo.
 - Detalle completo en memoria: `project_postura-legal-cobro.md` y `project_blindaje-legal-certificados.md`.
 
