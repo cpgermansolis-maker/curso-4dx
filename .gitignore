@@ -38,3 +38,9 @@ desktop.ini
 
 # Firebase CLI cache local
 .firebase/
+
+# Grafo de análisis (graphify): artefacto regenerable con /graphify.
+# Se ignora porque (a) se reconstruye desde el código, (b) son MB de JSON/HTML
+# que ensucian diffs e historial, y (c) graphify-out/converted/ contiene markdown
+# derivado de los libros fuente protegidos (FEUM, etc.) — y este repo es PÚBLICO.
+graphify-out/
