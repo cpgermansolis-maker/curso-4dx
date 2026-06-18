@@ -4,15 +4,10 @@ package-lock.json
 # Nota: package.json a nivel raíz se ignora, pero functions/package.json SÍ se incluye
 /package.json
 
-# PDFs fuente de los libros (copyright, no se publican)
-libros/*/libro.pdf
-libros/*/libro.PDF
-libros/FARMACOPEA/
-libros/Gerenciaefva/
-libros/LaParadoja/
-libros/Coaching/
-libros/FoodAndBeverage/
-libros/ElABCparacrear/
+# Material fuente de libros (copyright, no se publican). Repo PÚBLICO →
+# se ignora la carpeta completa para que ningún libro nuevo se cuele por error.
+# (libros/ también está excluido del hosting en firebase.json → hosting.ignore.)
+libros/
 
 # Archivos temporales
 tmp-*.js
