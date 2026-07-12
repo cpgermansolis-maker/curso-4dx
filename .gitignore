@@ -9,6 +9,9 @@ package-lock.json
 # (libros/ también está excluido del hosting en firebase.json → hosting.ignore.)
 libros/
 
+# Notas locales de asistentes (Copilot, etc.) — sin valor para el repo público
+RESUMEN-CONTEXTO-COPILOT.md
+
 # Archivos temporales
 tmp-*.js
 tmp-*.txt
