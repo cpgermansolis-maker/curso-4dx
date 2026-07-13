@@ -158,7 +158,21 @@ npx firebase-tools deploy --only hosting
 
 ---
 
-## Último avance (2026-06-18, fix certificado en blanco + blindaje repo público)
+## Admin por CLI (becas / usuarios / correos)
+
+Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local de `firebase-tools` contra Firestore REST + identitytoolkit. Script guardado en la memoria (`memory/tool_fs-helper-trikles.js` — copiar al scratchpad y correr con `node`). Comandos: `list` (alumnos+cursos), `grant <email> <courseId> <nota>` (beca, mismo formato que el panel), `lookup <email>`, `changeemail <viejo> <nuevo>`. Detalle y gotchas en memoria `reference_admin-cli-firestore.md`.
+
+- **Cambiar el correo de un alumno requiere DOS lados:** Auth (`accounts:update`) **y** mover el doc `users/{email}` (el ID del doc ES el correo en minúsculas; Firestore no renombra → copiar+borrar). Hacerlo solo en la consola de Firebase deja los cursos huérfanos. El sitio NO tiene UI para que el alumno cambie su correo; auth es solo password → la contraseña se conserva.
+- Las becas por CLI **no disparan el webhook de Apps Script** (hoja de registro) que sí dispara el panel.
+- `npx firebase-tools auth:export` lista cuentas pero trae hashes de contraseñas → borrar el export tras usarlo.
+
+---
+
+## Último avance (2026-07-12, becas por CLI + cambio de correo de alumno)
+
+**Becas de CLAUDE SISTEMA** a dos alumnos (Ismael y Armando) + **cambio de correo de la cuenta de Armando** a su Gmail (misma contraseña; Auth + doc `users/{email}` movidos completos y verificados). Todo por CLI — ver sección **Admin por CLI**; correos y detalle en la memoria `project_pendientes-abiertos.md` (privada — NO poner correos de alumnos en este archivo: el repo es público). También: `RESUMEN-CONTEXTO-COPILOT.md` agregado a `.gitignore` (commit `79c9229`; pendiente menor resuelto). Sin cambios de código del sitio, sin deploy.
+
+### Antes (2026-06-18, fix certificado en blanco + blindaje repo público)
 
 **Fix de impresión del certificado.** Una alumna (Mente Millonaria) reportó por WhatsApp que el certificado salía **en blanco** al "Imprimir / Guardar PDF" en celular. Causa: el `@media print` de `curso.html` aislaba con `visibility:hidden` + `position:absolute` — y `visibility:hidden` no saca del layout, así que el documento seguía altísimo y en Chrome de Android el certificado caía fuera de las primeras hojas. Reescrito a **cascada `display:none`** (solo `#certificateEl`, en `position:static`) + `print-color-adjust:exact` + `@page margin:12mm`. Ver **Flujo de certificado → Gotcha de impresión**. Commit `e922ebf`, deployado a hosting. **No probado en móvil real** (no se puede simular aquí; los alumnos retroalimentan). **Blindaje del repo PÚBLICO:** `.gitignore` ahora ignora `libros/` completa (antes lista parcial) y `graphify-out/` — estaban protegidos del hosting pero no del repo de GitHub, que es público. Commits `400de12`, `1fe3f8d`. Ver **Legal**.
 
@@ -168,7 +182,7 @@ npx firebase-tools deploy --only hosting
 
 ### Antes (2026-06-15, monetización "acceso abierto" + Stripe LIVE + bot + verificador)
 
-Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin condición** (esta política la reemplazó el embudo del 2026-06-16). Stripe LIVE activado, bot de preventa activo/verificado, verificador de folios (`verificar.html` + `issueCertificate`), Fable 5 reescrito como lección durable. Detalle en las memorias respectivas.
+Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin condición** (esta política la reemplazó el embudo del 2026-06-16). Stripe LIVE activado, bot de preventa activo/verificado, verificador de folios (`verificar.html` + `issueCertificate`), Fable 5 reescrito como lección durable (`lbonus2` en CLAUDE SISTEMA, índices: bonus=29, examen=30, cert=31; **lección: el patrón "bonus por modelo nuevo" es frágil → preferir contenido agnóstico de modelo**; memoria `project_bonus-fable5-claude-sistema.md`). Detalle en las memorias respectivas.
 
 ## Avance (2026-06-11, piloto Destapa tu Negocio + fixes)
 
@@ -178,21 +192,14 @@ Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin cond
 
 **Fixes:** (1) racha persistida en Firestore; (2) examen con una oportunidad por pregunta (ver sección Progress). (3) **Caché**: `cleanUrls` servía páginas sin extensión (`/curso`) que no casaban con la regla de headers `**/*.@(html|js)` → caché de 1h. Cambiado `source` a `**`. Ver Gotchas de deploy. Commits `9de3af9`→`8f97dba`, deployado.
 
-### Antes (2026-06-09, bonus Fable 5)
-
-**Módulo bonus 2 en CLAUDE SISTEMA (`lbonus2`, quizzes `quiz_fable_a/b`, no entran al examen; índices: bonus=29, examen=30, cert=31).** Originalmente (2026-06-09, commit `3fc7436`) promocionaba Claude Fable 5. **Anthropic retiró Fable 5; el 2026-06-15 (commit `7f5effa`) se reescribió** como lección DURABLE de selección de modelo ("Cuándo subir de modelo… el caso Fable 5"), badge `UPDATE_BADGES['claude-sistema']='⚡ Actualizado'`. **El patrón "bonus por modelo nuevo" resultó frágil → preferir contenido agnóstico de modelo.** Detalle en memoria `project_bonus-fable5-claude-sistema.md`.
-
 ## Pendientes al cierre
 
-- 🆕 **Confirmar que el certificado ya imprime/guarda completo en celular** — el fix (cascada `display:none`) no se pudo probar en móvil real; Germán dijo que los alumnos retroalimentarán. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`.
-- 🆕 **(menor) Decidir si ignorar `RESUMEN-CONTEXTO-COPILOT.md`** — sigue untracked; no se publica al sitio (`*.md` en hosting.ignore) pero se subiría al repo público con un `git add .`.
-- 🆕 **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
-- 🆕 **Enviar la nota al abogado de PI** sobre el embudo (texto listo en `project_postura-legal-cobro.md`): ¿usar derivados como gancho/premio reintroduce "fin de lucro" aunque no se cobren? Germán eligió proceder.
+- **Confirmar que el certificado ya imprime/guarda completo en celular** — el fix (cascada `display:none`, 2026-06-18) no se pudo probar en móvil real; los alumnos retroalimentarán. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`.
+- **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
+- **Enviar la nota al abogado de PI** sobre el embudo (texto listo en `project_postura-legal-cobro.md`): ¿usar derivados como gancho/premio reintroduce "fin de lucro" aunque no se cobren? Germán eligió proceder.
 - **Stripe LIVE:** falta la **prueba de compra real + reembolso** para validar webhook→inscripción end-to-end (cobro ya es real).
 - **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); decidir si OAC va también en `legal.html`/certificados de otros cursos.
-- ✅ ~~Cobrar CLAUDE SISTEMA + Destapa~~ — ACTIVO desde 2026-06-15 (Stripe LIVE real). Falta solo la prueba de compra+reembolso (arriba).
 - ✅ ~~**Verificador de folios (Fase 2)**~~ — HECHO 2026-06-15: Cloud Function `issueCertificate` + colección pública `certificates/{folio}` + `verificar.html`. Claim "verificable" restaurado. (Follow-up: backfill de certificados viejos, opcional.)
-- ✅ ~~Fable 5 bonus~~ — HECHO 2026-06-15: Anthropic retiró Fable 5; `lbonus2` reescrito como lección durable de selección de modelo (caso Fable 5), badge a `⚡ Actualizado`.
 - ✅🤖 **Bot de preventa — ACTIVO Y VERIFICADO (2026-06-15).** `ANTHROPIC_API_KEY` puesta por Germán + `chatPreventa` desplegada; probado end-to-end (responde con precio correcto y certificado honesto). Cloud Function `chatPreventa` (onCall, modelo **`claude-haiku-4-5`** vía `@anthropic-ai/sdk`): system prompt con catálogo + política pago/gratis + certificado honesto + handoff a Germán; rate limit por IP (colección `chatLimits`, ~40 msgs/IP/día); `buildPreventaSystemPrompt(courseId)` + `PREVENTA_CATALOG` en functions/index.js. Helper `TK.chatPreventa(courseId, messages)`. Chat UI en el widget flotante del landing de curso.html (reemplazó las FAQ estáticas; degrada con gracia si la función no está activa). **ACTIVAR con:** (1) `npx firebase-tools functions:secrets:set ANTHROPIC_API_KEY` (pega la API key de Anthropic), (2) `npx firebase-tools deploy --only functions:chatPreventa --project trikles-cursos`. Para cambiar el contacto/WhatsApp del handoff: `TRIKLES_CONTACT_EMAIL`/`TRIKLES_CONTACT_WHATSAPP` en functions/index.js.
 - Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
 
