@@ -85,7 +85,9 @@ Preguntas por defecto (sobreescribibles con `meta.reflectionQuestions`):
 - ¿Qué vas a implementar en los próximos 30 días?
 - ¿Cómo puedes aplicar lo aprendido hoy mismo?
 
-**⚠️ Gotcha de impresión del certificado (arreglado 2026-06-18):** el `@media print` de `curso.html` aísla el certificado con **cascada `display:none`** (oculta todo menos la ruta a `#certificateEl`, que va en `position:static` desde arriba de la hoja) + `print-color-adjust:exact`. **NO volver al truco `visibility:hidden` + `position:absolute`**: `visibility:hidden` no saca del layout → el documento sigue altísimo y en Chrome de Android el certificado caía fuera de las primeras hojas → **PDF en blanco** (era el bug reportado por la alumna de Mente Millonaria).
+**⚠️ Gotcha de impresión del certificado:** el `@media print` de `curso.html` aísla el certificado con **cascada `display:none`** (oculta todo menos la ruta a `#certificateEl`, que va en `position:static` desde arriba de la hoja) + `print-color-adjust:exact`. **NO volver al truco `visibility:hidden` + `position:absolute`**: `visibility:hidden` no saca del layout → el documento sigue altísimo y el certificado puede caer fuera de las primeras hojas.
+
+**⚠️ CORRECCIÓN (2026-07-15) — el diagnóstico del 2026-06-18 estaba MAL.** El PDF en blanco que reportó la alumna de Mente Millonaria **no** era por el paginado en móvil: ese curso no tenía `#certificateEl` (incrustaba su certificado a mano), y el `@media print` oculta todo lo que no sea `#certificateEl` → hoja en blanco, en cualquier dispositivo. El fix de junio atacó la causa equivocada y el bug siguió vivo un mes. **Lección: antes de culpar al CSS, verificar que el elemento que el selector busca EXISTA en esa página.** Ver **Sistema de certificados — CONTRATO**.
 
 ---
 
@@ -178,23 +180,46 @@ npx firebase-tools deploy --only hosting
 
 ---
 
+## Recordatorios de inactividad (correos automáticos a alumnos)
+
+Cloud Function **`sendInactiveReminders`** (`functions/index.js`): corre **todos los días a las 10:00 de CDMX** y le escribe, desde el Gmail de Germán vía nodemailer, a alumnos con **30+ días sin avanzar** y curso incompleto. Cooldown de 30 días por curso. Opt-out: `emailPreferences.remindersEnabled === false` + endpoint `unsubscribeReminders`. Excluye `FULL_ACCESS_EMAILS`.
+
+- **Manda 1 correo por ALUMNO por corrida** (no uno por curso), eligiendo aquel donde está más cerca de terminar; a igualdad, el más abandonado. Antes mandaba uno por curso: un alumno con 3 cursos estancados recibía **3 correos el mismo minuto** — camino directo a que te marquen como spam. No revertir.
+- ⚠️ **`COURSE_TITLES` / `COURSE_LESSON_COUNTS` / `COURSE_PASS_SCORES` duplican datos de `cursos/*.js` y se desincronizan solas.** Las functions se deployan sin la carpeta `cursos/`, por eso van a mano. **Un curso ausente de esas tablas NO recibe recordatorios y no avisa de nada.** Así pasaron meses sin seguimiento los 3 cursos lanzados después del sistema — incluidos **los dos de paga**. `COURSE_LESSON_COUNTS` es el **TOTAL** de lecciones (`lessons.length`, con intro/examen/certificado), porque se compara contra `progress.completed`. Al agregar un curso, darlo de alta en las 3 tablas y correr `node tools/audit-cursos.js`, que ya las verifica.
+- **Rebotes:** un aviso de Gmail que dice "problema temporal … seguirá intentando" es del **buzón del alumno** (lleno o cuenta suspendida), no de la plataforma. Una dirección inexistente rebota **permanente y de inmediato**. No hay nada que arreglar del lado del sitio.
+- Simulacro sin enviar (cuántos correos saldrían y a quién): ver `project_recordatorios-inactividad.md` en la memoria.
+
+---
+
 ## Admin por CLI (becas / usuarios / correos)
 
-Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local de `firebase-tools` contra Firestore REST + identitytoolkit. Script guardado en la memoria (`memory/tool_fs-helper-trikles.js` — copiar al scratchpad y correr con `node`). Comandos: `list` (alumnos+cursos), `grant <email> <courseId> <nota>` (beca, mismo formato que el panel), `lookup <email>`, `changeemail <viejo> <nuevo>`. Detalle y gotchas en memoria `reference_admin-cli-firestore.md`.
+Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local de `firebase-tools` contra Firestore REST + identitytoolkit. Script guardado en la memoria (`memory/tool_fs-helper-trikles.js` — copiar al scratchpad y correr con `node`). Comandos: `list`, `get <email>` (doc completo con progreso), `grant <email> <courseId> <nota>` (beca, mismo formato que el panel), `lookup <email>`, `changeemail <viejo> <nuevo>`, `backup <email> <archivo>`, `delete <email> <localIdEsperado>`. Detalle y gotchas en memoria `reference_admin-cli-firestore.md`.
 
-- **Cambiar el correo de un alumno requiere DOS lados:** Auth (`accounts:update`) **y** mover el doc `users/{email}` (el ID del doc ES el correo en minúsculas; Firestore no renombra → copiar+borrar). Hacerlo solo en la consola de Firebase deja los cursos huérfanos. El sitio NO tiene UI para que el alumno cambie su correo; auth es solo password → la contraseña se conserva.
+- **⚠️ Cambiarle el correo a un alumno le rompe el login: AVÍSALE EL MISMO DÍA.** El sitio no tiene UI para que él lo cambie, su teléfono le sigue autocompletando el correo viejo, y lo natural es que se **re-registre** en vez de escribirte. Pasó con Armando (12→16 jul): acabamos con dos cuentas y él cuatro días sin sus cursos.
+- **Cambiar el correo requiere DOS lados:** Auth (`accounts:update`) **y** mover el doc `users/{email}` (el ID del doc ES el correo en minúsculas; Firestore no renombra → copiar+borrar). Hacerlo solo en la consola de Firebase deja los cursos huérfanos. Auth es solo password → la contraseña se conserva.
+- **Al deshacer un cambio de correo, revertir la cuenta ORIGINAL, no adoptar la duplicada:** el folio del certificado es `buildCertFolio(uid, courseId)` → cambiar de `localId` le cambia todos los folios al alumno.
 - Las becas por CLI **no disparan el webhook de Apps Script** (hoja de registro) que sí dispara el panel.
 - `npx firebase-tools auth:export` lista cuentas pero trae hashes de contraseñas → borrar el export tras usarlo.
 
 ---
 
-## Último avance (2026-07-12, becas por CLI + cambio de correo de alumno)
+## Último avance (2026-07-16, reparación del sistema de certificados + recordatorios)
 
-**Becas de CLAUDE SISTEMA** a dos alumnos (Ismael y Armando) + **cambio de correo de la cuenta de Armando** a su Gmail (misma contraseña; Auth + doc `users/{email}` movidos completos y verificados). Todo por CLI — ver sección **Admin por CLI**; correos y detalle en la memoria `project_pendientes-abiertos.md` (privada — NO poner correos de alumnos en este archivo: el repo es público). También: `RESUMEN-CONTEXTO-COPILOT.md` agregado a `.gitignore` (commit `79c9229`; pendiente menor resuelto). Sin cambios de código del sitio, sin deploy.
+**6 de 11 cursos estaban rotos en silencio.** Una auditoría de CLAUDE SISTEMA destapó que el sistema de certificados llevaba meses fallando sin que nadie lo notara: `codigo-honor` era **imposible de terminar** (candado mutuo), `mente-millonaria` solo daba certificado con 15/15 y lo imprimía en blanco, `claude-sistema` **no entregaba certificado** aunque el landing lo prometía, y 4dx/habitos/feum lo emitían **sin folio ni descargo SEP**. Todo reparado; los 11 cursos usan ya `id:'final_exam'` + `id:'certificate'` y el certificado inyectado. Detalle y reglas en **Sistema de certificados — CONTRATO**. Commits `94044f3`, `886c3df`.
 
-### Antes (2026-06-18, fix certificado en blanco + blindaje repo público)
+**`tools/audit-cursos.js`** (commit `eed4be9`) — auditoría pre-deploy que simula un alumno aprobando **con el mínimo** y verifica también las tablas de `functions/index.js`. Ver **Deploy**.
 
-**Fix de impresión del certificado.** Una alumna (Mente Millonaria) reportó por WhatsApp que el certificado salía **en blanco** al "Imprimir / Guardar PDF" en celular. Causa: el `@media print` de `curso.html` aislaba con `visibility:hidden` + `position:absolute` — y `visibility:hidden` no saca del layout, así que el documento seguía altísimo y en Chrome de Android el certificado caía fuera de las primeras hojas. Reescrito a **cascada `display:none`** (solo `#certificateEl`, en `position:static`) + `print-color-adjust:exact` + `@page margin:12mm`. Ver **Flujo de certificado → Gotcha de impresión**. Commit `e922ebf`, deployado a hosting. **No probado en móvil real** (no se puede simular aquí; los alumnos retroalimentan). **Blindaje del repo PÚBLICO:** `.gitignore` ahora ignora `libros/` completa (antes lista parcial) y `graphify-out/` — estaban protegidos del hosting pero no del repo de GitHub, que es público. Commits `400de12`, `1fe3f8d`. Ver **Legal**.
+**Recordatorios de inactividad arreglados** (commit `84eeaad`, function deployada): los 2 cursos de paga nunca mandaban recordatorio, 6 cursos mentían en el asunto, y un alumno podía recibir 3 correos de golpe. Ver **Recordatorios de inactividad**.
+
+**Cuenta de un alumno recuperada:** Armando se había **re-registrado** con su iCloud tras el cambio de correo del 12-jul (quedaron 2 cuentas). Duplicada borrada y correo devuelto a su cuenta original, con progreso intacto. **Lección: cambiar el correo de un alumno le rompe el login → avisarle el mismo día.** Ver **Admin por CLI**.
+
+### Antes (2026-07-12, becas por CLI + cambio de correo de alumno)
+
+**Becas de CLAUDE SISTEMA** a Ismael y Armando + **cambio de correo de Armando** a su Gmail, todo por CLI (ver **Admin por CLI**). Correos y detalle en la memoria `project_pendientes-abiertos.md` — privada; **NO poner correos de alumnos en este archivo: el repo es público**. `RESUMEN-CONTEXTO-COPILOT.md` a `.gitignore` (commit `79c9229`). Sin deploy.
+
+### Antes (2026-06-18, blindaje del repo público)
+
+**`.gitignore` ahora ignora `libros/` completa** (antes lista parcial → se colaban libros nuevos) y `graphify-out/`: estaban protegidos del hosting pero **no** del repo de GitHub, que es público. Commits `400de12`, `1fe3f8d`. Ver **Legal**. (El fix de impresión del certificado de ese día atacó la causa equivocada — ver la corrección en **Flujo de certificado**.)
 
 ### Antes (2026-06-16, embudo "2 gratis" + Stripe LIVE probándose)
 
@@ -202,25 +227,24 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ### Antes (2026-06-15, monetización "acceso abierto" + Stripe LIVE + bot + verificador)
 
-Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin condición** (esta política la reemplazó el embudo del 2026-06-16). Stripe LIVE activado, bot de preventa activo/verificado, verificador de folios (`verificar.html` + `issueCertificate`), Fable 5 reescrito como lección durable (`lbonus2` en CLAUDE SISTEMA, índices: bonus=29, examen=30, cert=31; **lección: el patrón "bonus por modelo nuevo" es frágil → preferir contenido agnóstico de modelo**; memoria `project_bonus-fable5-claude-sistema.md`). Detalle en las memorias respectivas.
+Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin condición** (esta política la reemplazó el embudo del 2026-06-16). Stripe LIVE activado, bot de preventa activo/verificado, verificador de folios (`verificar.html` + `issueCertificate`), Fable 5 reescrito como lección durable (`lbonus2` en CLAUDE SISTEMA; **lección: el patrón "bonus por modelo nuevo" es frágil → preferir contenido agnóstico de modelo**; memoria `project_bonus-fable5-claude-sistema.md`). Detalle en las memorias respectivas.
 
-## Avance (2026-06-11, piloto Destapa tu Negocio + fixes)
+### Antes (2026-06-11, piloto Destapa tu Negocio + marca OAC)
 
-**Curso piloto PUBLICADO + marca OAC.** Se reconstruyó "La Meta" (Goldratt) como **obra original** "Destapa tu Negocio" (Método FLUIR, 5 fases, 22 lecciones + examen + cert, 7 casos PYME MX). Publicado: `cursos/destapa-tu-negocio.js`, alta en CATALOG/PRICING ($449 Premium)/LAUNCH_DATES/ENROLL_PRICING/getCatalog. Flag **`meta.originalWork:true`** → curso.html dice "Obra original de…" en vez de "Basado en el libro de…" (6 sitios). Portada SVG premium con **logo OAC vectorizado protagonista + TRIKLES discreto**; mismo branding agregado a la portada de CLAUDE SISTEMA. Inventario de ideas + blueprint + regla anti-derivado en `libros/LaMeta/`. Detalle en memoria `project_piloto-destapa-tu-negocio.md`.
-
-**Acceso total del dueño:** `FULL_ACCESS_EMAILS` en curso.html (`cpgermansolis@gmail.com`, `gerloxsolis@gmail.com`) entran a cualquier curso sin beca. Memoria `reference_acceso-total-cuentas.md`.
-
-**Fixes:** (1) racha persistida en Firestore; (2) examen con una oportunidad por pregunta (ver sección Progress). (3) **Caché**: `cleanUrls` servía páginas sin extensión (`/curso`) que no casaban con la regla de headers `**/*.@(html|js)` → caché de 1h. Cambiado `source` a `**`. Ver Gotchas de deploy. Commits `9de3af9`→`8f97dba`, deployado.
+**Curso piloto PUBLICADO.** "La Meta" (Goldratt) reconstruida como **obra original** "Destapa tu Negocio" (Método FLUIR, 7 casos PYME MX). Flag **`meta.originalWork:true`** → el sitio dice "Obra original de…" en vez de "Basado en el libro de…". Branding OAC en portadas. **Acceso total del dueño:** `FULL_ACCESS_EMAILS`. Fixes: racha persistida, examen con una oportunidad por pregunta, bug de caché (`cleanUrls`). Memorias `project_piloto-destapa-tu-negocio.md`, `reference_acceso-total-cuentas.md`.
 
 ## Pendientes al cierre
 
-- **Confirmar que el certificado ya imprime/guarda completo en celular** — el fix (cascada `display:none`, 2026-06-18) no se pudo probar en móvil real; los alumnos retroalimentarán. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`.
+- **Confirmar que el certificado ya imprime/guarda completo en celular.** Ahora sí tiene fundamento (el `#certificateEl` que el `@media print` busca ya existe en TODOS los cursos; antes faltaba en 3). **No probado en móvil real** — lo confirma un alumno imprimiendo. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`, no el curso.
 - **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
 - **Enviar la nota al abogado de PI** sobre el embudo (texto listo en `project_postura-legal-cobro.md`): ¿usar derivados como gancho/premio reintroduce "fin de lucro" aunque no se cobren? Germán eligió proceder.
 - **Stripe LIVE:** falta la **prueba de compra real + reembolso** para validar webhook→inscripción end-to-end (cobro ya es real).
 - **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); decidir si OAC va también en `legal.html`/certificados de otros cursos.
 - ✅ ~~**Verificador de folios (Fase 2)**~~ — HECHO 2026-06-15: Cloud Function `issueCertificate` + colección pública `certificates/{folio}` + `verificar.html`. Claim "verificable" restaurado. (Follow-up: backfill de certificados viejos, opcional.)
 - ✅🤖 **Bot de preventa — ACTIVO Y VERIFICADO (2026-06-15).** `ANTHROPIC_API_KEY` puesta por Germán + `chatPreventa` desplegada; probado end-to-end (responde con precio correcto y certificado honesto). Cloud Function `chatPreventa` (onCall, modelo **`claude-haiku-4-5`** vía `@anthropic-ai/sdk`): system prompt con catálogo + política pago/gratis + certificado honesto + handoff a Germán; rate limit por IP (colección `chatLimits`, ~40 msgs/IP/día); `buildPreventaSystemPrompt(courseId)` + `PREVENTA_CATALOG` en functions/index.js. Helper `TK.chatPreventa(courseId, messages)`. Chat UI en el widget flotante del landing de curso.html (reemplazó las FAQ estáticas; degrada con gracia si la función no está activa). **ACTIVAR con:** (1) `npx firebase-tools functions:secrets:set ANTHROPIC_API_KEY` (pega la API key de Anthropic), (2) `npx firebase-tools deploy --only functions:chatPreventa --project trikles-cursos`. Para cambiar el contacto/WhatsApp del handoff: `TRIKLES_CONTACT_EMAIL`/`TRIKLES_CONTACT_WHATSAPP` en functions/index.js.
+- **Recordatorios: la 1ª corrida con los 3 cursos nuevos activados sale el 2026-07-17 a las 10:00** (5 correos a 5 alumnos). Vale la pena mirar si `lorelay_anerol` (a 2 lecciones de terminar CLAUDE SISTEMA) o `blackwolf9518` (a 3) retoman: es la prueba de si el recordatorio convierte.
+- **Backfill de folios** (opcional): los certificados emitidos antes del 2026-06-15, y los de los 3 cursos que estaban fuera del estándar, no tienen folio registrado hasta que el alumno reabra su certificado.
+- **Mente Millonaria no está en `COURSE_LEARNINGS`** (`curso.html`) → su botón de LinkedIn usa el texto genérico.
 - Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
 
 ---
