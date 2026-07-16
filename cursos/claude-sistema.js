@@ -160,7 +160,8 @@ const COURSE_CLAUDE_SISTEMA = {
         28: ['quiz_bonus_a', 'quiz_bonus_b'],
         29: ['quiz_fable_a', 'quiz_fable_b'],
         30: ['final_q1','final_q2','final_q3','final_q4','final_q5','final_q6','final_q7','final_q8','final_q9','final_q10','final_q11','final_q12','final_q13','final_q14','final_q15'],
-        31: []
+        31: [],
+        32: []
     },
 
     examPassScore: 11,
@@ -2889,7 +2890,7 @@ Siempre respóndeme en español latinoamericano.</pre>
     // ==========================================================
 
     {
-        id: 'l28', module: 'Examen de certificación', tag: 'tag-exam', tagLabel: 'EXAMEN',
+        id: 'final_exam', module: 'Examen de certificación', tag: 'tag-exam', tagLabel: 'EXAMEN',
         title: 'Examen de certificación — CLAUDE SISTEMA',
         subtitle: 'Demuestra que tienes el sistema — 15 preguntas sobre los 4 módulos · Necesitas 11 correctas para certificarte',
         content: `
@@ -3153,7 +3154,7 @@ Siempre respóndeme en español latinoamericano.</pre>
                 <li><strong>Opción A — Community VIP TRIKLES:</strong> Publica los 5 componentes en el hilo de Proyecto Final. Feedback del instructor en los primeros 3 días.</li>
                 <li><strong>Opción B — Envío directo:</strong> Correo al instructor con asunto: "[Tu nombre] — Proyecto Final CLAUDE SISTEMA"</li>
             </ul>
-            <p><strong>Certificado:</strong> Lo recibirás dentro de 48 horas después de que el instructor valide que los 5 componentes están completos. No hay nota — hay aprobado o pendiente. Si algo falta, se te dice qué mejorar con instrucciones específicas.</p>
+            <p><strong>Tu certificado no depende de esta entrega.</strong> Se habilita al aprobar el examen y está en la siguiente lección. Este proyecto es para ti: es la diferencia entre haber pasado un examen y tener un sistema funcionando. Si lo envías, recibes retroalimentación del instructor sobre los 5 componentes — qué está sólido y qué conviene apretar.</p>
         </div>
 
         <div class="lesson-okr-post">
@@ -3166,6 +3167,39 @@ Siempre respóndeme en español latinoamericano.</pre>
                 <li>Tu certificado VIP TRIKLES — CLAUDE SISTEMA</li>
             </ul>
             <div class="okr-next">→ <strong>Tu sistema no termina aquí. Hoy empieza.</strong></div>
+        </div>
+        `
+    },
+
+    // ==========================================================
+    // LECCIÓN 32 — CERTIFICADO
+    // ==========================================================
+    {
+        id: 'certificate', module: 'Certificado', tag: 'tag-exam', tagLabel: 'CERTIFICADO',
+        title: 'Tu certificado VIP TRIKLES',
+        subtitle: 'CLAUDE SISTEMA — Domina los tres pilares de la IA más poderosa',
+        // El certificado (nombre, fecha, folio y descargo legal) lo inyecta curso.html
+        // vía ensureCertificateElement() al detectar id:'certificate'.
+        // No incrustar aquí un bloque de certificado: sin #certificateEl el @media print
+        // oculta toda la lección y la hoja sale en blanco.
+        content: `
+        <div class="content-card" style="margin-top:30px;">
+            <h3>🚀 ¿Qué sigue ahora?</h3>
+            <ol class="concept-list">
+                <li><strong>Agenda tu auditoría de 30 minutos</strong> (Módulo 4) para el primer lunes del próximo mes. Si no está en el calendario, no va a pasar.</li>
+                <li><strong>Termina tu Proyecto Final</strong> si aún te falta algún componente. El certificado ya es tuyo; el sistema funcionando es lo que cambia tu trabajo.</li>
+                <li><strong>Envía tu proyecto al instructor</strong> si quieres retroalimentación sobre los 5 componentes.</li>
+                <li><strong>Revisa los dos módulos bonus</strong> cada vez que Anthropic anuncie un modelo nuevo. Ahí está el criterio para decidir sin rehacer tu sistema.</li>
+                <li><strong>Vuelve al catálogo</strong> y sigue construyendo. Tu acceso es de por vida e incluye las actualizaciones del curso.</li>
+            </ol>
+        </div>
+
+        <div class="content-card" style="margin-top:20px;background:#0f0028;color:#e9e4ff;border-left:3px solid #a78bfa;">
+            <h3 style="color:#c4b5fd;">Un mensaje final del instructor</h3>
+            <p>Empezaste este curso usando Claude como una herramienta a la que se le pregunta. Terminas con un sistema: sabes qué pilar usar y por qué, tienes un Project que te conoce, un flujo documentado y algo automatizado corriendo.</p>
+            <p>La parte incómoda es esta: el sistema se degrada si no lo tocas. Claude cambia, tu trabajo cambia, y un sistema que no se audita se convierte en un montón de plantillas viejas. Por eso el Módulo 4 insiste en los 30 minutos al mes — es lo único que separa a quien tiene un sistema vivo de quien tiene el recuerdo de un curso.</p>
+            <p>Nos vemos en la próxima actualización.</p>
+            <p style="margin-top:15px;font-style:italic;">— LADE Germán Solís Muñoz<br>Director de Gestión Empresarial · TRIKLES</p>
         </div>
         `
     }

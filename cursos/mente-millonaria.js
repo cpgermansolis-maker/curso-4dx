@@ -3048,7 +3048,7 @@ const COURSE_MENTE_MILLONARIA = {
     // LECCIÓN 22 — CIERRE + EXAMEN FINAL
     // ==========================================================
     {
-        id: 'l22', module: 'Examen final', tag: 'tag-final', tagLabel: 'EXAMEN',
+        id: 'final_exam', module: 'Examen final', tag: 'tag-final', tagLabel: 'EXAMEN',
         title: 'Examen final del curso',
         subtitle: '15 preguntas · Aprobar con 11 o más para obtener tu certificado',
         content: `

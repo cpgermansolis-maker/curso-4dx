@@ -3573,8 +3573,11 @@ function buildSidebar() {
 }
 
 function showLockedAlert(lessonIdx) {
-    if (lessonIdx === 7) {
-        alert('&#128274; Certificado bloqueado\n\nDebes aprobar el examen final con 7/10 o más para desbloquear tu certificado.');
+    if (lessonIdx === getCertLessonIndex()) {
+        // Umbral real del curso: antes venía cableado a "7/10" (los valores de 4DX),
+        // así que mentía en todos los demás cursos.
+        alert('&#128274; Certificado bloqueado\n\nDebes aprobar el examen final con ' +
+            getExamPassScore() + '/' + getExamTotalQuestions() + ' o más para desbloquear tu certificado.');
     } else {
         alert('&#128274; Lección bloqueada\n\nDebes completar la lección anterior (responder correctamente todos los quizzes) para desbloquear está lección.');
     }
@@ -3640,6 +3643,19 @@ function ensureCertificateElement() {
     const certDesc = (COURSE.certificate && COURSE.certificate.description)
         || ('Habiendo demostrado dominio de los conceptos y competencias del curso "' + courseTitle + '".');
 
+    // Nombre del curso tal como debe leerse en el diploma. Cada curso lo redacta en
+    // certificate.courseNameForCert (título + subtítulo/autor ya formateados para el
+    // certificado). meta.author es solo respaldo: trae copy editorial de catálogo
+    // ("38ª edición · #1 NYT / WSJ") que no tiene nada que hacer en un certificado.
+    const certCourseName = (COURSE.certificate && COURSE.certificate.courseNameForCert) || courseTitle;
+    // La atribución de obra original se conserva aparte (marca OAC); en los cursos
+    // derivados el autor ya viene dentro de courseNameForCert, así que no se repite.
+    const certAttribution = (meta.originalWork && courseAuthor)
+        ? '<br><span>Obra original de ' + courseAuthor + '</span>'
+        : ((!(COURSE.certificate && COURSE.certificate.courseNameForCert) && courseAuthor)
+            ? '<br><span>Basado en la obra de ' + courseAuthor + '</span>'
+            : '');
+
     // Folio único determinístico: mismo alumno + mismo curso => mismo folio (reproducible y verificable).
     // Usamos el UID real de Firebase Auth (no el campo del doc, que en cuentas creadas por
     // webhook/beca podría faltar) para que coincida EXACTO con el folio que registra la
@@ -3671,7 +3687,7 @@ function ensureCertificateElement() {
                 '<div class="cert-award-text">Se otorga el presente a:</div>' +
                 '<div class="cert-name" id="certName">' + (currentUser.name || 'Alumno TRIKLES') + '</div>' +
                 '<div class="cert-award-text">Por haber completado exitosamente el curso:</div>' +
-                '<div class="cert-course">' + courseTitle + (courseAuthor ? '<br><span>' + (meta.originalWork ? 'Obra original de ' : 'Basado en la obra de ') + courseAuthor + '</span>' : '') + '</div>' +
+                '<div class="cert-course">' + certCourseName + certAttribution + '</div>' +
                 '<div class="cert-desc">' + certDesc + '</div>' +
             '</div>' +
 

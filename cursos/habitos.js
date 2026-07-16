@@ -1564,58 +1564,6 @@ const COURSE_HABITOS = {
             </div>
         </div>
 
-        <div class="certificate" id="certificateEl">
-            <div class="cert-seal">
-                <div style="font-size:1.2em;">7H</div>
-                <div style="font-size:0.65em;">CERTIFIED</div>
-                <div style="font-size:0.6em;" id="certYear">2026</div>
-            </div>
-
-            <div class="cert-header">
-                <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="trikles-logo-cert" onerror="this.style.display='none';">
-                <div class="cert-icon">&#127942;</div>
-                <div class="cert-title">CERTIFICADO</div>
-                <div class="cert-subtitle">de finalización satisfactoria</div>
-            </div>
-
-            <div class="cert-body">
-                <div class="cert-award-text">Se otorga el presente a:</div>
-                <div class="cert-name" id="certName">Nombre del Alumno</div>
-                <div class="cert-award-text">Por haber completado exitosamente el curso:</div>
-                <div class="cert-course">Los 7 Hábitos de la Gente<br>Altamente Efectiva</div>
-                <div class="cert-desc">Habiendo demostrado dominio integral de los principios del carácter, el continuum de la madurez y los siete hábitos de la efectividad personal e interpersonal, según la obra de Stephen R. Covey.</div>
-            </div>
-
-            <div class="cert-footer">
-                <div class="cert-sig-block">
-                    <div class="cert-sig-handwritten">
-                        <div class="cert-sig-name-cursive">GSM</div>
-                        <svg class="cert-sig-flourish" viewBox="0 0 180 16" preserveAspectRatio="none">
-                            <path d="M 5 9 C 35 14, 75 14, 115 8 C 138 4, 158 2, 170 8 Q 177 12, 168 14"/>
-                        </svg>
-                    </div>
-                    <div class="cert-sig-line">
-                        <div class="cert-sig-name">LADE Germán Solís Muñoz</div>
-                        <div class="cert-sig-title">Director de Gestión Empresarial · TRIKLES</div>
-                    </div>
-                </div>
-                <div class="cert-sig-block">
-                    <div style="height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
-                        <div style="border:2px solid #d4af37;color:#d4af37;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.7em;transform:rotate(-8deg);">TRIKLES</div>
-                    </div>
-                    <div class="cert-sig-line">
-                        <div class="cert-sig-name" id="certDate">14 de Abril, 2026</div>
-                        <div class="cert-sig-title">Fecha de expedición</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="cert-actions">
-            <button class="btn btn-primary" onclick="window.print()">&#128424;&#65039; Imprimir / Guardar PDF</button>
-            <button class="btn btn-success" onclick="window.location.href='index.html'">&#128218; Volver al Catálogo</button>
-        </div>
-
         <div class="content-card" style="margin-top:30px;">
             <h3>&#128640; ¿Qué sigue ahora?</h3>
             <ol class="concept-list">
