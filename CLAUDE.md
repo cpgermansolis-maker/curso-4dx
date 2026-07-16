@@ -55,6 +55,23 @@ window.COURSE_X = COURSE_X;
 
 ---
 
+## Sistema de certificados — CONTRATO (reparado 2026-07-15)
+
+Todo el flujo final de `curso.html` cuelga de **dos ids exactos**. Un curso que no los use se ve perfecto hasta que un alumno llega al final, y ahí falla en silencio:
+
+| Id de lección | De qué depende |
+|---|---|
+| `id: 'final_exam'` | `getExamLessonIndex()`. Sin él, `isLessonRequirementsMet` **no aplica `examPassScore`** y exige las 15 respuestas correctas para avanzar. |
+| `id: 'certificate'` | `getCertLessonIndex()` + `ensureCertificateElement()`. Sin él no hay certificado inyectado: ni nombre real, ni fecha, ni folio, ni descargo SEP, ni reflexión, y **el `@media print` imprime la hoja en blanco**. |
+
+**Reglas que no se rompen:**
+- **NUNCA incrustar un certificado en el `content` de la lección.** `ensureCertificateElement()` sale temprano si ya existe `#certificateEl` → el alumno recibe su certificado **sin folio y sin el descargo de la SEP** (requisito legal). Y un bloque propio *sin* `#certificateEl` hace que la impresión salga en blanco. El certificado lo arma `curso.html`, siempre.
+- **`certificate.courseNameForCert` es el nombre que se lee en el diploma.** Si falta, cae a `meta.author`, que trae copy de catálogo ("38ª edición · #1 NYT / WSJ"). La línea "Obra original de…" (marca OAC) se agrega aparte vía `meta.originalWork`.
+- **`lessonRequirements` está indexado por POSICIÓN** y cada requisito debe ser un quiz que exista **en esa misma lección**.
+- Verificar siempre con **`node tools/audit-cursos.js`** (ver Deploy).
+
+**Qué pasó (2026-07-15):** 6 de 11 cursos estaban rotos sin que nadie lo notara. `codigo-honor` era **imposible de terminar** (requirements corridos un índice → la lección 22 pedía las 15 del examen, que viven en la 23, y la 23 no abría sin ellas: candado mutuo). `mente-millonaria` solo entregaba certificado con **15/15** en vez de 11/15, e imprimía en blanco (era el bug de la alumna; el fix del 2026-06-18 atacó la causa equivocada). `claude-sistema` **no entregaba certificado** aunque el landing lo prometía. `4dx`/`habitos`/`feum` emitían **sin folio ni descargo legal**. Todo reparado y verificado; commits `94044f3` y `886c3df`.
+
 ## Flujo de certificado (actualizado 2026-05-28)
 
 1. Alumno completa todas las lecciones y aprueba el examen (`finalScore >= examPassScore`)
@@ -143,11 +160,14 @@ progress: {
 ## Deploy
 
 ```powershell
+node tools/audit-cursos.js      # SIEMPRE antes de deployar si tocaste cursos/
 git add <files>
 git commit -m "mensaje"
 git push origin main
 npx firebase-tools deploy --only hosting
 ```
+
+**`node tools/audit-cursos.js`** — audita los 11 cursos y sale con código 1 si alguno está roto. Replica la lógica de bloqueo real de `curso.html` y simula un alumno que aprueba el examen **con el mínimo** (ahí se escondían los bugs; con puntaje perfecto todo parecía sano). Detecta: falta de `id:'final_exam'`/`id:'certificate'`, certificados incrustados a mano, `lessonRequirements` desalineados o que piden quizzes de otra lección, y lecciones imposibles de desbloquear. Creado el 2026-07-15 tras descubrir que 6 de 11 cursos estaban rotos en silencio (ver **Sistema de certificados**). Si agregas un curso o mueves una lección, corre esto antes que nada.
 
 `firebase` directo no funciona en Windows de Germán — siempre usar `npx firebase-tools`.
 

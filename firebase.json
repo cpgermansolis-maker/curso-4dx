@@ -26,6 +26,7 @@
       "functions/**",
       "memory/**",
       "graphify-out/**",
+      "tools/**",
       "*.md",
       "libros/**"
     ],
