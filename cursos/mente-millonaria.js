@@ -3259,41 +3259,14 @@ const COURSE_MENTE_MILLONARIA = {
     // LECCIÓN 23 — CERTIFICADO
     // ==========================================================
     {
-        id: 'l23', module: 'Certificado', tag: 'tag-cert', tagLabel: 'CERTIFICADO',
+        id: 'certificate', module: 'Certificado', tag: 'tag-cert', tagLabel: 'CERTIFICADO',
         title: 'Tu certificado del curso',
         subtitle: 'Reconocimiento oficial de TRIKLES',
+        // El certificado (con nombre real, fecha, folio y descargo legal) lo inyecta
+        // curso.html vía ensureCertificateElement() al detectar id:'certificate'.
+        // No incrustar aquí un bloque de certificado: sin #certificateEl el @media print
+        // oculta toda la lección y la hoja sale en blanco.
         content: `
-        <div class="cert-container">
-            <div class="cert-frame">
-                <div class="cert-border-outer">
-                    <div class="cert-border-inner">
-                        <div class="cert-seal">T</div>
-                        <div class="cert-header">TRIKLES · Academia de Gerencia</div>
-                        <div class="cert-title">Certificado de Finalización</div>
-                        <div class="cert-otorga">Se otorga el presente a</div>
-                        <div class="cert-name" id="certName">[Nombre del participante]</div>
-                        <div class="cert-course">Por haber completado exitosamente el curso</div>
-                        <div class="cert-course-name">Los Secretos de la Mente Millonaria<br><small>El método de T. Harv Eker aplicado al contexto mexicano</small></div>
-                        <div class="cert-description">Habiendo demostrado dominio de los conceptos de patrón financiero, programación verbal, modelaje, incidentes específicos, los 17 Archivos de Riqueza, el sistema de las 6 cuentas y la disciplina diaria del millonario, según el método de T. Harv Eker para reprogramación financiera profunda.</div>
-                        <div class="cert-signatures">
-                            <div class="cert-sig-line">
-                                <div class="cert-sig-name">LADE Germán Solís Muñoz</div>
-                                <div class="cert-sig-title">Instructor · TRIKLES</div>
-                            </div>
-                            <div class="cert-sig-line">
-                                <div class="cert-sig-name" id="certDate">12 de Mayo, 2026</div>
-                                <div class="cert-sig-title">Fecha de expedición</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="cert-actions">
-            <button class="btn btn-primary" onclick="window.print()">Imprimir / Guardar PDF</button>
-        </div>
-
         <div class="content-card" style="margin-top:30px;background:#faf8f3;border-left:3px solid #c9a961;">
             <h3 style="color:#0a2540;">¿Qué sigue ahora?</h3>
             <ol class="concept-list">
