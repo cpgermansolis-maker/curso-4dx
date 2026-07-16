@@ -119,9 +119,53 @@ function auditar(id, COURSE) {
     return { errores, examIdx, certIdx, total: lessons.length };
 }
 
+// ── Tablas de functions/index.js que duplican datos de cursos/*.js
+//
+// sendInactiveReminders (recordatorio diario de 10:00) NO puede importar cursos/*.js:
+// las functions se deployan solas, sin esa carpeta. Así que mantiene sus propias
+// tablas a mano... y se desincronizan solas. El 2026-07-15 seis cursos mandaban un
+// número equivocado de lecciones en el asunto, y claude-sistema / destapa-tu-negocio /
+// mente-millonaria no mandaban NADA (un curso ausente de la tabla se salta en
+// silencio) — justo los dos cursos de paga sin seguimiento.
+function leerTabla(src, nombre) {
+    const m = src.match(new RegExp(nombre + '\\s*=\\s*\\{([\\s\\S]*?)\\}', 'm'));
+    if (!m) return null;
+    const out = {};
+    for (const x of m[1].matchAll(/'([^']+)'\s*:\s*(\d+)/g)) out[x[1]] = Number(x[2]);
+    return out;
+}
+function leerTitulos(src) {
+    const m = src.match(/COURSE_TITLES\s*=\s*\{([\s\S]*?)\};/m);
+    if (!m) return null;
+    return new Set([...m[1].matchAll(/'([^']+)'\s*:/g)].map(x => x[1]));
+}
+
+function auditarFunctions(cursos) {
+    const f = path.join(__dirname, '..', 'functions', 'index.js');
+    if (!fs.existsSync(f)) return [];
+    const src = fs.readFileSync(f, 'utf8');
+    const counts = leerTabla(src, 'COURSE_LESSON_COUNTS');
+    const scores = leerTabla(src, 'COURSE_PASS_SCORES');
+    const titles = leerTitulos(src);
+    const errores = [];
+    if (!counts || !scores || !titles) {
+        errores.push('no se pudieron leer las tablas de functions/index.js (¿cambió el formato?)');
+        return errores;
+    }
+    for (const { id, total, passScore } of cursos) {
+        if (!titles.has(id)) errores.push(`${id}: falta en COURSE_TITLES → nunca recibe recordatorios`);
+        if (counts[id] === undefined) errores.push(`${id}: falta en COURSE_LESSON_COUNTS → nunca recibe recordatorios`);
+        else if (counts[id] !== total) errores.push(`${id}: COURSE_LESSON_COUNTS dice ${counts[id]} y el curso tiene ${total} → el asunto miente ("te faltan N lecciones")`);
+        if (scores[id] === undefined) errores.push(`${id}: falta en COURSE_PASS_SCORES → usaría 7 por defecto en vez de ${passScore}`);
+        else if (scores[id] !== passScore) errores.push(`${id}: COURSE_PASS_SCORES dice ${scores[id]} y examPassScore es ${passScore}`);
+    }
+    return errores;
+}
+
 // ── main
 const archivos = fs.readdirSync(DIR).filter(f => f.endsWith('.js')).sort();
 let rotos = 0;
+const cursosOk = [];
 
 console.log(`Auditando ${archivos.length} cursos en cursos/\n`);
 
@@ -146,10 +190,18 @@ for (const f of archivos) {
     console.log(`${marca} ${id.padEnd(22)} lecciones:${String(total).padStart(2)}  examen:${String(examIdx).padStart(2)}  certificado:${String(certIdx).padStart(2)}`);
     errores.forEach(e => console.log(`${' '.repeat(4)}→ ${e}`));
     if (errores.length) rotos++;
+    cursosOk.push({ id, total, passScore: COURSE.examPassScore || 7 });
 }
 
-if (rotos) {
-    console.log(`\n✗ ${rotos} curso(s) con problemas. NO deployar hasta corregir.`);
+console.log('\nTablas de functions/index.js (recordatorios de inactividad):');
+const errFn = auditarFunctions(cursosOk);
+if (errFn.length) errFn.forEach(e => console.log(`  ✗ ${e}`));
+else console.log('  ✓ en sync con cursos/');
+
+if (rotos || errFn.length) {
+    if (rotos) console.log(`\n✗ ${rotos} curso(s) con problemas.`);
+    if (errFn.length) console.log(`✗ ${errFn.length} desajuste(s) en functions/index.js.`);
+    console.log('NO deployar hasta corregir.');
     process.exit(1);
 }
-console.log('\n✓ Todos los cursos pasan. Listo para deploy.');
+console.log('\n✓ Todos los cursos pasan y las tablas están en sync. Listo para deploy.');

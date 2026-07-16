@@ -49,7 +49,8 @@ const COURSE_TITLES = {
     'codigo-honor': 'El ABC para crear un equipo de negocios exitoso',
     'food-beverage': 'Control de Costos en Alimentos y Bebidas (Dopson & Hayes)',
     'claude-sistema': 'CLAUDE SISTEMA',
-    'destapa-tu-negocio': 'Destapa tu Negocio'
+    'destapa-tu-negocio': 'Destapa tu Negocio',
+    'mente-millonaria': 'Los Secretos de la Mente Millonaria'
 };
 
 // Precios en centavos MXN (Stripe trabaja en la unidad más pequeña)
@@ -71,27 +72,43 @@ const BUNDLE_TITLE = 'Bundle completo TRIKLES — 8 cursos';
 // Dominio base para success_url / cancel_url (Firebase Hosting)
 const APP_BASE_URL = 'https://trikles-cursos.web.app';
 
-// Metadatos adicionales para recordatorios de inactividad
-// Número de lecciones de CONTENIDO (sin examen ni certificado)
+// Metadatos adicionales para recordatorios de inactividad.
+//
+// ⚠️ Es el TOTAL de lecciones del curso (`COURSE.lessons.length`), incluidos intro,
+// examen y certificado — NO solo las de contenido. Tiene que ser el total porque se
+// compara contra `progress.completed`, que guarda índices de TODAS las lecciones.
+// Un curso que falte aquí NO recibe recordatorios nunca (la función lo salta).
+//
+// Estas tablas duplican datos que viven en cursos/*.js y se desincronizan solas:
+// el 2026-07-15 seis cursos mandaban un número equivocado en el asunto y los tres
+// más nuevos (los dos de paga incluidos) no mandaban nada. Verificar con:
+//     node tools/audit-cursos.js
 const COURSE_LESSON_COUNTS = {
-    '4dx':               8,
-    'habitos':           10,
-    'feum-inventarios':  22,
-    'gerencia-efectiva': 22,
-    'la-paradoja':       18,
-    'coaching':          23,
-    'codigo-honor':      22,
-    'food-beverage':     30
+    '4dx':                 8,
+    'habitos':            10,
+    'feum-inventarios':   24,
+    'gerencia-efectiva':  24,
+    'la-paradoja':        20,
+    'coaching':           25,
+    'codigo-honor':       25,
+    'food-beverage':      33,
+    'claude-sistema':     33,
+    'destapa-tu-negocio': 24,
+    'mente-millonaria':   24
 };
 const COURSE_PASS_SCORES = {
     '4dx': 7, 'habitos': 7, 'feum-inventarios': 7, 'gerencia-efectiva': 7,
     'la-paradoja': 7, 'coaching': 7, 'codigo-honor': 11, 'food-beverage': 12,
-    'claude-sistema': 11, 'destapa-tu-negocio': 7
+    'claude-sistema': 11, 'destapa-tu-negocio': 7, 'mente-millonaria': 11
 };
 
 // Umbrales de recordatorio (en días)
 const REMINDER_INACTIVE_DAYS = 30;   // se considera inactivo
 const REMINDER_COOLDOWN_DAYS = 30;   // no enviar más de 1 recordatorio cada 30 días
+
+// Cuentas del dueño: tienen todos los cursos, no necesitan que se les recuerde nada.
+// Espejo de FULL_ACCESS_EMAILS en curso.html / index.html.
+const FULL_ACCESS_EMAILS = ['cpgermansolis@gmail.com', 'gerloxsolis@gmail.com'];
 
 function escapeHtml(s) {
     return String(s || '')
@@ -576,7 +593,14 @@ exports.sendInactiveReminders = onSchedule(
                     continue;
                 }
 
+                // El dueño tiene todos los cursos: no se manda recordatorios a sí mismo
+                if (FULL_ACCESS_EMAILS.includes(String(user.email).trim().toLowerCase())) {
+                    continue;
+                }
+
+                // 1) Juntar TODOS los cursos elegibles de este alumno...
                 const enrollments = user.enrollments || {};
+                const candidatos = [];
                 for (const courseId of Object.keys(enrollments)) {
                     const enr = enrollments[courseId];
                     scanned++;
@@ -607,32 +631,55 @@ exports.sendInactiveReminders = onSchedule(
                         if (daysSinceReminder < REMINDER_COOLDOWN_DAYS) { skipped++; continue; }
                     }
 
-                    // Componer y enviar el correo
-                    const rendered = renderReminderEmail(
-                        user.name, title, courseId, completedCount, totalLessons, daysInactive
-                    );
-                    const firstName = (user.name || '').split(' ')[0];
-                    const subject = '📚 ' + firstName +
-                        ', retomemos "' + title + '" — te faltan ' +
-                        (totalLessons - completedCount) + ' lecciones';
+                    candidatos.push({ courseId, title, totalLessons, completedCount, daysInactive });
+                }
 
-                    try {
-                        await transport.sendMail({
-                            from: '"TRIKLES · Germán Solís" <' + GMAIL_USER.value() + '>',
-                            to: user.email,
-                            subject: subject,
-                            text: rendered.text,
-                            html: rendered.html
-                        });
-                        // Marcar el timestamp del recordatorio enviado
-                        await docSnap.ref.update({
-                            ['enrollments.' + courseId + '.lastReminderAt']: new Date().toISOString()
-                        });
-                        sent++;
-                        logger.info('Recordatorio enviado', { to: user.email, courseId: courseId, daysInactive: daysInactive });
-                    } catch (errSend) {
-                        logger.error('Error enviando recordatorio', { to: user.email, courseId: courseId, error: errSend.message });
-                    }
+                if (!candidatos.length) continue;
+
+                // 2) ...y mandar UN SOLO correo por alumno y por corrida.
+                // Antes se enviaba uno por curso: un alumno con 3 cursos estancados
+                // recibía 3 correos en el mismo minuto, que es la mejor forma de que
+                // te marque como spam. Se elige el curso donde está MÁS CERCA de
+                // terminar (el que es más probable que retome); a igualdad, el que
+                // lleva más tiempo abandonado.
+                candidatos.sort((a, b) => {
+                    const faltanA = a.totalLessons - a.completedCount;
+                    const faltanB = b.totalLessons - b.completedCount;
+                    return (faltanA - faltanB) || (b.daysInactive - a.daysInactive);
+                });
+                const elegido = candidatos[0];
+                if (candidatos.length > 1) {
+                    logger.info('Varios cursos elegibles, se manda solo el más cercano a terminar', {
+                        to: user.email, elegido: elegido.courseId,
+                        omitidos: candidatos.slice(1).map(c => c.courseId)
+                    });
+                }
+
+                const rendered = renderReminderEmail(
+                    user.name, elegido.title, elegido.courseId,
+                    elegido.completedCount, elegido.totalLessons, elegido.daysInactive
+                );
+                const firstName = (user.name || '').split(' ')[0];
+                const subject = '📚 ' + firstName +
+                    ', retomemos "' + elegido.title + '" — te faltan ' +
+                    (elegido.totalLessons - elegido.completedCount) + ' lecciones';
+
+                try {
+                    await transport.sendMail({
+                        from: '"TRIKLES · Germán Solís" <' + GMAIL_USER.value() + '>',
+                        to: user.email,
+                        subject: subject,
+                        text: rendered.text,
+                        html: rendered.html
+                    });
+                    // Marcar el timestamp del recordatorio enviado
+                    await docSnap.ref.update({
+                        ['enrollments.' + elegido.courseId + '.lastReminderAt']: new Date().toISOString()
+                    });
+                    sent++;
+                    logger.info('Recordatorio enviado', { to: user.email, courseId: elegido.courseId, daysInactive: elegido.daysInactive });
+                } catch (errSend) {
+                    logger.error('Error enviando recordatorio', { to: user.email, courseId: elegido.courseId, error: errSend.message });
                 }
             }
             logger.info('sendInactiveReminders completado', { scanned: scanned, sent: sent, skipped: skipped });
