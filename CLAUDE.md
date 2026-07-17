@@ -203,7 +203,15 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ---
 
-## Último avance (2026-07-16, reparación del sistema de certificados + recordatorios)
+## Último avance (2026-07-17, verificación de recordatorios + 2 pendientes cerrados)
+
+**Recordatorios verificados en vivo.** Las corridas del 16-jul (5 correos) y 17-jul (3) salieron limpias; la lógica "1 por alumno por corrida" funciona. El "error" que reportó Germán era un **rebote benigno** (buzón del alumno lleno, no la plataforma). **Decisión:** el cooldown es por curso → un alumno puede recibir correos en días consecutivos (curso distinto); se deja así.
+
+**Dos pendientes cerrados:** Mente Millonaria ya está en `COURSE_LEARNINGS` (commit `5c81f94`, deployado); y **backfill de folios** hecho (17 certificados pre-2026-06-15 registrados en `certificates/{folio}`; herramienta reusable `tool_backfill-folios-trikles.js` en memoria). Correo de `legal.html`: se deja igual.
+
+**Herramienta personal de Germán (fuera de TRIKLES):** buscador offline de las **Normas Globales de Auditoría Interna 2024** (IIA) para su trabajo de auditor en Grupo TODA. Vive en `libros/` (gitignored → nunca se sube). Evaluación del libro: **no se puede convertir en curso** (es norma normativa, no libro de ideas; copyright IIA agresivo + riesgo de marca CIA). Detalle en memoria `reference_buscador-normas-auditoria.md`.
+
+### Antes (2026-07-16, reparación del sistema de certificados + recordatorios)
 
 **6 de 11 cursos estaban rotos en silencio.** Una auditoría de CLAUDE SISTEMA destapó que el sistema de certificados llevaba meses fallando sin que nadie lo notara: `codigo-honor` era **imposible de terminar** (candado mutuo), `mente-millonaria` solo daba certificado con 15/15 y lo imprimía en blanco, `claude-sistema` **no entregaba certificado** aunque el landing lo prometía, y 4dx/habitos/feum lo emitían **sin folio ni descargo SEP**. Todo reparado; los 11 cursos usan ya `id:'final_exam'` + `id:'certificate'` y el certificado inyectado. Detalle y reglas en **Sistema de certificados — CONTRATO**. Commits `94044f3`, `886c3df`.
 
@@ -225,13 +233,7 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 **Cambio de estrategia de monetización → EMBUDO.** Los cursos derivados dejaron de ser "gratis para todos" y pasaron a ser gancho+recompensa: (1) **1 curso derivado gratis al registrarse** (pick explícito), (2) **comprar un curso propio desbloquea TODOS los derivados gratis**, (3) **grandfathering** (quien ya tenía derivados los conserva). Implementado con helpers `hasPurchasedAnyPaidCourse`/`hasUsedFreePick`/`derivedAccessState` espejados en `curso.html` e `index.html`, todo derivado de `enrollments` (sin schema nuevo, sin cambios de servidor). Estados `unlocked`/`free_pick`/`locked` en landing + catálogo; modal `clShowUnlockUpsell` para upsell; banner "1 gratis"; bot actualizado. Ver sección **Legal → MODELO DE MONETIZACIÓN** y memoria `project_estrategia-embudo-2-gratis.md`. Commit `371d86c`, deployado (hosting + `chatPreventa`). **Germán decidió "Proceder" sobre el matiz legal; queda nota para su abogado de PI.** Pendiente: él prueba el flujo en vivo (incógnito).
 
-### Antes (2026-06-15, monetización "acceso abierto" + Stripe LIVE + bot + verificador)
-
-Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin condición** (esta política la reemplazó el embudo del 2026-06-16). Stripe LIVE activado, bot de preventa activo/verificado, verificador de folios (`verificar.html` + `issueCertificate`), Fable 5 reescrito como lección durable (`lbonus2` en CLAUDE SISTEMA; **lección: el patrón "bonus por modelo nuevo" es frágil → preferir contenido agnóstico de modelo**; memoria `project_bonus-fable5-claude-sistema.md`). Detalle en las memorias respectivas.
-
-### Antes (2026-06-11, piloto Destapa tu Negocio + marca OAC)
-
-**Curso piloto PUBLICADO.** "La Meta" (Goldratt) reconstruida como **obra original** "Destapa tu Negocio" (Método FLUIR, 7 casos PYME MX). Flag **`meta.originalWork:true`** → el sitio dice "Obra original de…" en vez de "Basado en el libro de…". Branding OAC en portadas. **Acceso total del dueño:** `FULL_ACCESS_EMAILS`. Fixes: racha persistida, examen con una oportunidad por pregunta, bug de caché (`cleanUrls`). Memorias `project_piloto-destapa-tu-negocio.md`, `reference_acceso-total-cuentas.md`.
+*(Entradas anteriores a 2026-06-16 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: impresión de certificado, caché de deploy, examen de una oportunidad, racha persistida.)*
 
 ## Pendientes al cierre
 
@@ -242,10 +244,10 @@ Cobro reactivado solo para los 2 limpios; **derivados gratis para todos sin cond
 - **Destapa tu Negocio:** Germán hace su **revisión de instructor** (ya es público); decidir si OAC va también en `legal.html`/certificados de otros cursos.
 - ✅ ~~**Verificador de folios (Fase 2)**~~ — HECHO 2026-06-15: Cloud Function `issueCertificate` + colección pública `certificates/{folio}` + `verificar.html`. Claim "verificable" restaurado. (Follow-up: backfill de certificados viejos, opcional.)
 - ✅🤖 **Bot de preventa — ACTIVO Y VERIFICADO (2026-06-15).** `ANTHROPIC_API_KEY` puesta por Germán + `chatPreventa` desplegada; probado end-to-end (responde con precio correcto y certificado honesto). Cloud Function `chatPreventa` (onCall, modelo **`claude-haiku-4-5`** vía `@anthropic-ai/sdk`): system prompt con catálogo + política pago/gratis + certificado honesto + handoff a Germán; rate limit por IP (colección `chatLimits`, ~40 msgs/IP/día); `buildPreventaSystemPrompt(courseId)` + `PREVENTA_CATALOG` en functions/index.js. Helper `TK.chatPreventa(courseId, messages)`. Chat UI en el widget flotante del landing de curso.html (reemplazó las FAQ estáticas; degrada con gracia si la función no está activa). **ACTIVAR con:** (1) `npx firebase-tools functions:secrets:set ANTHROPIC_API_KEY` (pega la API key de Anthropic), (2) `npx firebase-tools deploy --only functions:chatPreventa --project trikles-cursos`. Para cambiar el contacto/WhatsApp del handoff: `TRIKLES_CONTACT_EMAIL`/`TRIKLES_CONTACT_WHATSAPP` en functions/index.js.
-- **Recordatorios: la 1ª corrida con los 3 cursos nuevos activados sale el 2026-07-17 a las 10:00** (5 correos a 5 alumnos). Vale la pena mirar si `lorelay_anerol` (a 2 lecciones de terminar CLAUDE SISTEMA) o `blackwolf9518` (a 3) retoman: es la prueba de si el recordatorio convierte.
-- **Backfill de folios** (opcional): los certificados emitidos antes del 2026-06-15, y los de los 3 cursos que estaban fuera del estándar, no tienen folio registrado hasta que el alumno reabra su certificado.
-- **Mente Millonaria no está en `COURSE_LEARNINGS`** (`curso.html`) → su botón de LinkedIn usa el texto genérico.
-- Revisar correo de contacto en `legal.html` (hoy cpgermansolis@gmail.com).
+- **Recordatorios — convierten?** Las corridas del 16-jul (5 correos) y 17-jul (3) salieron limpias (verificado en logs). Falta ver si `lorelay_anerol` (a 2 lecciones de CLAUDE SISTEMA) o `blackwolf9518` (a 3) retoman. **Decisión de Germán (2026-07-17):** el cooldown es por curso, no por alumno → un alumno puede recibir correo días consecutivos (curso distinto); **dejarlo así**, no meter cooldown global sin que lo pida.
+- ✅ ~~**Backfill de folios**~~ — HECHO 2026-07-17: 17 certificados pre-2026-06-15 registrados en `certificates/{folio}` (`tools/`→memoria `tool_backfill-folios-trikles.js`, dry-run por defecto). Solo queda el goteo natural: los que reabra un alumno se registran solos.
+- ✅ ~~**Mente Millonaria en `COURSE_LEARNINGS`**~~ — HECHO 2026-07-17 (commit `5c81f94`, deployado): ya trae 4 aprendizajes propios; el botón de LinkedIn dejó de usar el texto genérico.
+- ✅ ~~Correo de contacto en `legal.html`~~ — Germán decidió **dejar el mismo** (cpgermansolis@gmail.com) el 2026-07-17.
 
 ---
 
