@@ -823,6 +823,128 @@ exports.revokeAdmin = onCall(
 );
 
 // =========================================================
+// GESTIÓN DE CUENTA DE ALUMNO — cambiar correo / contraseña
+// =========================================================
+// Reemplazan al CLI (tool_fs-helper-trikles.js) para que Germán pueda hacer
+// ambas operaciones desde admin.html. Solo un admin autenticado puede llamarlas
+// (mismo blindaje que grantAdmin/revokeAdmin). Cambiar el correo/clave de OTRA
+// cuenta requiere el Admin SDK; el SDK del navegador solo deja tocar la propia.
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// changeUserEmail (callable) — { oldEmail, newEmail }
+// Cambia el correo en Firebase Auth Y mueve el perfil users/{correo}, conservando
+// el mismo uid → los folios de certificado (buildCertFolio(uid,courseId)) NO cambian.
+// Es estrictamente mejor que el re-registro del alumno (que sí cambia el uid).
+// ⚠️ El alumno tendrá que entrar con el correo NUEVO; su contraseña se conserva.
+exports.changeUserEmail = onCall(
+    { cors: true },
+    async (request) => {
+        if (!request.auth || request.auth.token.admin !== true) {
+            throw new HttpsError('permission-denied', 'Requiere privilegios de administrador.');
+        }
+        const oldEmail = String(request.data.oldEmail || '').trim().toLowerCase();
+        const newEmail = String(request.data.newEmail || '').trim().toLowerCase();
+        if (!oldEmail || !newEmail) {
+            throw new HttpsError('invalid-argument', 'Se requieren oldEmail y newEmail.');
+        }
+        if (oldEmail === newEmail) {
+            throw new HttpsError('invalid-argument', 'El correo nuevo es igual al actual.');
+        }
+        if (!EMAIL_RE.test(newEmail)) {
+            throw new HttpsError('invalid-argument', 'El correo nuevo no tiene un formato válido.');
+        }
+
+        // 1) La cuenta original debe existir en Auth.
+        let userRecord;
+        try {
+            userRecord = await admin.auth().getUserByEmail(oldEmail);
+        } catch (e) {
+            throw new HttpsError('not-found', 'No existe una cuenta con ese correo: ' + oldEmail);
+        }
+        const uid = userRecord.uid;
+
+        // 2) El correo nuevo NO debe estar tomado por otra cuenta.
+        try {
+            await admin.auth().getUserByEmail(newEmail);
+            throw new HttpsError('already-exists', 'Ya existe una cuenta con el correo: ' + newEmail);
+        } catch (e) {
+            if (e instanceof HttpsError) throw e;            // already-exists → propagar
+            // auth/user-not-found → correo libre, continuar
+        }
+
+        // 3) Cambiar el correo en Auth (mismo uid → folios intactos).
+        await admin.auth().updateUser(uid, { email: newEmail, emailVerified: false });
+
+        // 4) Mover el perfil users/{oldEmail} → users/{newEmail}. Si algo falla,
+        //    revertir Auth para no dejar login y perfil desalineados.
+        let movedDoc = false;
+        try {
+            const db = admin.firestore();
+            const oldRef = db.collection('users').doc(oldEmail);
+            const newRef = db.collection('users').doc(newEmail);
+            const oldSnap = await oldRef.get();
+            if (oldSnap.exists) {
+                const newSnap = await newRef.get();
+                if (newSnap.exists) {
+                    throw new HttpsError('failed-precondition',
+                        'Ya existe un perfil bajo el correo nuevo; no se pisa nada.');
+                }
+                const data = oldSnap.data() || {};
+                data.email = newEmail;
+                await newRef.set(data);
+                await oldRef.delete();
+                movedDoc = true;
+            }
+        } catch (moveErr) {
+            // Rollback del correo en Auth.
+            try {
+                await admin.auth().updateUser(uid, { email: oldEmail });
+            } catch (rbErr) {
+                logger.error('changeUserEmail: rollback de Auth falló', { uid, oldEmail, newEmail, err: String(rbErr) });
+                throw new HttpsError('internal',
+                    'El perfil no se pudo mover Y el correo de acceso quedó en ' + newEmail +
+                    '. Revisa manualmente el usuario ' + uid + '.');
+            }
+            if (moveErr instanceof HttpsError) throw moveErr;
+            throw new HttpsError('internal', 'No se pudo mover el perfil: ' + (moveErr.message || moveErr));
+        }
+
+        logger.info('changeUserEmail', { by: request.auth.token.email, oldEmail, newEmail, uid, movedDoc });
+        return { ok: true, uid, movedDoc };
+    }
+);
+
+// changeUserPassword (callable) — { email, newPassword }
+// Establece una contraseña nueva para el alumno. El admin la teclea y se la
+// comparte al alumno; el correo de acceso NO cambia. Mínimo 6 chars (regla Firebase).
+exports.changeUserPassword = onCall(
+    { cors: true },
+    async (request) => {
+        if (!request.auth || request.auth.token.admin !== true) {
+            throw new HttpsError('permission-denied', 'Requiere privilegios de administrador.');
+        }
+        const email = String(request.data.email || '').trim().toLowerCase();
+        const newPassword = String(request.data.newPassword || '');
+        if (!email) {
+            throw new HttpsError('invalid-argument', 'Se requiere el campo email.');
+        }
+        if (newPassword.length < 6) {
+            throw new HttpsError('invalid-argument', 'La contraseña debe tener al menos 6 caracteres.');
+        }
+        let userRecord;
+        try {
+            userRecord = await admin.auth().getUserByEmail(email);
+        } catch (e) {
+            throw new HttpsError('not-found', 'No existe una cuenta con ese correo: ' + email);
+        }
+        await admin.auth().updateUser(userRecord.uid, { password: newPassword });
+        logger.info('changeUserPassword', { by: request.auth.token.email, target: email });
+        return { ok: true };
+    }
+);
+
+// =========================================================
 // CERTIFICADOS — registro de folio verificable
 // =========================================================
 // El folio TKS-XXXX-XXXX se calcula determinísticamente a partir de

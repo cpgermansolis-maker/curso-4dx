@@ -408,6 +408,7 @@
         <div class="quick-actions">
             <button class="btn-action btn-scholarship" onclick="openScholarshipModal()">🎓 Otorgar beca</button>
             <button class="btn-action" style="background:#e8f5e9;color:#1b5e20;border-color:#43a047;" onclick="openAdminMgmtModal()">👑 Gestionar admins</button>
+            <button class="btn-action" style="background:#e3f2fd;color:#0d47a1;border-color:#1976d2;" onclick="openAccountModal()">🔑 Cuenta de alumno</button>
             <button class="btn-action btn-clean-test" onclick="cleanTestStudents()">🧹 Borrar alumnos de prueba</button>
             <button class="btn-action btn-clean-all" onclick="cleanAllStudents()">⚠️ Borrar TODOS los alumnos</button>
             <button class="btn-action" style="background:#fff3e0;color:#e65100;border-color:#ffb300;" onclick="openRatingsPanel()">⭐ Calificaciones</button>
@@ -567,6 +568,57 @@
 
         <div class="modal-actions">
             <button class="btn-modal-cancel" onclick="closeAdminMgmtModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ======= MODAL CUENTA DE ALUMNO (correo / contraseña) ======= -->
+<div id="accountModal" class="modal-backdrop" onclick="if(event.target===this) closeAccountModal()">
+    <div class="modal-body">
+        <button class="modal-close" onclick="closeAccountModal()">✕</button>
+        <h2>🔑 Gestionar cuenta de alumno</h2>
+        <p style="color:var(--text-light);margin:6px 0 18px;font-size:0.9em;">Cambia el correo de acceso o la contraseña de un alumno registrado.</p>
+
+        <div class="form-group">
+            <label>Alumno:</label>
+            <input type="text" id="acctSearch" placeholder="Busca por nombre o correo..." oninput="filterAccountStudents()">
+            <div class="student-picker" id="acctStudentList"></div>
+        </div>
+
+        <div id="acctPanels" style="display:none;">
+            <div style="background:#f5f5f5;border-radius:8px;padding:10px 14px;margin:6px 0 16px;font-size:0.9em;">
+                Correo actual: <strong id="acctCurrentEmail"></strong>
+            </div>
+
+            <!-- Cambiar correo -->
+            <div class="form-group">
+                <label>Cambiar correo de acceso:</label>
+                <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:0.82em;color:#6d4c00;line-height:1.5;">
+                    <strong>⚠️ Antes de cambiarlo:</strong> el alumno tendrá que iniciar sesión con el <strong>correo nuevo</strong>. <strong>Su contraseña se conserva.</strong> El sitio no tiene forma de que él lo cambie solo → <strong>avísale hoy mismo</strong> o se re-registrará (fue lo que pasó con Armando). Sus certificados y folios <strong>no</strong> cambian.
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <input type="email" id="acctNewEmail" placeholder="correo-nuevo@ejemplo.com" style="flex:1;">
+                    <button class="btn-modal-confirm" onclick="changeStudentEmail()" style="white-space:nowrap;">✉️ Cambiar correo</button>
+                </div>
+            </div>
+
+            <hr style="border:none;border-top:1px solid #e0e0e0;margin:18px 0;">
+
+            <!-- Cambiar contraseña -->
+            <div class="form-group">
+                <label>Cambiar contraseña:</label>
+                <div style="background:#e8f5e9;border:1px solid #c5e1a5;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:0.82em;color:#33691e;line-height:1.5;">
+                    Tú tecleas la clave nueva y se aplica al instante. <strong>Compártesela al alumno</strong> (WhatsApp/correo). Su correo de acceso <strong>no</strong> cambia.
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <input type="text" id="acctNewPassword" placeholder="Contraseña nueva (mín. 6 caracteres)" style="flex:1;" autocomplete="off">
+                    <button class="btn-modal-confirm" onclick="changeStudentPassword()" style="white-space:nowrap;">🔒 Establecer</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-modal-cancel" onclick="closeAccountModal()">Cerrar</button>
         </div>
     </div>
 </div>
@@ -953,6 +1005,96 @@ async function revokeAdminAccess() {
         await call({ email });
         alert('✅ Acceso de administrador revocado para:\n' + email);
         closeAdminMgmtModal();
+    } catch (e) {
+        alert('Error: ' + (e.message || e));
+    }
+}
+
+// =========================================================
+// ========== CUENTA DE ALUMNO (correo / contraseña) ==========
+// =========================================================
+// Llama a las Cloud Functions changeUserEmail / changeUserPassword (protegidas
+// por el claim admin). El buscador reutiliza las clases del picker de becas.
+let acctSelectedEmail = null;
+
+function openAccountModal() {
+    acctSelectedEmail = null;
+    document.getElementById('acctSearch').value = '';
+    document.getElementById('acctNewEmail').value = '';
+    document.getElementById('acctNewPassword').value = '';
+    document.getElementById('acctPanels').style.display = 'none';
+    document.getElementById('accountModal').classList.add('show');
+    renderAccountStudentList('');
+}
+function closeAccountModal() {
+    document.getElementById('accountModal').classList.remove('show');
+}
+function filterAccountStudents() {
+    renderAccountStudentList(document.getElementById('acctSearch').value);
+}
+function renderAccountStudentList(filter) {
+    const users = getUsers();
+    const emails = Object.keys(users);
+    const f = (filter || '').toLowerCase().trim();
+    const filtered = emails.filter(e => {
+        const u = users[e];
+        return !f || (u.name || '').toLowerCase().includes(f) || e.includes(f) || (u.company || '').toLowerCase().includes(f);
+    });
+    const container = document.getElementById('acctStudentList');
+    if (filtered.length === 0) {
+        container.innerHTML = '<div class="student-picker-empty">' + (emails.length === 0 ? 'No hay alumnos registrados todavía.' : 'Ningún alumno coincide con la búsqueda.') + '</div>';
+        return;
+    }
+    container.innerHTML = filtered.slice(0, 50).map(e => {
+        const u = users[e];
+        const sel = acctSelectedEmail === e ? ' selected' : '';
+        return '<div class="student-picker-item' + sel + '" onclick="selectAccountStudent(\'' + e.replace(/'/g, "\\'") + '\')">' +
+            '<strong>' + (u.name || e) + '</strong>' +
+            '<small>' + e + (u.company ? ' · ' + u.company : '') + '</small>' +
+        '</div>';
+    }).join('');
+}
+function selectAccountStudent(email) {
+    acctSelectedEmail = email;
+    document.getElementById('acctCurrentEmail').textContent = email;
+    document.getElementById('acctNewEmail').value = '';
+    document.getElementById('acctNewPassword').value = '';
+    document.getElementById('acctPanels').style.display = 'block';
+    renderAccountStudentList(document.getElementById('acctSearch').value);
+}
+
+async function changeStudentEmail() {
+    if (!acctSelectedEmail) { alert('Elige un alumno primero.'); return; }
+    const oldEmail = acctSelectedEmail;
+    const newEmail = (document.getElementById('acctNewEmail').value || '').trim().toLowerCase();
+    if (!newEmail) { alert('Escribe el correo nuevo.'); return; }
+    if (newEmail === oldEmail) { alert('El correo nuevo es igual al actual.'); return; }
+    if (!confirm('¿Cambiar el correo de:\n' + oldEmail + '\n→ ' + newEmail + '\n\nEl alumno deberá iniciar sesión con el correo NUEVO (su contraseña se conserva).\nAvísale HOY MISMO o se re-registrará.')) return;
+    try {
+        const call = TK._functions.httpsCallable('changeUserEmail');
+        await call({ oldEmail, newEmail });
+        alert('✅ Correo cambiado a:\n' + newEmail + '\n\n⚠️ Avísale al alumno HOY: ahora inicia sesión con ese correo (su contraseña no cambió).');
+        await init();                       // refresca la tabla y _usersCache
+        acctSelectedEmail = newEmail;
+        document.getElementById('acctCurrentEmail').textContent = newEmail;
+        document.getElementById('acctNewEmail').value = '';
+        renderAccountStudentList(document.getElementById('acctSearch').value);
+    } catch (e) {
+        alert('Error: ' + (e.message || e));
+    }
+}
+
+async function changeStudentPassword() {
+    if (!acctSelectedEmail) { alert('Elige un alumno primero.'); return; }
+    const email = acctSelectedEmail;
+    const newPassword = document.getElementById('acctNewPassword').value || '';
+    if (newPassword.length < 6) { alert('La contraseña debe tener al menos 6 caracteres.'); return; }
+    if (!confirm('¿Establecer una contraseña nueva para:\n' + email + '?')) return;
+    try {
+        const call = TK._functions.httpsCallable('changeUserPassword');
+        await call({ email, newPassword });
+        alert('✅ Contraseña actualizada para:\n' + email + '\n\nCompártesela al alumno. Su correo de acceso no cambia.');
+        document.getElementById('acctNewPassword').value = '';
     } catch (e) {
         alert('Error: ' + (e.message || e));
     }
