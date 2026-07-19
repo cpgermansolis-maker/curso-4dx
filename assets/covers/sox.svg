@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#0d2b4e"/>
+      <stop offset="55%"  stop-color="#0a2540"/>
+      <stop offset="100%" stop-color="#04101f"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#e6cd8b"/>
+      <stop offset="50%"  stop-color="#c9a961"/>
+      <stop offset="100%" stop-color="#a8863f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="300" height="400" fill="url(#bg)"/>
+
+  <!-- decorative background glyph: §404 -->
+  <text x="150" y="330" font-family="Georgia,serif" font-weight="900" font-size="150" fill="#c9a961" text-anchor="middle" opacity="0.06">§404</text>
+
+  <!-- HEADER: brand + tier -->
+  <text x="20" y="36" font-family="'Segoe UI',Tahoma,sans-serif" font-weight="800" font-size="13" fill="#ffffff" letter-spacing="2">TR<tspan fill="#ff8f00">I</tspan>KLES</text>
+  <text x="280" y="36" font-family="'Segoe UI',Tahoma,sans-serif" font-weight="700" font-size="9" fill="#c9a961" letter-spacing="2.5" text-anchor="end">CURSO PREMIUM</text>
+  <line x1="20" y1="48" x2="280" y2="48" stroke="#c9a961" stroke-width="0.6" opacity="0.6"/>
+
+  <!-- balance / scales motif -->
+  <g stroke="url(#gold)" stroke-width="2.2" fill="none" opacity="0.9">
+    <line x1="150" y1="108" x2="150" y2="150"/>
+    <line x1="110" y1="118" x2="190" y2="118"/>
+    <path d="M110 118 L98 140 A14 14 0 0 0 122 140 Z" fill="#c9a961" fill-opacity="0.12"/>
+    <path d="M190 118 L178 140 A14 14 0 0 0 202 140 Z" fill="#c9a961" fill-opacity="0.12"/>
+    <line x1="132" y1="152" x2="168" y2="152"/>
+  </g>
+  <circle cx="150" cy="112" r="3.5" fill="url(#gold)"/>
+
+  <!-- TITLE block -->
+  <text x="150" y="205" font-family="'Segoe UI',Tahoma,sans-serif" font-size="11" fill="#ffffff" text-anchor="middle" letter-spacing="4.5" opacity="0.82">SARBANES-OXLEY</text>
+  <text x="150" y="272" font-family="Georgia,serif" font-weight="900" font-size="92" fill="url(#gold)" text-anchor="middle" letter-spacing="2">SOX</text>
+
+  <line x1="70" y1="296" x2="230" y2="296" stroke="#c9a961" stroke-width="0.6" opacity="0.5"/>
+
+  <text x="150" y="320" font-family="'Segoe UI',Tahoma,sans-serif" font-size="11" fill="#dfe7f0" text-anchor="middle" letter-spacing="1.5">Control Interno Financiero</text>
+  <text x="150" y="340" font-family="'Segoe UI',Tahoma,sans-serif" font-size="11" fill="#c9a961" text-anchor="middle" letter-spacing="3" font-weight="700">· ICFR ·</text>
+
+  <text x="150" y="378" font-family="'Segoe UI',Tahoma,sans-serif" font-size="9" fill="#8fa6c0" text-anchor="middle" letter-spacing="1.2">En la Práctica · Obra original</text>
+</svg>

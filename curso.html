@@ -903,6 +903,10 @@
         .tag-d1 { background: var(--blue); } .tag-d2 { background: var(--orange); }
         .tag-d3 { background: var(--green); } .tag-d4 { background: var(--purple); }
         .tag-intro { background: #546e7a; } .tag-final { background: var(--gold); color: #333; }
+        /* Chips del curso SOX (paleta profesional azul-dorado, no VIP) */
+        .tag-s0 { background: #455a64; } .tag-s1 { background: #0d47a1; }
+        .tag-s2 { background: #00695c; } .tag-s3 { background: #1565c0; }
+        .tag-s4 { background: #283593; } .tag-s5 { background: #00838f; }
         .lesson-header h1 { font-size: 1.6em; color: var(--blue); }
         .lesson-header p { color: var(--text-light); margin-top: 4px; }
 
@@ -4265,7 +4269,7 @@ function isEligibleForFreeFirstCourse() {
 //      TODOS los derivados gratis. (Comprar un propio NO regala el otro propio.)
 //   3) Quien ya tenía cursos derivados gratis (política vieja) los CONSERVA.
 // Ver memoria postura-legal + project_estrategia-embudo-2-gratis.
-const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio'];
+const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio', 'sox'];
 function isPaidCourse(id) {
     const cid = id || (COURSE && COURSE.id);
     return PAID_COURSE_IDS.indexOf(cid) !== -1;
@@ -4315,7 +4319,8 @@ const ENROLL_PRICING = {
     'feum-inventarios':  { listPrice: 1999, price:  649 },
     'habitos':           { listPrice:  999, price:  249 },
     '4dx':               { listPrice:  999, price:  249 },
-    'destapa-tu-negocio':{ listPrice: 1799, price:  449 }
+    'destapa-tu-negocio':{ listPrice: 1799, price:  449 },
+    'sox':               { listPrice: 2999, price:  999 }
 };
 
 function _fmtPriceEnroll(n) {
@@ -4962,10 +4967,11 @@ function showCourseLanding() {
 function clShowUnlockUpsell() {
     let m = document.getElementById('clUnlockModal');
     if (m) { m.style.display = 'flex'; document.body.style.overflow = 'hidden'; return; }
-    const TITLES = { 'claude-sistema': 'CLAUDE SISTEMA', 'destapa-tu-negocio': 'Destapa tu Negocio' };
+    const TITLES = { 'claude-sistema': 'CLAUDE SISTEMA', 'destapa-tu-negocio': 'Destapa tu Negocio', 'sox': 'SOX en la Práctica' };
     const SUBS = {
         'claude-sistema': 'Sistema VIP de productividad con IA',
-        'destapa-tu-negocio': 'Método FLUIR para destrabar tu PYME'
+        'destapa-tu-negocio': 'Método FLUIR para destrabar tu PYME',
+        'sox': 'Sarbanes-Oxley y control interno financiero (ICFR)'
     };
     const cardsHtml = PAID_COURSE_IDS.map(function (id) {
         const p = ENROLL_PRICING[id] || { price: 0, listPrice: null };

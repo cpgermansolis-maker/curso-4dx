@@ -2246,6 +2246,19 @@ const CATALOG = [
         lessonsCount: 24,
         icon: '🔓',
         active: true
+    },
+    {
+        id: 'sox',
+        title: 'SOX en la Práctica',
+        subtitle: 'Sarbanes-Oxley y el control interno financiero (ICFR)',
+        author: 'Obra original profesional · Germán Solís (auditor)',
+        cover: 'assets/covers/sox.svg',
+        description: 'La formación profesional en Sarbanes-Oxley que casi no existe en español. Para auditores, contralores y equipos de control interno —sobre todo en subsidiarias mexicanas de matrices listadas en EE.UU.— este curso lleva de cero a dominar la metodología completa: qué es la ley y a quién aplica, el marco COSO 2013, alcance y materialidad, documentación y prueba de controles (matriz de riesgos, recorridos, diseño vs. operación, muestreo, ITGC, IPE, segregación de funciones) y evaluación de deficiencias hasta la debilidad material. 32 lecciones con enfoque práctico de auditor y contexto mexicano. Contenido verificado contra la ley, el estándar PCAOB AS 2201 y la guía de la SEC.',
+        category: 'Auditoría y control interno',
+        duration: '12-15 horas',
+        lessonsCount: 32,
+        icon: '🏛️',
+        active: true
     }
 ];
 
@@ -2263,7 +2276,8 @@ const PRICING = {
     'la-paradoja':       { listPrice: 1199, price:  299, badge: null },
     'habitos':           { listPrice:  999, price:  249, badge: null },
     '4dx':               { listPrice:  999, price:  249, badge: null },
-    'destapa-tu-negocio':{ listPrice: 1799, price:  449, badge: 'Premium' }
+    'destapa-tu-negocio':{ listPrice: 1799, price:  449, badge: 'Premium' },
+    'sox':               { listPrice: 2999, price:  999, badge: 'Premium' }
 };
 const BUNDLE = { listPrice: 7892, price: 2299 };
 
@@ -2273,7 +2287,7 @@ const BUNDLE = { listPrice: 7892, price: 2299 };
 //   1) Gancho: el alumno se lleva UN derivado gratis (su pick) al registrarse.
 //   2) Recompensa: al comprar un curso propio se desbloquean TODOS los derivados.
 //   3) Quien ya tenía derivados gratis los CONSERVA. Espejo de curso.html.
-const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio'];
+const PAID_COURSE_IDS = ['claude-sistema', 'destapa-tu-negocio', 'sox'];
 function isPaidCourse(id) { return PAID_COURSE_IDS.indexOf(id) !== -1; }
 function isFreeRequestCourse(id) { return !isPaidCourse(id); }
 
@@ -2322,7 +2336,8 @@ const LAUNCH_DATES = {
     'codigo-honor':      '2026-04-22',
     'mente-millonaria':  '2026-05-12',
     'claude-sistema':    '2026-05-28',
-    'destapa-tu-negocio':'2026-06-11'  // el más nuevo
+    'destapa-tu-negocio':'2026-06-11',
+    'sox':               '2026-07-18'  // el más nuevo
 };
 
 // Configuración de badges dinámicos
@@ -3174,7 +3189,7 @@ function renderPricing() {
     // Política 2026-06-15: vitrina de VALOR (no venta in-situ). Derivados = acceso
     // gratuito (con su valor tachado, para que se vea el ahorro); limpios = precio real.
     // Todos los botones llevan al curso (curso.html), donde se aplica la política.
-    const order = ['claude-sistema', 'destapa-tu-negocio', 'food-beverage', 'feum-inventarios', 'codigo-honor', 'coaching', 'gerencia-efectiva', 'mente-millonaria', 'la-paradoja', 'habitos', '4dx'];
+    const order = ['claude-sistema', 'destapa-tu-negocio', 'sox', 'food-beverage', 'feum-inventarios', 'codigo-honor', 'coaching', 'gerencia-efectiva', 'mente-millonaria', 'la-paradoja', 'habitos', '4dx'];
     const byId = Object.fromEntries(CATALOG.map(c => [c.id, c]));
     grid.innerHTML = order.filter(id => byId[id] && PRICING[id]).map(id => {
         const c = byId[id];

@@ -50,7 +50,8 @@ const COURSE_TITLES = {
     'food-beverage': 'Control de Costos en Alimentos y Bebidas (Dopson & Hayes)',
     'claude-sistema': 'CLAUDE SISTEMA',
     'destapa-tu-negocio': 'Destapa tu Negocio',
-    'mente-millonaria': 'Los Secretos de la Mente Millonaria'
+    'mente-millonaria': 'Los Secretos de la Mente Millonaria',
+    'sox': 'SOX en la Práctica'
 };
 
 // Precios en centavos MXN (Stripe trabaja en la unidad más pequeña)
@@ -61,6 +62,7 @@ const COURSE_TITLES = {
 const COURSE_PRICES_CENTS = {
     'claude-sistema':    64900,   // $649.00  (obra original — cobrable)
     'destapa-tu-negocio':44900,   // $449.00  (obra original — cobrable)
+    'sox':               99900,   // $999.00  (obra original — cobrable)
     // ---- Derivados: NO cobrables (acceso gratuito). No habilitar precio. ----
     // '4dx': 24900, 'habitos': 24900, 'feum-inventarios': 64900,
     // 'gerencia-efectiva': 39900, 'la-paradoja': 29900, 'coaching': 39900,
@@ -94,12 +96,14 @@ const COURSE_LESSON_COUNTS = {
     'food-beverage':      33,
     'claude-sistema':     33,
     'destapa-tu-negocio': 24,
-    'mente-millonaria':   24
+    'mente-millonaria':   24,
+    'sox':                32
 };
 const COURSE_PASS_SCORES = {
     '4dx': 7, 'habitos': 7, 'feum-inventarios': 7, 'gerencia-efectiva': 7,
     'la-paradoja': 7, 'coaching': 7, 'codigo-honor': 11, 'food-beverage': 12,
-    'claude-sistema': 11, 'destapa-tu-negocio': 7, 'mente-millonaria': 11
+    'claude-sistema': 11, 'destapa-tu-negocio': 7, 'mente-millonaria': 11,
+    'sox': 11
 };
 
 // Umbrales de recordatorio (en días)
@@ -1067,6 +1071,7 @@ const TRIKLES_CONTACT_WHATSAPP = '+52 246 411 5513';
 const PREVENTA_CATALOG = [
     { id: 'claude-sistema',      t: 'CLAUDE SISTEMA',                              price: 'DE PAGO · $649 MXN (obra original VIP)',  d: 'Domina Claude (la IA) como sistema de trabajo personal: Chat, Co-work y Code. Nivel intermedio-avanzado.' },
     { id: 'destapa-tu-negocio',  t: 'Destapa tu Negocio',                          price: 'DE PAGO · $449 MXN (obra original)',      d: 'Método FLUIR: encuentra y rompe el freno que limita las utilidades de tu PYME. 7 casos de negocio mexicanos.' },
+    { id: 'sox',                 t: 'SOX en la Práctica',                          price: 'DE PAGO · $999 MXN (obra original profesional)', d: 'Metodología Sarbanes-Oxley y control interno financiero (ICFR) para auditores y contralores: COSO, alcance, pruebas de controles y deficiencias. 32 lecciones, enfoque práctico y contexto mexicano.' },
     { id: 'mente-millonaria',    t: 'Los Secretos de la Mente Millonaria',         price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $449',    d: 'Reprograma tu mentalidad financiera (ideas de T. Harv Eker).' },
     { id: 'la-paradoja',         t: 'La Paradoja',                                 price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $299',    d: 'Liderazgo de servicio (ideas de James C. Hunter).' },
     { id: 'habitos',             t: 'Los 7 Hábitos de la Gente Altamente Efectiva',price: 'GRATIS (1 de bienvenida, o todos al comprar un curso TRIKLES) · valor $249',    d: 'Efectividad personal y profesional (ideas de Covey).' },
@@ -1100,8 +1105,8 @@ function buildPreventaSystemPrompt(courseId) {
         '',
         'CÓMO FUNCIONA EL ACCESO (esto es clave, explícalo bien):',
         '- Al CREAR CUENTA, el visitante se lleva UN curso de la biblioteca GRATIS, el que él elija (su "curso de bienvenida"). Sin tarjeta, entra al instante.',
-        '- Las 2 OBRAS ORIGINALES (CLAUDE SISTEMA $649 y Destapa tu Negocio $449) SÍ se pagan, con Stripe (tarjeta, SPEI u OXXO), pago único y acceso de por vida. Comprar una NO incluye la otra.',
-        '- GRAN BENEFICIO: al comprar CUALQUIERA de las 2 obras originales, se DESBLOQUEA TODO EL CATÁLOGO de cursos de la biblioteca GRATIS, para siempre. Es el mejor argumento de venta: pagas un curso original y te llevas toda la biblioteca de regalo.',
+        '- Las 3 OBRAS ORIGINALES (CLAUDE SISTEMA $649, Destapa tu Negocio $449 y SOX en la Práctica $999) SÍ se pagan, con Stripe (tarjeta, SPEI u OXXO), pago único y acceso de por vida. Comprar una NO incluye las otras.',
+        '- GRAN BENEFICIO: al comprar CUALQUIERA de las obras originales, se DESBLOQUEA TODO EL CATÁLOGO de cursos de la biblioteca GRATIS, para siempre. Es el mejor argumento de venta: pagas un curso original y te llevas toda la biblioteca de regalo.',
         '- Si alguien ya usó su curso gratis de bienvenida y quiere más cursos de la biblioteca sin comprar, explícale con amabilidad que el camino es adquirir una obra original (y así desbloquea todos).',
         '',
         'CERTIFICADO (sé honesto, no exageres): al aprobar el examen final reciben un Certificado TRIKLES con folio único verificable en línea, ideal para LinkedIn y CV. Es una CONSTANCIA de finalización de carácter privado; NO es un título ni cédula profesional y NO tiene validez oficial ante la SEP.',
