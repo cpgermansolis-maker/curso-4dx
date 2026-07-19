@@ -195,6 +195,7 @@ Cloud Function **`sendInactiveReminders`** (`functions/index.js`): corre **todos
 
 Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local de `firebase-tools` contra Firestore REST + identitytoolkit. Script guardado en la memoria (`memory/tool_fs-helper-trikles.js` — copiar al scratchpad y correr con `node`). Comandos: `list`, `get <email>` (doc completo con progreso), `grant <email> <courseId> <nota>` (beca, mismo formato que el panel), `lookup <email>`, `changeemail <viejo> <nuevo>`, `backup <email> <archivo>`, `delete <email> <localIdEsperado>`. Detalle y gotchas en memoria `reference_admin-cli-firestore.md`.
 
+- **✅ Desde 2026-07-18, cambiar correo y contraseña de un alumno YA está en el PANEL** (botón "🔑 Cuenta de alumno" en `admin.html` → Cloud Functions `changeUserEmail` / `changeUserPassword`, protegidas por el claim admin, mismo patrón que `grantAdmin`). El CLI queda de respaldo. `changeUserEmail` conserva el `uid` (folios de certificado intactos — mejor que el re-registro) y mueve el doc `users/{email}`, con **rollback de Auth** si el movimiento del doc falla. `changeUserPassword` fija la clave (mín. 6). Cliente en `admin.html` (`changeStudentEmail`/`changeStudentPassword`). El aviso de abajo sigue vigente: cambiar el correo igual le rompe el login al alumno.
 - **⚠️ Cambiarle el correo a un alumno le rompe el login: AVÍSALE EL MISMO DÍA.** El sitio no tiene UI para que él lo cambie, su teléfono le sigue autocompletando el correo viejo, y lo natural es que se **re-registre** en vez de escribirte. Pasó con Armando (12→16 jul): acabamos con dos cuentas y él cuatro días sin sus cursos.
 - **Cambiar el correo requiere DOS lados:** Auth (`accounts:update`) **y** mover el doc `users/{email}` (el ID del doc ES el correo en minúsculas; Firestore no renombra → copiar+borrar). Hacerlo solo en la consola de Firebase deja los cursos huérfanos. Auth es solo password → la contraseña se conserva.
 - **Al deshacer un cambio de correo, revertir la cuenta ORIGINAL, no adoptar la duplicada:** el folio del certificado es `buildCertFolio(uid, courseId)` → cambiar de `localId` le cambia todos los folios al alumno.
@@ -203,7 +204,13 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ---
 
-## Último avance (2026-07-17, verificación de recordatorios + 2 pendientes cerrados)
+## Último avance (2026-07-18, nuevo curso SOX + cambio de correo/clave en el panel)
+
+**Nuevo curso propio: "SOX en la Práctica"** (Sarbanes-Oxley / ICFR) — id `sox`, **3ª obra original de pago** ($999, badge Premium, estética azul-dorado NO VIP), profesional/práctica, **32 lecciones** + examen 15 (pasa con 11) + certificado. Es la obra **más limpia legalmente** del catálogo: la ley SOX es dominio público; solo COSO/PCAOB tienen copyright → se enseñan sus conceptos con palabras/diagramas propios. Construido, **auditado** (`audit-cursos.js` en verde), cableado en todos los sitios (CATALOG/PRICING/PAID_COURSE_IDS/LAUNCH_DATES/order en index.html; PAID_COURSE_IDS/ENROLL_PRICING/unlock-modal/**chips CSS `.tag-s0..s5`** en curso.html; getCatalog en admin.html; COURSE_TITLES/PRICES_CENTS 99900/LESSON_COUNTS 32/PASS_SCORES 11/PREVENTA en functions) y **desplegado** (commit `5c496e8`, functions + hosting). **PENDIENTE: Germán revisa la exactitud técnica como auditor (SME) antes de promocionarlo** — está live y comprable pero sin promoción. Detalle en memoria `project_curso-sox.md`.
+
+**Cambiar correo/clave de alumnos ya está en el panel** (antes solo por CLI). Ver **Admin por CLI**. Commit `01b2cd1`, deployado y verificado en vivo (cuenta de Armando: correo movido + login OK, folios intactos).
+
+### Antes (2026-07-17, verificación de recordatorios + 2 pendientes cerrados)
 
 **Recordatorios verificados en vivo.** Las corridas del 16-jul (5 correos) y 17-jul (3) salieron limpias; la lógica "1 por alumno por corrida" funciona. El "error" que reportó Germán era un **rebote benigno** (buzón del alumno lleno, no la plataforma). **Decisión:** el cooldown es por curso → un alumno puede recibir correos en días consecutivos (curso distinto); se deja así.
 
@@ -229,14 +236,12 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 **`.gitignore` ahora ignora `libros/` completa** (antes lista parcial → se colaban libros nuevos) y `graphify-out/`: estaban protegidos del hosting pero **no** del repo de GitHub, que es público. Commits `400de12`, `1fe3f8d`. Ver **Legal**. (El fix de impresión del certificado de ese día atacó la causa equivocada — ver la corrección en **Flujo de certificado**.)
 
-### Antes (2026-06-16, embudo "2 gratis" + Stripe LIVE probándose)
-
-**Cambio de estrategia de monetización → EMBUDO.** Los cursos derivados dejaron de ser "gratis para todos" y pasaron a ser gancho+recompensa: (1) **1 curso derivado gratis al registrarse** (pick explícito), (2) **comprar un curso propio desbloquea TODOS los derivados gratis**, (3) **grandfathering** (quien ya tenía derivados los conserva). Implementado con helpers `hasPurchasedAnyPaidCourse`/`hasUsedFreePick`/`derivedAccessState` espejados en `curso.html` e `index.html`, todo derivado de `enrollments` (sin schema nuevo, sin cambios de servidor). Estados `unlocked`/`free_pick`/`locked` en landing + catálogo; modal `clShowUnlockUpsell` para upsell; banner "1 gratis"; bot actualizado. Ver sección **Legal → MODELO DE MONETIZACIÓN** y memoria `project_estrategia-embudo-2-gratis.md`. Commit `371d86c`, deployado (hosting + `chatPreventa`). **Germán decidió "Proceder" sobre el matiz legal; queda nota para su abogado de PI.** Pendiente: él prueba el flujo en vivo (incógnito).
-
-*(Entradas anteriores a 2026-06-16 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: impresión de certificado, caché de deploy, examen de una oportunidad, racha persistida.)*
+*(Entradas anteriores a 2026-06-18 podadas — viven en git y en las memorias `project_*`. El embudo "2 gratis" (2026-06-16) vive en **Legal → MODELO DE MONETIZACIÓN** y en `project_estrategia-embudo-2-gratis.md`. Otros gotchas ya están en las secciones técnicas de arriba: impresión de certificado, caché de deploy, examen de una oportunidad, racha persistida.)*
 
 ## Pendientes al cierre
 
+- **⭐ Germán revisa la exactitud técnica del curso SOX como auditor (SME)** antes de promocionarlo — está live pero sin promoción, así que es el momento. Si algo no cuadra, se corrige y redeploya. También: definir su credencial de autoría (¿C.P./C.P.C./CIA?) para `meta.author`/`instructor.title` en `cursos/sox.js` (hoy dice "LADE Germán Solís Muñoz"). Ver `project_curso-sox.md`.
+- ✅ ~~**Cambiar correo/clave desde el panel**~~ — HECHO 2026-07-18 (Cloud Functions `changeUserEmail`/`changeUserPassword` + modal "🔑 Cuenta de alumno" en admin.html; commit `01b2cd1`, deployado y verificado). Ver **Admin por CLI**.
 - **Confirmar que el certificado ya imprime/guarda completo en celular.** Ahora sí tiene fundamento (el `#certificateEl` que el `@media print` busca ya existe en TODOS los cursos; antes faltaba en 3). **No probado en móvil real** — lo confirma un alumno imprimiendo. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`, no el curso.
 - **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
 - **Enviar la nota al abogado de PI** sobre el embudo (texto listo en `project_postura-legal-cobro.md`): ¿usar derivados como gancho/premio reintroduce "fin de lucro" aunque no se cobren? Germán eligió proceder.
@@ -245,9 +250,7 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 - ✅ ~~**Verificador de folios (Fase 2)**~~ — HECHO 2026-06-15: Cloud Function `issueCertificate` + colección pública `certificates/{folio}` + `verificar.html`. Claim "verificable" restaurado. (Follow-up: backfill de certificados viejos, opcional.)
 - ✅🤖 **Bot de preventa — ACTIVO Y VERIFICADO (2026-06-15).** `ANTHROPIC_API_KEY` puesta por Germán + `chatPreventa` desplegada; probado end-to-end (responde con precio correcto y certificado honesto). Cloud Function `chatPreventa` (onCall, modelo **`claude-haiku-4-5`** vía `@anthropic-ai/sdk`): system prompt con catálogo + política pago/gratis + certificado honesto + handoff a Germán; rate limit por IP (colección `chatLimits`, ~40 msgs/IP/día); `buildPreventaSystemPrompt(courseId)` + `PREVENTA_CATALOG` en functions/index.js. Helper `TK.chatPreventa(courseId, messages)`. Chat UI en el widget flotante del landing de curso.html (reemplazó las FAQ estáticas; degrada con gracia si la función no está activa). **ACTIVAR con:** (1) `npx firebase-tools functions:secrets:set ANTHROPIC_API_KEY` (pega la API key de Anthropic), (2) `npx firebase-tools deploy --only functions:chatPreventa --project trikles-cursos`. Para cambiar el contacto/WhatsApp del handoff: `TRIKLES_CONTACT_EMAIL`/`TRIKLES_CONTACT_WHATSAPP` en functions/index.js.
 - **Recordatorios — convierten?** Las corridas del 16-jul (5 correos) y 17-jul (3) salieron limpias (verificado en logs). Falta ver si `lorelay_anerol` (a 2 lecciones de CLAUDE SISTEMA) o `blackwolf9518` (a 3) retoman. **Decisión de Germán (2026-07-17):** el cooldown es por curso, no por alumno → un alumno puede recibir correo días consecutivos (curso distinto); **dejarlo así**, no meter cooldown global sin que lo pida.
-- ✅ ~~**Backfill de folios**~~ — HECHO 2026-07-17: 17 certificados pre-2026-06-15 registrados en `certificates/{folio}` (`tools/`→memoria `tool_backfill-folios-trikles.js`, dry-run por defecto). Solo queda el goteo natural: los que reabra un alumno se registran solos.
-- ✅ ~~**Mente Millonaria en `COURSE_LEARNINGS`**~~ — HECHO 2026-07-17 (commit `5c81f94`, deployado): ya trae 4 aprendizajes propios; el botón de LinkedIn dejó de usar el texto genérico.
-- ✅ ~~Correo de contacto en `legal.html`~~ — Germán decidió **dejar el mismo** (cpgermansolis@gmail.com) el 2026-07-17.
+- ✅ ~~Backfill de folios · Mente Millonaria en `COURSE_LEARNINGS` · correo de `legal.html`~~ — todos HECHOS/decididos el 2026-07-17 (ver git y memorias; `tool_backfill-folios-trikles.js` sigue reusable).
 
 ---
 
