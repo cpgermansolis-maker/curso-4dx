@@ -220,6 +220,11 @@
         transition: all 0.18s; white-space: nowrap;
     }
     .topbar-nav-link:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); color: var(--gold); }
+    .tnl-new {
+        background: var(--gold); color: #1a1300; font-size: 0.7em; font-weight: 800;
+        padding: 2px 7px; border-radius: 999px; margin-left: 5px; letter-spacing: 0.4px;
+        text-transform: uppercase; vertical-align: middle;
+    }
     .greeting { font-size: 0.95em; }
     .greeting strong { color: var(--gold); }
     .user-menu { display: flex; align-items: center; gap: 10px; }
@@ -1887,7 +1892,7 @@
     <div class="topbar">
         <div class="topbar-left">
             <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="logo" onerror="this.style.display='none';">
-            <a href="/libros" class="topbar-nav-link" title="Biblioteca de Autor — libros de Germán Solís">📖 Libros</a>
+            <a href="/libros" class="topbar-nav-link" title="Biblioteca de Autor · libros de Germán Solís">📖 Libros <span class="tnl-new">Nuevo</span></a>
             <div class="greeting" id="userGreetingBlock" style="display:none;">Hola, <strong id="userGreeting">Alumno</strong></div>
         </div>
         <!-- Vista invitado -->
@@ -3406,6 +3411,58 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeDepositModal();
 });
 </script>
+<!-- FRANJA EDITORIAL: Biblioteca de Autor (mundo literario, aparte de los cursos) -->
+<style>
+  .lib-band {
+    background: #0c0a09;
+    background-image:
+      radial-gradient(120% 90% at 85% 8%, rgba(232,80,31,0.20), transparent 55%),
+      radial-gradient(80% 70% at 4% 100%, rgba(217,160,102,0.09), transparent 55%);
+    border-top: 1px solid #322619; padding: 58px 24px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+  }
+  .lib-band-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 44px; flex-wrap: wrap; }
+  .lib-band-cover { flex: 0 0 auto; display: block; }
+  .lib-band-cover img {
+    width: 178px; border-radius: 8px; display: block; border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.6); transform: rotateZ(-2deg);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .lib-band-cover:hover img { transform: rotateZ(0) translateY(-4px); box-shadow: 0 30px 62px rgba(0,0,0,0.72); }
+  .lib-band-copy { flex: 1 1 340px; min-width: 0; }
+  .lib-band-eyebrow { color: #f0754a; font-size: 0.8em; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .lib-band-title { font-family: 'Playfair Display', Georgia, serif; color: #f3eee4; font-size: clamp(1.8em, 4vw, 2.6em); line-height: 1.1; font-weight: 700; margin: 0; }
+  .lib-band-title em { color: #e8501f; font-style: italic; }
+  .lib-band-text { color: #b9ac99; font-size: 1.02em; margin: 14px 0 0; max-width: 52ch; line-height: 1.6; }
+  .lib-band-text strong { color: #f3eee4; font-weight: 600; }
+  .lib-band-cta {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
+    background: #e8501f; color: #1a0d06; font-weight: 700; font-size: 0.98em;
+    padding: 13px 26px; border-radius: 12px; text-decoration: none; transition: all .18s;
+  }
+  .lib-band-cta:hover { background: #f0754a; transform: translateY(-1px); }
+  .lib-band-note { color: #8a7f6f; font-size: 0.82em; margin-top: 14px; letter-spacing: 0.3px; }
+  @media (max-width: 640px) {
+    .lib-band { padding: 40px 20px; }
+    .lib-band-inner { gap: 26px; }
+    .lib-band-cover img { width: 132px; }
+  }
+</style>
+<section class="lib-band">
+  <div class="lib-band-inner">
+    <a class="lib-band-cover" href="/libros" aria-label="Explorar la Biblioteca de Autor">
+      <img src="biblioteca/la-mancha-naranja/portada.jpg" alt="La Mancha Naranja, de Germán Solís Muñoz" loading="lazy">
+    </a>
+    <div class="lib-band-copy">
+      <div class="lib-band-eyebrow">✦ Nuevo · Biblioteca de Autor</div>
+      <h2 class="lib-band-title">Los libros de Germán Solís, <em>gratis</em>.</h2>
+      <p class="lib-band-text">Cuentos y relatos originales para leer en línea o descargar, sin costo y sin registro. Empieza por <strong>La Mancha Naranja</strong>, un cuento de terror.</p>
+      <a class="lib-band-cta" href="/libros">Explorar la biblioteca →</a>
+      <div class="lib-band-note">1 libro publicado · más en camino</div>
+    </div>
+  </div>
+</section>
+
 <footer style="text-align:center;padding:28px 20px;border-top:1px solid rgba(255,255,255,0.08);color:#9aa6c0;font-size:0.82em;line-height:1.8;">
   <div>© 2026 TRIKLES · Plataforma privada de formación · Germán Solís Muñoz</div>
   <div style="margin-top:4px;">
