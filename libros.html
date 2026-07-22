@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca de Autor · Germán Solís Muñoz · TRIKLES</title>
+<meta name="description" content="Obras originales de Germán Solís Muñoz. Lee en línea o descarga gratis. Cuentos, relatos y ensayos de autor.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Biblioteca de Autor · Germán Solís Muñoz">
+<meta property="og:description" content="Obras originales para leer en línea o descargar gratis.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0c0a09;          /* fondo negro cálido, como la portada */
+    --ink-2: #14100d;
+    --panel: #1b1510;        /* tarjetas / superficies */
+    --panel-2: #221a13;
+    --line: #322619;
+    --cream: #f3eee4;        /* texto principal claro */
+    --muted: #b9ac99;        /* texto secundario cálido */
+    --muted-2: #8a7f6f;
+    --orange: #e8501f;       /* el naranja de "NARANJA" */
+    --orange-soft: #f0754a;
+    --gold: #d9a066;
+    --paper: #f4efe6;        /* papel del lector */
+    --paper-ink: #241f18;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink); color: var(--cream);
+    font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65; font-size: 16px; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(120% 80% at 88% -8%, rgba(232,80,31,0.18), transparent 55%),
+      radial-gradient(90% 60% at -10% 110%, rgba(217,160,102,0.07), transparent 55%);
+    background-attachment: fixed;
+  }
+  .serif { font-family: 'Playfair Display', Georgia, serif; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- TOPBAR ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; gap: 16px;
+    background: rgba(12,10,9,0.82); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .brand .logo { font-weight: 800; letter-spacing: 3px; font-size: 1.05em; color: var(--cream); }
+  .brand .sub { color: var(--muted-2); font-size: 0.74em; letter-spacing: 2px; text-transform: uppercase; }
+  .topnav { display: flex; align-items: center; gap: 6px; }
+  .topnav a {
+    padding: 8px 14px; border-radius: 999px; font-size: 0.86em; font-weight: 600;
+    color: var(--muted); transition: all .18s;
+  }
+  .topnav a:hover { color: var(--cream); background: rgba(255,255,255,0.06); }
+  .topnav a.active { color: var(--ink); background: var(--cream); }
+
+  /* ---------- HERO ---------- */
+  .hero { max-width: 1040px; margin: 0 auto; padding: 64px 24px 30px; }
+  .hero .eyebrow {
+    color: var(--orange); font-size: 0.8em; letter-spacing: 3px;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: clamp(2.4em, 6vw, 4em); line-height: 1.05; font-weight: 700; letter-spacing: -0.5px; }
+  .hero h1 em { color: var(--orange); font-style: italic; }
+  .hero .lead { color: var(--muted); font-size: 1.1em; max-width: 620px; margin-top: 18px; }
+
+  .author-row {
+    display: flex; align-items: center; gap: 16px; margin-top: 30px;
+    padding: 16px 18px; border: 1px solid var(--line); border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+    max-width: 620px;
+  }
+  .author-row img {
+    width: 66px; height: 66px; border-radius: 50%; object-fit: cover; object-position: center top;
+    border: 2px solid var(--gold); flex: 0 0 auto;
+  }
+  .author-row .a-name { font-weight: 700; font-size: 1.02em; }
+  .author-row .a-bio { color: var(--muted); font-size: 0.86em; margin-top: 2px; }
+  .author-row .a-free {
+    margin-left: auto; flex: 0 0 auto; align-self: flex-start;
+    color: var(--gold); font-size: 0.74em; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; border: 1px solid rgba(217,160,102,0.4);
+    padding: 5px 10px; border-radius: 999px;
+  }
+
+  /* ---------- ESTANTE ---------- */
+  .shelf { max-width: 1040px; margin: 0 auto; padding: 24px 24px 80px; }
+  .shelf-title {
+    display: flex; align-items: center; gap: 14px; margin: 26px 0 22px;
+    color: var(--muted-2); font-size: 0.78em; letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
+  }
+  .shelf-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .book {
+    display: grid; grid-template-columns: 240px 1fr; gap: 30px;
+    background: linear-gradient(180deg, var(--panel), var(--ink-2));
+    border: 1px solid var(--line); border-radius: 20px;
+    padding: 28px; margin-bottom: 26px;
+  }
+  .book-cover-wrap { perspective: 1000px; }
+  .book-cover {
+    width: 100%; border-radius: 8px; display: block;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.55), 0 2px 0 rgba(255,255,255,0.04) inset;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform .3s ease, box-shadow .3s ease; cursor: pointer;
+  }
+  .book-cover:hover { transform: translateY(-4px) rotateZ(-0.4deg); box-shadow: 0 26px 54px rgba(0,0,0,0.6); }
+
+  .book-info { display: flex; flex-direction: column; min-width: 0; }
+  .book-genre {
+    display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
+    color: var(--orange-soft); font-size: 0.74em; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .book h2 { font-size: 2.1em; line-height: 1.08; font-weight: 700; }
+  .book h2 .b-sub { display: block; font-size: 0.5em; font-style: italic; color: var(--muted); font-weight: 400; margin-top: 6px; letter-spacing: 0.3px; }
+  .book-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0; color: var(--muted-2); font-size: 0.85em; }
+  .book-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .book-synopsis { color: var(--muted); font-size: 0.98em; max-width: 60ch; }
+  .book-dedication { color: var(--muted-2); font-size: 0.86em; font-style: italic; margin-top: 14px; padding-left: 14px; border-left: 2px solid var(--line); }
+
+  .book-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    padding: 13px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95em;
+    border: 1px solid transparent; transition: all .18s; font-family: inherit;
+  }
+  .btn-read { background: var(--orange); color: #1a0d06; }
+  .btn-read:hover { background: var(--orange-soft); transform: translateY(-1px); }
+  .btn-dl { background: transparent; color: var(--cream); border-color: var(--line); }
+  .btn-dl:hover { border-color: var(--gold); color: var(--gold); }
+  .free-pill {
+    color: var(--gold); font-size: 0.8em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  /* ---------- PIE ---------- */
+  footer.legal {
+    border-top: 1px solid var(--line); padding: 34px 24px 60px; text-align: center;
+    color: var(--muted-2); font-size: 0.84em; max-width: 1040px; margin: 0 auto;
+  }
+  footer.legal strong { color: var(--muted); }
+  footer.legal a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  footer.legal .copyright { margin-top: 8px; }
+
+  /* ---------- LECTOR (PDF.js) ---------- */
+  #reader {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    flex-direction: column; background: #0a0806;
+  }
+  #reader.show { display: flex; }
+  .reader-bar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 10px 16px; background: rgba(20,16,13,0.96);
+    border-bottom: 1px solid var(--line); backdrop-filter: blur(8px);
+  }
+  .reader-bar .r-title { font-weight: 700; font-size: 0.95em; margin-right: auto; display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .reader-bar .r-title .r-genre { color: var(--orange-soft); font-size: 0.78em; font-weight: 600; white-space: nowrap; }
+  .reader-bar .r-title .r-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rbtn {
+    background: rgba(255,255,255,0.06); border: 1px solid var(--line); color: var(--cream);
+    width: 40px; height: 40px; border-radius: 10px; cursor: pointer; font-size: 1.05em;
+    display: inline-flex; align-items: center; justify-content: center; transition: all .15s; flex: 0 0 auto;
+  }
+  .rbtn:hover:not(:disabled) { background: rgba(255,255,255,0.12); border-color: var(--gold); }
+  .rbtn:disabled { opacity: 0.35; cursor: default; }
+  .rbtn.r-close { background: transparent; }
+  .rbtn.r-close:hover { background: rgba(232,80,31,0.2); border-color: var(--orange); }
+  .r-page-ind { font-size: 0.9em; color: var(--muted); min-width: 74px; text-align: center; font-variant-numeric: tabular-nums; }
+  .r-dl { text-decoration: none; }
+  .r-group { display: inline-flex; align-items: center; gap: 6px; }
+
+  .reader-stage {
+    flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start;
+    padding: 24px 12px 48px; -webkit-overflow-scrolling: touch;
+  }
+  #pdfCanvas {
+    background: var(--paper); border-radius: 4px; max-width: 100%; height: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  }
+  .reader-loading, .reader-error {
+    color: var(--muted); text-align: center; padding: 80px 24px; width: 100%;
+  }
+  .reader-error a { color: var(--gold); text-decoration: underline; }
+  .spinner {
+    width: 34px; height: 34px; border: 3px solid rgba(255,255,255,0.15);
+    border-top-color: var(--orange); border-radius: 50%; margin: 0 auto 16px;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 720px) {
+    .hero { padding: 40px 20px 20px; }
+    .book { grid-template-columns: 1fr; gap: 20px; padding: 22px; }
+    .book-cover-wrap { max-width: 220px; margin: 0 auto; }
+    .book h2 { font-size: 1.7em; }
+    .author-row .a-free { display: none; }
+    .reader-bar .r-title .r-genre { display: none; }
+    .r-group.r-zoom { display: none; }
+    .reader-stage { padding: 14px 6px 40px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <a class="brand" href="/">
+      <span class="logo">TRIKLES</span>
+      <span class="sub">Biblioteca de Autor</span>
+    </a>
+    <nav class="topnav">
+      <a href="/">Cursos</a>
+      <a href="/libros" class="active">Libros</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">Obras originales</div>
+    <h1 class="serif">Biblioteca de <em>Autor</em></h1>
+    <p class="lead">Cuentos y relatos de Germán Solís Muñoz. Léelos en línea o descárgalos gratis, sin registro.</p>
+
+    <div class="author-row">
+      <img src="biblioteca/german-autor.jpg" alt="Germán Solís Muñoz" onerror="this.onerror=null;this.src='instructor-german.jpg'">
+      <div>
+        <div class="a-name">Germán Solís Muñoz</div>
+        <div class="a-bio">Autor · Instructor TRIKLES · Contador y auditor</div>
+      </div>
+      <div class="a-free">Lectura y descarga libres</div>
+    </div>
+  </header>
+
+  <!-- ESTANTE -->
+  <main class="shelf">
+    <div class="shelf-title">Publicaciones</div>
+    <div id="bookList"></div>
+  </main>
+
+  <!-- PIE LEGAL -->
+  <footer class="legal">
+    <div><strong>Obras originales de Germán Solís Muñoz.</strong> Puedes leerlas y descargarlas gratis, para tu disfrute personal.</div>
+    <div class="copyright">© <span id="year">2026</span> Germán Solís Muñoz. Todos los derechos reservados. · <a href="/legal">Aviso legal</a></div>
+  </footer>
+
+  <!-- LECTOR -->
+  <div id="reader" aria-hidden="true">
+    <div class="reader-bar">
+      <div class="r-title">
+        <span class="r-genre" id="rGenre"></span>
+        <span class="r-name serif" id="rName"></span>
+      </div>
+      <div class="r-group r-zoom">
+        <button class="rbtn" id="rZoomOut" title="Alejar" aria-label="Alejar">−</button>
+        <button class="rbtn" id="rZoomIn" title="Acercar" aria-label="Acercar">+</button>
+      </div>
+      <div class="r-group">
+        <button class="rbtn" id="rPrev" title="Página anterior" aria-label="Anterior">‹</button>
+        <span class="r-page-ind" id="rPageInd">– / –</span>
+        <button class="rbtn" id="rNext" title="Página siguiente" aria-label="Siguiente">›</button>
+      </div>
+      <a class="rbtn r-dl" id="rDownload" title="Descargar PDF" aria-label="Descargar" download>⬇</a>
+      <button class="rbtn r-close" id="rClose" title="Cerrar (Esc)" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="reader-stage" id="rStage">
+      <canvas id="pdfCanvas" style="display:none;"></canvas>
+      <div class="reader-loading" id="rLoading"><div class="spinner"></div>Cargando libro…</div>
+      <div class="reader-error" id="rError" style="display:none;"></div>
+    </div>
+  </div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ====== CATÁLOGO DE LIBROS ======
+     Para agregar un libro nuevo: crea la carpeta biblioteca/<id>/ con
+     libro.pdf y portada.jpg, y añade un objeto a este arreglo. */
+  const BOOKS = [
+    {
+      id: 'la-mancha-naranja',
+      title: 'La Mancha Naranja',
+      subtitle: 'y el aguacero que no cesaba',
+      genre: 'Cuento de terror',
+      year: 2026,
+      pages: 16,
+      readingMin: 12,
+      cover: 'biblioteca/la-mancha-naranja/portada.jpg',
+      pdf: 'biblioteca/la-mancha-naranja/libro.pdf',
+      dedication: 'Para Gaby, que corrió conmigo por todos los cuartos.',
+      synopsis: 'Una tarde de lluvia leve, de esas que dan ganas de café y de no salir nunca, se convierte en algo que no obedece a las reglas del agua. El narrador, sus hermanos y su prima Caro miran el aguacero desde el lado seco del vidrio, hasta que la tormenta se pone de pie y camina hacia ellos. Ya no hay casa a la cual volver a tiempo. Se refugian en una vecindad de cuartos y almacenes mientras el agua golpea el techo como si quisiera entrar. Un cuento de terror sobre la lluvia que no para, y sobre lo que deja cuando por fin se va.'
+    }
+  ];
+
+  /* ====== RENDER DEL ESTANTE ====== */
+  function renderBooks() {
+    document.getElementById('bookList').innerHTML = BOOKS.map((b, i) => `
+      <article class="book">
+        <div class="book-cover-wrap">
+          <img class="book-cover" src="${b.cover}" alt="Portada de ${b.title}"
+               onclick="openReader(${i})" loading="lazy"
+               onerror="this.style.opacity=0.3">
+        </div>
+        <div class="book-info">
+          <span class="book-genre">📖 ${b.genre}</span>
+          <h2 class="serif">${b.title}${b.subtitle ? `<span class="b-sub">${b.subtitle}</span>` : ''}</h2>
+          <div class="book-meta">
+            <span>🗓 ${b.year}</span>
+            <span>📄 ${b.pages} páginas</span>
+            <span>⏱ ≈ ${b.readingMin} min de lectura</span>
+          </div>
+          <p class="book-synopsis">${b.synopsis}</p>
+          ${b.dedication ? `<div class="book-dedication">«${b.dedication}»</div>` : ''}
+          <div class="book-actions">
+            <button class="btn btn-read" onclick="openReader(${i})">📖 Leer en línea</button>
+            <a class="btn btn-dl" href="${b.pdf}" download>⬇ Descargar PDF</a>
+            <span class="free-pill">✦ Gratis</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  }
+  renderBooks();
+
+  /* ====== LECTOR PDF (PDF.js, carga diferida) ====== */
+  const PDFJS_VER = '3.11.174';
+  const PDFJS_SRC = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VER}/pdf.min.js`;
+  const PDFJS_WORKER = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VER}/pdf.worker.min.js`;
+
+  let pdfjsPromise = null;
+  function loadPdfjs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (pdfjsPromise) return pdfjsPromise;
+    pdfjsPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = PDFJS_SRC;
+      s.onload = () => {
+        if (window.pdfjsLib) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+          resolve(window.pdfjsLib);
+        } else reject(new Error('pdfjs no cargó'));
+      };
+      s.onerror = () => reject(new Error('No se pudo cargar el lector'));
+      document.head.appendChild(s);
+    });
+    return pdfjsPromise;
+  }
+
+  const reader = {
+    doc: null, page: 1, pages: 0, zoom: 1, book: null, rendering: false, pending: null
+  };
+  const el = {
+    reader: document.getElementById('reader'),
+    canvas: document.getElementById('pdfCanvas'),
+    loading: document.getElementById('rLoading'),
+    error: document.getElementById('rError'),
+    stage: document.getElementById('rStage'),
+    pageInd: document.getElementById('rPageInd'),
+    prev: document.getElementById('rPrev'),
+    next: document.getElementById('rNext'),
+    zoomIn: document.getElementById('rZoomIn'),
+    zoomOut: document.getElementById('rZoomOut'),
+    name: document.getElementById('rName'),
+    genre: document.getElementById('rGenre'),
+    download: document.getElementById('rDownload'),
+    close: document.getElementById('rClose')
+  };
+
+  async function openReader(i) {
+    const b = BOOKS[i];
+    reader.book = b; reader.page = 1; reader.zoom = 1; reader.doc = null;
+    el.name.textContent = b.title;
+    el.genre.textContent = b.genre;
+    el.download.href = b.pdf;
+    el.reader.classList.add('show');
+    el.reader.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    el.canvas.style.display = 'none';
+    el.error.style.display = 'none';
+    el.loading.style.display = 'block';
+    el.pageInd.textContent = '– / –';
+
+    try {
+      const pdfjsLib = await loadPdfjs();
+      const doc = await pdfjsLib.getDocument(b.pdf).promise;
+      reader.doc = doc; reader.pages = doc.numPages;
+      el.loading.style.display = 'none';
+      el.canvas.style.display = 'block';
+      await renderPage(1);
+    } catch (err) {
+      el.loading.style.display = 'none';
+      el.error.style.display = 'block';
+      el.error.innerHTML = `No se pudo abrir el lector en línea.<br><br>
+        Puedes <a href="${b.pdf}" download>descargar el PDF</a> o
+        <a href="${b.pdf}" target="_blank" rel="noopener">abrirlo en una pestaña nueva</a>.`;
+    }
+  }
+
+  async function renderPage(n) {
+    if (!reader.doc) return;
+    n = Math.min(Math.max(1, n), reader.pages);
+    reader.page = n;
+    if (reader.rendering) { reader.pending = n; return; }
+    reader.rendering = true;
+
+    const page = await reader.doc.getPage(n);
+    const dpr = window.devicePixelRatio || 1;
+    // Ancho disponible del escenario (menos padding), limitado para que no se agigante en desktop
+    const avail = Math.min(el.stage.clientWidth - 24, 900);
+    const base = page.getViewport({ scale: 1 });
+    const fitScale = avail / base.width;
+    const scale = fitScale * reader.zoom;
+    const viewport = page.getViewport({ scale: scale * dpr });
+
+    const ctx = el.canvas.getContext('2d');
+    el.canvas.width = viewport.width;
+    el.canvas.height = viewport.height;
+    el.canvas.style.width = (viewport.width / dpr) + 'px';
+    el.canvas.style.height = (viewport.height / dpr) + 'px';
+
+    await page.render({ canvasContext: ctx, viewport }).promise;
+    el.stage.scrollTop = 0;
+    updateControls();
+
+    reader.rendering = false;
+    if (reader.pending !== null) {
+      const p = reader.pending; reader.pending = null; renderPage(p);
+    }
+  }
+
+  function updateControls() {
+    el.pageInd.textContent = `${reader.page} / ${reader.pages}`;
+    el.prev.disabled = reader.page <= 1;
+    el.next.disabled = reader.page >= reader.pages;
+  }
+
+  function closeReader() {
+    el.reader.classList.remove('show');
+    el.reader.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (reader.doc) { try { reader.doc.destroy(); } catch (e) {} }
+    reader.doc = null;
+  }
+
+  el.prev.onclick = () => renderPage(reader.page - 1);
+  el.next.onclick = () => renderPage(reader.page + 1);
+  el.zoomIn.onclick = () => { reader.zoom = Math.min(reader.zoom + 0.2, 3); renderPage(reader.page); };
+  el.zoomOut.onclick = () => { reader.zoom = Math.max(reader.zoom - 0.2, 0.6); renderPage(reader.page); };
+  el.close.onclick = closeReader;
+
+  document.addEventListener('keydown', (e) => {
+    if (!el.reader.classList.contains('show')) return;
+    if (e.key === 'Escape') closeReader();
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') renderPage(reader.page + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') renderPage(reader.page - 1);
+  });
+
+  // Re-render al cambiar el tamaño de la ventana (ajuste de ancho)
+  let resizeT = null;
+  window.addEventListener('resize', () => {
+    if (!el.reader.classList.contains('show') || !reader.doc) return;
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => renderPage(reader.page), 180);
+  });
+</script>
+</body>
+</html>

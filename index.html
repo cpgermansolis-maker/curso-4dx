@@ -214,6 +214,12 @@
     }
     .topbar-left { display: flex; align-items: center; gap: 16px; }
     .topbar img.logo { height: 36px; background: white; padding: 4px 10px; border-radius: 6px; }
+    .topbar-nav-link {
+        color: rgba(255,255,255,0.92); font-size: 0.86em; font-weight: 600; text-decoration: none;
+        padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.22);
+        transition: all 0.18s; white-space: nowrap;
+    }
+    .topbar-nav-link:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); color: var(--gold); }
     .greeting { font-size: 0.95em; }
     .greeting strong { color: var(--gold); }
     .user-menu { display: flex; align-items: center; gap: 10px; }
@@ -1881,6 +1887,7 @@
     <div class="topbar">
         <div class="topbar-left">
             <img src="assets/logo-trikles.jpg" alt="TRIKLES" class="logo" onerror="this.style.display='none';">
+            <a href="/libros" class="topbar-nav-link" title="Biblioteca de Autor — libros de Germán Solís">📖 Libros</a>
             <div class="greeting" id="userGreetingBlock" style="display:none;">Hola, <strong id="userGreeting">Alumno</strong></div>
         </div>
         <!-- Vista invitado -->
