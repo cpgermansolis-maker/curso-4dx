@@ -112,6 +112,19 @@ Detección VIP: `PRICING[id]?.badge === 'VIP'`
 
 ---
 
+## Biblioteca de Autor (`libros.html` → `/libros`) — obras PROPIAS de Germán
+
+Sección independiente para los libros que Germán **escribe** (lanzada 2026-07-21). Leer en línea + descargar gratis, **sin login**. Estética literaria oscura (negro + naranja + serif Playfair), aparte del azul de los cursos. Primer libro: *La Mancha Naranja* (cuento de terror).
+
+- **⚠️ Carpeta `biblioteca/` = PÚBLICA, opuesta a `libros/`.** `libros/` está gitignored **y** hosting-ignored (PDFs con copyright ajeno). Las obras **propias** van en `biblioteca/`, que SÍ se trackea en el repo público y SÍ se sirve. **No la agregues a ningún `ignore`.**
+- **Agregar un libro:** crear `biblioteca/<id>/` con `libro.pdf` + `portada.jpg`, y añadir un objeto al arreglo `BOOKS` en `libros.html`. Opcional: subir el contador de la franja editorial (`.lib-band`) en `index.html`.
+- **Lector:** PDF.js 3.11.174 UMD desde cdnjs (carga diferida, fallback a descarga si el CDN falla). Se **renderiza el PDF** (no se extrae texto): los PDFs pueden ser **de imagen** (el de La Mancha Naranja lo es → pdftotext saca ~10 palabras) y así se conserva el diseño del autor.
+- **Entradas desde el inicio:** chip "📖 Libros [Nuevo]" en la barra + franja editorial full-width antes del footer (`.lib-band`).
+- **Herramientas locales de PDF/imagen:** **PyMuPDF (fitz) + Pillow** vía `python` (se usaron para extraer la portada de la pág 1 y recortar el headshot del autor; `instructor-german.jpg` es de cuerpo completo → recortar la cara para avatares). Poppler `pdftoppm` NO está; `pdftotext`/`pdfinfo` sí (Git bin).
+- **Germán es LADE** (Licenciado en Administración de Empresas), no contador. Credencial de autoría cerrada. Detalle en memoria `project_biblioteca-de-autor.md`.
+
+---
+
 ## Landing de curso (`curso.html` → `showCourseLanding`)
 
 Para usuarios **no inscritos** incluye, en orden de abajo a arriba:
@@ -204,7 +217,11 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ---
 
-## Último avance (2026-07-18, nuevo curso SOX + cambio de correo/clave en el panel)
+## Último avance (2026-07-21, Biblioteca de Autor — libros propios de Germán)
+
+**Nueva sección independiente "Biblioteca de Autor" (`/libros`)** para las obras que Germán **escribe** (obra propia): leer en línea con **lector PDF.js embebido** + **descargar gratis**, sin login. Estética literaria oscura (negro + naranja + serif), aparte del azul de los cursos. Primer libro: *La Mancha Naranja y el aguacero que no cesaba* (cuento de terror, 16 pág). Entradas desde el inicio: chip "📖 Libros [Nuevo]" en la barra + **franja editorial** (`.lib-band`) antes del footer. **Credencial de autoría cerrada: Germán es LADE.** Convención de carpeta, cómo agregar libros y gotchas en la sección **Biblioteca de Autor** (arriba) y en `project_biblioteca-de-autor.md`. Commits `139eebb`/`3988295`/`97afb82`, deployados y verificados 200 en vivo.
+
+### Antes (2026-07-18, nuevo curso SOX + cambio de correo/clave en el panel)
 
 **Nuevo curso propio: "SOX en la Práctica"** (Sarbanes-Oxley / ICFR) — id `sox`, **3ª obra original de pago** ($999, badge Premium, estética azul-dorado NO VIP), profesional/práctica, **32 lecciones** + examen 15 (pasa con 11) + certificado. Es la obra **más limpia legalmente** del catálogo: la ley SOX es dominio público; solo COSO/PCAOB tienen copyright → se enseñan sus conceptos con palabras/diagramas propios. Construido, **auditado** (`audit-cursos.js` en verde), cableado en todos los sitios (CATALOG/PRICING/PAID_COURSE_IDS/LAUNCH_DATES/order en index.html; PAID_COURSE_IDS/ENROLL_PRICING/unlock-modal/**chips CSS `.tag-s0..s5`** en curso.html; getCatalog en admin.html; COURSE_TITLES/PRICES_CENTS 99900/LESSON_COUNTS 32/PASS_SCORES 11/PREVENTA en functions) y **desplegado** (commit `5c496e8`, functions + hosting). **PENDIENTE: Germán revisa la exactitud técnica como auditor (SME) antes de promocionarlo** — está live y comprable pero sin promoción. Detalle en memoria `project_curso-sox.md`.
 
@@ -232,15 +249,11 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 **Becas de CLAUDE SISTEMA** a Ismael y Armando + **cambio de correo de Armando** a su Gmail, todo por CLI (ver **Admin por CLI**). Correos y detalle en la memoria `project_pendientes-abiertos.md` — privada; **NO poner correos de alumnos en este archivo: el repo es público**. `RESUMEN-CONTEXTO-COPILOT.md` a `.gitignore` (commit `79c9229`). Sin deploy.
 
-### Antes (2026-06-18, blindaje del repo público)
-
-**`.gitignore` ahora ignora `libros/` completa** (antes lista parcial → se colaban libros nuevos) y `graphify-out/`: estaban protegidos del hosting pero **no** del repo de GitHub, que es público. Commits `400de12`, `1fe3f8d`. Ver **Legal**. (El fix de impresión del certificado de ese día atacó la causa equivocada — ver la corrección en **Flujo de certificado**.)
-
-*(Entradas anteriores a 2026-06-18 podadas — viven en git y en las memorias `project_*`. El embudo "2 gratis" (2026-06-16) vive en **Legal → MODELO DE MONETIZACIÓN** y en `project_estrategia-embudo-2-gratis.md`. Otros gotchas ya están en las secciones técnicas de arriba: impresión de certificado, caché de deploy, examen de una oportunidad, racha persistida.)*
+*(Entradas anteriores a 2026-07-12 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: blindaje del repo público (`.gitignore` ignora `libros/` + `graphify-out/`, 2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN** y `project_estrategia-embudo-2-gratis.md`; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
 
 ## Pendientes al cierre
 
-- **⭐ Germán revisa la exactitud técnica del curso SOX como auditor (SME)** antes de promocionarlo — está live pero sin promoción, así que es el momento. Si algo no cuadra, se corrige y redeploya. También: definir su credencial de autoría (¿C.P./C.P.C./CIA?) para `meta.author`/`instructor.title` en `cursos/sox.js` (hoy dice "LADE Germán Solís Muñoz"). Ver `project_curso-sox.md`.
+- **⭐ Germán revisa la exactitud técnica del curso SOX como auditor (SME)** antes de promocionarlo: está live pero sin promoción, así que es el momento. Si algo no cuadra, se corrige y redeploya. (Credencial de autoría ya resuelta: Germán es **LADE**; `cursos/sox.js` ya lo trae.) Ver `project_curso-sox.md`.
 - ✅ ~~**Cambiar correo/clave desde el panel**~~ — HECHO 2026-07-18 (Cloud Functions `changeUserEmail`/`changeUserPassword` + modal "🔑 Cuenta de alumno" en admin.html; commit `01b2cd1`, deployado y verificado). Ver **Admin por CLI**.
 - **Confirmar que el certificado ya imprime/guarda completo en celular.** Ahora sí tiene fundamento (el `#certificateEl` que el `@media print` busca ya existe en TODOS los cursos; antes faltaba en 3). **No probado en móvil real** — lo confirma un alumno imprimiendo. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`, no el curso.
 - **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
