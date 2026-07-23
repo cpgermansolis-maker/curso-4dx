@@ -105,7 +105,39 @@
     border: 1px solid var(--line); border-radius: 20px;
     padding: 28px; margin-bottom: 26px;
   }
-  .book-cover-wrap { perspective: 1000px; }
+  .book-cover-wrap { perspective: 1000px; position: relative; }
+  /* --- Tráiler: chip y botón de play sobre la portada --- */
+  .cover-tag {
+    position: absolute; top: 10px; left: 10px; z-index: 3; pointer-events: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(232,80,31,0.94); color: #1a0d06;
+    font-size: 0.66em; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 9px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  }
+  .play-badge {
+    position: absolute; inset: 0; margin: auto; z-index: 2;
+    width: 62px; height: 62px; border-radius: 50%; cursor: pointer; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(12,10,9,0.55); border: 2px solid rgba(255,255,255,0.9);
+    backdrop-filter: blur(2px); transition: transform .18s ease, background .18s ease;
+  }
+  .play-badge::before {
+    content: ""; width: 0; height: 0; margin-left: 5px;
+    border-style: solid; border-width: 11px 0 11px 18px;
+    border-color: transparent transparent transparent #fff; transition: border-color .18s ease;
+  }
+  .play-badge::after {
+    content: ""; position: absolute; inset: -7px; border-radius: 50%;
+    border: 2px solid rgba(232,80,31,0.75); animation: pulseRing 2.4s ease-out infinite;
+  }
+  .play-badge:hover { transform: scale(1.08); background: var(--orange); border-color: var(--orange); }
+  .play-badge:hover::before { border-color: transparent transparent transparent #1a0d06; }
+  @keyframes pulseRing {
+    0%   { transform: scale(0.85); opacity: 0.85; }
+    70%  { transform: scale(1.4); opacity: 0; }
+    100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .play-badge::after { animation: none; } }
   .book-cover {
     width: 100%; border-radius: 8px; display: block;
     box-shadow: 0 18px 40px rgba(0,0,0,0.55), 0 2px 0 rgba(255,255,255,0.04) inset;
@@ -137,6 +169,8 @@
   .btn-read:hover { background: var(--orange-soft); transform: translateY(-1px); }
   .btn-dl { background: transparent; color: var(--cream); border-color: var(--line); }
   .btn-dl:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-trailer { background: rgba(232,80,31,0.14); color: var(--orange-soft); border-color: rgba(232,80,31,0.45); }
+  .btn-trailer:hover { background: var(--orange); color: #1a0d06; border-color: var(--orange); transform: translateY(-1px); }
   .free-pill {
     color: var(--gold); font-size: 0.8em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
     display: inline-flex; align-items: center; gap: 6px;
@@ -197,6 +231,22 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ---------- LIGHTBOX DE TRÁILER ---------- */
+  .tl-overlay {
+    position: fixed; inset: 0; z-index: 120; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+    background: rgba(6,4,3,0.93); backdrop-filter: blur(6px);
+  }
+  .tl-overlay.show { display: flex; }
+  .tl-inner { width: min(960px, 100%); }
+  .tl-video {
+    width: 100%; max-height: 78vh; display: block; background: #000;
+    border-radius: 12px; border: 1px solid var(--line);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  }
+  .tl-cap { text-align: center; color: var(--muted); margin-top: 14px; font-size: 1.05em; font-style: italic; }
+  .tl-close { position: absolute; top: 16px; right: 16px; z-index: 2; }
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 720px) {
     .hero { padding: 40px 20px 20px; }
@@ -252,6 +302,15 @@
     <div class="copyright">© <span id="year">2026</span> Germán Solís Muñoz. Todos los derechos reservados. · <a href="/legal">Aviso legal</a></div>
   </footer>
 
+  <!-- LIGHTBOX DE TRÁILER -->
+  <div id="trailer" class="tl-overlay" aria-hidden="true">
+    <button class="rbtn r-close tl-close" id="tlClose" title="Cerrar (Esc)" aria-label="Cerrar tráiler">✕</button>
+    <div class="tl-inner">
+      <video id="tlVideo" class="tl-video" controls playsinline preload="none"></video>
+      <div class="tl-cap serif" id="tlCap"></div>
+    </div>
+  </div>
+
   <!-- LECTOR -->
   <div id="reader" aria-hidden="true">
     <div class="reader-bar">
@@ -295,8 +354,22 @@
       readingMin: 12,
       cover: 'biblioteca/la-mancha-naranja/portada.jpg',
       pdf: 'biblioteca/la-mancha-naranja/libro.pdf',
+      trailer: 'biblioteca/la-mancha-naranja/trailer.mp4',
+      trailerPoster: 'biblioteca/la-mancha-naranja/trailer-poster.jpg',
       dedication: 'Para Gaby, que corrió conmigo por todos los cuartos.',
       synopsis: 'Una tarde de lluvia leve, de esas que dan ganas de café y de no salir nunca, se convierte en algo que no obedece a las reglas del agua. El narrador, sus hermanos y su prima Caro miran el aguacero desde el lado seco del vidrio, hasta que la tormenta se pone de pie y camina hacia ellos. Ya no hay casa a la cual volver a tiempo. Se refugian en una vecindad de cuartos y almacenes mientras el agua golpea el techo como si quisiera entrar. Un cuento de terror sobre la lluvia que no para, y sobre lo que deja cuando por fin se va.'
+    },
+    {
+      id: 'dios-jugando-a-ser-tu',
+      title: 'Dios Jugando a Ser Tú',
+      subtitle: 'Doce enseñanzas para recordar quién eres',
+      genre: 'Testimonio',
+      year: 2026,
+      pages: 21,
+      readingMin: 18,
+      cover: 'biblioteca/dios-jugando-a-ser-tu/portada.jpg',
+      pdf: 'biblioteca/dios-jugando-a-ser-tu/libro.pdf',
+      synopsis: 'Un hombre joven de Tlaxcala empezó a hacerse preguntas y no pudo parar. De esa búsqueda nace este testimonio: doce frases de Jesús —el Reino que está dentro, la fe del tamaño de una semilla, setenta veces siete, los lirios del campo— leídas no como órdenes para adorar a alguien lejano, sino como un espejo para recordar algo que ya somos. No viene a discutir con ninguna iglesia ni a corregir la fe de nadie; transmite lo que el autor encontró cuando leyó esas palabras antiguas como si se las dijeran a él, de frente. Doce enseñanzas y doce ejercicios para la vida diaria, con una sola invitación: no creer nada, sino observarlo en tu propia vida.'
     }
   ];
 
@@ -308,6 +381,11 @@
           <img class="book-cover" src="${b.cover}" alt="Portada de ${b.title}"
                onclick="openReader(${i})" loading="lazy"
                onerror="this.style.opacity=0.3">
+          ${b.trailer ? `
+            <span class="cover-tag">🎬 Tráiler</span>
+            <button class="play-badge" onclick="event.stopPropagation();openTrailer(${i})"
+                    title="Ver el tráiler" aria-label="Ver el tráiler de ${b.title}"></button>
+          ` : ''}
         </div>
         <div class="book-info">
           <span class="book-genre">📖 ${b.genre}</span>
@@ -320,6 +398,7 @@
           <p class="book-synopsis">${b.synopsis}</p>
           ${b.dedication ? `<div class="book-dedication">«${b.dedication}»</div>` : ''}
           <div class="book-actions">
+            ${b.trailer ? `<button class="btn btn-trailer" onclick="openTrailer(${i})">🎬 Ver tráiler</button>` : ''}
             <button class="btn btn-read" onclick="openReader(${i})">📖 Leer en línea</button>
             <a class="btn btn-dl" href="${b.pdf}" download>⬇ Descargar PDF</a>
             <span class="free-pill">✦ Gratis</span>
@@ -329,6 +408,39 @@
     `).join('');
   }
   renderBooks();
+
+  /* ====== LIGHTBOX DE TRÁILER (video) ====== */
+  const tl = {
+    overlay: document.getElementById('trailer'),
+    video: document.getElementById('tlVideo'),
+    cap: document.getElementById('tlCap'),
+    close: document.getElementById('tlClose')
+  };
+  function openTrailer(i) {
+    const b = BOOKS[i];
+    if (!b || !b.trailer) return;
+    tl.video.src = b.trailer;
+    if (b.trailerPoster) tl.video.poster = b.trailerPoster;
+    tl.cap.textContent = 'Tráiler · ' + b.title;
+    tl.overlay.classList.add('show');
+    tl.overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    tl.video.play().catch(() => {});
+  }
+  function closeTrailer() {
+    tl.overlay.classList.remove('show');
+    tl.overlay.setAttribute('aria-hidden', 'true');
+    try { tl.video.pause(); } catch (e) {}
+    tl.video.removeAttribute('src');
+    tl.video.removeAttribute('poster');
+    tl.video.load();
+    document.body.style.overflow = '';
+  }
+  tl.close.onclick = closeTrailer;
+  tl.overlay.addEventListener('click', (e) => { if (e.target === tl.overlay) closeTrailer(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tl.overlay.classList.contains('show')) closeTrailer();
+  });
 
   /* ====== LECTOR PDF (PDF.js, carga diferida) ====== */
   const PDFJS_VER = '3.11.174';
