@@ -218,7 +218,13 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ---
 
-## Último avance (2026-07-21, Biblioteca de Autor — libros propios de Germán)
+## Último avance (2026-07-22, tráiler de libro + 2º libro propio + learnings de SOX)
+
+**Biblioteca de Autor — tráiler embebido + segundo libro.** *La Mancha Naranja* ahora tiene **tráiler** (chip 🎬 + botón ▶ pulsante sobre la portada + **lightbox de video** `#trailer`; campos `trailer`/`trailerPoster` en `BOOKS`, UI ya reutilizable). El video venía con **marca NotebookLM** abajo-derecha → removida con ffmpeg `delogo` y re-encodeada (12.5→5.4 MB); Germán confirmó dejarlo **sin marca**. Nuevo libro propio ***Dios Jugando a Ser Tú*** (testimonio espiritual, 21 pág, id `dios-jugando-a-ser-tu`; portada extraída de la pág 1 con PyMuPDF). Franja del inicio a "2 libros". Convención de tráiler + ffmpeg documentadas en **Biblioteca de Autor** y `project_biblioteca-de-autor.md`. Commits `51b73a4`/`3c2b250`, deployados y 200 en vivo.
+
+**Curso SOX — `COURSE_LEARNINGS['sox']` propio.** 4 takeaways técnicos en primera persona (404a/b, top-down basado en riesgos, diseño vs efectividad operativa, severidad de deficiencias) para el texto sugerido al **compartir el certificado en LinkedIn**; reemplaza el fallback genérico. Commit `70fc6d1`, deployado (`audit-cursos.js` en verde). **Sigue pendiente la revisión técnica de Germán como SME** (ver Pendientes).
+
+### Antes (2026-07-21, Biblioteca de Autor — libros propios de Germán)
 
 **Nueva sección independiente "Biblioteca de Autor" (`/libros`)** para las obras que Germán **escribe** (obra propia): leer en línea con **lector PDF.js embebido** + **descargar gratis**, sin login. Estética literaria oscura (negro + naranja + serif), aparte del azul de los cursos. Primer libro: *La Mancha Naranja y el aguacero que no cesaba* (cuento de terror, 16 pág). Entradas desde el inicio: chip "📖 Libros [Nuevo]" en la barra + **franja editorial** (`.lib-band`) antes del footer. **Credencial de autoría cerrada: Germán es LADE.** Convención de carpeta, cómo agregar libros y gotchas en la sección **Biblioteca de Autor** (arriba) y en `project_biblioteca-de-autor.md`. Commits `139eebb`/`3988295`/`97afb82`, deployados y verificados 200 en vivo.
 
@@ -246,11 +252,7 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 **Cuenta de un alumno recuperada:** Armando se había **re-registrado** con su iCloud tras el cambio de correo del 12-jul (quedaron 2 cuentas). Duplicada borrada y correo devuelto a su cuenta original, con progreso intacto. **Lección: cambiar el correo de un alumno le rompe el login → avisarle el mismo día.** Ver **Admin por CLI**.
 
-### Antes (2026-07-12, becas por CLI + cambio de correo de alumno)
-
-**Becas de CLAUDE SISTEMA** a Ismael y Armando + **cambio de correo de Armando** a su Gmail, todo por CLI (ver **Admin por CLI**). Correos y detalle en la memoria `project_pendientes-abiertos.md` — privada; **NO poner correos de alumnos en este archivo: el repo es público**. `RESUMEN-CONTEXTO-COPILOT.md` a `.gitignore` (commit `79c9229`). Sin deploy.
-
-*(Entradas anteriores a 2026-07-12 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: blindaje del repo público (`.gitignore` ignora `libros/` + `graphify-out/`, 2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN** y `project_estrategia-embudo-2-gratis.md`; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
+*(Entradas anteriores a 2026-07-16 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: blindaje del repo público (`.gitignore` ignora `libros/` + `graphify-out/`, 2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN** y `project_estrategia-embudo-2-gratis.md`; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
 
 ## Pendientes al cierre
 
