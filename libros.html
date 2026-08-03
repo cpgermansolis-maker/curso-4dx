@@ -834,7 +834,8 @@
     setBookState(reader.book.id, { highlights: st.highlights.concat([hl]) });
     window.getSelection().removeAllRanges();
     hidePop(); renderHighlights(); renderNotes(); updateNotesBadge();
-    showToast('🖍 Frase guardada en tus notas');
+    // El aviso enseña el gesto: sin esto, quitar un resaltado no es descubrible.
+    showToast('🖍 Guardada · toca la frase resaltada para copiarla o quitarla');
   }
   function removeHighlight(id) {
     if (!reader.book) return;
@@ -864,7 +865,11 @@
     document.body.removeChild(ta);
   }
 
-  /* ---- Menú flotante (selección o resaltado tocado) ---- */
+  /* ---- Menú flotante (selección o resaltado tocado) ----
+     popMode distingue quién abrió el menú. Hace falta porque el `click` sobre un
+     resaltado ocurre ANTES del temporizador del `mouseup`: sin esto, ese
+     temporizador no encuentra selección y cierra el menú recién abierto. */
+  let popMode = null;
   function showPop(rect, buttons) {
     el.selPop.innerHTML = '';
     buttons.forEach(b => {
@@ -882,10 +887,11 @@
     el.selPop.style.left = left + 'px';
     el.selPop.style.top = top + 'px';
   }
-  function hidePop() { el.selPop.classList.remove('show'); }
+  function hidePop() { el.selPop.classList.remove('show'); popMode = null; }
   function popForSelection() {
     const info = selectionInfo();
-    if (!info) { hidePop(); return; }
+    if (!info) { if (popMode === 'sel') hidePop(); return; }
+    popMode = 'sel';
     showPop(info.range.getBoundingClientRect(), [
       { label: '🖍 Resaltar', fn: addHighlight },
       { label: '⧉ Copiar', fn: () => { copyText(info.text); window.getSelection().removeAllRanges(); hidePop(); } }
@@ -1046,21 +1052,32 @@
   el.stage.addEventListener('mouseup', () => setTimeout(popForSelection, 10));
   el.stage.addEventListener('touchend', () => setTimeout(popForSelection, 60));
   document.addEventListener('selectionchange', () => {
+    // Solo cierra el menú DE SELECCIÓN: al tocar un resaltado la selección se
+    // colapsa y este evento salta 2 ms después, cerrando el menú recién abierto.
+    if (popMode !== 'sel') return;
     const s = window.getSelection();
-    if ((!s || s.isCollapsed) && !el.selPop.contains(document.activeElement)) hidePop();
+    if (!s || s.isCollapsed) hidePop();
   });
   el.stage.addEventListener('scroll', hidePop);
   el.stage.addEventListener('mousedown', ev => {
     if (!ev.target.closest('.hl-rect') && !el.selPop.contains(ev.target)) hidePop();
   });
-  /* Clic sobre un resaltado ya guardado → Copiar / Quitar */
-  el.hlLayer.addEventListener('click', ev => {
-    const t = ev.target.closest('.hl-rect');
-    if (!t || !reader.book) return;
-    ev.stopPropagation();
-    const h = bookState(reader.book.id).highlights.find(x => x.id === t.dataset.hl);
+  /* Clic sobre un resaltado ya guardado → Copiar / Quitar.
+     ⚠️ La capa de texto va ENCIMA de los resaltados (es lo que permite seleccionar),
+     así que el clic aterriza en un <span> y NUNCA llega al .hl-rect: por eso no
+     sirve escuchar el evento en la capa de resaltados. Se resuelve mirando TODOS
+     los elementos bajo el puntero, no solo el objetivo del evento. */
+  el.stage.addEventListener('click', ev => {
+    if (!reader.book) return;
+    if (selectionInfo()) return;   // si hay texto seleccionado, manda el menú de selección
+    const debajo = document.elementsFromPoint(ev.clientX, ev.clientY);
+    const rect = debajo.find(n => n.classList && n.classList.contains('hl-rect'));
+    if (!rect) return;
+    const h = bookState(reader.book.id).highlights.find(x => x.id === rect.dataset.hl);
     if (!h) return;
-    showPop(t.getBoundingClientRect(), [
+    ev.stopPropagation();
+    popMode = 'hl';
+    showPop(rect.getBoundingClientRect(), [
       { label: '⧉ Copiar', fn: () => { copyText(h.text); hidePop(); } },
       { label: '🗑 Quitar', fn: () => removeHighlight(h.id) }
     ]);
