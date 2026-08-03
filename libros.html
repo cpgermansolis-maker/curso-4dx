@@ -212,6 +212,50 @@
   .r-dl { text-decoration: none; }
   .r-group { display: inline-flex; align-items: center; gap: 6px; }
 
+  /* ---------- MARCADORES Y PROGRESO DE LECTURA ----------
+     Estado guardado en localStorage (en /libros no hay login):
+     es por navegador/dispositivo y no se sincroniza entre equipos. */
+  .rbtn.on { background: rgba(217,160,102,0.22); border-color: var(--gold); color: var(--gold); }
+  .r-marks {
+    display: none; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding: 9px 16px; background: rgba(20,16,13,0.9); border-bottom: 1px solid var(--line);
+  }
+  .r-marks.show { display: flex; }
+  .r-marks-label {
+    color: var(--muted-2); font-size: 0.76em; letter-spacing: 1.4px;
+    text-transform: uppercase; font-weight: 700;
+  }
+  .mark-chip {
+    background: rgba(217,160,102,0.12); border: 1px solid rgba(217,160,102,0.4); color: var(--gold);
+    padding: 4px 12px; border-radius: 20px; cursor: pointer; font-size: 0.84em;
+    font-family: inherit; transition: all .15s; font-variant-numeric: tabular-nums;
+  }
+  .mark-chip:hover { background: var(--gold); color: #1a1209; }
+  .mark-chip.cur { background: var(--gold); color: #1a1209; font-weight: 700; }
+  .r-toast {
+    position: absolute; left: 50%; bottom: 26px; z-index: 5; transform: translateX(-50%);
+    background: rgba(27,21,16,0.97); border: 1px solid var(--gold); color: var(--cream);
+    padding: 11px 18px; border-radius: 12px; font-size: 0.9em; display: none;
+    align-items: center; gap: 14px; box-shadow: 0 14px 40px rgba(0,0,0,0.6); max-width: 92vw;
+  }
+  .r-toast.show { display: flex; animation: toastIn .25s ease; }
+  @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  .r-toast button {
+    background: transparent; border: 1px solid var(--line); color: var(--gold); padding: 5px 12px;
+    border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.9em; white-space: nowrap;
+  }
+  .r-toast button:hover { background: var(--gold); color: #1a1209; border-color: var(--gold); }
+  .book-progress {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-top: 12px; color: var(--gold); font-size: 0.86em;
+  }
+  .book-progress .pbar {
+    width: 108px; height: 5px; border-radius: 4px;
+    background: rgba(217,160,102,0.18); overflow: hidden;
+  }
+  .book-progress .pbar i { display: block; height: 100%; background: var(--gold); }
+  .book-progress .done { color: var(--orange-soft); font-weight: 600; }
+
   .reader-stage {
     flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start;
     padding: 24px 12px 48px; -webkit-overflow-scrolling: touch;
@@ -327,13 +371,22 @@
         <span class="r-page-ind" id="rPageInd">– / –</span>
         <button class="rbtn" id="rNext" title="Página siguiente" aria-label="Siguiente">›</button>
       </div>
+      <button class="rbtn" id="rMark" title="Marcar esta página (B)" aria-label="Marcar esta página">🔖</button>
       <a class="rbtn r-dl" id="rDownload" title="Descargar PDF" aria-label="Descargar" download>⬇</a>
       <button class="rbtn r-close" id="rClose" title="Cerrar (Esc)" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="r-marks" id="rMarks">
+      <span class="r-marks-label">🔖 Marcadores</span>
+      <span id="rMarksList" style="display:flex;gap:8px;flex-wrap:wrap;"></span>
     </div>
     <div class="reader-stage" id="rStage">
       <canvas id="pdfCanvas" style="display:none;"></canvas>
       <div class="reader-loading" id="rLoading"><div class="spinner"></div>Cargando libro…</div>
       <div class="reader-error" id="rError" style="display:none;"></div>
+    </div>
+    <div class="r-toast" id="rToast">
+      <span id="rToastMsg"></span>
+      <button id="rToastAction">Empezar de nuevo</button>
     </div>
   </div>
 
@@ -386,6 +439,58 @@
     }
   ];
 
+  /* ====== PROGRESO Y MARCADORES DE LECTURA ======
+     Se guardan en el localStorage del navegador porque /libros NO tiene login
+     (leer y descargar son libres, sin registro). Consecuencia esperada: el
+     avance es POR DISPOSITIVO — no se sincroniza entre el celular y la compu. */
+  const LS_KEY = 'trikles-libros-v1';
+
+  function loadStore() {
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}') || {}; }
+    catch (e) { return {}; }   // modo privado / storage bloqueado: se degrada sin romper
+  }
+  function saveStore(s) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  function bookState(id) {
+    const b = loadStore()[id] || {};
+    return {
+      page: b.page || 1,
+      pages: b.pages || 0,
+      marks: Array.isArray(b.marks) ? b.marks : []
+    };
+  }
+  function setBookState(id, patch) {
+    const s = loadStore();
+    s[id] = Object.assign(bookState(id), patch);
+    saveStore(s);
+  }
+
+  /* Línea de estado bajo la sinopsis: dónde te quedaste y cuántos marcadores llevas */
+  function progressHtml(b) {
+    const st = bookState(b.id);
+    const total = st.pages || b.pages || 0;
+    const bits = [];
+    if (st.page > 1 && total) {
+      if (st.page >= total) {
+        bits.push('<span class="done">✓ Lo terminaste</span>');
+      } else {
+        const pct = Math.round(st.page / total * 100);
+        bits.push(`<span>📍 Vas en la pág. ${st.page} de ${total}</span>`);
+        bits.push(`<span class="pbar"><i style="width:${pct}%"></i></span>`);
+      }
+    }
+    if (st.marks.length) {
+      bits.push(`<span>🔖 ${st.marks.length} ${st.marks.length === 1 ? 'marcador' : 'marcadores'}</span>`);
+    }
+    return bits.length ? `<div class="book-progress">${bits.join('')}</div>` : '';
+  }
+  function readLabel(b) {
+    const st = bookState(b.id);
+    const total = st.pages || b.pages || 0;
+    return (st.page > 1 && total && st.page < total) ? '📖 Continuar leyendo' : '📖 Leer en línea';
+  }
+
   /* ====== RENDER DEL ESTANTE ====== */
   function renderBooks() {
     document.getElementById('bookList').innerHTML = BOOKS.map((b, i) => `
@@ -410,9 +515,10 @@
           </div>
           <p class="book-synopsis">${b.synopsis}</p>
           ${b.dedication ? `<div class="book-dedication">«${b.dedication}»</div>` : ''}
+          ${progressHtml(b)}
           <div class="book-actions">
             ${b.trailer ? `<button class="btn btn-trailer" onclick="openTrailer(${i})">🎬 Ver tráiler</button>` : ''}
-            <button class="btn btn-read" onclick="openReader(${i})">📖 Leer en línea</button>
+            <button class="btn btn-read" onclick="openReader(${i})">${readLabel(b)}</button>
             <a class="btn btn-dl" href="${b.pdf}" download>⬇ Descargar PDF</a>
             <span class="free-pill">✦ Gratis</span>
           </div>
@@ -496,12 +602,69 @@
     name: document.getElementById('rName'),
     genre: document.getElementById('rGenre'),
     download: document.getElementById('rDownload'),
-    close: document.getElementById('rClose')
+    close: document.getElementById('rClose'),
+    mark: document.getElementById('rMark'),
+    marks: document.getElementById('rMarks'),
+    marksList: document.getElementById('rMarksList'),
+    toast: document.getElementById('rToast'),
+    toastMsg: document.getElementById('rToastMsg'),
+    toastAction: document.getElementById('rToastAction')
   };
+
+  /* ---- Avisos flotantes dentro del lector ---- */
+  let toastT = null;
+  function showToast(msg, actionLabel, actionFn) {
+    el.toastMsg.textContent = msg;
+    if (actionLabel) {
+      el.toastAction.textContent = actionLabel;
+      el.toastAction.style.display = '';
+      el.toastAction.onclick = actionFn;
+    } else {
+      el.toastAction.style.display = 'none';
+    }
+    el.toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(hideToast, actionLabel ? 7000 : 2400);
+  }
+  function hideToast() { clearTimeout(toastT); el.toast.classList.remove('show'); }
+
+  /* ---- Marcadores de página ---- */
+  function renderMarks() {
+    if (!reader.book) return;
+    const st = bookState(reader.book.id);
+    const marcada = st.marks.includes(reader.page);
+    el.mark.classList.toggle('on', marcada);
+    el.mark.title = marcada ? 'Quitar el marcador de esta página (B)' : 'Marcar esta página (B)';
+    if (!st.marks.length) {
+      el.marks.classList.remove('show');
+      el.marksList.innerHTML = '';
+      return;
+    }
+    el.marks.classList.add('show');
+    el.marksList.innerHTML = st.marks.map(p =>
+      `<button class="mark-chip${p === reader.page ? ' cur' : ''}" onclick="renderPage(${p})"
+               title="Ir a la página ${p}">pág. ${p}</button>`
+    ).join('');
+  }
+  function toggleMark() {
+    if (!reader.doc || !reader.book) return;
+    const st = bookState(reader.book.id);
+    const p = reader.page;
+    const marks = st.marks.includes(p)
+      ? st.marks.filter(x => x !== p)
+      : st.marks.concat(p).sort((a, b) => a - b);
+    setBookState(reader.book.id, { marks });
+    renderMarks();
+    showToast(marks.includes(p) ? `🔖 Página ${p} marcada` : `Marcador de la página ${p} quitado`);
+  }
 
   async function openReader(i) {
     const b = BOOKS[i];
+    const st = bookState(b.id);
     reader.book = b; reader.page = 1; reader.zoom = 1; reader.doc = null;
+    hideToast();
+    el.marks.classList.remove('show');
+    el.mark.classList.remove('on');
     el.name.textContent = b.title;
     el.genre.textContent = b.genre;
     el.download.href = b.pdf;
@@ -517,9 +680,18 @@
       const pdfjsLib = await loadPdfjs();
       const doc = await pdfjsLib.getDocument(b.pdf).promise;
       reader.doc = doc; reader.pages = doc.numPages;
+      setBookState(b.id, { pages: doc.numPages });
       el.loading.style.display = 'none';
       el.canvas.style.display = 'block';
-      await renderPage(1);
+      // Reanuda donde se quedó (acotado por si el PDF cambió de número de páginas)
+      const inicio = Math.min(Math.max(1, st.page), doc.numPages);
+      await renderPage(inicio);
+      renderMarks();
+      if (inicio > 1) {
+        showToast(`Continuando donde te quedaste · pág. ${inicio}`,
+                  'Empezar de nuevo',
+                  () => { hideToast(); renderPage(1); });
+      }
     } catch (err) {
       el.loading.style.display = 'none';
       el.error.style.display = 'block';
@@ -554,6 +726,7 @@
     await page.render({ canvasContext: ctx, viewport }).promise;
     el.stage.scrollTop = 0;
     updateControls();
+    if (reader.book) { setBookState(reader.book.id, { page: n, pages: reader.pages }); renderMarks(); }
 
     reader.rendering = false;
     if (reader.pending !== null) {
@@ -573,8 +746,12 @@
     document.body.style.overflow = '';
     if (reader.doc) { try { reader.doc.destroy(); } catch (e) {} }
     reader.doc = null;
+    hideToast();
+    el.marks.classList.remove('show');
+    renderBooks();   // refresca el estante con el avance recién guardado
   }
 
+  el.mark.onclick = toggleMark;
   el.prev.onclick = () => renderPage(reader.page - 1);
   el.next.onclick = () => renderPage(reader.page + 1);
   el.zoomIn.onclick = () => { reader.zoom = Math.min(reader.zoom + 0.2, 3); renderPage(reader.page); };
@@ -586,6 +763,7 @@
     if (e.key === 'Escape') closeReader();
     else if (e.key === 'ArrowRight' || e.key === 'PageDown') renderPage(reader.page + 1);
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') renderPage(reader.page - 1);
+    else if (e.key === 'b' || e.key === 'B') toggleMark();
   });
 
   // Re-render al cambiar el tamaño de la ventana (ajuste de ancho)
