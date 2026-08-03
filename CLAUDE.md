@@ -221,7 +221,23 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ---
 
-## Último avance (2026-07-22, tráiler de libro + 2º libro propio + learnings de SOX)
+## Último avance (2026-08-03, revisión SME de SOX + 3er libro + lector con memoria y resaltados)
+
+**Curso SOX — checklist de revisión SME entregado (EN CURSO).** `revision/revision-sox-sme.html`: **140 afirmaciones técnicas** del curso agrupadas por lección + los 15 reactivos del examen, cada una marcable ✓/✗/? con notas, **42 marcadas como prioritarias**, y botón para generar el reporte de correcciones. **Germán se quedó revisándolo.** Tres hallazgos ya señalados como errores probables: PCAOB "máximo 2 contadores" (la ley dice *exactamente* 2), la inconsistencia MRC-vs-IPE entre L13/L20/L28, y el "y que un auditor lo confirme" de L0 + P1 del examen (contradice L3/L6). Detalle en `project_curso-sox.md`.
+
+**Carpeta `revision/` = documentos de trabajo interno.** En `.gitignore` **y** en `hosting.ignore`. No es producto: no va al repo público ni se sirve (verificado 404 en vivo).
+
+**Tercer libro propio: *¿Ora por qué?*** (cuento sobre la culpa, 10 pág, id `ora-por-que`). Franja del inicio a "3 libros". Commit `5f2e2b9`.
+
+**El lector de `/libros` ahora recuerda y deja subrayar.** Reanuda donde te quedaste, marcadores de página (🔖 / tecla B), **selección y copia nativas** (capa de texto de PDF.js), **resaltados persistentes** y panel 📑 "Mis notas". Todo en `localStorage` → por dispositivo. Commits `92e99b0`, `f07009e`, `3c9ec0e`. Convención y los 3 gotchas de la capa de texto: sección **Biblioteca de Autor**.
+
+**❌ Dato falso corregido:** "La Mancha Naranja es PDF de imagen" llevaba meses en este archivo y era **falso** — los 3 libros tienen texto real; los `�` eran encoding de consola. De no verificarlo, la función de copiar se habría descartado por imposible. **Es la 2ª vez que un artefacto de consola causa un diagnóstico falso** (la 1ª fue Grep con las barras).
+
+**💡 Aprendizaje de proceso:** el bug de "no se puede quitar un resaltado" salió **solo porque Germán preguntó cómo se hacía**. Una pregunta del usuario sobre *cómo se usa X* es señal de que X puede estar roto o no ser descubrible → **verificar antes de contestar**. Ninguna de las dos fallas (clic robado por la capa de texto; menú que se cerraba en 2 ms) se veía en un screenshot; salieron manejando Chrome por CDP con clics reales y un MutationObserver (ver `reference_navegador-headless-cdp.md` + `tool_cdp-shot.js` en la memoria).
+
+**⏸️ COSO y NIA: en STANDBY** por decisión de Germán. Plan completo (análisis legal, reencuadre de NIA como "cómo se audita en la práctica", ruta de 3 cursos) en `project_plan-cursos-coso-nia.md`.
+
+### Antes (2026-07-22, tráiler de libro + 2º libro propio + learnings de SOX)
 
 **Biblioteca de Autor — tráiler embebido + segundo libro.** *La Mancha Naranja* ahora tiene **tráiler** (chip 🎬 + botón ▶ pulsante sobre la portada + **lightbox de video** `#trailer`; campos `trailer`/`trailerPoster` en `BOOKS`, UI ya reutilizable). El video venía con **marca NotebookLM** abajo-derecha → removida con ffmpeg `delogo` y re-encodeada (12.5→5.4 MB); Germán confirmó dejarlo **sin marca**. Nuevo libro propio ***Dios Jugando a Ser Tú*** (testimonio espiritual, 21 pág, id `dios-jugando-a-ser-tu`; portada extraída de la pág 1 con PyMuPDF). Franja del inicio a "2 libros". Convención de tráiler + ffmpeg documentadas en **Biblioteca de Autor** y `project_biblioteca-de-autor.md`. Commits `51b73a4`/`3c2b250`, deployados y 200 en vivo.
 
@@ -245,21 +261,12 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 **Herramienta personal de Germán (fuera de TRIKLES):** buscador offline de las **Normas Globales de Auditoría Interna 2024** (IIA) para su trabajo de auditor en Grupo TODA. Vive en `libros/` (gitignored → nunca se sube). Evaluación del libro: **no se puede convertir en curso** (es norma normativa, no libro de ideas; copyright IIA agresivo + riesgo de marca CIA). Detalle en memoria `reference_buscador-normas-auditoria.md`.
 
-### Antes (2026-07-16, reparación del sistema de certificados + recordatorios)
-
-**6 de 11 cursos estaban rotos en silencio.** Una auditoría de CLAUDE SISTEMA destapó que el sistema de certificados llevaba meses fallando sin que nadie lo notara: `codigo-honor` era **imposible de terminar** (candado mutuo), `mente-millonaria` solo daba certificado con 15/15 y lo imprimía en blanco, `claude-sistema` **no entregaba certificado** aunque el landing lo prometía, y 4dx/habitos/feum lo emitían **sin folio ni descargo SEP**. Todo reparado; los 11 cursos usan ya `id:'final_exam'` + `id:'certificate'` y el certificado inyectado. Detalle y reglas en **Sistema de certificados — CONTRATO**. Commits `94044f3`, `886c3df`.
-
-**`tools/audit-cursos.js`** (commit `eed4be9`) — auditoría pre-deploy que simula un alumno aprobando **con el mínimo** y verifica también las tablas de `functions/index.js`. Ver **Deploy**.
-
-**Recordatorios de inactividad arreglados** (commit `84eeaad`, function deployada): los 2 cursos de paga nunca mandaban recordatorio, 6 cursos mentían en el asunto, y un alumno podía recibir 3 correos de golpe. Ver **Recordatorios de inactividad**.
-
-**Cuenta de un alumno recuperada:** Armando se había **re-registrado** con su iCloud tras el cambio de correo del 12-jul (quedaron 2 cuentas). Duplicada borrada y correo devuelto a su cuenta original, con progreso intacto. **Lección: cambiar el correo de un alumno le rompe el login → avisarle el mismo día.** Ver **Admin por CLI**.
-
-*(Entradas anteriores a 2026-07-16 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: blindaje del repo público (`.gitignore` ignora `libros/` + `graphify-out/`, 2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN** y `project_estrategia-embudo-2-gratis.md`; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
+*(Entradas anteriores a 2026-07-17 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: la reparación del sistema de certificados y `tools/audit-cursos.js` (2026-07-16) en **Sistema de certificados — CONTRATO** y **Deploy**; el arreglo de los recordatorios en **Recordatorios de inactividad**; "cambiar el correo de un alumno le rompe el login → avísale el mismo día" en **Admin por CLI**; blindaje del repo público (2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN**; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
 
 ## Pendientes al cierre
 
-- **⭐ Germán revisa la exactitud técnica del curso SOX como auditor (SME)** antes de promocionarlo: está live pero sin promoción, así que es el momento. Si algo no cuadra, se corrige y redeploya. (Credencial de autoría ya resuelta: Germán es **LADE**; `cursos/sox.js` ya lo trae.) Ver `project_curso-sox.md`.
+- **⭐ EN CURSO — Germán está revisando el curso SOX como SME** en `revision/revision-sox-sme.html` (140 afirmaciones, 42 prioritarias). **Al retomar: pedirle el reporte** → corregir `cursos/sox.js` → `node tools/audit-cursos.js` → redeploy → **y ya promocionar** (lleva desde el 2026-07-18 live sin una sola promoción). Los 3 hallazgos ya señalados están en `project_curso-sox.md`.
+- **⏸️ COSO y NIA en standby** (decisión de Germán, 2026-08-03). Plan listo con el análisis legal y 3 decisiones que él debe tomar: `project_plan-cursos-coso-nia.md`. No arrancar sin que lo reactive.
 - ✅ ~~**Cambiar correo/clave desde el panel**~~ — HECHO 2026-07-18 (Cloud Functions `changeUserEmail`/`changeUserPassword` + modal "🔑 Cuenta de alumno" en admin.html; commit `01b2cd1`, deployado y verificado). Ver **Admin por CLI**.
 - **Confirmar que el certificado ya imprime/guarda completo en celular.** Ahora sí tiene fundamento (el `#certificateEl` que el `@media print` busca ya existe en TODOS los cursos; antes faltaba en 3). **No probado en móvil real** — lo confirma un alumno imprimiendo. Si vuelve a salir en blanco, revisar el `@media print` de `curso.html`, no el curso.
 - **Probar el embudo "2 gratis" en vivo (Germán, incógnito + correo de prueba):** estado `free_pick` (🎁 activar gratis) → estado `locked` tras usar el gratis (modal de desbloqueo) → estado `unlocked` tras comprar un propio ("Acceder gratis"). Ver `project_estrategia-embudo-2-gratis.md`.
@@ -285,6 +292,7 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
   - Implementación: `PAID_COURSE_IDS = ['claude-sistema','destapa-tu-negocio']` + helpers `hasPurchasedAnyPaidCourse()`, `hasUsedFreePick()` (cuenta derivados inscritos ≥1), `derivedAccessState(id)` → `unlocked`/`free_pick`/`locked`. **Espejados en `curso.html` e `index.html`** (incluye `FULL_ACCESS_EMAILS` en ambos). Todo se **deriva de `enrollments`** (no hay campo nuevo): derivado con `source:'free_request'` = pick/grandfather; propio con `method:'stripe'`/`paidAt` = compra que desbloquea todo. **Sin cambios de servidor para el desbloqueo** (es client-side). CTAs del landing por estado; modal `clShowUnlockUpsell()` para `locked`; banner "1 curso gratis" en el catálogo (`hasFreePickAvailable()`); bot (`buildPreventaSystemPrompt`) actualizado. `COURSE_PRICES_CENTS` sigue con solo los 2 limpios (el servidor rechaza cobrar derivados). Commit `371d86c`.
   - ✅ **Stripe LIVE activado (2026-06-15):** Germán puso `STRIPE_SECRET_KEY=sk_live_...` + creó webhook live (`https://stripewebhook-y57ht7jzda-uc.a.run.app`, eventos checkout.session.completed/async_payment_succeeded/async_payment_failed) y su `STRIPE_WEBHOOK_SECRET`; redeployadas `createStripeCheckout` + `stripeWebhook`. El cobro de claude-sistema ($649) y destapa ($449) es REAL. Pendiente solo: prueba de compra real + reembolso (validar webhook→inscripción). Nota Stripe: 1ª transferencia a banco suele retenerse ~7 días en cuentas nuevas.
 - **`libros/**` está excluido del hosting** en `firebase.json` → `hosting.ignore` (commit 216aacb). NO quitarlo: Firebase deploya desde la carpeta local, no desde git, así que el `.gitignore` no basta. Los PDFs fuente NO deben servirse públicamente.
+- **`revision/**` = documentos de trabajo interno** (checklists de revisión/QA de cursos). Está en `.gitignore` **y** en `hosting.ignore`: no es producto, no va al repo público ni se sirve. Es también el lugar donde dejar páginas sonda de prueba. Verificar con `git check-ignore -v <ruta>` y con `curl` que dé 404 tras deployar.
 - **⚠️ El repo de GitHub es PÚBLICO** (`cpgermansolis-maker/curso-4dx`). `hosting.ignore` protege el SITIO; **`.gitignore` protege el REPO** — son listas distintas y AMBAS importan. Desde 2026-06-18 `.gitignore` ignora `libros/` completa (antes era lista parcial → se colaban libros nuevos) y `graphify-out/` (artefacto + `converted/` deriva de los libros). Al agregar material con copyright, confirmar que cae bajo `.gitignore`, no solo bajo `hosting.ignore`.
 - **Certificados:** ya llevan descargo "sin validez oficial ante la SEP" + folio único + página `legal.html`. No quitar el descargo.
 - Detalle completo en memoria: `project_postura-legal-cobro.md` y `project_blindaje-legal-certificados.md`.
