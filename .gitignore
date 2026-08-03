@@ -12,6 +12,10 @@ libros/
 # Notas locales de asistentes (Copilot, etc.) — sin valor para el repo público
 RESUMEN-CONTEXTO-COPILOT.md
 
+# Documentos de trabajo interno (revisiones SME de cursos, checklists de QA).
+# No son parte del sitio ni del producto. También excluidos del hosting en firebase.json.
+revision/
+
 # Archivos temporales
 tmp-*.js
 tmp-*.txt
