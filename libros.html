@@ -256,6 +256,85 @@
   .book-progress .pbar i { display: block; height: 100%; background: var(--gold); }
   .book-progress .done { color: var(--orange-soft); font-weight: 600; }
 
+  /* ---------- SELECCIÓN DE TEXTO, RESALTADOS Y PANEL DE NOTAS ----------
+     El canvas de PDF.js es una imagen: no se puede seleccionar. Encima se monta
+     la capa de texto de PDF.js (spans transparentes posicionados) para que la
+     selección y el copiado sean los NATIVOS del navegador. */
+  .page-wrap { position: relative; display: block; line-height: 0; }
+  .textLayer {
+    position: absolute; inset: 0; overflow: hidden; line-height: 1;
+    transform-origin: 0 0; z-index: 3;
+  }
+  .textLayer span, .textLayer br {
+    color: transparent; position: absolute; white-space: pre;
+    cursor: text; transform-origin: 0 0;
+  }
+  .textLayer ::selection { background: rgba(217,160,102,0.45); }
+  .textLayer ::-moz-selection { background: rgba(217,160,102,0.45); }
+  /* Resaltados: bajo la capa de texto, para no estorbar la selección */
+  .hl-layer { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .hl-rect {
+    position: absolute; background: rgba(217,160,102,0.42); border-radius: 2px;
+    pointer-events: auto; cursor: pointer; transition: background .15s;
+  }
+  .hl-rect:hover { background: rgba(232,80,31,0.45); }
+  /* Menú flotante que sale al seleccionar o al tocar un resaltado */
+  .sel-pop {
+    position: fixed; z-index: 120; display: none; gap: 4px;
+    background: rgba(20,16,13,0.98); border: 1px solid var(--gold);
+    padding: 5px; border-radius: 10px; box-shadow: 0 12px 34px rgba(0,0,0,0.6);
+  }
+  .sel-pop.show { display: flex; }
+  .sel-pop button {
+    background: transparent; border: 0; color: var(--cream); font-family: inherit;
+    font-size: 0.86em; padding: 8px 13px; border-radius: 7px; cursor: pointer; white-space: nowrap;
+  }
+  .sel-pop button:hover { background: var(--gold); color: #1a1209; }
+  /* Panel lateral "Mis notas" */
+  .notes-panel {
+    position: absolute; top: 0; right: 0; bottom: 0; width: min(390px, 88vw); z-index: 6;
+    background: #100c09; border-left: 1px solid var(--line);
+    transform: translateX(101%); transition: transform .22s ease;
+    display: flex; flex-direction: column; box-shadow: -18px 0 50px rgba(0,0,0,0.55);
+  }
+  .notes-panel.show { transform: translateX(0); }
+  .np-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px 14px; border-bottom: 1px solid var(--line); flex: 0 0 auto;
+  }
+  .np-head h3 { font-size: 0.95em; font-weight: 700; }
+  .np-body { flex: 1; overflow: auto; padding: 14px; }
+  .np-sec {
+    color: var(--muted-2); font-size: 0.74em; letter-spacing: 1.4px;
+    text-transform: uppercase; font-weight: 700; margin: 18px 0 9px;
+  }
+  .np-sec:first-child { margin-top: 0; }
+  .np-empty { color: var(--muted-2); font-size: 0.86em; font-style: italic; line-height: 1.5; }
+  .np-item {
+    display: flex; gap: 8px; align-items: flex-start; padding: 10px 11px;
+    border: 1px solid var(--line); border-radius: 9px; margin-bottom: 8px;
+    background: rgba(255,255,255,0.02); transition: border-color .15s;
+  }
+  .np-item:hover { border-color: var(--gold); }
+  .np-item .np-txt { flex: 1; min-width: 0; cursor: pointer; }
+  .np-item .np-quote {
+    font-size: 0.88em; color: var(--cream); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .np-item .np-pg { color: var(--gold); font-size: 0.76em; margin-top: 5px; }
+  .np-del {
+    background: transparent; border: 0; color: var(--muted-2); cursor: pointer;
+    font-size: 0.95em; padding: 3px 5px; border-radius: 6px; flex: 0 0 auto; line-height: 1;
+  }
+  .np-del:hover { color: var(--orange); background: rgba(232,80,31,0.12); }
+  .rbtn { position: relative; }
+  .rb-badge {
+    position: absolute; top: -5px; right: -5px; background: var(--gold); color: #1a1209;
+    font-size: 0.6em; font-weight: 800; min-width: 17px; height: 17px; border-radius: 9px;
+    display: none; align-items: center; justify-content: center; padding: 0 4px;
+  }
+  .rb-badge.show { display: flex; }
+
   .reader-stage {
     flex: 1; overflow: auto; display: flex; justify-content: center; align-items: flex-start;
     padding: 24px 12px 48px; -webkit-overflow-scrolling: touch;
@@ -372,6 +451,7 @@
         <button class="rbtn" id="rNext" title="Página siguiente" aria-label="Siguiente">›</button>
       </div>
       <button class="rbtn" id="rMark" title="Marcar esta página (B)" aria-label="Marcar esta página">🔖</button>
+      <button class="rbtn" id="rNotesBtn" title="Mis notas: marcadores y frases resaltadas" aria-label="Mis notas">📑<span class="rb-badge" id="rNotesBadge">0</span></button>
       <a class="rbtn r-dl" id="rDownload" title="Descargar PDF" aria-label="Descargar" download>⬇</a>
       <button class="rbtn r-close" id="rClose" title="Cerrar (Esc)" aria-label="Cerrar">✕</button>
     </div>
@@ -380,10 +460,22 @@
       <span id="rMarksList" style="display:flex;gap:8px;flex-wrap:wrap;"></span>
     </div>
     <div class="reader-stage" id="rStage">
-      <canvas id="pdfCanvas" style="display:none;"></canvas>
+      <div class="page-wrap" id="rPageWrap" style="display:none;">
+        <canvas id="pdfCanvas"></canvas>
+        <div class="hl-layer" id="rHlLayer"></div>
+        <div class="textLayer" id="rTextLayer"></div>
+      </div>
       <div class="reader-loading" id="rLoading"><div class="spinner"></div>Cargando libro…</div>
       <div class="reader-error" id="rError" style="display:none;"></div>
     </div>
+    <div class="notes-panel" id="rNotes">
+      <div class="np-head">
+        <h3>📑 Mis notas</h3>
+        <button class="rbtn r-close" id="rNotesClose" title="Cerrar el panel" aria-label="Cerrar el panel">✕</button>
+      </div>
+      <div class="np-body" id="rNotesBody"></div>
+    </div>
+    <div class="sel-pop" id="rSelPop"></div>
     <div class="r-toast" id="rToast">
       <span id="rToastMsg"></span>
       <button id="rToastAction">Empezar de nuevo</button>
@@ -457,8 +549,15 @@
     return {
       page: b.page || 1,
       pages: b.pages || 0,
-      marks: Array.isArray(b.marks) ? b.marks : []
+      marks: Array.isArray(b.marks) ? b.marks : [],
+      // Cada resaltado: { id, page, text, rects:[{x,y,w,h}] } con coordenadas
+      // NORMALIZADAS 0..1 respecto a la página → sobreviven al zoom y al resize.
+      highlights: Array.isArray(b.highlights) ? b.highlights : []
     };
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
   function setBookState(id, patch) {
     const s = loadStore();
@@ -482,6 +581,9 @@
     }
     if (st.marks.length) {
       bits.push(`<span>🔖 ${st.marks.length} ${st.marks.length === 1 ? 'marcador' : 'marcadores'}</span>`);
+    }
+    if (st.highlights.length) {
+      bits.push(`<span>🖍 ${st.highlights.length} ${st.highlights.length === 1 ? 'frase' : 'frases'}</span>`);
     }
     return bits.length ? `<div class="book-progress">${bits.join('')}</div>` : '';
   }
@@ -608,7 +710,16 @@
     marksList: document.getElementById('rMarksList'),
     toast: document.getElementById('rToast'),
     toastMsg: document.getElementById('rToastMsg'),
-    toastAction: document.getElementById('rToastAction')
+    toastAction: document.getElementById('rToastAction'),
+    pageWrap: document.getElementById('rPageWrap'),
+    textLayer: document.getElementById('rTextLayer'),
+    hlLayer: document.getElementById('rHlLayer'),
+    selPop: document.getElementById('rSelPop'),
+    notes: document.getElementById('rNotes'),
+    notesBtn: document.getElementById('rNotesBtn'),
+    notesBody: document.getElementById('rNotesBody'),
+    notesBadge: document.getElementById('rNotesBadge'),
+    notesClose: document.getElementById('rNotesClose')
   };
 
   /* ---- Avisos flotantes dentro del lector ---- */
@@ -654,24 +765,194 @@
       ? st.marks.filter(x => x !== p)
       : st.marks.concat(p).sort((a, b) => a - b);
     setBookState(reader.book.id, { marks });
-    renderMarks();
+    renderMarks(); renderNotes(); updateNotesBadge();
     showToast(marks.includes(p) ? `🔖 Página ${p} marcada` : `Marcador de la página ${p} quitado`);
+  }
+  function removeMark(p) {
+    if (!reader.book) return;
+    const st = bookState(reader.book.id);
+    setBookState(reader.book.id, { marks: st.marks.filter(x => x !== p) });
+    renderMarks(); renderNotes(); updateNotesBadge();
+  }
+
+  /* ---- Capa de texto: es lo que permite SELECCIONAR y COPIAR ----
+     PDF.js dibuja la página como imagen en el canvas; encima colocamos spans
+     transparentes con el texto real, alineados al viewport en px de CSS. */
+  async function buildTextLayer(page, cssViewport, scale) {
+    const layer = el.textLayer;
+    layer.innerHTML = '';
+    layer.style.width = cssViewport.width + 'px';
+    layer.style.height = cssViewport.height + 'px';
+    layer.style.setProperty('--scale-factor', scale);
+    if (!window.pdfjsLib || !window.pdfjsLib.renderTextLayer) return;
+    try {
+      const tc = await page.getTextContent();
+      const opts = { container: layer, viewport: cssViewport, textDivs: [] };
+      let task;
+      try { task = window.pdfjsLib.renderTextLayer(Object.assign({ textContentSource: tc }, opts)); }
+      catch (e) { task = window.pdfjsLib.renderTextLayer(Object.assign({ textContent: tc }, opts)); }
+      await task.promise;
+    } catch (e) {
+      // Si un PDF no trae texto (escaneado), el lector sigue funcionando: solo no se selecciona.
+    }
+  }
+
+  /* ---- Resaltados ---- */
+  function renderHighlights() {
+    if (!reader.book) { el.hlLayer.innerHTML = ''; return; }
+    const st = bookState(reader.book.id);
+    el.hlLayer.innerHTML = st.highlights
+      .filter(h => h.page === reader.page)
+      .map(h => h.rects.map(r =>
+        `<div class="hl-rect" data-hl="${h.id}" title="Frase resaltada — clic para copiar o quitar"
+              style="left:${r.x * 100}%;top:${r.y * 100}%;width:${r.w * 100}%;height:${r.h * 100}%"></div>`
+      ).join('')).join('');
+  }
+  function selectionInfo() {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+    const range = sel.getRangeAt(0);
+    if (!el.textLayer.contains(range.startContainer)) return null;
+    const text = sel.toString().trim();
+    return text ? { range, text } : null;
+  }
+  function addHighlight() {
+    const info = selectionInfo();
+    if (!info || !reader.book) return;
+    const wrap = el.pageWrap.getBoundingClientRect();
+    const rects = Array.from(info.range.getClientRects())
+      .filter(r => r.width > 1 && r.height > 1)
+      .map(r => ({
+        x: (r.left - wrap.left) / wrap.width,
+        y: (r.top - wrap.top) / wrap.height,
+        w: r.width / wrap.width,
+        h: r.height / wrap.height
+      }));
+    if (!rects.length) return;
+    const st = bookState(reader.book.id);
+    const hl = { id: 'h' + Date.now() + Math.floor(Math.random() * 1000), page: reader.page, text: info.text, rects };
+    setBookState(reader.book.id, { highlights: st.highlights.concat([hl]) });
+    window.getSelection().removeAllRanges();
+    hidePop(); renderHighlights(); renderNotes(); updateNotesBadge();
+    showToast('🖍 Frase guardada en tus notas');
+  }
+  function removeHighlight(id) {
+    if (!reader.book) return;
+    const st = bookState(reader.book.id);
+    setBookState(reader.book.id, { highlights: st.highlights.filter(h => h.id !== id) });
+    hidePop(); renderHighlights(); renderNotes(); updateNotesBadge();
+  }
+  function copyHl(id) {
+    const h = bookState(reader.book.id).highlights.find(x => x.id === id);
+    if (h) copyText(h.text);
+  }
+
+  /* ---- Copiar al portapapeles (con respaldo para contextos no seguros) ---- */
+  function copyText(t) {
+    const ok = () => showToast('⧉ Copiado al portapapeles');
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(t).then(ok).catch(() => fallbackCopy(t, ok));
+    } else fallbackCopy(t, ok);
+  }
+  function fallbackCopy(t, ok) {
+    const ta = document.createElement('textarea');
+    ta.value = t;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); ok(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  /* ---- Menú flotante (selección o resaltado tocado) ---- */
+  function showPop(rect, buttons) {
+    el.selPop.innerHTML = '';
+    buttons.forEach(b => {
+      const btn = document.createElement('button');
+      btn.textContent = b.label;
+      btn.onclick = ev => { ev.stopPropagation(); b.fn(); };
+      el.selPop.appendChild(btn);
+    });
+    el.selPop.classList.add('show');
+    const pw = el.selPop.offsetWidth, ph = el.selPop.offsetHeight;
+    let left = rect.left + rect.width / 2 - pw / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
+    let top = rect.top - ph - 10;
+    if (top < 8) top = rect.bottom + 10;
+    el.selPop.style.left = left + 'px';
+    el.selPop.style.top = top + 'px';
+  }
+  function hidePop() { el.selPop.classList.remove('show'); }
+  function popForSelection() {
+    const info = selectionInfo();
+    if (!info) { hidePop(); return; }
+    showPop(info.range.getBoundingClientRect(), [
+      { label: '🖍 Resaltar', fn: addHighlight },
+      { label: '⧉ Copiar', fn: () => { copyText(info.text); window.getSelection().removeAllRanges(); hidePop(); } }
+    ]);
+  }
+
+  /* ---- Panel "Mis notas" ---- */
+  function updateNotesBadge() {
+    if (!reader.book) return;
+    const st = bookState(reader.book.id);
+    const n = st.marks.length + st.highlights.length;
+    el.notesBadge.textContent = n;
+    el.notesBadge.classList.toggle('show', n > 0);
+  }
+  function renderNotes() {
+    if (!reader.book) return;
+    const st = bookState(reader.book.id);
+    let h = '<div class="np-sec">🔖 Marcadores</div>';
+    h += st.marks.length
+      ? st.marks.map(p => `
+        <div class="np-item">
+          <div class="np-txt" onclick="jumpFromNotes(${p})"><div class="np-quote">Página ${p}</div></div>
+          <button class="np-del" onclick="removeMark(${p})" title="Quitar el marcador">✕</button>
+        </div>`).join('')
+      : '<div class="np-empty">Sin marcadores. Usa el 🔖 de la barra para guardar la página en la que vas.</div>';
+
+    h += '<div class="np-sec">🖍 Frases resaltadas</div>';
+    h += st.highlights.length
+      ? st.highlights.slice().sort((a, b) => a.page - b.page).map(x => `
+        <div class="np-item">
+          <div class="np-txt" onclick="jumpFromNotes(${x.page})">
+            <div class="np-quote">«${escapeHtml(x.text)}»</div>
+            <div class="np-pg">pág. ${x.page}</div>
+          </div>
+          <button class="np-del" onclick="copyHl('${x.id}')" title="Copiar la frase">⧉</button>
+          <button class="np-del" onclick="removeHighlight('${x.id}')" title="Quitar el resaltado">✕</button>
+        </div>`).join('')
+      : '<div class="np-empty">Selecciona una frase del libro con el dedo o el ratón y toca «Resaltar».</div>';
+
+    el.notesBody.innerHTML = h;
+  }
+  function jumpFromNotes(p) {
+    renderPage(p);
+    if (window.innerWidth < 760) el.notes.classList.remove('show');
+  }
+  function toggleNotes() {
+    el.notes.classList.toggle('show');
+    if (el.notes.classList.contains('show')) renderNotes();
   }
 
   async function openReader(i) {
     const b = BOOKS[i];
     const st = bookState(b.id);
     reader.book = b; reader.page = 1; reader.zoom = 1; reader.doc = null;
-    hideToast();
+    hideToast(); hidePop();
     el.marks.classList.remove('show');
     el.mark.classList.remove('on');
+    el.notes.classList.remove('show');
+    el.textLayer.innerHTML = ''; el.hlLayer.innerHTML = '';
+    updateNotesBadge();
     el.name.textContent = b.title;
     el.genre.textContent = b.genre;
     el.download.href = b.pdf;
     el.reader.classList.add('show');
     el.reader.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    el.canvas.style.display = 'none';
+    el.pageWrap.style.display = 'none';
     el.error.style.display = 'none';
     el.loading.style.display = 'block';
     el.pageInd.textContent = '– / –';
@@ -682,11 +963,11 @@
       reader.doc = doc; reader.pages = doc.numPages;
       setBookState(b.id, { pages: doc.numPages });
       el.loading.style.display = 'none';
-      el.canvas.style.display = 'block';
+      el.pageWrap.style.display = 'block';
       // Reanuda donde se quedó (acotado por si el PDF cambió de número de páginas)
       const inicio = Math.min(Math.max(1, st.page), doc.numPages);
       await renderPage(inicio);
-      renderMarks();
+      renderMarks(); renderNotes(); updateNotesBadge();
       if (inicio > 1) {
         showToast(`Continuando donde te quedaste · pág. ${inicio}`,
                   'Empezar de nuevo',
@@ -715,18 +996,23 @@
     const base = page.getViewport({ scale: 1 });
     const fitScale = avail / base.width;
     const scale = fitScale * reader.zoom;
-    const viewport = page.getViewport({ scale: scale * dpr });
+    const viewport = page.getViewport({ scale: scale * dpr });   // píxeles reales del canvas
+    const cssViewport = page.getViewport({ scale });              // tamaño en px de CSS
 
     const ctx = el.canvas.getContext('2d');
     el.canvas.width = viewport.width;
     el.canvas.height = viewport.height;
-    el.canvas.style.width = (viewport.width / dpr) + 'px';
-    el.canvas.style.height = (viewport.height / dpr) + 'px';
+    el.canvas.style.width = cssViewport.width + 'px';
+    el.canvas.style.height = cssViewport.height + 'px';
+    el.pageWrap.style.width = cssViewport.width + 'px';
 
     await page.render({ canvasContext: ctx, viewport }).promise;
+    await buildTextLayer(page, cssViewport, scale);
     el.stage.scrollTop = 0;
+    hidePop();
     updateControls();
     if (reader.book) { setBookState(reader.book.id, { page: n, pages: reader.pages }); renderMarks(); }
+    renderHighlights();
 
     reader.rendering = false;
     if (reader.pending !== null) {
@@ -746,12 +1032,39 @@
     document.body.style.overflow = '';
     if (reader.doc) { try { reader.doc.destroy(); } catch (e) {} }
     reader.doc = null;
-    hideToast();
+    hideToast(); hidePop();
     el.marks.classList.remove('show');
+    el.notes.classList.remove('show');
     renderBooks();   // refresca el estante con el avance recién guardado
   }
 
   el.mark.onclick = toggleMark;
+  el.notesBtn.onclick = toggleNotes;
+  el.notesClose.onclick = () => el.notes.classList.remove('show');
+
+  /* Selección de texto → menú flotante con Resaltar / Copiar */
+  el.stage.addEventListener('mouseup', () => setTimeout(popForSelection, 10));
+  el.stage.addEventListener('touchend', () => setTimeout(popForSelection, 60));
+  document.addEventListener('selectionchange', () => {
+    const s = window.getSelection();
+    if ((!s || s.isCollapsed) && !el.selPop.contains(document.activeElement)) hidePop();
+  });
+  el.stage.addEventListener('scroll', hidePop);
+  el.stage.addEventListener('mousedown', ev => {
+    if (!ev.target.closest('.hl-rect') && !el.selPop.contains(ev.target)) hidePop();
+  });
+  /* Clic sobre un resaltado ya guardado → Copiar / Quitar */
+  el.hlLayer.addEventListener('click', ev => {
+    const t = ev.target.closest('.hl-rect');
+    if (!t || !reader.book) return;
+    ev.stopPropagation();
+    const h = bookState(reader.book.id).highlights.find(x => x.id === t.dataset.hl);
+    if (!h) return;
+    showPop(t.getBoundingClientRect(), [
+      { label: '⧉ Copiar', fn: () => { copyText(h.text); hidePop(); } },
+      { label: '🗑 Quitar', fn: () => removeHighlight(h.id) }
+    ]);
+  });
   el.prev.onclick = () => renderPage(reader.page - 1);
   el.next.onclick = () => renderPage(reader.page + 1);
   el.zoomIn.onclick = () => { reader.zoom = Math.min(reader.zoom + 0.2, 3); renderPage(reader.page); };
@@ -760,10 +1073,15 @@
 
   document.addEventListener('keydown', (e) => {
     if (!el.reader.classList.contains('show')) return;
-    if (e.key === 'Escape') closeReader();
+    if (e.key === 'Escape') {
+      // Esc cierra primero lo que esté encima: menú → panel → lector
+      if (el.selPop.classList.contains('show')) hidePop();
+      else if (el.notes.classList.contains('show')) el.notes.classList.remove('show');
+      else closeReader();
+    }
     else if (e.key === 'ArrowRight' || e.key === 'PageDown') renderPage(reader.page + 1);
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') renderPage(reader.page - 1);
-    else if (e.key === 'b' || e.key === 'B') toggleMark();
+    else if ((e.key === 'b' || e.key === 'B') && !selectionInfo()) toggleMark();
   });
 
   // Re-render al cambiar el tamaño de la ventana (ajuste de ancho)
