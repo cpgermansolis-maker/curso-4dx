@@ -4,14 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Biblioteca de Autor · Germán Solís Muñoz · TRIKLES</title>
-<meta name="description" content="Obras originales de Germán Solís Muñoz. Lee en línea o descarga gratis. Cuentos, relatos y ensayos de autor.">
+<meta name="description" content="Obras originales de Germán Solís Muñoz. Cuentos y relatos para leer en línea o descargar gratis, y Recordar con Amor, un libro para el duelo.">
 <meta name="robots" content="index,follow">
 <meta property="og:title" content="Biblioteca de Autor · Germán Solís Muñoz">
-<meta property="og:description" content="Obras originales para leer en línea o descargar gratis.">
+<meta property="og:description" content="Obras originales para leer en línea o descargar.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Firebase: solo para los libros DE PAGO (cuenta TRIKLES + compra). Los gratis no la usan. -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+<script src="firebase-init.js"></script>
 <style>
   :root {
     --ink: #0c0a09;          /* fondo negro cálido, como la portada */
@@ -370,6 +376,79 @@
   .tl-cap { text-align: center; color: var(--muted); margin-top: 14px; font-size: 1.05em; font-style: italic; }
   .tl-close { position: absolute; top: 16px; right: 16px; z-index: 2; }
 
+  /* ---------- LIBROS DE PAGO: precio, muestra, compra ---------- */
+  .price-pill {
+    display: inline-flex; align-items: baseline; gap: 6px;
+    color: var(--cream); font-weight: 800; font-size: 1.05em;
+  }
+  .price-pill small { color: var(--muted-2); font-weight: 600; font-size: 0.7em; letter-spacing: 1px; }
+  .owned-pill { color: #9fd49a; font-size: 0.8em; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .btn-buy { background: var(--cream); color: var(--ink); }
+  .btn-buy:hover { background: #fff; transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+  .cover-tag.new { background: var(--gold); }
+
+  /* Fin de la muestra dentro del lector */
+  .paywall {
+    display: none; width: min(460px, 100%); margin: 30px auto; text-align: center;
+    background: linear-gradient(180deg, var(--panel), var(--ink-2));
+    border: 1px solid var(--gold); border-radius: 18px; padding: 30px 26px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6); line-height: 1.55;
+  }
+  .paywall.show { display: block; }
+  .paywall img { width: 108px; border-radius: 6px; box-shadow: 0 10px 28px rgba(0,0,0,0.5); margin-bottom: 18px; }
+  .paywall h3 { font-size: 1.5em; font-weight: 700; margin-bottom: 8px; }
+  .paywall p { color: var(--muted); font-size: 0.95em; }
+  .paywall .btn { margin-top: 20px; justify-content: center; width: 100%; }
+  .paywall .pw-fine { color: var(--muted-2); font-size: 0.8em; margin-top: 12px; }
+  .paywall .pw-back { background: transparent; border: 0; color: var(--gold); cursor: pointer; font-family: inherit; font-size: 0.88em; margin-top: 14px; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Sesión en la barra */
+  .topnav .who { color: var(--muted-2); font-size: 0.8em; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topnav button.linkish {
+    background: transparent; border: 0; font-family: inherit; cursor: pointer;
+    padding: 8px 14px; border-radius: 999px; font-size: 0.86em; font-weight: 600; color: var(--muted);
+  }
+  .topnav button.linkish:hover { color: var(--cream); background: rgba(255,255,255,0.06); }
+
+  /* Modal de cuenta (entrar / crear cuenta) */
+  .auth-overlay {
+    position: fixed; inset: 0; z-index: 140; display: none; align-items: center; justify-content: center;
+    padding: 16px; background: rgba(6,4,3,0.88); backdrop-filter: blur(6px);
+  }
+  .auth-overlay.show { display: flex; }
+  .auth-card {
+    width: min(410px, 100%); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 18px; padding: 26px 24px; position: relative; max-height: 92vh; overflow: auto;
+  }
+  .auth-card h3 { font-size: 1.35em; margin-bottom: 4px; padding-right: 40px; }
+  .auth-card .auth-why { color: var(--muted); font-size: 0.88em; margin-bottom: 16px; }
+  .auth-tabs { display: flex; gap: 6px; margin-bottom: 16px; background: rgba(255,255,255,0.04); padding: 4px; border-radius: 10px; }
+  .auth-tabs button {
+    flex: 1; background: transparent; border: 0; color: var(--muted); padding: 9px; border-radius: 8px;
+    font-family: inherit; font-weight: 700; font-size: 0.88em; cursor: pointer;
+  }
+  .auth-tabs button.on { background: var(--cream); color: var(--ink); }
+  .auth-card label { display: block; color: var(--muted); font-size: 0.8em; font-weight: 600; margin: 10px 0 5px; }
+  .auth-card input {
+    width: 100%; padding: 12px 13px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--ink-2); color: var(--cream); font-family: inherit; font-size: 16px;
+  }
+  .auth-card input:focus { outline: none; border-color: var(--gold); }
+  .auth-card .btn { width: 100%; justify-content: center; margin-top: 18px; }
+  .auth-err { display: none; color: #ffb4a0; background: rgba(232,80,31,0.12); border: 1px solid rgba(232,80,31,0.4); border-radius: 9px; padding: 9px 11px; font-size: 0.85em; margin-top: 12px; }
+  .auth-err.ok { color: #b8e6b3; background: rgba(120,200,110,0.1); border-color: rgba(120,200,110,0.4); }
+  .auth-forgot { background: transparent; border: 0; color: var(--gold); font-family: inherit; font-size: 0.82em; cursor: pointer; margin-top: 12px; text-decoration: underline; text-underline-offset: 3px; }
+  .auth-close { position: absolute; top: 14px; right: 14px; }
+
+  /* Aviso al volver de Stripe */
+  .buy-banner { max-width: 1040px; margin: 0 auto 6px; padding: 0 24px; display: none; }
+  .buy-banner.show { display: block; }
+  .buy-banner > div {
+    border: 1px solid var(--gold); background: rgba(217,160,102,0.1); color: var(--cream);
+    border-radius: 14px; padding: 14px 18px; font-size: 0.94em;
+  }
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 720px) {
     .hero { padding: 40px 20px 20px; }
@@ -377,6 +456,9 @@
     .book-cover-wrap { max-width: 220px; margin: 0 auto; }
     .book h2 { font-size: 1.7em; }
     .author-row .a-free { display: none; }
+    .topnav .who { display: none; }
+    .topbar { padding: 12px 16px; }
+    .brand .sub { display: none; }
     .reader-bar .r-title .r-genre { display: none; }
     .r-group.r-zoom { display: none; }
     .reader-stage { padding: 14px 6px 40px; }
@@ -394,6 +476,8 @@
     <nav class="topnav">
       <a href="/">Cursos</a>
       <a href="/libros" class="active">Libros</a>
+      <span class="who" id="navWho"></span>
+      <button class="linkish" id="navAuth" style="display:none;">Entrar</button>
     </nav>
   </div>
 
@@ -401,7 +485,7 @@
   <header class="hero">
     <div class="eyebrow">Obras originales</div>
     <h1 class="serif">Biblioteca de <em>Autor</em></h1>
-    <p class="lead">Cuentos y relatos de Germán Solís Muñoz. Léelos en línea o descárgalos gratis, sin registro.</p>
+    <p class="lead">Cuentos, relatos y un libro para el duelo, de Germán Solís Muñoz. Léelos en línea o descárgalos. Los cuentos son gratis y sin registro.</p>
 
     <div class="author-row">
       <img src="biblioteca/german-autor.jpg" alt="Germán Solís Muñoz" onerror="this.onerror=null;this.src='instructor-german.jpg'">
@@ -409,11 +493,12 @@
         <div class="a-name">Germán Solís Muñoz</div>
         <div class="a-bio">Autor · Instructor TRIKLES · LADE y auditor</div>
       </div>
-      <div class="a-free">Lectura y descarga libres</div>
+      <div class="a-free">Obra original</div>
     </div>
   </header>
 
   <!-- ESTANTE -->
+  <div class="buy-banner" id="buyBanner"><div id="buyBannerMsg"></div></div>
   <main class="shelf">
     <div class="shelf-title">Publicaciones</div>
     <div id="bookList"></div>
@@ -421,7 +506,7 @@
 
   <!-- PIE LEGAL -->
   <footer class="legal">
-    <div><strong>Obras originales de Germán Solís Muñoz.</strong> Puedes leerlas y descargarlas gratis, para tu disfrute personal.</div>
+    <div><strong>Obras originales de Germán Solís Muñoz.</strong> Los libros gratis puedes leerlos y descargarlos para tu disfrute personal. Los de pago son para uso personal de quien los compra: no se revenden ni se comparten.</div>
     <div class="copyright">© <span id="year">2026</span> Germán Solís Muñoz. Todos los derechos reservados. · <a href="/legal">Aviso legal</a></div>
   </footer>
 
@@ -431,6 +516,37 @@
     <div class="tl-inner">
       <video id="tlVideo" class="tl-video" controls playsinline preload="none"></video>
       <div class="tl-cap serif" id="tlCap"></div>
+    </div>
+  </div>
+
+  <!-- CUENTA (solo para comprar un libro de pago) -->
+  <div id="authModal" class="auth-overlay" aria-hidden="true">
+    <div class="auth-card" role="dialog" aria-labelledby="authTitle">
+      <button class="rbtn r-close auth-close" id="authClose" title="Cerrar" aria-label="Cerrar">✕</button>
+      <h3 class="serif" id="authTitle">Tu cuenta TRIKLES</h3>
+      <p class="auth-why" id="authWhy">Tu libro queda guardado en tu cuenta: léelo o descárgalo desde cualquier celular o compu.</p>
+      <div class="auth-tabs">
+        <button id="tabReg" class="on" type="button">Crear cuenta</button>
+        <button id="tabLog" type="button">Ya tengo cuenta</button>
+      </div>
+      <form id="formReg">
+        <label for="regName">Tu nombre</label>
+        <input id="regName" autocomplete="name" required>
+        <label for="regEmail">Correo</label>
+        <input id="regEmail" type="email" autocomplete="email" required>
+        <label for="regPass">Contraseña (mínimo 6)</label>
+        <input id="regPass" type="password" autocomplete="new-password" minlength="6" required>
+        <button class="btn btn-read" type="submit">Crear cuenta y continuar</button>
+      </form>
+      <form id="formLog" style="display:none;">
+        <label for="logEmail">Correo</label>
+        <input id="logEmail" type="email" autocomplete="email" required>
+        <label for="logPass">Contraseña</label>
+        <input id="logPass" type="password" autocomplete="current-password" required>
+        <button class="btn btn-read" type="submit">Entrar y continuar</button>
+        <button class="auth-forgot" id="authForgot" type="button">¿Olvidaste tu contraseña?</button>
+      </form>
+      <div class="auth-err" id="authErr"></div>
     </div>
   </div>
 
@@ -467,6 +583,7 @@
       </div>
       <div class="reader-loading" id="rLoading"><div class="spinner"></div>Cargando libro…</div>
       <div class="reader-error" id="rError" style="display:none;"></div>
+      <div class="paywall" id="rPaywall"></div>
     </div>
     <div class="notes-panel" id="rNotes">
       <div class="np-head">
@@ -489,6 +606,25 @@
      Para agregar un libro nuevo: crea la carpeta biblioteca/<id>/ con
      libro.pdf y portada.jpg, y añade un objeto a este arreglo. */
   const BOOKS = [
+    {
+      // LIBRO DE PAGO: sin `pdf` público. El completo lo entrega la Cloud Function
+      // getBook a quien lo compró; aquí solo va la muestra (primeras páginas).
+      // Precio y archivo en BOOK_PRODUCTS de functions/index.js (mantener en sync).
+      id: 'recordar-con-amor',
+      title: 'Recordar con Amor',
+      subtitle: 'Cosas bonitas que se pueden pensar de alguien que ya no está en tu vida',
+      genre: 'Un libro para el duelo',
+      year: 2026,
+      pages: 19,
+      readingMin: 20,
+      cover: 'biblioteca/recordar-con-amor/portada.jpg',
+      price: 39,
+      sample: 'biblioteca/recordar-con-amor/muestra.pdf',
+      samplePages: 3,
+      isNew: true,
+      dedication: 'Para los que están soltando a alguien y no quieren soltarlo con odio.',
+      synopsis: 'El autor terminó un vínculo largo, fuerte, casi poético, y escribió este libro desde el duelo. En el duelo la mente hace trampas: de la confusión salen frases que se sienten ciertas y no lo son. Aquí va lo contrario, una lista de cosas bonitas que se pueden pensar de alguien con quien todo terminó, repartidas en seis partes: lo que existió, lo que te dejó, esa persona de lejos, los ecos, el final y lo que sigue para ti. Tiene una sola regla: nada de esto es para que vuelva. Es para desearle que esté bien allá y, sobre todo, para que tú estés bien acá. Porque el duelo va a doler de todos modos, pero con amor sana más rápido que con odio.'
+    },
     {
       id: 'la-mancha-naranja',
       title: 'La Mancha Naranja',
@@ -593,6 +729,28 @@
     return (st.page > 1 && total && st.page < total) ? '📖 Continuar leyendo' : '📖 Leer en línea';
   }
 
+  /* Botones del estante: gratis (leer + descargar), de pago sin comprar
+     (muestra + comprar) o de pago ya comprado (leer + descargar completo). */
+  function actionsHtml(b, i) {
+    const trailer = b.trailer ? `<button class="btn btn-trailer" onclick="openTrailer(${i})">🎬 Ver tráiler</button>` : '';
+    if (!b.price) {
+      return `${trailer}
+        <button class="btn btn-read" onclick="openReader(${i})">${readLabel(b)}</button>
+        <a class="btn btn-dl" href="${b.pdf}" download>⬇ Descargar PDF</a>
+        <span class="free-pill">✦ Gratis</span>`;
+    }
+    if (isOwned(b.id)) {
+      return `${trailer}
+        <button class="btn btn-read" onclick="openReader(${i})">${readLabel(b)}</button>
+        <button class="btn btn-dl" onclick="downloadPaid(${i}, this)">⬇ Descargar PDF</button>
+        <span class="owned-pill">✓ Es tuyo</span>`;
+    }
+    return `${trailer}
+      <button class="btn btn-buy" onclick="buyBook(${i}, this)">Comprar · $${b.price}</button>
+      <button class="btn btn-dl" onclick="openReader(${i})">📖 Leer las primeras ${b.samplePages} páginas</button>
+      <span class="price-pill">$${b.price} <small>MXN</small></span>`;
+  }
+
   /* ====== RENDER DEL ESTANTE ====== */
   function renderBooks() {
     document.getElementById('bookList').innerHTML = BOOKS.map((b, i) => `
@@ -601,6 +759,7 @@
           <img class="book-cover" src="${b.cover}" alt="Portada de ${b.title}"
                onclick="openReader(${i})" loading="lazy"
                onerror="this.style.opacity=0.3">
+          ${b.isNew && !b.trailer ? `<span class="cover-tag new">✦ Nuevo</span>` : ''}
           ${b.trailer ? `
             <span class="cover-tag">🎬 Tráiler</span>
             <button class="play-badge" onclick="event.stopPropagation();openTrailer(${i})"
@@ -618,17 +777,249 @@
           <p class="book-synopsis">${b.synopsis}</p>
           ${b.dedication ? `<div class="book-dedication">«${b.dedication}»</div>` : ''}
           ${progressHtml(b)}
-          <div class="book-actions">
-            ${b.trailer ? `<button class="btn btn-trailer" onclick="openTrailer(${i})">🎬 Ver tráiler</button>` : ''}
-            <button class="btn btn-read" onclick="openReader(${i})">${readLabel(b)}</button>
-            <a class="btn btn-dl" href="${b.pdf}" download>⬇ Descargar PDF</a>
-            <span class="free-pill">✦ Gratis</span>
-          </div>
+          <div class="book-actions">${actionsHtml(b, i)}</div>
         </div>
       </article>
     `).join('');
   }
+  /* ====== LIBROS DE PAGO: cuenta, compra y entrega ======
+     Quién tiene qué lo decide SIEMPRE el servidor (Cloud Function getBook, que lee
+     bookPurchases). Aquí solo se recuerda en memoria mientras la página está abierta.
+     El PDF completo nunca está en el hosting: llega de getBook y vive en memoria. */
+  const HAS_FB = typeof window.TK !== 'undefined';
+  const OWNED = new Set();
+  const paidBytes = {};   // bookId → Uint8Array del PDF completo
+  function isOwned(id) { return OWNED.has(id); }
+
+  function fnCall(name, data) {
+    if (!HAS_FB || !TK._functions) {
+      return Promise.reject(new Error('No se pudo conectar con el servidor. Recarga la página.'));
+    }
+    return TK._functions.httpsCallable(name)(data).then(r => r.data);
+  }
+
+  async function refreshOwned() {
+    const next = new Set();
+    if (HAS_FB && TK.isLoggedIn()) {
+      await Promise.all(BOOKS.filter(b => b.price).map(b =>
+        fnCall('getBook', { bookId: b.id, statusOnly: true })
+          .then(r => { if (r && r.owned) next.add(b.id); })
+          .catch(() => {})));
+    }
+    OWNED.clear();
+    next.forEach(id => OWNED.add(id));
+  }
+
+  async function getPaidBytes(id) {
+    if (!paidBytes[id]) {
+      const r = await fnCall('getBook', { bookId: id });
+      if (!r || !r.owned || !r.pdfBase64) throw new Error('Este libro todavía no aparece en tu cuenta.');
+      const bin = atob(r.pdfBase64);
+      const u8 = new Uint8Array(bin.length);
+      for (let k = 0; k < bin.length; k++) u8[k] = bin.charCodeAt(k);
+      paidBytes[id] = u8;
+    }
+    // PDF.js se queda con el buffer que recibe (lo transfiere a su worker): se le da una copia
+    return paidBytes[id].slice();
+  }
+
+  async function downloadPaid(i, btn) {
+    const b = BOOKS[i];
+    const label = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.innerHTML = 'Preparando…'; }
+    try {
+      const bytes = await getPaidBytes(b.id);
+      const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = b.title + ' - Germán Solís Muñoz.pdf';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch (err) {
+      alert(err.message || 'No se pudo descargar. Intenta de nuevo.');
+    } finally {
+      if (btn) { btn.disabled = false; btn.innerHTML = label; }
+    }
+  }
+
+  let pendingBuy = null;   // libro que se quería comprar cuando se pidió la cuenta
+  async function buyBook(i, btn) {
+    const b = BOOKS[i];
+    if (!HAS_FB) { alert('No se pudo conectar con el servidor. Recarga la página.'); return; }
+    if (!TK.isLoggedIn()) {
+      pendingBuy = i;
+      openAuth(`Para comprar «${b.title}» crea tu cuenta o entra. Tu libro queda guardado ahí: lo lees o lo descargas desde cualquier celular o compu.`);
+      return;
+    }
+    if (isOwned(b.id)) { openReader(i); return; }
+    const label = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.innerHTML = 'Abriendo el pago…'; }
+    try {
+      const r = await TK.createStripeCheckout('book:' + b.id);
+      window.location.href = r.url;
+    } catch (err) {
+      alert('No se pudo abrir el pago: ' + (err.message || 'intenta de nuevo en un momento.'));
+      if (btn) { btn.disabled = false; btn.innerHTML = label; }
+    }
+  }
+
+  /* ---- Modal de cuenta ---- */
+  const au = {
+    modal: document.getElementById('authModal'), why: document.getElementById('authWhy'),
+    err: document.getElementById('authErr'),
+    tabReg: document.getElementById('tabReg'), tabLog: document.getElementById('tabLog'),
+    formReg: document.getElementById('formReg'), formLog: document.getElementById('formLog')
+  };
+  function authTab(which) {
+    const reg = which === 'reg';
+    au.tabReg.classList.toggle('on', reg); au.tabLog.classList.toggle('on', !reg);
+    au.formReg.style.display = reg ? '' : 'none';
+    au.formLog.style.display = reg ? 'none' : '';
+    authMsg('');
+  }
+  function authMsg(msg, ok) {
+    au.err.textContent = msg;
+    au.err.classList.toggle('ok', !!ok);
+    au.err.style.display = msg ? 'block' : 'none';
+  }
+  function openAuth(why) {
+    au.why.textContent = why || 'Entra con tu cuenta TRIKLES para ver los libros que compraste.';
+    authTab('reg');
+    au.modal.classList.add('show');
+    au.modal.setAttribute('aria-hidden', 'false');
+  }
+  function closeAuth() {
+    au.modal.classList.remove('show');
+    au.modal.setAttribute('aria-hidden', 'true');
+    pendingBuy = null;
+  }
+  async function afterAuth() {
+    const want = pendingBuy;
+    closeAuth();
+    await syncSession();
+    if (want !== null) {
+      if (isOwned(BOOKS[want].id)) openReader(want);
+      else buyBook(want);
+    }
+  }
+  au.tabReg.onclick = () => authTab('reg');
+  au.tabLog.onclick = () => authTab('log');
+  document.getElementById('authClose').onclick = closeAuth;
+  au.modal.addEventListener('click', e => { if (e.target === au.modal) closeAuth(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && au.modal.classList.contains('show')) { e.stopImmediatePropagation(); closeAuth(); }
+  }, true);
+  au.formReg.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = au.formReg.querySelector('button[type=submit]');
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('regPass').value;
+    if (pass.length < 6) { authMsg('La contraseña debe tener al menos 6 caracteres.'); return; }
+    btn.disabled = true; authMsg('');
+    try {
+      const data = await TK.register({ name, email, company: '', role: '' }, pass);
+      sendSignupWebhook(data);
+      await afterAuth();
+    } catch (err) {
+      authMsg(err.message);
+    } finally { btn.disabled = false; }
+  });
+  au.formLog.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = au.formLog.querySelector('button[type=submit]');
+    btn.disabled = true; authMsg('');
+    try {
+      await TK.login(document.getElementById('logEmail').value, document.getElementById('logPass').value);
+      await afterAuth();
+    } catch (err) {
+      authMsg(err.message);
+    } finally { btn.disabled = false; }
+  });
+  document.getElementById('authForgot').onclick = async () => {
+    const email = document.getElementById('logEmail').value.trim();
+    if (!email) { authMsg('Escribe tu correo arriba y vuelve a tocar «¿Olvidaste tu contraseña?».'); return; }
+    try {
+      await TK.sendPasswordResetEmail(email);
+      authMsg('Listo: si ese correo tiene cuenta, te llegó un enlace para cambiar la contraseña.', true);
+    } catch (err) { authMsg(err.message); }
+  };
+
+  // Mismo registro en la hoja de Google (Apps Script) que dispara el alta en index.html
+  const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxRhZta3v89vwBarC6WQDm-dHlGj9-ftLx-1lPfexPaSMmdjJTiVhX2bKR-m07ywcEqxw/exec';
+  function sendSignupWebhook(data) {
+    try {
+      fetch(WEBHOOK_URL, {
+        method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'signup', timestamp: new Date().toISOString(),
+          courseId: '', courseTitle: 'Biblioteca de Autor (libro de pago)',
+          name: data.name, email: data.email, company: '', role: '',
+          progress: 0, finalScore: null, completed: false
+        })
+      }).catch(() => {});
+    } catch (e) {}
+  }
+
+  /* ---- Sesión en la barra ---- */
+  const navWho = document.getElementById('navWho');
+  const navAuth = document.getElementById('navAuth');
+  function updateNav() {
+    if (!HAS_FB) return;
+    navAuth.style.display = '';
+    if (TK.isLoggedIn()) {
+      navWho.textContent = TK.getCurrentEmail();
+      navAuth.textContent = 'Salir';
+      navAuth.onclick = async () => {
+        await TK.logout();
+        Object.keys(paidBytes).forEach(k => delete paidBytes[k]);
+        await syncSession();
+      };
+    } else {
+      navWho.textContent = '';
+      navAuth.textContent = 'Entrar';
+      navAuth.onclick = () => openAuth();
+    }
+  }
+  let syncSeq = 0;
+  async function syncSession() {
+    const my = ++syncSeq;
+    updateNav();
+    await refreshOwned();
+    if (my === syncSeq) renderBooks();
+  }
+
+  /* ---- Regreso de Stripe (/libros?compra=<id>) ----
+     El webhook puede tardar unos segundos; con OXXO, hasta que la tienda confirme. */
+  async function handleReturnFromStripe() {
+    const id = new URLSearchParams(location.search).get('compra');
+    if (!id) return;
+    history.replaceState(null, '', location.pathname);
+    const i = BOOKS.findIndex(b => b.id === id);
+    if (i < 0) return;
+    const banner = document.getElementById('buyBanner');
+    const msg = document.getElementById('buyBannerMsg');
+    banner.classList.add('show');
+    msg.textContent = `Gracias por comprar «${BOOKS[i].title}». Estamos confirmando tu pago…`;
+    for (let t = 0; t < 12 && !isOwned(id); t++) {
+      await refreshOwned();
+      if (!isOwned(id)) await new Promise(r => setTimeout(r, 2500));
+    }
+    renderBooks();
+    if (isOwned(id)) {
+      msg.textContent = `✓ Listo: «${BOOKS[i].title}» ya es tuyo. Lo encuentras aquí cada vez que entres con tu cuenta.`;
+      openReader(i);
+    } else {
+      msg.textContent = 'Tu pago se está confirmando. Si pagaste con tarjeta, recarga esta página en un minuto. ' +
+        'Si elegiste OXXO, el libro aparece aquí en cuanto la tienda confirme el pago (puede tardar hasta 48 horas).';
+    }
+  }
+
   renderBooks();
+  if (HAS_FB) {
+    TK.onAuthChange(() => syncSession());
+    TK.ready().then(async () => { await syncSession(); handleReturnFromStripe(); });
+  }
 
   /* ====== LIGHTBOX DE TRÁILER (video) ====== */
   const tl = {
@@ -688,7 +1079,7 @@
   }
 
   const reader = {
-    doc: null, page: 1, pages: 0, zoom: 1, book: null, rendering: false, pending: null
+    doc: null, page: 1, pages: 0, zoom: 1, book: null, rendering: false, pending: null, sample: false
   };
   const el = {
     reader: document.getElementById('reader'),
@@ -719,7 +1110,8 @@
     notesBtn: document.getElementById('rNotesBtn'),
     notesBody: document.getElementById('rNotesBody'),
     notesBadge: document.getElementById('rNotesBadge'),
-    notesClose: document.getElementById('rNotesClose')
+    notesClose: document.getElementById('rNotesClose'),
+    paywall: document.getElementById('rPaywall')
   };
 
   /* ---- Avisos flotantes dentro del lector ---- */
@@ -945,7 +1337,14 @@
   async function openReader(i) {
     const b = BOOKS[i];
     const st = bookState(b.id);
+    // Libro de pago: completo si ya es tuyo, si no, solo la muestra
+    const paid = !!b.price;
+    const owned = paid && isOwned(b.id);
+    // Puede abrirse encima de otro (p. ej. de la muestra al libro recién comprado)
+    if (reader.doc) { try { reader.doc.destroy(); } catch (e) {} }
     reader.book = b; reader.page = 1; reader.zoom = 1; reader.doc = null;
+    reader.sample = paid && !owned;
+    hidePaywall();
     hideToast(); hidePop();
     el.marks.classList.remove('show');
     el.mark.classList.remove('on');
@@ -954,7 +1353,15 @@
     updateNotesBadge();
     el.name.textContent = b.title;
     el.genre.textContent = b.genre;
-    el.download.href = b.pdf;
+    // Descargar: el gratis es un enlace directo; el de pago se arma con el PDF que
+    // entrega getBook (blob). En la muestra no hay botón de descarga.
+    el.download.style.display = reader.sample ? 'none' : '';
+    el.download.onclick = null;
+    if (!paid) el.download.href = b.pdf;
+    else {
+      el.download.removeAttribute('href');
+      el.download.onclick = (ev) => { ev.preventDefault(); downloadPaid(i); };
+    }
     el.reader.classList.add('show');
     el.reader.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -965,9 +1372,11 @@
 
     try {
       const pdfjsLib = await loadPdfjs();
-      const doc = await pdfjsLib.getDocument(b.pdf).promise;
+      let source = b.pdf;
+      if (paid) source = owned ? { data: await getPaidBytes(b.id) } : b.sample;
+      const doc = await pdfjsLib.getDocument(source).promise;
       reader.doc = doc; reader.pages = doc.numPages;
-      setBookState(b.id, { pages: doc.numPages });
+      setBookState(b.id, { pages: totalPages() });
       el.loading.style.display = 'none';
       el.pageWrap.style.display = 'block';
       // Reanuda donde se quedó (acotado por si el PDF cambió de número de páginas)
@@ -982,7 +1391,11 @@
     } catch (err) {
       el.loading.style.display = 'none';
       el.error.style.display = 'block';
-      el.error.innerHTML = `No se pudo abrir el lector en línea.<br><br>
+      el.error.innerHTML = paid
+        ? `No se pudo abrir el libro.<br><br>${escapeHtml(err.message || '')}<br><br>
+           Revisa tu conexión y vuelve a intentarlo. Si sigue fallando, escríbenos a
+           <a href="mailto:cpgermansolis@gmail.com">cpgermansolis@gmail.com</a> y te lo mandamos.`
+        : `No se pudo abrir el lector en línea.<br><br>
         Puedes <a href="${b.pdf}" download>descargar el PDF</a> o
         <a href="${b.pdf}" target="_blank" rel="noopener">abrirlo en una pestaña nueva</a>.`;
     }
@@ -991,6 +1404,7 @@
   async function renderPage(n) {
     if (!reader.doc) return;
     n = Math.min(Math.max(1, n), reader.pages);
+    hidePaywall();
     reader.page = n;
     if (reader.rendering) { reader.pending = n; return; }
     reader.rendering = true;
@@ -1017,7 +1431,7 @@
     el.stage.scrollTop = 0;
     hidePop();
     updateControls();
-    if (reader.book) { setBookState(reader.book.id, { page: n, pages: reader.pages }); renderMarks(); }
+    if (reader.book) { setBookState(reader.book.id, { page: n, pages: totalPages() }); renderMarks(); }
     renderHighlights();
 
     reader.rendering = false;
@@ -1026,10 +1440,53 @@
     }
   }
 
+  // En la muestra, el avance guardado y el indicador cuentan contra el libro
+  // COMPLETO (si no, al llegar a la pág. 3 de la muestra diría "Lo terminaste").
+  function totalPages() {
+    return reader.sample && reader.book ? reader.book.pages : reader.pages;
+  }
   function updateControls() {
-    el.pageInd.textContent = `${reader.page} / ${reader.pages}`;
+    el.pageInd.textContent = reader.sample
+      ? `${reader.page} / ${totalPages()} · muestra`
+      : `${reader.page} / ${reader.pages}`;
     el.prev.disabled = reader.page <= 1;
-    el.next.disabled = reader.page >= reader.pages;
+    // En la muestra, "siguiente" en la última página lleva a la invitación de compra
+    el.next.disabled = !reader.sample && reader.page >= reader.pages;
+  }
+  function nextPage() {
+    if (reader.sample && reader.page >= reader.pages) { showPaywall(); return; }
+    renderPage(reader.page + 1);
+  }
+  function prevPage() {
+    if (el.paywall.classList.contains('show')) { hidePaywall(); return; }
+    renderPage(reader.page - 1);
+  }
+
+  /* ---- Fin de la muestra: invitación a comprar ---- */
+  function showPaywall() {
+    const b = reader.book;
+    if (!b) return;
+    const i = BOOKS.indexOf(b);
+    hidePop(); hideToast();
+    el.pageWrap.style.display = 'none';
+    el.paywall.innerHTML = `
+      <img src="${b.cover}" alt="">
+      <h3 class="serif">Hasta aquí llega la muestra</h3>
+      <p>Te faltan ${b.pages - reader.pages} páginas de <em>${b.title}</em>: las seis partes y la despedida.</p>
+      <button class="btn btn-buy" onclick="buyBook(${i}, this)">Comprar el libro · $${b.price} MXN</button>
+      <div class="pw-fine">Pago seguro con tarjeta u OXXO. Es tuyo para siempre: lo lees aquí o lo descargas en PDF.</div>
+      <button class="pw-back" onclick="hidePaywall()">‹ Volver a la muestra</button>`;
+    el.paywall.classList.add('show');
+    el.pageInd.textContent = `${reader.page} / ${totalPages()} · muestra`;
+    el.next.disabled = true;
+    el.prev.disabled = false;
+    el.stage.scrollTop = 0;
+  }
+  function hidePaywall() {
+    if (!el.paywall.classList.contains('show')) return;
+    el.paywall.classList.remove('show');
+    el.paywall.innerHTML = '';
+    if (reader.doc) { el.pageWrap.style.display = 'block'; updateControls(); }
   }
 
   function closeReader() {
@@ -1038,6 +1495,7 @@
     document.body.style.overflow = '';
     if (reader.doc) { try { reader.doc.destroy(); } catch (e) {} }
     reader.doc = null;
+    hidePaywall();
     hideToast(); hidePop();
     el.marks.classList.remove('show');
     el.notes.classList.remove('show');
@@ -1082,22 +1540,24 @@
       { label: '🗑 Quitar', fn: () => removeHighlight(h.id) }
     ]);
   });
-  el.prev.onclick = () => renderPage(reader.page - 1);
-  el.next.onclick = () => renderPage(reader.page + 1);
+  el.prev.onclick = prevPage;
+  el.next.onclick = nextPage;
   el.zoomIn.onclick = () => { reader.zoom = Math.min(reader.zoom + 0.2, 3); renderPage(reader.page); };
   el.zoomOut.onclick = () => { reader.zoom = Math.max(reader.zoom - 0.2, 0.6); renderPage(reader.page); };
   el.close.onclick = closeReader;
 
   document.addEventListener('keydown', (e) => {
     if (!el.reader.classList.contains('show')) return;
+    // Escribiendo en el modal de cuenta: las flechas y la B no son del lector
+    if (au.modal.classList.contains('show') || (e.target.closest && e.target.closest('input, textarea'))) return;
     if (e.key === 'Escape') {
       // Esc cierra primero lo que esté encima: menú → panel → lector
       if (el.selPop.classList.contains('show')) hidePop();
       else if (el.notes.classList.contains('show')) el.notes.classList.remove('show');
       else closeReader();
     }
-    else if (e.key === 'ArrowRight' || e.key === 'PageDown') renderPage(reader.page + 1);
-    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') renderPage(reader.page - 1);
+    else if (e.key === 'ArrowRight' || e.key === 'PageDown') nextPage();
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevPage();
     else if ((e.key === 'b' || e.key === 'B') && !selectionInfo()) toggleMark();
   });
 
@@ -1105,6 +1565,7 @@
   let resizeT = null;
   window.addEventListener('resize', () => {
     if (!el.reader.classList.contains('show') || !reader.doc) return;
+    if (el.paywall.classList.contains('show')) return;   // no tapar la invitación de compra
     clearTimeout(resizeT);
     resizeT = setTimeout(() => renderPage(reader.page), 180);
   });

@@ -1,3 +1,10 @@
 node_modules/
 *.log
 .firebase/
+
+# PDFs COMPLETOS de libros propios DE PAGO (Biblioteca de Autor). El repo es
+# PÚBLICO: si se commitean, cualquiera los descarga de GitHub sin pagar.
+# Firebase SÍ los sube al deployar functions (el deploy no lee .gitignore, solo
+# el "ignore" de firebase.json) — ahí los lee la función getBook.
+# El original vive en libros/Libros Propios/<Titulo>/; copiarlo aquí antes de deployar.
+private-books/

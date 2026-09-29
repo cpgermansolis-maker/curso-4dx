@@ -6,6 +6,7 @@
    3) stripeWebhook:          recibe la confirmación de pago e inscribe al alumno.
    4) sendInactiveReminders:  corre diario a las 10 AM y recuerda a alumnos inactivos 30+ días.
    5) unsubscribeReminders:   endpoint de opt-out desde el link del correo.
+   6) getBook:                entrega el PDF de un libro propio de pago (/libros) a quien lo compró.
 
    Secretos requeridos (configurar con `firebase functions:secrets:set`):
    - GMAIL_USER             correo Gmail emisor (ej. cpgermansolis@gmail.com)
@@ -68,6 +69,21 @@ const COURSE_PRICES_CENTS = {
     // 'gerencia-efectiva': 39900, 'la-paradoja': 29900, 'coaching': 39900,
     // 'codigo-honor': 44900, 'food-beverage': 79900
 };
+// Libros propios DE PAGO de la Biblioteca de Autor (/libros). Viajan por el mismo
+// createStripeCheckout con courseId = 'book:<id>'. NO son cursos: la compra se
+// registra en la colección bookPurchases (no en enrollments), así que NO cuenta
+// como "compra de un propio" y NO desbloquea los derivados del embudo 2 gratis
+// (decisión de Germán, 2026-09-29). El PDF completo vive en
+// functions/private-books/ (gitignored, repo público) y solo lo entrega getBook.
+const BOOK_PREFIX = 'book:';
+const BOOK_PRODUCTS = {
+    'recordar-con-amor': {
+        title: 'Recordar con Amor',
+        priceCents: 3900,   // $39.00 MXN
+        file: 'recordar-con-amor.pdf'
+    }
+};
+
 const BUNDLE_PRICE_CENTS = 229900;  // $2,299.00
 const BUNDLE_TITLE = 'Bundle completo TRIKLES — 8 cursos';
 
@@ -275,7 +291,19 @@ exports.createStripeCheckout = onCall(
 
         // Validar producto
         let lineItems, amountCents, productName;
-        if (courseId === 'BUNDLE' || courseId === '__bundle') {
+        let productDesc = 'Plataforma TRIKLES · Acceso de por vida · Certificado incluido';
+        let successUrl = APP_BASE_URL + '/pago-exitoso.html?session_id={CHECKOUT_SESSION_ID}';
+        let cancelUrl = APP_BASE_URL + '/index.html';
+        if (courseId.startsWith(BOOK_PREFIX)) {
+            const bookId = courseId.slice(BOOK_PREFIX.length);
+            const book = BOOK_PRODUCTS[bookId];
+            if (!book) throw new HttpsError('invalid-argument', 'Libro inválido: ' + bookId);
+            amountCents = book.priceCents;
+            productName = book.title + ' — libro digital';
+            productDesc = 'Germán Solís Muñoz · Léelo en línea y descárgalo en PDF cuando quieras';
+            successUrl = APP_BASE_URL + '/libros?compra=' + encodeURIComponent(bookId);
+            cancelUrl = APP_BASE_URL + '/libros';
+        } else if (courseId === 'BUNDLE' || courseId === '__bundle') {
             amountCents = BUNDLE_PRICE_CENTS;
             productName = BUNDLE_TITLE;
         } else if (COURSE_PRICES_CENTS[courseId]) {
@@ -290,7 +318,7 @@ exports.createStripeCheckout = onCall(
                 currency: 'mxn',
                 product_data: {
                     name: productName,
-                    description: 'Plataforma TRIKLES · Acceso de por vida · Certificado incluido'
+                    description: productDesc
                 },
                 unit_amount: amountCents
             },
@@ -310,8 +338,8 @@ exports.createStripeCheckout = onCall(
                     courseId: courseId,
                     userEmail: userEmail
                 },
-                success_url: APP_BASE_URL + '/pago-exitoso.html?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url: APP_BASE_URL + '/index.html',
+                success_url: successUrl,
+                cancel_url: cancelUrl,
                 locale: 'es',
                 allow_promotion_codes: true,
                 // OXXO requiere que el cliente tenga un nombre — Stripe lo solicita automáticamente
@@ -410,6 +438,30 @@ exports.stripeWebhook = onRequest(
         }
 
         const db = admin.firestore();
+
+        // Libro de pago: se registra en bookPurchases, NUNCA en enrollments (ver BOOK_PRODUCTS).
+        if (courseId.startsWith(BOOK_PREFIX)) {
+            const bookId = courseId.slice(BOOK_PREFIX.length);
+            try {
+                await db.collection('bookPurchases').doc(userEmail + '__' + bookId).set({
+                    email: userEmail,
+                    bookId: bookId,
+                    paidAt: new Date().toISOString(),
+                    stripeSessionId: session.id,
+                    amount: session.amount_total / 100,
+                    currency: session.currency
+                });
+                logger.info('Compra de libro guardada', {userEmail, bookId, sessionId: session.id});
+                res.status(200).send('OK');
+            } catch (err) {
+                // 500 → Stripe reintenta. Aquí no hay riesgo de duplicado: el ID del doc
+                // es fijo (correo__libro), un reintento solo sobrescribe lo mismo.
+                logger.error('Error guardando compra de libro:', err);
+                res.status(500).send('Error: ' + err.message);
+            }
+            return;
+        }
+
         const userRef = db.collection('users').doc(userEmail);
 
         // Preparar la(s) inscripción(es) a escribir
@@ -1193,6 +1245,54 @@ exports.chatPreventa = onCall(
         } catch (err) {
             logger.error('chatPreventa error:', err && err.message);
             throw new HttpsError('internal', 'El asistente no está disponible en este momento. Intenta de nuevo en un momento, o escríbele a Germán a ' + TRIKLES_CONTACT_EMAIL + '.');
+        }
+    }
+);
+
+/**
+ * getBook (HTTPS callable)
+ * Entrega un libro propio DE PAGO de la Biblioteca de Autor (/libros) solo a quien
+ * lo compró. El PDF completo NO está en el hosting (biblioteca/ es pública): vive en
+ * functions/private-books/, que se sube con el deploy de functions pero no va a git.
+ *
+ * Entrada: { bookId: string, statusOnly?: boolean }
+ * Salida:  { owned: false }                         → no lo ha comprado
+ *          { owned: true }                          → con statusOnly
+ *          { owned: true, pdfBase64: '...' }        → el libro completo
+ *
+ * Acceso: compra registrada en bookPurchases/{correo__libro} (la escribe SOLO el
+ * webhook de Stripe; las reglas niegan escribirla desde el navegador), o cuentas
+ * del dueño / claim admin.
+ */
+exports.getBook = onCall(
+    {cors: true},
+    async (request) => {
+        if (!request.auth || !request.auth.token.email) {
+            throw new HttpsError('unauthenticated', 'Inicia sesión para leer este libro.');
+        }
+        const email = String(request.auth.token.email).trim().toLowerCase();
+        const bookId = String((request.data && request.data.bookId) || '');
+        const book = BOOK_PRODUCTS[bookId];
+        if (!book) throw new HttpsError('invalid-argument', 'Libro inválido: ' + bookId);
+
+        let owned = request.auth.token.admin === true || FULL_ACCESS_EMAILS.includes(email);
+        if (!owned) {
+            const snap = await admin.firestore().collection('bookPurchases').doc(email + '__' + bookId).get();
+            owned = snap.exists;
+        }
+        if (!owned) return {owned: false};
+        if (request.data && request.data.statusOnly) return {owned: true};
+
+        const fs = require('fs');
+        const path = require('path');
+        try {
+            const buf = fs.readFileSync(path.join(__dirname, 'private-books', book.file));
+            logger.info('Libro entregado', {email, bookId});
+            return {owned: true, pdfBase64: buf.toString('base64')};
+        } catch (err) {
+            // Casi siempre: se deployó functions sin copiar el PDF a private-books/.
+            logger.error('No se encontró el PDF del libro en private-books/', {bookId, err: err.message});
+            throw new HttpsError('internal', 'El libro no está disponible en este momento. Escríbenos y te lo mandamos.');
         }
     }
 );

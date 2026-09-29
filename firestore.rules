@@ -72,6 +72,17 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // === Compras de libros propios de pago (Biblioteca de Autor) ===
+    // ID "email__bookId". Lectura: solo el dueño o admin.
+    // Escritura: NUNCA desde el cliente; solo el webhook de Stripe (Admin SDK).
+    // Por eso NO van en users/{email}: ese doc lo puede editar su dueño, y
+    // entonces cualquiera podría "regalarse" el libro desde la consola.
+    match /bookPurchases/{purchaseId} {
+      allow read: if isAdmin()
+          || (callerEmail() != '' && purchaseId.split('__')[0] == callerEmail());
+      allow write: if false;
+    }
+
     // === Cualquier otra ruta: denegado ===
     match /{document=**} {
       allow read, write: if false;
