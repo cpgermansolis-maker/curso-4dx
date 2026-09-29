@@ -9,6 +9,9 @@
 <meta property="og:title" content="Biblioteca de Autor · Germán Solís Muñoz">
 <meta property="og:description" content="Obras originales para leer en línea o descargar.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://trikles-cursos.web.app/libros">
+<meta property="og:image" content="https://trikles-cursos.web.app/biblioteca/recordar-con-amor/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -368,6 +371,8 @@
   }
   .tl-overlay.show { display: flex; }
   .tl-inner { width: min(960px, 100%); }
+  /* Tráiler vertical (9:16, formato de celular): caja angosta, alto limitado a la pantalla */
+  .tl-inner.vertical { width: min(430px, 100%, 45vh); }
   .tl-video {
     width: 100%; max-height: 78vh; display: block; background: #000;
     border-radius: 12px; border: 1px solid var(--line);
@@ -449,6 +454,58 @@
     border-radius: 14px; padding: 14px 18px; font-size: 0.94em;
   }
 
+  /* ---------- "LO RECOMIENDO": compartir un libro ---------- */
+  .btn-reco {
+    background: transparent; color: var(--gold); border-color: rgba(217,160,102,0.45);
+    padding: 11px 18px; font-size: 0.9em;
+  }
+  .btn-reco:hover { background: rgba(217,160,102,0.14); border-color: var(--gold); }
+  .book.flash { animation: bookFlash 2.4s ease; }
+  @keyframes bookFlash {
+    0%, 60% { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217,160,102,0.35); }
+    100% { border-color: var(--line); box-shadow: none; }
+  }
+  .share-overlay {
+    position: fixed; inset: 0; z-index: 150; display: none; align-items: center; justify-content: center;
+    padding: 16px; background: rgba(6,4,3,0.88); backdrop-filter: blur(6px);
+  }
+  .share-overlay.show { display: flex; }
+  .share-card {
+    width: min(440px, 100%); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 18px; padding: 24px 22px; position: relative; max-height: 92vh; overflow: auto;
+  }
+  .share-head { display: flex; gap: 14px; align-items: center; padding-right: 40px; margin-bottom: 16px; }
+  .share-head img { width: 54px; border-radius: 4px; box-shadow: 0 6px 18px rgba(0,0,0,0.5); flex: 0 0 auto; }
+  .share-head h3 { font-size: 1.2em; line-height: 1.2; }
+  .share-head p { color: var(--muted); font-size: 0.84em; margin-top: 3px; }
+  .share-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .share-opt {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--line); color: var(--cream);
+    border-radius: 12px; padding: 14px 6px; cursor: pointer; font-family: inherit;
+    font-size: 0.8em; font-weight: 600; transition: all .15s; text-align: center;
+  }
+  .share-opt:hover { border-color: var(--gold); background: rgba(217,160,102,0.1); }
+  .share-opt .ico {
+    width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.05em; font-weight: 800; color: #fff;
+  }
+  .share-native { grid-column: 1 / -1; flex-direction: row; font-size: 0.88em; }
+  .share-link {
+    display: flex; gap: 8px; margin-top: 14px; align-items: stretch;
+  }
+  .share-link input {
+    flex: 1; min-width: 0; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--ink-2); color: var(--muted); font-family: inherit; font-size: 0.84em;
+  }
+  .share-link button {
+    background: var(--cream); color: var(--ink); border: 0; border-radius: 10px; padding: 0 16px;
+    font-family: inherit; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  .share-link button.done { background: #9fd49a; }
+  .share-msg { color: var(--muted-2); font-size: 0.8em; margin-top: 12px; line-height: 1.5; font-style: italic; }
+  .pw-reco { display: block; margin: 16px auto 0; }
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 720px) {
     .hero { padding: 40px 20px 20px; }
@@ -513,9 +570,29 @@
   <!-- LIGHTBOX DE TRÁILER -->
   <div id="trailer" class="tl-overlay" aria-hidden="true">
     <button class="rbtn r-close tl-close" id="tlClose" title="Cerrar (Esc)" aria-label="Cerrar tráiler">✕</button>
-    <div class="tl-inner">
+    <div class="tl-inner" id="tlInner">
       <video id="tlVideo" class="tl-video" controls playsinline preload="none"></video>
       <div class="tl-cap serif" id="tlCap"></div>
+    </div>
+  </div>
+
+  <!-- LO RECOMIENDO (compartir un libro) -->
+  <div id="shareModal" class="share-overlay" aria-hidden="true">
+    <div class="share-card" role="dialog" aria-labelledby="shareTitle">
+      <button class="rbtn r-close auth-close" id="shareClose" title="Cerrar" aria-label="Cerrar">✕</button>
+      <div class="share-head">
+        <img id="shareCover" alt="">
+        <div>
+          <h3 class="serif" id="shareTitle">Lo recomiendo</h3>
+          <p>Mándaselo a alguien a quien le pueda servir.</p>
+        </div>
+      </div>
+      <div class="share-grid" id="shareGrid"></div>
+      <div class="share-link">
+        <input id="shareUrl" readonly aria-label="Enlace del libro">
+        <button id="shareCopy" type="button">Copiar enlace</button>
+      </div>
+      <div class="share-msg" id="shareMsg"></div>
     </div>
   </div>
 
@@ -567,6 +644,7 @@
         <button class="rbtn" id="rNext" title="Página siguiente" aria-label="Siguiente">›</button>
       </div>
       <button class="rbtn" id="rMark" title="Marcar esta página (B)" aria-label="Marcar esta página">🔖</button>
+      <button class="rbtn" id="rShare" title="Lo recomiendo: comparte este libro" aria-label="Recomendar este libro">💛</button>
       <button class="rbtn" id="rNotesBtn" title="Mis notas: marcadores y frases resaltadas" aria-label="Mis notas">📑<span class="rb-badge" id="rNotesBadge">0</span></button>
       <a class="rbtn r-dl" id="rDownload" title="Descargar PDF" aria-label="Descargar" download>⬇</a>
       <button class="rbtn r-close" id="rClose" title="Cerrar (Esc)" aria-label="Cerrar">✕</button>
@@ -618,6 +696,9 @@
       pages: 19,
       readingMin: 20,
       cover: 'biblioteca/recordar-con-amor/portada.jpg',
+      trailer: 'biblioteca/recordar-con-amor/trailer.mp4',
+      trailerPoster: 'biblioteca/recordar-con-amor/trailer-poster.jpg',
+      trailerVertical: true,   // 720×1280 (formato celular) → lightbox angosto
       price: 39,
       sample: 'biblioteca/recordar-con-amor/muestra.pdf',
       samplePages: 3,
@@ -688,7 +769,8 @@
       marks: Array.isArray(b.marks) ? b.marks : [],
       // Cada resaltado: { id, page, text, rects:[{x,y,w,h}] } con coordenadas
       // NORMALIZADAS 0..1 respecto a la página → sobreviven al zoom y al resize.
-      highlights: Array.isArray(b.highlights) ? b.highlights : []
+      highlights: Array.isArray(b.highlights) ? b.highlights : [],
+      recoAsked: !!b.recoAsked
     };
   }
   function escapeHtml(s) {
@@ -733,28 +815,29 @@
      (muestra + comprar) o de pago ya comprado (leer + descargar completo). */
   function actionsHtml(b, i) {
     const trailer = b.trailer ? `<button class="btn btn-trailer" onclick="openTrailer(${i})">🎬 Ver tráiler</button>` : '';
+    const reco = `<button class="btn btn-reco" onclick="openShare(${i})">💛 Lo recomiendo</button>`;
     if (!b.price) {
       return `${trailer}
         <button class="btn btn-read" onclick="openReader(${i})">${readLabel(b)}</button>
         <a class="btn btn-dl" href="${b.pdf}" download>⬇ Descargar PDF</a>
-        <span class="free-pill">✦ Gratis</span>`;
+        <span class="free-pill">✦ Gratis</span>${reco}`;
     }
     if (isOwned(b.id)) {
       return `${trailer}
         <button class="btn btn-read" onclick="openReader(${i})">${readLabel(b)}</button>
         <button class="btn btn-dl" onclick="downloadPaid(${i}, this)">⬇ Descargar PDF</button>
-        <span class="owned-pill">✓ Es tuyo</span>`;
+        <span class="owned-pill">✓ Es tuyo</span>${reco}`;
     }
     return `${trailer}
       <button class="btn btn-buy" onclick="buyBook(${i}, this)">Comprar · $${b.price}</button>
       <button class="btn btn-dl" onclick="openReader(${i})">📖 Leer las primeras ${b.samplePages} páginas</button>
-      <span class="price-pill">$${b.price} <small>MXN</small></span>`;
+      <span class="price-pill">$${b.price} <small>MXN</small></span>${reco}`;
   }
 
   /* ====== RENDER DEL ESTANTE ====== */
   function renderBooks() {
     document.getElementById('bookList').innerHTML = BOOKS.map((b, i) => `
-      <article class="book">
+      <article class="book" id="libro-${b.id}">
         <div class="book-cover-wrap">
           <img class="book-cover" src="${b.cover}" alt="Portada de ${b.title}"
                onclick="openReader(${i})" loading="lazy"
@@ -986,8 +1069,13 @@
     const my = ++syncSeq;
     updateNav();
     await refreshOwned();
-    if (my === syncSeq) renderBooks();
+    if (my === syncSeq) {
+      renderBooks();
+      // renderBooks rehace el estante: si se llegó por un enlace a un libro, re-señalarlo
+      if (!hashFocused) { hashFocused = true; focusBookFromHash(); }
+    }
   }
+  let hashFocused = false;
 
   /* ---- Regreso de Stripe (/libros?compra=<id>) ----
      El webhook puede tardar unos segundos; con OXXO, hasta que la tienda confirme. */
@@ -1015,7 +1103,97 @@
     }
   }
 
+  /* ====== "LO RECOMIENDO": compartir un libro ======
+     Cada libro tiene su propia página para compartir, biblioteca/<id>/index.html,
+     con la tarjeta de vista previa (portada, título, sinopsis) que muestran WhatsApp,
+     Facebook, etc., y que manda al lector directo al libro en /libros#libro-<id>.
+     Esas páginas se generan con: python tools/build-share-libros.py */
+  const SITE = 'https://trikles-cursos.web.app';
+  const SHARE_ICONS = {
+    wa: ['#25D366', 'W'], fb: ['#1877F2', 'f'], x: ['#000', '𝕏'], tg: ['#229ED9', 'T'], mail: ['#8a7f6f', '✉']
+  };
+  function shareUrl(b) { return `${SITE}/biblioteca/${b.id}/`; }
+  function shareText(b) {
+    const gancho = b.price
+      ? 'Puedes leer las primeras páginas gratis.'
+      : 'Se lee gratis en línea.';
+    return `Te recomiendo «${b.title}», de Germán Solís Muñoz. ${gancho}`;
+  }
+  let shareBook = null;
+  function openShare(i) {
+    const b = BOOKS[i];
+    shareBook = b;
+    const url = shareUrl(b), text = shareText(b);
+    const enc = encodeURIComponent;
+    const opts = [
+      ['wa', 'WhatsApp', `https://wa.me/?text=${enc(text + ' ' + url)}`],
+      ['fb', 'Facebook', `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`],
+      ['x', 'X', `https://twitter.com/intent/tweet?text=${enc(text)}&url=${enc(url)}`],
+      ['tg', 'Telegram', `https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`],
+      ['mail', 'Correo', `mailto:?subject=${enc('Te recomiendo un libro: ' + b.title)}&body=${enc(text + '\n\n' + url)}`]
+    ];
+    let h = opts.map(([k, label, href]) => `
+      <a class="share-opt" href="${href}" ${k === 'mail' ? '' : 'target="_blank" rel="noopener"'}>
+        <span class="ico" style="background:${SHARE_ICONS[k][0]}">${SHARE_ICONS[k][1]}</span>${label}
+      </a>`).join('');
+    // En el celular: el menú de compartir del teléfono (Instagram, Messenger, etc.)
+    if (navigator.share) {
+      h += `<button class="share-opt" type="button" onclick="nativeShare()">
+        <span class="ico" style="background:var(--orange)">⋯</span>Más opciones</button>`;
+    }
+    document.getElementById('shareGrid').innerHTML = h;
+    document.getElementById('shareCover').src = b.cover;
+    document.getElementById('shareTitle').textContent = `Recomienda «${b.title}»`;
+    document.getElementById('shareUrl').value = url;
+    document.getElementById('shareMsg').textContent = `Mensaje: «${text}»`;
+    const copy = document.getElementById('shareCopy');
+    copy.textContent = 'Copiar enlace'; copy.classList.remove('done');
+    const m = document.getElementById('shareModal');
+    m.classList.add('show'); m.setAttribute('aria-hidden', 'false');
+  }
+  function closeShare() {
+    const m = document.getElementById('shareModal');
+    m.classList.remove('show'); m.setAttribute('aria-hidden', 'true');
+  }
+  function nativeShare() {
+    if (!shareBook) return;
+    navigator.share({ title: shareBook.title, text: shareText(shareBook), url: shareUrl(shareBook) }).catch(() => {});
+  }
+  document.getElementById('shareCopy').onclick = () => {
+    if (!shareBook) return;
+    const t = shareText(shareBook) + ' ' + shareUrl(shareBook);
+    const ok = () => {
+      const c = document.getElementById('shareCopy');
+      c.textContent = '✓ Copiado'; c.classList.add('done');
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(t).then(ok).catch(() => fallbackCopy(t, ok));
+    } else fallbackCopy(t, ok);
+  };
+  document.getElementById('shareClose').onclick = closeShare;
+  document.getElementById('shareModal').addEventListener('click', e => {
+    if (e.target.id === 'shareModal') closeShare();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('shareModal').classList.contains('show')) {
+      e.stopImmediatePropagation(); closeShare();
+    }
+  }, true);
+
+  /* Enlace directo a un libro: /libros#libro-<id> (lo usan las páginas para compartir) */
+  function focusBookFromHash() {
+    const m = location.hash.match(/^#libro-(.+)$/);
+    if (!m) return;
+    const card = document.getElementById('libro-' + decodeURIComponent(m[1]));
+    if (!card) return;
+    card.scrollIntoView({ block: 'start', behavior: 'instant' });
+    window.scrollBy(0, -80);   // que no lo tape la barra fija
+    card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
+  }
+
   renderBooks();
+  focusBookFromHash();
+  window.addEventListener('hashchange', focusBookFromHash);
   if (HAS_FB) {
     TK.onAuthChange(() => syncSession());
     TK.ready().then(async () => { await syncSession(); handleReturnFromStripe(); });
@@ -1031,6 +1209,7 @@
   function openTrailer(i) {
     const b = BOOKS[i];
     if (!b || !b.trailer) return;
+    document.getElementById('tlInner').classList.toggle('vertical', !!b.trailerVertical);
     tl.video.src = b.trailer;
     if (b.trailerPoster) tl.video.poster = b.trailerPoster;
     tl.cap.textContent = 'Tráiler · ' + b.title;
@@ -1432,6 +1611,12 @@
     hidePop();
     updateControls();
     if (reader.book) { setBookState(reader.book.id, { page: n, pages: totalPages() }); renderMarks(); }
+    // Última página del libro COMPLETO (no de la muestra): invitar a recomendarlo, una sola vez
+    if (reader.book && !reader.sample && n === reader.pages && reader.pages > 1 && !bookState(reader.book.id).recoAsked) {
+      setBookState(reader.book.id, { recoAsked: true });
+      const idx = BOOKS.indexOf(reader.book);
+      setTimeout(() => showToast('¿Te gustó? Recomiéndalo a alguien 💛', 'Lo recomiendo', () => { hideToast(); openShare(idx); }), 900);
+    }
     renderHighlights();
 
     reader.rendering = false;
@@ -1475,7 +1660,8 @@
       <p>Te faltan ${b.pages - reader.pages} páginas de <em>${b.title}</em>: las seis partes y la despedida.</p>
       <button class="btn btn-buy" onclick="buyBook(${i}, this)">Comprar el libro · $${b.price} MXN</button>
       <div class="pw-fine">Pago seguro con tarjeta u OXXO. Es tuyo para siempre: lo lees aquí o lo descargas en PDF.</div>
-      <button class="pw-back" onclick="hidePaywall()">‹ Volver a la muestra</button>`;
+      <button class="pw-back" onclick="hidePaywall()">‹ Volver a la muestra</button>
+      <button class="pw-back pw-reco" onclick="openShare(${i})">💛 ¿Conoces a alguien a quien le sirva? Recomiéndalo</button>`;
     el.paywall.classList.add('show');
     el.pageInd.textContent = `${reader.page} / ${totalPages()} · muestra`;
     el.next.disabled = true;
@@ -1503,6 +1689,7 @@
   }
 
   el.mark.onclick = toggleMark;
+  document.getElementById('rShare').onclick = () => { if (reader.book) openShare(BOOKS.indexOf(reader.book)); };
   el.notesBtn.onclick = toggleNotes;
   el.notesClose.onclick = () => el.notes.classList.remove('show');
 
@@ -1549,7 +1736,8 @@
   document.addEventListener('keydown', (e) => {
     if (!el.reader.classList.contains('show')) return;
     // Escribiendo en el modal de cuenta: las flechas y la B no son del lector
-    if (au.modal.classList.contains('show') || (e.target.closest && e.target.closest('input, textarea'))) return;
+    if (au.modal.classList.contains('show') || document.getElementById('shareModal').classList.contains('show')
+        || (e.target.closest && e.target.closest('input, textarea'))) return;
     if (e.key === 'Escape') {
       // Esc cierra primero lo que esté encima: menú → panel → lector
       if (el.selPop.classList.contains('show')) hidePop();
