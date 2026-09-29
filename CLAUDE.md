@@ -195,6 +195,7 @@ npx firebase-tools deploy --only hosting
 
 **Gotchas de deploy:**
 - En PowerShell, los here-strings `@'...'@` para `git commit -m` se rompen si el mensaje trae comillas/espacios → usar mensaje de **una sola línea** con comillas dobles.
+- **Secretos (`functions:secrets:set`):** el prompt NO muestra lo pegado → Germán pegó una llave dos veces (Anthropic 401). Verificar el largo con `functions:secrets:access` sin imprimir la llave; y el `set` no redeploya solo con `--force` → redeploy de la función después. Si él debe pegar algo, abrirle una ventana `Start-Process powershell -NoExit` con el comando ya corriendo. Functions en **Node 22** desde 2026-09-29.
 - **Firebase deploya desde la carpeta local, NO desde git.** Lo que esté en `.gitignore` igual se sube si no está también en `hosting.ignore` de `firebase.json`. (Así se filtraron los PDFs de `libros/`.)
 - **Caché / "no se ven los cambios" (resuelto 2026-06-11):** `firebase.json` tiene `cleanUrls:true`, así que las páginas se sirven SIN extensión (`/curso`, no `/curso.html`). La regla de headers `Cache-Control` apuntaba a `**/*.@(html|js)` y NO coincidía con esas rutas limpias → caían al caché por defecto (1h). Cambiado el `source` a `**` (todas las rutas con `max-age=0, must-revalidate`). Ahora los cambios se ven al instante. **Verificar headers servidos con `curl -sIL` (con `-L`, porque `/x.html` hace 302 a `/x`).** Tras un deploy, el navegador puede tener copias viejas aún válidas (cacheadas con el header viejo de 1h) → pedir a Germán **Ctrl+Shift+R** o ventana incógnito esa primera vez.
 
@@ -224,21 +225,17 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 ---
 
-## Último avance (2026-08-03, revisión SME de SOX + 3er libro + lector con memoria y resaltados)
+## Último avance (2026-09-29, primer libro de pago + "Lo recomiendo" + Node 22 + chat reparado)
 
-**Curso SOX — checklist de revisión SME entregado (EN CURSO).** `revision/revision-sox-sme.html`: **140 afirmaciones técnicas** del curso agrupadas por lección + los 15 reactivos del examen, cada una marcable ✓/✗/? con notas, **42 marcadas como prioritarias**, y botón para generar el reporte de correcciones. **Germán se quedó revisándolo.** Tres hallazgos ya señalados como errores probables: PCAOB "máximo 2 contadores" (la ley dice *exactamente* 2), la inconsistencia MRC-vs-IPE entre L13/L20/L28, y el "y que un auditor lo confirme" de L0 + P1 del examen (contradice L3/L6). Detalle en `project_curso-sox.md`.
+**Primer libro propio DE PAGO: *Recordar con Amor*** ($39 MXN, 19 pág, libro para el duelo). Muestra pública de 3 págs con invitación de compra; comprar pide cuenta TRIKLES; el PDF completo solo lo entrega `getBook`; **no desbloquea derivados**. Tráiler vertical (sin la marca "Gemini Notebook"). Convención completa en **Biblioteca de Autor**. Commit `4d5b5e0`.
 
-**Carpeta `revision/` = documentos de trabajo interno.** En `.gitignore` **y** en `hosting.ignore`. No es producto: no va al repo público ni se sirve (verificado 404 en vivo).
+**"💛 Lo recomiendo"** en los 4 libros: WhatsApp/Facebook/X/Telegram/correo/copiar enlace + menú nativo del celular; cada libro tiene su página para compartir con tarjeta de vista previa (`python tools/build-share-libros.py`). Commit `dbc95cd`.
 
-**Tercer libro propio: *¿Ora por qué?*** (cuento sobre la culpa, 10 pág, id `ora-por-que`). Franja del inicio a "3 libros". Commit `5f2e2b9`.
+**Functions a Node 22** (Node 20 se apagaba el 2026-10-30) y **chat de preventa reparado**: la llave de Anthropic se había borrado en la consola; nueva llave "TRIKLES chat preventa" (no borrarla). Commits `3bbabcc`, `ff0959e`.
 
-**El lector de `/libros` ahora recuerda y deja subrayar.** Reanuda donde te quedaste, marcadores de página (🔖 / tecla B), **selección y copia nativas** (capa de texto de PDF.js), **resaltados persistentes** y panel 📑 "Mis notas". Todo en `localStorage` → por dispositivo. Commits `92e99b0`, `f07009e`, `3c9ec0e`. Convención y los 3 gotchas de la capa de texto: sección **Biblioteca de Autor**.
+### Antes (2026-08-03, revisión SME de SOX + 3er libro + lector con memoria y resaltados)
 
-**❌ Dato falso corregido:** "La Mancha Naranja es PDF de imagen" llevaba meses en este archivo y era **falso** — los 3 libros tienen texto real; los `�` eran encoding de consola. De no verificarlo, la función de copiar se habría descartado por imposible. **Es la 2ª vez que un artefacto de consola causa un diagnóstico falso** (la 1ª fue Grep con las barras).
-
-**💡 Aprendizaje de proceso:** el bug de "no se puede quitar un resaltado" salió **solo porque Germán preguntó cómo se hacía**. Una pregunta del usuario sobre *cómo se usa X* es señal de que X puede estar roto o no ser descubrible → **verificar antes de contestar**. Ninguna de las dos fallas (clic robado por la capa de texto; menú que se cerraba en 2 ms) se veía en un screenshot; salieron manejando Chrome por CDP con clics reales y un MutationObserver (ver `reference_navegador-headless-cdp.md` + `tool_cdp-shot.js` en la memoria).
-
-**⏸️ COSO y NIA: en STANDBY** por decisión de Germán. Plan completo (análisis legal, reencuadre de NIA como "cómo se audita en la práctica", ruta de 3 cursos) en `project_plan-cursos-coso-nia.md`.
+Checklist `revision/revision-sox-sme.html` (140 afirmaciones, 42 prioritarias) entregado a Germán — **sigue esperando su reporte**. 3er libro *¿Ora por qué?*. El lector de /libros reanuda, marca páginas, selecciona/copia y resalta (gotchas en **Biblioteca de Autor**). Se corrigió el dato falso "La Mancha es PDF de imagen" (era encoding de consola). **Aprendizaje:** una pregunta de Germán sobre *cómo se usa X* es señal de que X puede estar roto → verificar antes de contestar. COSO/NIA en standby (`project_plan-cursos-coso-nia.md`).
 
 ### Antes (2026-07-22, tráiler de libro + 2º libro propio + learnings de SOX)
 
@@ -256,19 +253,13 @@ Operaciones de admin **sin abrir `admin.html`**, reutilizando la sesión local d
 
 **Cambiar correo/clave de alumnos ya está en el panel** (antes solo por CLI). Ver **Admin por CLI**. Commit `01b2cd1`, deployado y verificado en vivo (cuenta de Armando: correo movido + login OK, folios intactos).
 
-### Antes (2026-07-17, verificación de recordatorios + 2 pendientes cerrados)
-
-**Recordatorios verificados en vivo.** Las corridas del 16-jul (5 correos) y 17-jul (3) salieron limpias; la lógica "1 por alumno por corrida" funciona. El "error" que reportó Germán era un **rebote benigno** (buzón del alumno lleno, no la plataforma). **Decisión:** el cooldown es por curso → un alumno puede recibir correos en días consecutivos (curso distinto); se deja así.
-
-**Dos pendientes cerrados:** Mente Millonaria ya está en `COURSE_LEARNINGS` (commit `5c81f94`, deployado); y **backfill de folios** hecho (17 certificados pre-2026-06-15 registrados en `certificates/{folio}`; herramienta reusable `tool_backfill-folios-trikles.js` en memoria). Correo de `legal.html`: se deja igual.
-
-**Herramienta personal de Germán (fuera de TRIKLES):** buscador offline de las **Normas Globales de Auditoría Interna 2024** (IIA) para su trabajo de auditor en Grupo TODA. Vive en `libros/` (gitignored → nunca se sube). Evaluación del libro: **no se puede convertir en curso** (es norma normativa, no libro de ideas; copyright IIA agresivo + riesgo de marca CIA). Detalle en memoria `reference_buscador-normas-auditoria.md`.
-
-*(Entradas anteriores a 2026-07-17 podadas — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: la reparación del sistema de certificados y `tools/audit-cursos.js` (2026-07-16) en **Sistema de certificados — CONTRATO** y **Deploy**; el arreglo de los recordatorios en **Recordatorios de inactividad**; "cambiar el correo de un alumno le rompe el login → avísale el mismo día" en **Admin por CLI**; blindaje del repo público (2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN**; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
+*(Entradas anteriores a 2026-07-18 podadas (la del 07-17 — recordatorios verificados, backfill de folios, buscador de Normas IIA — vive en `project_pendientes-abiertos.md` y sus memorias) — viven en git y en las memorias `project_*`. Sus gotchas ya están en las secciones técnicas de arriba: la reparación del sistema de certificados y `tools/audit-cursos.js` (2026-07-16) en **Sistema de certificados — CONTRATO** y **Deploy**; el arreglo de los recordatorios en **Recordatorios de inactividad**; "cambiar el correo de un alumno le rompe el login → avísale el mismo día" en **Admin por CLI**; blindaje del repo público (2026-06-18) en **Legal**; embudo "2 gratis" (2026-06-16) en **Legal → MODELO DE MONETIZACIÓN**; impresión de certificado, caché de deploy, examen de una oportunidad y racha persistida en sus secciones.)*
 
 ## Pendientes al cierre
 
-- ✅ ~~Chat de preventa caído~~ — ARREGLADO 2026-09-29: la llave de junio se había BORRADO en console.anthropic.com (no aparecía en la lista). Nueva llave **"TRIKLES chat preventa"** → secreto `ANTHROPIC_API_KEY` versión 3, versiones 1–2 destruidas. **Gotcha:** el prompt de `secrets:set` no muestra lo que pegas y Germán la pegó DOS veces (216 chars en vez de 108) → Anthropic 401. Diagnóstico sin exponer la llave: `functions:secrets:access` → medir largo/prefijo con node. Para que él la meta, abrirle una ventana con `Start-Process powershell -NoExit` corriendo el comando.
+**▶ Por dónde retomar (2026-09-29):** compra de prueba de $39 (cuenta no FULL_ACCESS) → revisar logs de la corrida de recordatorios del 30-sep (1ª en Node 22) → pedirle a Germán el reporte SME de SOX.
+
+- ✅ ~~Chat de preventa caído~~ — ARREGLADO 2026-09-29 (llave nueva "TRIKLES chat preventa", secreto v3). Gotcha de `secrets:set` (no muestra lo pegado; se pegó 2 veces) en **Deploy**.
 - ✅ ~~Node 20 se apaga el 2026-10-30~~ — HECHO 2026-09-29 (commit `3bbabcc`): 13 functions en **Node 22**, firebase-functions 5→7, firebase-admin 12→13 (se quedó en 13 a propósito: el código usa la API `admin.auth()`/`admin.firestore()`). Verificado en vivo: Stripe, webhook, getBook, unsubscribe y horario del recordatorio (10:00 CDMX). Falta solo confirmar que la corrida de recordatorios del 30-sep salga limpia en los logs.
 - **Probar la compra real de *Recordar con Amor* ($39):** Germán compra con una cuenta que NO sea de FULL_ACCESS (las suyas ya lo ven como "Es tuyo") → debe volver a /libros, confirmarse solo y abrir el libro completo; luego reembolsar desde Stripe. Con eso queda validado también el webhook de Stripe en LIVE (pendiente viejo).
 
